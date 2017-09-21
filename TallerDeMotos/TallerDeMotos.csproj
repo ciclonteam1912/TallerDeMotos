@@ -200,12 +200,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="ConfiguracionDeEntidades\ClienteConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\MarcaConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\ModeloConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\PersoneriaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TipoDocumentoConfiguracion.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MarcaController.cs" />
+    <Compile Include="Controllers\ModeloController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -229,8 +233,18 @@
     <Compile Include="Migrations\201709212023579_CreacionDeTablaClientes.Designer.cs">
       <DependentUpon>201709212023579_CreacionDeTablaClientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709212148317_CreacionDeTablaMarcas.cs" />
+    <Compile Include="Migrations\201709212148317_CreacionDeTablaMarcas.Designer.cs">
+      <DependentUpon>201709212148317_CreacionDeTablaMarcas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709212301007_CreacionDeTablaModelos.cs" />
+    <Compile Include="Migrations\201709212301007_CreacionDeTablaModelos.Designer.cs">
+      <DependentUpon>201709212301007_CreacionDeTablaModelos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ModelosDeDominio\Cliente.cs" />
+    <Compile Include="Models\ModelosDeDominio\Marca.cs" />
+    <Compile Include="Models\ModelosDeDominio\Modelo.cs" />
     <Compile Include="Models\ModelosDeDominio\Personeria.cs" />
     <Compile Include="Models\ModelosDeDominio\TipoDocumento.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -239,6 +253,7 @@
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ModeloViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-cerulean.css" />
@@ -345,6 +360,10 @@
     <Content Include="Views\Shared\_MenuVertical.cshtml" />
     <Content Include="Views\Cliente\ListaDeClientes.cshtml" />
     <Content Include="Views\Cliente\ClienteFormulario.cshtml" />
+    <Content Include="Views\Marca\ListaDeMarcas.cshtml" />
+    <Content Include="Views\Marca\MarcaFormulario.cshtml" />
+    <Content Include="Views\Modelo\ListaDeModelos.cshtml" />
+    <Content Include="Views\Modelo\ModeloFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -372,6 +391,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709212023579_CreacionDeTablaClientes.resx">
       <DependentUpon>201709212023579_CreacionDeTablaClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709212148317_CreacionDeTablaMarcas.resx">
+      <DependentUpon>201709212148317_CreacionDeTablaMarcas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709212301007_CreacionDeTablaModelos.resx">
+      <DependentUpon>201709212301007_CreacionDeTablaModelos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

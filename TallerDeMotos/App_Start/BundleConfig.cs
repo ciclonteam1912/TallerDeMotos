@@ -25,6 +25,7 @@ namespace TallerDeMotos
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-cerulean.css",
+                      "~/Content/FontAwesome-4.7.0/css/font-awesome.css",
                       "~/Content/site.css"));
         }
     }

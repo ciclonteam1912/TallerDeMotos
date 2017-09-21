@@ -1,0 +1,171 @@
+﻿@model TallerDeMotos.ViewModels.ClienteViewModel
+@{
+    ViewBag.Title = Model.Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>@Model.Titulo</h2>
+
+    @using (Html.BeginForm("GuardarCliente", "Cliente"))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">@Model.Titulo</div>
+            <div class="panel-body">
+                <div class="row">
+                    <h4>@Html.ValidationSummary(true, "¡Por favor solucione los siguientes errores!")</h4>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PersoneriaId)
+                            @Html.DropDownListFor(m => m.PersoneriaId, new SelectList(Model.Personerias, "Id", "Descripcion"), "Seleccionar Personería", new { @class = "form-control", id = "personeriaId" })
+                            @Html.ValidationMessageFor(m => m.PersoneriaId)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Nombre, new { id = "labelNombre" })
+                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre del Cliente...", id = "inputNombre", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Nombre)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group" id="apellido" style="display:none">
+                            @Html.LabelFor(m => m.Apellido)
+                            @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", placeholder = "Apellido del Cliente...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Apellido)
+                        </div>
+                        <div class="form-group" id="propietario" style="display: none">
+                            @Html.LabelFor(m => m.NombrePropietario)
+                            @Html.TextBoxFor(m => m.NombrePropietario, new { @class = "form-control", placeholder = "Nombre del Propietario...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.NombrePropietario)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Telefono)
+                            @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", placeholder = "Número de Teléfono...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Telefono)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.TipoDocumentoId)
+                            @Html.DropDownListFor(m => m.TipoDocumentoId, new SelectList(Model.TiposDocumentos, "Id", "Descripcion"), "Seleccionar Tipo de Documento", new { @class = "form-control", id = "tipoDocumentoId" })
+                            @Html.ValidationMessageFor(m => m.TipoDocumentoId)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ValorDocumento)
+                            @Html.TextBoxFor(m => m.ValorDocumento, new { @class = "form-control", placeholder = "Ingrese el Valor del Documento...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.ValorDocumento)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CorreoElectronico)
+                            @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control", placeholder = "Correo Electrónico...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.CorreoElectronico)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Direccion)
+                            @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control", placeholder = "Dirección...", maxlength = 255, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Direccion)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FechaDeNacimiento, new { id = "labelFecha" })
+                            @Html.TextBoxFor(m => m.FechaDeNacimiento, "{0:d MMM yyyy}", new { @class = "form-control", placeholder = "Fecha de Nacimiento...", id = "inputFecha" })
+                            @Html.ValidationMessageFor(m => m.FechaDeNacimiento)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+                    @Html.HiddenFor(m => m.Id)
+                    @Html.AntiForgeryToken()
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+
+            var personeriaId = $("#personeriaId").val();
+
+            var optarray = $("#tipoDocumentoId").children('option').map(function () {
+                return {
+                    "value": this.value,
+                    "option": "<option value='" + this.value + "'>" + this.text + "</option>"
+                }
+            });
+
+            CambiarFormulario(personeriaId);
+
+            $("#personeriaId").change(function () {
+                CambiarFormulario($(this).val());
+            }).change();
+
+            function CambiarFormulario(id) {
+                var personeriaId = id;
+
+                if (personeriaId == 4) {
+                    $("#apellido").hide();
+                    $("#propietario").show();
+                    $("#labelFecha").text("Fecha de Fundación");
+                    $("#inputFecha").attr("placeholder", "Fecha de Fundación...");
+                    $("#labelNombre").text("Institución o Empresa");
+                    $("#inputNombre").attr("placeholder", "Nombre de la Institución o Empresa...");
+                    $("#Apellido").val("");
+                } else {
+                    $("#apellido").show();
+                    $("#propietario").hide();
+                    $("#labelFecha").text("Fecha de Nacimiento");
+                    $("#inputFecha").attr("placeholder", "Fecha de Nacimiento...");
+                    $("#labelNombre").text("Nombre");
+                    $("#inputNombre").attr("placeholder", "Nombre del Cliente...");
+                    $("#NombrePropietario").val("");
+                }
+
+                $("#tipoDocumentoId").children('option').remove();
+                var addoptarr = [];
+                if (personeriaId == 4) {
+                    addoptarr.push(optarray[2].option);
+                }
+                else {
+                    if ($("#Id").val() != 0) {
+                        for (i = 1; i < optarray.length; i++) {
+                            addoptarr.push(optarray[i].option);
+                        }
+                    }
+                    else {
+                        for (i = 0; i < optarray.length; i++) {
+                            addoptarr.push(optarray[i].option);
+                        }
+                    }
+                }
+
+                $("#tipoDocumentoId").html(addoptarr.join(''));
+            }
+        });
+    </script>
+}

@@ -27,6 +27,15 @@ footer{
     float: right;
 }
 
+.field-validation-error, .validation-summary-errors, label.error {
+    color: red;
+}
+
+.input-validation-error, select.form-control.error {
+    border: 2px solid red;
+}
+
+
 /*------------- MENÚ PRINCIPAL------------------*/
 .btn-menu {
     display: none;

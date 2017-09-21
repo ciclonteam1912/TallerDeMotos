@@ -3,6 +3,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using TallerDeMotos.ConfiguracionDeEntidades;
+using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Models
 {
@@ -23,6 +25,18 @@ namespace TallerDeMotos.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+        }
+
+        public DbSet<Personeria> Personerias { get; set; }
+        public DbSet<TipoDocumento> TipoDocumentos { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Configurations.Add(new PersoneriaConfiguracion());
+            modelBuilder.Configurations.Add(new TipoDocumentoConfiguracion());
+            modelBuilder.Configurations.Add(new ClienteConfiguracion());
         }
 
         public static ApplicationDbContext Create()

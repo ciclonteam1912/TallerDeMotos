@@ -199,6 +199,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="ConfiguracionDeEntidades\ClienteConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\PersoneriaConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\TipoDocumentoConfiguracion.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -209,7 +212,26 @@
     <Compile Include="Migrations\201709211458209_CreacionDeTablasDeAspNetIdentity.Designer.cs">
       <DependentUpon>201709211458209_CreacionDeTablasDeAspNetIdentity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709211933126_CreacionDeTablaPersonerias.cs" />
+    <Compile Include="Migrations\201709211933126_CreacionDeTablaPersonerias.Designer.cs">
+      <DependentUpon>201709211933126_CreacionDeTablaPersonerias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709211941442_CreacionDeTablaTipoDocumentos.cs" />
+    <Compile Include="Migrations\201709211941442_CreacionDeTablaTipoDocumentos.Designer.cs">
+      <DependentUpon>201709211941442_CreacionDeTablaTipoDocumentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709212001180_CargarDatosEnLasTablasPersoneriasYTipoDocumentos.cs" />
+    <Compile Include="Migrations\201709212001180_CargarDatosEnLasTablasPersoneriasYTipoDocumentos.Designer.cs">
+      <DependentUpon>201709212001180_CargarDatosEnLasTablasPersoneriasYTipoDocumentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709212023579_CreacionDeTablaClientes.cs" />
+    <Compile Include="Migrations\201709212023579_CreacionDeTablaClientes.Designer.cs">
+      <DependentUpon>201709212023579_CreacionDeTablaClientes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ModelosDeDominio\Cliente.cs" />
+    <Compile Include="Models\ModelosDeDominio\Personeria.cs" />
+    <Compile Include="Models\ModelosDeDominio\TipoDocumento.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -334,6 +356,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709211458209_CreacionDeTablasDeAspNetIdentity.resx">
       <DependentUpon>201709211458209_CreacionDeTablasDeAspNetIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709211933126_CreacionDeTablaPersonerias.resx">
+      <DependentUpon>201709211933126_CreacionDeTablaPersonerias.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709211941442_CreacionDeTablaTipoDocumentos.resx">
+      <DependentUpon>201709211941442_CreacionDeTablaTipoDocumentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709212001180_CargarDatosEnLasTablasPersoneriasYTipoDocumentos.resx">
+      <DependentUpon>201709212001180_CargarDatosEnLasTablasPersoneriasYTipoDocumentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709212023579_CreacionDeTablaClientes.resx">
+      <DependentUpon>201709212023579_CreacionDeTablaClientes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

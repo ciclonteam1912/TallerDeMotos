@@ -273,6 +273,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\menu-responsive.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -317,6 +318,7 @@
     <Content Include="Views\Inicio\Compras.cshtml" />
     <Content Include="Views\Inicio\Stock.cshtml" />
     <Content Include="Views\Inicio\Seguridad.cshtml" />
+    <Content Include="Views\Shared\_MenuVertical.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

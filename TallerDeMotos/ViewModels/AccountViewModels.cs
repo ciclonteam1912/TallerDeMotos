@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace TallerDeMotos.Models
+namespace TallerDeMotos.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {

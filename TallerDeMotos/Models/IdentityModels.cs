@@ -38,6 +38,7 @@ namespace TallerDeMotos.Models
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<FormaPago> FormasPago { get; set; }
+        public DbSet<Talonario> Talonarios { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -53,6 +54,7 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new CargoConfiguracion());
             modelBuilder.Configurations.Add(new EmpleadoConfiguracion());
             modelBuilder.Configurations.Add(new FormaPagoConfiguracion());
+            modelBuilder.Configurations.Add(new TalonarioConfiguracion());
         }
 
         public static ApplicationDbContext Create()

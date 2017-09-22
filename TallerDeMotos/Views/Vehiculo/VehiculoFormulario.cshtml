@@ -1,0 +1,119 @@
+﻿@model TallerDeMotos.ViewModels.VehiculoViewModel
+@{
+    ViewBag.Title = Model.Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>@Model.Titulo</h2>
+
+    @using (Html.BeginForm("GuardarVehiculo", "Vehiculo"))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">@Model.Titulo</div>
+            <div class="panel-body">
+                <div class="row">
+                    @Html.ValidationSummary(true, "¡Por favor soluciona los siguientes errores!")
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.ClienteId)
+                            @Html.DropDownListFor(v => v.ClienteId, new SelectList(Model.Clientes, "Id", "NombreCompleto"), "Seleccione un Cliente", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(v => v.ClienteId)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.ModeloId)
+                            @Html.DropDownListFor(v => v.ModeloId, new SelectList(Model.Modelos, "Id", "Nombre"), "Seleccione un Modelo del Vehículo", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(v => v.ModeloId)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.AseguradoraId)
+                            @Html.DropDownListFor(v => v.AseguradoraId, new SelectList(Model.Aseguradoras, "Id", "Nombre"), "Seleccione una Aseguradora", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(v => v.AseguradoraId)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.CombustibleId)
+                            @Html.DropDownListFor(v => v.CombustibleId, new SelectList(Model.Combustibles, "Id", "Nombre"), "Seleccione un Tipo de Combustible", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(v => v.CombustibleId)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.Matricula)
+                            @Html.TextBoxFor(v => v.Matricula, new { @class = "form-control", placeholder = "Matrícula del Vehículo...", maxlength = 20, autocomplete = "off" })
+                            @Html.ValidationMessageFor(v => v.Matricula)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.Chasis)
+                            @Html.TextBoxFor(v => v.Chasis, new { @class = "form-control", placeholder = "Chasis del Vehículo...", maxlength = 20, autocomplete = "off" })
+                            @Html.ValidationMessageFor(v => v.Chasis)
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.Motor)
+                            @Html.TextBoxFor(v => v.Motor, new { @class = "form-control", placeholder = "Motor del Vehículo...", maxlength = 20, autocomplete = "off" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.Cilindrada)
+                            @Html.TextBoxFor(v => v.Cilindrada, new { @class = "form-control", placeholder = "Cilindrada del Vehículo...", autocomplete = "off", type = "number", min = "0", max = "999", oninput = "maxLengthCheck(this)" })
+                            @Html.ValidationMessageFor(v => v.Cilindrada)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.Kilometro)
+                            @Html.TextBoxFor(v => v.Kilometro, new { @class = "form-control", placeholder = "Kilómetraje del Vehículo", autocomplete = "off", type = "number", min = "0", max = "99999", oninput = "maxLengthCheck(this)" })
+                            @Html.ValidationMessageFor(v => v.Kilometro)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.Color)
+                            @Html.TextBoxFor(v => v.Color, new { @class = "form-control", placeholder = "Color del Vehículo", autocomplete = "off", maxlength = 20 })
+                        </div>
+                    </div>
+                </div>
+                @Html.HiddenFor(v => v.Id)
+                @Html.AntiForgeryToken()
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts{
+    <script>
+        function maxLengthCheck(object) {
+            if (object.value.length > object.max.length)
+                object.value = object.value.slice(0, object.max.length);
+        }
+
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+        });
+    </script>
+}

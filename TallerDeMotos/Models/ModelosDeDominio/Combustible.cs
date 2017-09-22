@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -18,15 +20,18 @@ namespace TallerDeMotos.Models.ModelosDeDominio
             }
         }
 
+        public ICollection<Vehiculo> Vehiculos { get; set; }
+
         public Combustible()
         {
-
+            Vehiculos = new Collection<Vehiculo>();
         }
 
         public Combustible(Combustible combustible)
         {
             Id = combustible.Id;
             Nombre = combustible.Nombre;
+            Vehiculos = new Collection<Vehiculo>();
         }
     }
 }

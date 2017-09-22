@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
@@ -58,6 +60,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
             {
                 return Nombre.ToUpper() + " " + Apellido?.ToUpper();
             }
+        }
+
+        public ICollection<Vehiculo> Vehiculos { get; set; }
+
+        public Cliente()
+        {
+            Vehiculos = new Collection<Vehiculo>();
         }
     }
 }

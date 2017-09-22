@@ -1,0 +1,46 @@
+﻿@model TallerDeMotos.Models.ModelosDeDominio.FormaPago
+@{
+    ViewBag.Title = Model.Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>@Model.Titulo</h2>
+
+    @using (Html.BeginForm("GuardarFormaPago", "FormaPago"))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">@Model.Titulo</div>
+            <div class="panel-body">
+                <div class="row">
+                    <h4>@Html.ValidationSummary(true, "¡Por favor solucione los siguientes errores!")</h4>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(fp => fp.Nombre)
+                        @Html.TextBoxFor(fp => fp.Nombre, new { @class = "form-control", placeholder = "Nombre de la Forma de Pago..." })
+                        @Html.ValidationMessageFor(fp => fp.Nombre)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(fp => fp.Descripcion)
+                        @Html.TextAreaFor(fp => fp.Descripcion, new { @class = "form-control", placeholder = "Descripción de la Forma de Pago..." })
+                        @Html.ValidationMessageFor(fp => fp.Descripcion)
+                    </div>
+                    @Html.HiddenFor(fp => fp.Id)
+                    @Html.AntiForgeryToken()
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuVentas").addClass('active');
+        })
+    </script>
+}

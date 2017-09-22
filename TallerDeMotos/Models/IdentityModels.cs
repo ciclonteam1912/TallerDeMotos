@@ -32,6 +32,7 @@ namespace TallerDeMotos.Models
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Modelo> Modelos { get; set; }
+        public DbSet<Combustible> Combustibles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -41,6 +42,7 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new ClienteConfiguracion());
             modelBuilder.Configurations.Add(new MarcaConfiguracion());
             modelBuilder.Configurations.Add(new ModeloConfiguracion());
+            modelBuilder.Configurations.Add(new CombustibleConfiguracion());
         }
 
         public static ApplicationDbContext Create()

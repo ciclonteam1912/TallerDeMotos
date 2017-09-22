@@ -1,0 +1,36 @@
+﻿@model TallerDeMotos.Models.ModelosDeDominio.Combustible
+@{
+    ViewBag.Title = Model.Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>@Model.Titulo</h2>
+
+    @using (Html.BeginForm("GuardarCombustible", "Combustible"))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">@Model.Titulo</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Nombre)
+                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre del Combustible..." })
+                    @Html.ValidationMessageFor(m => m.Nombre)
+                </div>
+                @Html.HiddenFor(m => m.Id)
+                @Html.AntiForgeryToken()
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+        });
+    </script>
+}

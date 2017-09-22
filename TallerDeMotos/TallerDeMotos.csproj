@@ -200,8 +200,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="ConfiguracionDeEntidades\AseguradoraConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\CargoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ClienteConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CombustibleConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\EmpleadoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\MarcaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ModeloConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\PersoneriaConfiguracion.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="Controllers\AseguradoraController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CombustibleController.cs" />
+    <Compile Include="Controllers\EmpleadoController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
@@ -259,10 +262,20 @@
     <Compile Include="Migrations\201709220059465_CreacionDeTablaVehiculos.Designer.cs">
       <DependentUpon>201709220059465_CreacionDeTablaVehiculos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709220214328_CreacionDeTablaCargos.cs" />
+    <Compile Include="Migrations\201709220214328_CreacionDeTablaCargos.Designer.cs">
+      <DependentUpon>201709220214328_CreacionDeTablaCargos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709220240567_CreacionDeTablaEmpleados.cs" />
+    <Compile Include="Migrations\201709220240567_CreacionDeTablaEmpleados.Designer.cs">
+      <DependentUpon>201709220240567_CreacionDeTablaEmpleados.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ModelosDeDominio\Aseguradora.cs" />
+    <Compile Include="Models\ModelosDeDominio\Cargo.cs" />
     <Compile Include="Models\ModelosDeDominio\Cliente.cs" />
     <Compile Include="Models\ModelosDeDominio\Combustible.cs" />
+    <Compile Include="Models\ModelosDeDominio\Empleado.cs" />
     <Compile Include="Models\ModelosDeDominio\Marca.cs" />
     <Compile Include="Models\ModelosDeDominio\Modelo.cs" />
     <Compile Include="Models\ModelosDeDominio\Personeria.cs" />
@@ -271,6 +284,7 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
+    <Compile Include="ViewModels\EmpleadoViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -392,6 +406,8 @@
     <Content Include="Views\Aseguradora\AseguradoraFormulario.cshtml" />
     <Content Include="Views\Vehiculo\ListaDeVehiculos.cshtml" />
     <Content Include="Views\Vehiculo\VehiculoFormulario.cshtml" />
+    <Content Include="Views\Empleado\ListaDeEmpleados.cshtml" />
+    <Content Include="Views\Empleado\EmpleadoFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -434,6 +450,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709220059465_CreacionDeTablaVehiculos.resx">
       <DependentUpon>201709220059465_CreacionDeTablaVehiculos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709220214328_CreacionDeTablaCargos.resx">
+      <DependentUpon>201709220214328_CreacionDeTablaCargos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709220240567_CreacionDeTablaEmpleados.resx">
+      <DependentUpon>201709220240567_CreacionDeTablaEmpleados.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,94 @@
+﻿@model TallerDeMotos.ViewModels.EmpleadoViewModel
+@{
+    ViewBag.Title = Model.Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>@Model.Titulo</h2>
+
+    @using (Html.BeginForm("GuardarEmpleado", "Empleado"))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">@Model.Titulo</div>
+            <div class="panel-body">
+                <div class="row">
+                    <h4>@Html.ValidationSummary(true, "¡Por favor solucione los siguientes errores!")</h4>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Nombre)
+                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre del Empleado..." })
+                        @Html.ValidationMessageFor(m => m.Nombre)
+                    </div>
+                    <div class="form-group" id="apellido">
+                        @Html.LabelFor(m => m.Apellido)
+                        @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", placeholder = "Apellido del Empleado..." })
+                        @Html.ValidationMessageFor(m => m.Apellido)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Cedula)
+                        @Html.TextBoxFor(m => m.Cedula, new { @class = "form-control", placeholder = "Cédula..." })
+                        @Html.ValidationMessageFor(m => m.Cedula)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CargoId)
+                        @Html.DropDownListFor(m => m.CargoId, new SelectList(Model.Cargos, "Id", "Nombre"), "Seleccionar Cargo", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CargoId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Direccion)
+                        @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control", placeholder = "Dirección..." })
+                        @Html.ValidationMessageFor(m => m.Direccion)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CorreoElectronico)
+                        @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control", placeholder = "Correo Electrónico..." })
+                        @Html.ValidationMessageFor(m => m.CorreoElectronico)
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Telefono)
+                        @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", placeholder = "Número de Teléfono..." })
+                        @Html.ValidationMessageFor(m => m.Telefono)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FechaDeNacimiento, new { id = "labelFecha" })
+                        @Html.TextBoxFor(m => m.FechaDeNacimiento, "{0:d MMM yyyy}", new { @class = "form-control", placeholder = "Fecha de Nacimiento...", id = "inputFecha" })
+                        @Html.ValidationMessageFor(m => m.FechaDeNacimiento)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.HoraDeEntrada)
+                        @Html.TextBoxFor(m => m.HoraDeEntrada, new { @class = "form-control", placeholder = "Horario de Entrada..." })
+                        @Html.ValidationMessageFor(m => m.HoraDeEntrada)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.HoraDeSalida)
+                        @Html.TextBoxFor(m => m.HoraDeSalida, new { @class = "form-control", placeholder = "Horario de Salida..." })
+                        @Html.ValidationMessageFor(m => m.HoraDeSalida)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Salario)
+                        @Html.TextBoxFor(m => m.Salario, new { @class = "form-control", placeholder = "Salario..." })
+                        @Html.ValidationMessageFor(m => m.Salario)
+                    </div>
+                    @Html.HiddenFor(m => m.Id)
+                    @Html.AntiForgeryToken()
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+        })
+    </script>
+}

@@ -208,6 +208,7 @@
     <Compile Include="ConfiguracionDeEntidades\MarcaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ModeloConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\PersoneriaConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\ProveedorConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ServicioBasicoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TalonarioConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TipoDocumentoConfiguracion.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\ModeloController.cs" />
+    <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\ServicioBasicoController.cs" />
     <Compile Include="Controllers\TalonarioController.cs" />
     <Compile Include="Controllers\VehiculoController.cs" />
@@ -288,6 +290,10 @@
     <Compile Include="Migrations\201709220352087_CreacionDeTablaServiciosBasicos.Designer.cs">
       <DependentUpon>201709220352087_CreacionDeTablaServiciosBasicos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709220403432_CreacionDeTablaProveedores.cs" />
+    <Compile Include="Migrations\201709220403432_CreacionDeTablaProveedores.Designer.cs">
+      <DependentUpon>201709220403432_CreacionDeTablaProveedores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ModelosDeDominio\Aseguradora.cs" />
     <Compile Include="Models\ModelosDeDominio\Cargo.cs" />
@@ -298,6 +304,7 @@
     <Compile Include="Models\ModelosDeDominio\Marca.cs" />
     <Compile Include="Models\ModelosDeDominio\Modelo.cs" />
     <Compile Include="Models\ModelosDeDominio\Personeria.cs" />
+    <Compile Include="Models\ModelosDeDominio\Proveedor.cs" />
     <Compile Include="Models\ModelosDeDominio\ServicioBasico.cs" />
     <Compile Include="Models\ModelosDeDominio\Talonario.cs" />
     <Compile Include="Models\ModelosDeDominio\TipoDocumento.cs" />
@@ -436,6 +443,8 @@
     <Content Include="Views\Talonario\TalonarioFormulario.cshtml" />
     <Content Include="Views\ServicioBasico\ListaDeServiciosBasicos.cshtml" />
     <Content Include="Views\ServicioBasico\ServicioBasicoFormulario.cshtml" />
+    <Content Include="Views\Proveedor\ListaDeProveedores.cshtml" />
+    <Content Include="Views\Proveedor\ProveedorFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -493,6 +502,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709220352087_CreacionDeTablaServiciosBasicos.resx">
       <DependentUpon>201709220352087_CreacionDeTablaServiciosBasicos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709220403432_CreacionDeTablaProveedores.resx">
+      <DependentUpon>201709220403432_CreacionDeTablaProveedores.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

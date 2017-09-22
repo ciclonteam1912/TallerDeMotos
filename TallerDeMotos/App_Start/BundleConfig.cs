@@ -14,6 +14,12 @@ namespace TallerDeMotos
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
+                "~/Scripts/kendo/jquery.min.js",
+                "~/Scripts/kendo/kendo.all.min.js",                
+                // "~/Scripts/kendo/kendo.timezones.min.js", // uncomment if using the Scheduler
+                "~/Scripts/kendo/kendo.aspnetmvc.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
@@ -26,6 +32,12 @@ namespace TallerDeMotos
                       "~/Content/bootstrap-cerulean.css",
                       "~/Content/FontAwesome-4.7.0/css/font-awesome.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
+                "~/Content/kendo/kendo.common-bootstrap.min.css",
+                "~/Content/kendo/kendo.bootstrap.min.css"));
+
+            bundles.IgnoreList.Clear();
         }
     }
 }

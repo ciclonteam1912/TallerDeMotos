@@ -199,6 +199,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="ConfiguracionDeEntidades\AseguradoraConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ClienteConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CombustibleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\MarcaConfiguracion.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="ConfiguracionDeEntidades\PersoneriaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TipoDocumentoConfiguracion.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AseguradoraController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CombustibleController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
@@ -247,7 +249,12 @@
     <Compile Include="Migrations\201709212349336_CreacionDeTablaCombustibles.Designer.cs">
       <DependentUpon>201709212349336_CreacionDeTablaCombustibles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709220040117_CreacionDeTablaAseguradoras.cs" />
+    <Compile Include="Migrations\201709220040117_CreacionDeTablaAseguradoras.Designer.cs">
+      <DependentUpon>201709220040117_CreacionDeTablaAseguradoras.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ModelosDeDominio\Aseguradora.cs" />
     <Compile Include="Models\ModelosDeDominio\Cliente.cs" />
     <Compile Include="Models\ModelosDeDominio\Combustible.cs" />
     <Compile Include="Models\ModelosDeDominio\Marca.cs" />
@@ -373,6 +380,8 @@
     <Content Include="Views\Modelo\ModeloFormulario.cshtml" />
     <Content Include="Views\Combustible\ListaDeCombustibles.cshtml" />
     <Content Include="Views\Combustible\CombustibleFormulario.cshtml" />
+    <Content Include="Views\Aseguradora\ListaDeAseguradoras.cshtml" />
+    <Content Include="Views\Aseguradora\AseguradoraFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -409,6 +418,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709212349336_CreacionDeTablaCombustibles.resx">
       <DependentUpon>201709212349336_CreacionDeTablaCombustibles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709220040117_CreacionDeTablaAseguradoras.resx">
+      <DependentUpon>201709220040117_CreacionDeTablaAseguradoras.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

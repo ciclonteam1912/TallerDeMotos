@@ -201,10 +201,14 @@
                         if (result) {
                             $.ajax({
                                 url: "/api/clientes/" + button.attr("data-cliente-id"),
-                                method: "DELETE",
-                                success: function () {
-                                    button.parents("tr").remove();
-                                }
+                                method: "DELETE"
+                            })
+                            .done(function () {
+                                button.parents("tr").remove();
+                                toastr.success("Cliente eliminado con éxito.");
+                            })
+                            .fail(function () {
+                                toastr.error("No se pudo eliminar el cliente.");
                             });
                         }
                     }
@@ -212,6 +216,18 @@
 
                 return false;
             });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 4000,
+                "extendedTimeOut": 1000
+            }
         });
     </script>    
 }

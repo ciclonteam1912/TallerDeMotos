@@ -13,7 +13,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public Personeria()
         {
-            Clientes = new Collection<Cliente>();
+            Clientes = new HashSet<Cliente>();
         }
     }
 }

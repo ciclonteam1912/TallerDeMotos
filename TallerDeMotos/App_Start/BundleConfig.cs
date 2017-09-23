@@ -12,11 +12,13 @@ namespace TallerDeMotos
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/menu-responsive.js",
                         "~/Scripts/bootstrap.js",
+                        "~/Scripts/bootbox.js",
                         "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
                 "~/Scripts/kendo/jquery.min.js",
-                "~/Scripts/kendo/kendo.all.min.js",                
+                "~/Scripts/kendo/kendo.all.min.js",
+                "~/Scripts/kendo/messages/kendo.messages.es-ES.min.js",
                 // "~/Scripts/kendo/kendo.timezones.min.js", // uncomment if using the Scheduler
                 "~/Scripts/kendo/kendo.aspnetmvc.min.js"));
 

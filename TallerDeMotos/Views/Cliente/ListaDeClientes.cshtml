@@ -1,10 +1,9 @@
-﻿
-@{
-    ViewBag.Title = "Lista De Clientes";
+﻿@{
+    ViewBag.Title = "Lista de Clientes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Html.Partial("_MenuVertical")
-<div class="col-lg-9 col-md-9 col-xs-11">
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>Lista De Clientes</h2>
 
     <p>
@@ -14,78 +13,6 @@
     <div id="example">
         <div id="grid"></div>
     </div>
-    <style>
-        /* Page Template for the exported PDF */
-        .page-template {
-            font-family: "DejaVu Sans", "Arial", sans-serif;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
-            .page-template .header {
-                position: absolute;
-                top: 30px;
-                left: 30px;
-                right: 30px;
-                border-bottom: 1px solid #888;
-                color: #888;
-            }
-
-            .page-template .footer {
-                position: absolute;
-                bottom: 30px;
-                left: 30px;
-                right: 30px;
-                border-top: 1px solid #888;
-                text-align: center;
-                color: #888;
-            }
-
-            .page-template .watermark {
-                font-weight: bold;
-                font-size: 400%;
-                text-align: center;
-                margin-top: 30%;
-                color: #aaaaaa;
-                opacity: 0.1;
-                transform: rotate(-35deg) scale(1.7, 1.5);
-            }
-
-        /* Content styling */
-        .customer-photo {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-size: 32px 35px;
-            background-position: center center;
-            vertical-align: middle;
-            line-height: 32px;
-            box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
-            margin-left: 5px;
-        }
-
-        kendo-pdf-document .customer-photo {
-            border: 1px solid #dedede;
-        }
-
-        .customer-name {
-            display: inline-block;
-            vertical-align: middle;
-            line-height: 32px;
-            padding-left: 3px;
-        }
-        /* Hide the Grid header and pager during export */
-        .k-pdf-export .k-grid-toolbar,
-        .k-pdf-export .k-pager-wrap,
-        .k-pdf-export .k-filter-row
-        {
-            display: none;
-        }
-    </style>
 </div>
 
 @section Scripts{
@@ -109,29 +36,22 @@
     <script type="x/kendo-template" id="page-template">
         <div class="page-template">
             <div class="header">
-                <div style="float: right">Page #: pageNum # of #: totalPages #</div>
-                Multi-page grid with automatic page breaking
+                <div style="float: right">Página #: pageNum # de #: totalPages #</div>
+                Lista de Clientes - Taller de Motos Pedrozo
             </div>
-            <div class="watermark">KENDO UI</div>
+            <div class="body-pdf">
+                Lista de Clientes
+            </div>
+            <div class="watermark">Taller de Motos Pedrozo</div>
             <div class="footer">
-                Page #: pageNum # of #: totalPages #
+                Página #: pageNum # de #: totalPages #
             </div>
         </div>
     </script>
     <script>
-        $(document).ready(function () {            
+        $(document).ready(function () {
             var table = $("#grid").kendoGrid({
                 toolbar: ["pdf"],
-                pdf: {
-                    allPages: true,
-                    avoidLinks: true,
-                    paperSize: "A4",
-                    margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "1cm" },
-                    landscape: true,
-                    repeatHeaders: true,
-                    template: $("#page-template").html(),
-                    scale: 0.8
-                },
                 dataSource: {
                     transport: {
                         read: {
@@ -141,10 +61,29 @@
                     },
                     pageSize: 10
                 },
-                height: 550,
-                filterable: {
-                    mode: "row"
+                pdf: {
+                    fileName: "Lista de Clientes - Taller de Motos Pedrozo.pdf",
+                    allPages: true,
+                    avoidLinks: true,
+                    paperSize: "A4",
+                    margin: { top: "3cm", left: "1cm", right: "1cm", bottom: "1cm" },
+                    landscape: true,
+                    repeatHeaders: true,
+                    template: $("#page-template").html(),
+                    scale: 0.8
                 },
+                pdfExport: function(e){
+                    var grid = $("#grid").data("kendoGrid");
+                    grid.hideColumn(0);
+                    grid.hideColumn(1);
+                    e.promise
+                    .done(function () {
+                        grid.showColumn(0);
+                        grid.showColumn(1);
+                    });
+                },
+                height: 550,
+                filterable: true,
                 sortable: true,
                 pageable: {
                     refresh: true,
@@ -152,32 +91,47 @@
                     buttonCount: 5
                 },
                 noRecords: {
-                    template: "No data available on current page. Current page is: #=this.dataSource.page()#"
+                    template: "No existe registro de clientes. Current page is: #=this.dataSource.page()#"
                 },
                 columns: [{
                     template: "<a href='/Cliente/EditarCliente/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
                     field: "Id",
                     title: "&nbsp;",
                     filterable: false,
-                    sortable: false
+                    sortable: false,
+                    width: 50,
+                    attributes: {
+                        style: "text-align: center"
+                    }
                 }, {
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar' data-cliente-id= #: Id #></a>",
                     field: "Id",
                     title: "&nbsp;",
                     filterable: false,
-                    sortable: false
+                    sortable: false,
+                    width: 50,
+                    attributes: {
+                        style: "text-align: center" 
+                    }
                 }, {
                     field: "Nombre",
-                    title: "Nombre"
+                    title: "Nombre",
+                    width: 100,
                 }, {
                     field: "Apellido",
-                    title: "Apellido"
+                    title: "Apellido",
+                    width: 100,
                 }, {
                     field: "TipoDocumento.Descripcion",
-                    title: "Tipo de Documento"
+                    title: "Tipo de Documento",
+                    width: 180
                 }, {
                     field: "ValorDocumento",
-                    title: "Valor del Documento"
+                    title: "Valor del Documento",
+                    width: 180,
+                    attributes: {
+                        style: "text-align: right"
+                    }
                 }, {
                     field: "Personeria.Descripcion",
                     title: "Personería"

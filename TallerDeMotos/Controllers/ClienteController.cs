@@ -88,5 +88,13 @@ namespace TallerDeMotos.Controllers
 
             return View("ClienteFormulario", viewModel);
         }
+
+        [HttpPost]
+        public ActionResult GuardarEnPDF(string contentType, string base64, string fileName)
+        {
+            var fileContents = Convert.FromBase64String(base64);
+            Response.Headers.Add("Content-Disposition", "inline; filename=" + fileName);
+            return File(fileContents, contentType);
+        }
     }
 }

@@ -31,7 +31,7 @@ footer{
     color: red;
 }
 
-.input-validation-error, select.form-control.error {
+.input-validation-error, select.form-control.error, .input-validation-error .k-picker-wrap.k-state-default {
     border: 2px solid red;
 }
 
@@ -199,7 +199,8 @@ i.icono.izquierda{
 .k-pdf-export .k-grid-toolbar,
 .k-pdf-export .k-pager-wrap,
 .k-pdf-export .k-filter-row,
-.k-pdf-export .k-i-filter
+.k-pdf-export .k-i-filter,
+span.k-i-warning
 {
     display: none;
 }

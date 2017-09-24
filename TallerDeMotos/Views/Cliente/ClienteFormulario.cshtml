@@ -88,8 +88,10 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.FechaDeNacimiento, new { id = "labelFecha" })
-                            @Html.TextBoxFor(m => m.FechaDeNacimiento, "{0:d MMM yyyy}", new { @class = "form-control", placeholder = "Fecha de Nacimiento...", id = "inputFecha" })
-                            @Html.ValidationMessageFor(m => m.FechaDeNacimiento)
+                            @Html.TextBoxFor(m => m.FechaDeNacimiento, new { @class = "form-control", placeholder = "Fecha de Nacimiento...", id = "inputFecha", style = "width:74%; " })
+                            <div class="row">
+                                @Html.ValidationMessageFor(m => m.FechaDeNacimiento)                                
+                            </div>                            
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -109,6 +111,15 @@
     <script>
         $(document).ready(function () {
             $("#menuTaller").addClass('active');
+
+            var id = $("#Id").val();
+
+            //kendo.culture("es-ES");
+            $("#inputFecha").kendoDateTimePicker({
+                value: id == 0 ? new Date() : $("#inputFecha").val(),
+                culture: "es-ES",
+                dateInput: true
+            });
 
             var personeriaId = $("#personeriaId").val();
 

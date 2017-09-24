@@ -20,6 +20,7 @@ namespace TallerDeMotos
                 "~/Scripts/kendo/jquery.min.js",
                 "~/Scripts/kendo/kendo.all.min.js",
                 "~/Scripts/kendo/messages/kendo.messages.es-ES.min.js",
+                "~/Scripts/kendo/cultures/kendo.culture.es-ES.min.js",
                 // "~/Scripts/kendo/kendo.timezones.min.js", // uncomment if using the Scheduler
                 "~/Scripts/kendo/kendo.aspnetmvc.min.js"));
 

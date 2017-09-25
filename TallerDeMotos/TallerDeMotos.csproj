@@ -310,6 +310,7 @@
       <DependentUpon>201709220403432_CreacionDeTablaProveedores.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\ModelosDeDominio\Aseguradora.cs" />
     <Compile Include="Models\ModelosDeDominio\Cargo.cs" />
     <Compile Include="Models\ModelosDeDominio\Cliente.cs" />

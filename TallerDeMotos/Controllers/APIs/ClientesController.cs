@@ -1,13 +1,8 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using TallerDeMotos.Models;
-using TallerDeMotos.Models.ModelosDeDominio;
-using System.Data.Entity;
 
 namespace TallerDeMotos.Controllers.APIs
 {
@@ -41,11 +36,21 @@ namespace TallerDeMotos.Controllers.APIs
         [HttpDelete]
         public IHttpActionResult EliminarCliente(int id)
         {
-            var cliente = _context.Clientes.Single(c => c.Id == id);
-            _context.Clientes.Remove(cliente);
-            _context.SaveChanges();
+            try
+            {
+                var cliente = _context.Clientes.Single(c => c.Id == id);
+                _context.Clientes.Remove(cliente);
+                _context.SaveChanges();
+                
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException.InnerException.Message.Contains("FK_dbo.Vehiculos_dbo.Clientes_ClienteCodigo"))
+                    return Json(new JsonResponse { Success = false, Message = "FK_dbo.Vehiculos_dbo.Clientes_ClienteCodigo" });                
+            }
 
-            return Ok();
+            return Ok(new JsonResponse { Success = true, Message = "Cliente eliminado con éxito" });
+           
         }
     }
 }

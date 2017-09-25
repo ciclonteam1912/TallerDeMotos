@@ -39,6 +39,15 @@ footer{
     text-align: center;
 }
 
+a.eliminar {
+    background: #eeeeee;
+    color: red !important;
+}
+
+p.eliminar {
+    font-size: 12px;
+}
+
 /*------------- MENÚ PRINCIPAL------------------*/
 .btn-menu {
     display: none;
@@ -142,6 +151,11 @@ i.icono.izquierda{
     }
 }
 
+@media screen and (max-width: 410px){
+    .button-text {
+        display: none;
+    }
+}
 
 /***************Estilos PDF Export***********************/
  /* Page Template for the exported PDF */
@@ -200,7 +214,12 @@ i.icono.izquierda{
 .k-pdf-export .k-pager-wrap,
 .k-pdf-export .k-filter-row,
 .k-pdf-export .k-i-filter,
+.k-pdf-export .k-button.k-button-icontext.k-grid-VerDetalles,
 span.k-i-warning
 {
     display: none;
+}
+
+a.k-grid-pdf {
+    float: right;
 }

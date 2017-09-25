@@ -6,13 +6,29 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>Lista De Clientes</h2>
 
-    <p>
-        @Html.ActionLink("Nuevo Cliente", "NuevoCliente", "Cliente", new { @class = "btn btn-primary" })
-    </p>
-
     <div id="example">
-        <div id="grid"></div>
+        <div id="grid" style="width:100%"></div>
+        <div id="details"></div>
     </div>
+
+    <style type="text/css">
+        #details-container {
+            padding: 10px;
+        }
+
+            #details-container h2 {
+                margin: 0;
+            }
+
+            #details-container em {
+                color: #8c8c8c;
+            }
+
+            #details-container dt {
+                margin: 0;
+                display: inline;
+            }
+    </style>
 </div>
 
 @section Scripts{
@@ -49,7 +65,8 @@
         </div>
     </script>
     <script>
-        $(document).ready(function () {
+        var wnd, detailsTemplate;
+        $(document).ready(function () {           
             var table = $("#grid").kendoGrid({
                 toolbar: ["pdf"],
                 dataSource: {
@@ -76,10 +93,12 @@
                     var grid = $("#grid").data("kendoGrid");
                     grid.hideColumn(0);
                     grid.hideColumn(1);
+                    grid.hideColumn(7);
                     e.promise
                     .done(function () {
                         grid.showColumn(0);
                         grid.showColumn(1);
+                        grid.showColumn(7);
                     });
                 },
                 height: 550,
@@ -104,7 +123,7 @@
                         style: "text-align: center"
                     }
                 }, {
-                    template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar' data-cliente-id= #: Id #></a>",
+                    template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
                     title: "&nbsp;",
                     filterable: false,
@@ -123,24 +142,48 @@
                     width: 100,
                 }, {
                     field: "TipoDocumento.Descripcion",
-                    title: "Tipo de Documento",
-                    width: 180
+                    title: "Tipo de Doc.",
+                    width: 150
                 }, {
                     field: "ValorDocumento",
-                    title: "Valor del Documento",
-                    width: 180,
+                    title: "Valor",
+                    width: 100,
                     attributes: {
                         style: "text-align: right"
                     }
                 }, {
                     field: "Personeria.Descripcion",
-                    title: "Personería"
+                    title: "Personería",
+                    width: 120
+                }, { 
+                    command: { 
+                        text: "Ver Detalles", 
+                        click: showDetails
+                    },
+                    title: " ", 
+                    width: "130px"
                 }]
-            });
+            }).data("kendoGrid");
 
-            $("#grid").on("click", ".js-eliminar", function () {
-                var button = $(this);
-                console.log("1");
+            $(".k-grid-toolbar").append('<a href="Cliente/NuevoCliente" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Cliente</span></a>');
+
+            wnd = $("#details")
+                        .kendoWindow({
+                            title: "Detalles del Cliente",
+                            modal: true,
+                            visible: false,
+                            resizable: false,
+                            width: 300
+                        }).data("kendoWindow");
+            detailsTemplate = kendo.template($("#template").html());
+
+            $("#grid").on("click", "a.js-eliminar", function () {
+                var $tr = $(this).closest("tr"),
+                    grid = $("#grid").data("kendoGrid"),
+                    dataItem = grid.dataItem($tr);
+
+                var id = dataItem.Id;
+
                 bootbox.confirm({
                     message: "¿Estás seguro de eliminar este cliente?",
                     buttons: {
@@ -154,15 +197,20 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/clientes/" + button.attr("data-cliente-id"),
+                                url: "/api/clientes/" + id,
                                 method: "DELETE"
                             })
-                            .done(function () {
-                                button.parents("tr").remove();
-                                toastr.success("Cliente eliminado con éxito.");
-                            })
-                            .fail(function () {
-                                toastr.error("No se pudo eliminar el cliente.");
+                            .done(function (cliente) {
+                                console.log(cliente.Message);
+                                if (cliente.Success) {
+                                    //button.parents("tr").remove();
+                                    grid.dataSource.remove(dataItem);
+                                    toastr.success(cliente.Message);
+                                } else {
+                                    if (cliente.Message == "FK_dbo.Vehiculos_dbo.Clientes_ClienteCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el cliente. Elimine primero el vehículo de este cliente.</p>" +
+                                        "<a href='/Vehiculo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar vehículo</a>");
+                                }
                             });
                         }
                     }
@@ -179,9 +227,30 @@
                 "onclick": null,
                 "fadeIn": 300,
                 "fadeOut": 1000,
-                "timeOut": 4000,
+                "timeOut": 6000,
                 "extendedTimeOut": 1000
             }
         });
-    </script>    
+
+        function showDetails(e) {
+            e.preventDefault();
+
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            wnd.content(detailsTemplate(dataItem));
+            wnd.center().open();
+        }
+    </script> 
+    
+    <script type="text/x-kendo-template" id="template">    
+        
+        <div id="details-container">
+            <h2>#= Nombre # #= Apellido #</h2>
+            @*<em>#= Title #</em>*@
+            <dl>
+                <dt>Correo: #= CorreoElectronico #</dt>
+                <dt></dt>
+                <dt>Fecha Nac: #= kendo.toString(kendo.parseDate(FechaDeNacimiento), "g") #</dt>
+            </dl>
+        </div>
+    </script>       
 }

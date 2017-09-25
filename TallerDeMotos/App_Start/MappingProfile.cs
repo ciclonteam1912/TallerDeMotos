@@ -10,6 +10,7 @@ namespace TallerDeMotos.App_Start
             //Dominio a Dominio
             Mapper.CreateMap<Cliente, Cliente>()
                 .ForMember(c => c.FechaDeIngreso, opt => opt.Ignore());
+            Mapper.CreateMap<Modelo, Modelo>();
         }
     }
 }

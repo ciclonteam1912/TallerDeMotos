@@ -16,7 +16,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Nombre)
-                                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre del Modelo..." })
+                                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre del Modelo...", maxlength = 20, autocomplete = "off" })
                                 @Html.ValidationMessageFor(m => m.Nombre)
                             </div>
 

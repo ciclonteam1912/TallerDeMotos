@@ -13,6 +13,7 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Modelo, Modelo>();
             Mapper.CreateMap<Marca, Marca>();
             Mapper.CreateMap<Combustible, Combustible>();
+            Mapper.CreateMap<Aseguradora, Aseguradora>();
         }
     }
 }

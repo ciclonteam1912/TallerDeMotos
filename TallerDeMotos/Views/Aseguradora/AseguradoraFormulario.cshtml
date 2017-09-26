@@ -18,34 +18,34 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         @Html.LabelFor(m => m.Nombre)
-                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre de la Aseguradora..." })
+                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre de la Aseguradora...", maxlength = 20, autocomplete = "off" })
                         @Html.ValidationMessageFor(m => m.Nombre)
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.Contacto)
-                        @Html.TextBoxFor(m => m.Contacto, new { @class = "form-control", placeholder = "Ingrese Contacto de la Aseguradora..." })
+                        @Html.TextBoxFor(m => m.Contacto, new { @class = "form-control", placeholder = "Ingrese Contacto de la Aseguradora...", maxlength = 50, autocomplete = "off" })
                         @Html.ValidationMessageFor(m => m.Contacto)
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.Ruc)
-                        @Html.TextBoxFor(m => m.Ruc, new { @class = "form-control", placeholder = "Ingrese Ruc de la Aseguradora..." })
+                        @Html.TextBoxFor(m => m.Ruc, new { @class = "form-control", placeholder = "Ingrese Ruc de la Aseguradora...", maxlength = 10, autocomplete = "off" })
                         @Html.ValidationMessageFor(m => m.Ruc)
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         @Html.LabelFor(m => m.Direccion)
-                        @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control", placeholder = "Ingrese Dirección de la Aseguradora..." })
+                        @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control", placeholder = "Ingrese Dirección de la Aseguradora...", maxlength = 255, autocomplete = "off" })
                         @Html.ValidationMessageFor(m => m.Direccion)
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.Telefono)
-                        @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", placeholder = "Ingrese Teléfono de la Aseguradora..." })
+                        @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", placeholder = "Ingrese Teléfono de la Aseguradora...", maxlength = 50, autocomplete = "off" })
                         @Html.ValidationMessageFor(m => m.Telefono)
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.CorreoElectronico)
-                        @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control", placeholder = "Ingrese Correo Electrónico de la Aseguradora..." })
+                        @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control", placeholder = "Ingrese Correo Electrónico de la Aseguradora...", maxlength = 50, autocomplete = "off" })
                         @Html.ValidationMessageFor(m => m.CorreoElectronico)
                     </div>
                 </div>

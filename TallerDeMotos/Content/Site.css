@@ -223,3 +223,17 @@ span.k-i-warning
 a.k-grid-pdf {
     float: right;
 }
+
+/******************Estilos para detalles de la grilla*/
+#details-container {
+    padding: 10px;
+}
+
+#details-container h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#details-container em {
+    color: #8c8c8c;
+}

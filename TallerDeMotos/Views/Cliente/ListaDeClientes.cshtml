@@ -10,25 +10,6 @@
         <div id="grid" style="width:100%"></div>
         <div id="details"></div>
     </div>
-
-    <style type="text/css">
-        #details-container {
-            padding: 10px;
-        }
-
-            #details-container h2 {
-                margin: 0;
-            }
-
-            #details-container em {
-                color: #8c8c8c;
-            }
-
-            #details-container dt {
-                margin: 0;
-                display: inline;
-            }
-    </style>
 </div>
 
 @section Scripts{
@@ -165,7 +146,7 @@
                     title: " ", 
                     width: "130px"
                 }]
-            }).data("kendoGrid");
+            });
 
             $(".k-grid-toolbar").append('<a href="Cliente/NuevoCliente" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Cliente</span></a>');
 
@@ -175,7 +156,7 @@
                             modal: true,
                             visible: false,
                             resizable: false,
-                            width: 300
+                            width: 350
                         }).data("kendoWindow");
             detailsTemplate = kendo.template($("#template").html());
 
@@ -246,13 +227,12 @@
     <script type="text/x-kendo-template" id="template">    
         
         <div id="details-container">
-            <h2>#= Nombre # #= Apellido #</h2>
+            <h2>#= Nombre # #= (Apellido == null) ? ' ' : Apellido #</h2>
             @*<em>#= Title #</em>*@
-            <dl>
-                <dt>Correo: #= CorreoElectronico #</dt>
-                <dt></dt>
-                <dt>Fecha Nac: #= kendo.toString(kendo.parseDate(FechaDeNacimiento), "g") #</dt>
-            </dl>
+            
+                <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
+                <p><b> #= (Personeria.Descripcion == 'Física') ? 'Fecha de Nacimiento:' : 'Fecha de Fundación:' #</b> #= kendo.toString(kendo.parseDate(FechaDeNacimiento), "g") #</p>
+            
         </div>
     </script>       
 }

@@ -1,8 +1,172 @@
-﻿
-@{
-    ViewBag.Title = "ListaDeAseguradoras";
+﻿@{
+    ViewBag.Title = "Lista de Aseguradoras";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista de Aseguradoras</h2>
 
-<h2>ListaDeAseguradoras</h2>
+    <p><a href="Aseguradora/NuevaAseguradora" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Aseguradora</span></a></p>
 
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+        <div id="details"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var wnd, detailsTemplate;
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/aseguradoras",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 500,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de aseguradoras.</p>"
+                },
+                columns: [{
+                    template: "<a href='/Aseguradora/EditarAseguradora/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 50,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 50,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    field: "Nombre",
+                    title: "Nombre",
+                    width: 100
+                }, {
+                    field: "Ruc",
+                    title: "RUC",
+                    width: 100
+                }, {
+                    field: "Telefono",
+                    title: "Teléfono",
+                    width: 120
+                }, {
+                    field: "Direccion",
+                    title: "Dirección",
+                    width: 150
+                }, {
+                    command: {
+                        text: "Ver Detalles",
+                        click: showDetails
+                    },
+                    title: " ",
+                    width: "130px"
+                }]
+            });
+
+            wnd = $("#details")
+                        .kendoWindow({
+                            title: "Detalles de la Aseguradora",
+                            modal: true,
+                            visible: false,
+                            resizable: false,
+                            width: 350
+                        }).data("kendoWindow");
+            detailsTemplate = kendo.template($("#template").html());
+
+            $("#grid").on("click", "a.js-eliminar", function () {
+                var $tr = $(this).closest("tr"),
+                    grid = $("#grid").data("kendoGrid"),
+                    dataItem = grid.dataItem($tr);
+
+                var id = dataItem.Id;
+
+                bootbox.confirm({
+                    message: "¿Estás seguro de eliminar esta aseguradora?",
+                    buttons: {
+                        "cancel": {
+                            label: "Cancelar"
+                        },
+                        "confirm": {
+                            label: "Eliminar"
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/aseguradoras/" + id,
+                                method: "DELETE"
+                            })
+                            .done(function (aseguradora) {
+                                if (aseguradora.Success) {
+                                    grid.dataSource.remove(dataItem);
+                                    toastr.success(aseguradora.Message);
+                                } else {
+                                    if (aseguradora.Message == "FK_dbo.Vehiculos_dbo.Aseguradoras_AseguradoraCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar la aseguradora. Elimine primero el o los vehículos que utilizan esta aseguradora.</p>" +
+                                        "<a href='/Modelo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar Vehículo</a>");
+                                }
+                            });
+                        }
+                    }
+                });
+
+                return false;
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 6000,
+                "extendedTimeOut": 1000
+            }
+
+            function showDetails(e) {
+                e.preventDefault();
+
+                var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+                wnd.content(detailsTemplate(dataItem));
+                wnd.center().open();
+            }
+        });
+    </script>
+
+    <script type="text/x-kendo-template" id="template">
+        <div id="details-container">
+            <h2>#= Nombre #</h2>
+            @*<em>#= Title #</em>*@
+
+                <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
+                <p><b>Contacto:</b> #= (Contacto == null) ? ' ' : Contacto #</p>
+
+        </div>
+    </script>       
+}

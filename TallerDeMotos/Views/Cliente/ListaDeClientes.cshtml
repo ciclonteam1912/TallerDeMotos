@@ -66,7 +66,9 @@
     </script>
     <script>
         var wnd, detailsTemplate;
-        $(document).ready(function () {           
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+
             var table = $("#grid").kendoGrid({
                 toolbar: ["pdf"],
                 dataSource: {

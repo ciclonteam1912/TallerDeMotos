@@ -229,6 +229,7 @@
     <Compile Include="ConfiguracionDeEntidades\VehiculoConfiguracion.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APIs\ClientesController.cs" />
+    <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
     <Compile Include="Controllers\AseguradoraController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />

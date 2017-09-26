@@ -11,6 +11,7 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Cliente, Cliente>()
                 .ForMember(c => c.FechaDeIngreso, opt => opt.Ignore());
             Mapper.CreateMap<Modelo, Modelo>();
+            Mapper.CreateMap<Marca, Marca>();
         }
     }
 }

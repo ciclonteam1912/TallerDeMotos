@@ -1,8 +1,121 @@
-﻿
-@{
-    ViewBag.Title = "ListaDeCombustibles";
+﻿@{
+    ViewBag.Title = "Lista de Marcas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista de Marcas</h2>
 
-<h2>ListaDeCombustibles</h2>
+    <p><a href="Combustible/NuevoCombustible" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Tipo de Combustible</span></a></p>
 
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/combustibles",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 300,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de tipos de combustibles.</p>"
+                },
+                columns: [{
+                    template: "<a href='/Combustible/EditarCombustible/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    field: "Nombre",
+                    title: "Nombre"
+                }]
+            });
+
+            $("#grid").on("click", "a.js-eliminar", function () {
+                var $tr = $(this).closest("tr"),
+                    grid = $("#grid").data("kendoGrid"),
+                    dataItem = grid.dataItem($tr);
+
+                var id = dataItem.Id;
+
+                bootbox.confirm({
+                    message: "¿Estás seguro de eliminar esta tipo de combustible?",
+                    buttons: {
+                        "cancel": {
+                            label: "Cancelar"
+                        },
+                        "confirm": {
+                            label: "Eliminar"
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/combustibles/" + id,
+                                method: "DELETE"
+                            })
+                            .done(function (combustible) {
+                                if (combustible.Success) {
+                                    grid.dataSource.remove(dataItem);
+                                    toastr.success(combustible.Message);
+                                } else {
+                                    if (combustible.Message == "FK_dbo.Vehiculos_dbo.Combustibles_CombustibleCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el tipo de combustible. Elimine primero el o los vehículos que utilizan este tipo de combustible.</p>" +
+                                        "<a href='/Modelo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar Vehículo</a>");
+                                }
+                            });
+                        }
+                    }
+                });
+
+                return false;
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 6000,
+                "extendedTimeOut": 1000
+            }
+        });
+    </script>    
+}

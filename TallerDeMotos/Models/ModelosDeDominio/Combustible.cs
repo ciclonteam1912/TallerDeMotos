@@ -16,7 +16,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         {
             get
             {
-                return Id != 0 ? "Editar Combustible" : "Nuevo Combustible";
+                return Id != 0 ? "Editar Tipo de Combustible" : "Nuevo Tipo de Combustible";
             }
         }
 

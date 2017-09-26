@@ -117,26 +117,5 @@
                 "extendedTimeOut": 1000
             }
         });
-
-        function showDetails(e) {
-            e.preventDefault();
-
-            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-            wnd.content(detailsTemplate(dataItem));
-            wnd.center().open();
-        }
-    </script>
-
-    <script type="text/x-kendo-template" id="template">
-
-        <div id="details-container">
-            <h2>#= Nombre # #= Apellido #</h2>
-            @*<em>#= Title #</em>*@
-            <dl>
-                <dt>Correo: #= CorreoElectronico #</dt>
-                <dt></dt>
-                <dt>Fecha Nac: #= kendo.toString(kendo.parseDate(FechaDeNacimiento), "g") #</dt>
-            </dl>
-        </div>
-    </script>
+    </script>    
 }

@@ -14,7 +14,7 @@
             <div class="panel-body">
                 <div class="form-group">
                     @Html.LabelFor(m => m.Nombre)
-                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre del Combustible..." })
+                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre del Combustible...", maxlength = 20, autocomplete = "off" })
                     @Html.ValidationMessageFor(m => m.Nombre)
                 </div>
                 @Html.HiddenFor(m => m.Id)

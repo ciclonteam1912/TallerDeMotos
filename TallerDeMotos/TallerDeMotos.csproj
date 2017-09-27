@@ -234,6 +234,7 @@
     <Compile Include="Controllers\APIs\ClientesController.cs" />
     <Compile Include="Controllers\APIs\CombustiblesController.cs" />
     <Compile Include="Controllers\APIs\EmpleadosController.cs" />
+    <Compile Include="Controllers\APIs\FormasPagoController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
     <Compile Include="Controllers\APIs\VehiculosController.cs" />

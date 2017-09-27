@@ -18,6 +18,7 @@ namespace TallerDeMotos.App_Start
                 .ForMember(e => e.FechaDeIngreso, opt => opt.Ignore());
             Mapper.CreateMap<Vehiculo, Vehiculo>()
                 .ForMember(v => v.FechaDeIngreso, opt => opt.Ignore());
+            Mapper.CreateMap<FormaPago, FormaPago>();
         }
     }
 }

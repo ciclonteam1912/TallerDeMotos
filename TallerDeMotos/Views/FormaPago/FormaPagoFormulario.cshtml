@@ -15,17 +15,23 @@
                 <div class="row">
                     <h4>@Html.ValidationSummary(true, "¡Por favor solucione los siguientes errores!")</h4>
                 </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(fp => fp.Nombre)
+                            @Html.TextBoxFor(fp => fp.Nombre, new { @class = "form-control", placeholder = "Nombre de la Forma de Pago...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(fp => fp.Nombre)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(fp => fp.Descripcion)
+                            @Html.TextAreaFor(fp => fp.Descripcion, new { @class = "form-control", placeholder = "Descripción de la Forma de Pago...", maxlength = 255, autocomplete = "off" })
+                            @Html.ValidationMessageFor(fp => fp.Descripcion)
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(fp => fp.Nombre)
-                        @Html.TextBoxFor(fp => fp.Nombre, new { @class = "form-control", placeholder = "Nombre de la Forma de Pago..." })
-                        @Html.ValidationMessageFor(fp => fp.Nombre)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(fp => fp.Descripcion)
-                        @Html.TextAreaFor(fp => fp.Descripcion, new { @class = "form-control", placeholder = "Descripción de la Forma de Pago..." })
-                        @Html.ValidationMessageFor(fp => fp.Descripcion)
-                    </div>
                     @Html.HiddenFor(fp => fp.Id)
                     @Html.AntiForgeryToken()
                 </div>

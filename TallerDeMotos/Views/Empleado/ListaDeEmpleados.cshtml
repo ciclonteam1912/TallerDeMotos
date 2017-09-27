@@ -1,8 +1,175 @@
-﻿
-@{
-    ViewBag.Title = "ListaDeEmpleados";
+﻿@{
+    ViewBag.Title = "Lista de Empleados";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista de Empleados</h2>
 
-<h2>ListaDeEmpleados</h2>
+    <p><a href="Empleado/NuevoEmpleado" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Empleado</span></a></p>
 
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+        <div id="details"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var wnd, detailsTemplate;
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/empleados",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 500,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de empleados.</p>"
+                },
+                columns: [{
+                    template: "<a href='/Empleado/EditarEmpleado/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 50,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 50,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    field: "Nombre",
+                    title: "Nombre",
+                    width: 100
+                }, {
+                    field: "Apellido",
+                    title: "Apellido",
+                    width: 100
+                }, {
+                    field: "Cedula",
+                    title: "Cédula",
+                    width: 120
+                }, {
+                    field: "Telefono",
+                    title: "Teléfono",
+                    width: 120
+                }, {
+                    field: "Salario",
+                    title: "Salario",
+                    width: 120,
+                    format: "{0:n}"
+                }, {
+                    command: {
+                        text: "Ver Detalles",
+                        click: showDetails
+                    },
+                    title: " ",
+                    width: "130px"
+                }]
+            });
+
+            wnd = $("#details")
+                        .kendoWindow({
+                            title: "Detalles del Empleado",
+                            modal: true,
+                            visible: false,
+                            resizable: false,
+                            width: 350
+                        }).data("kendoWindow");
+            detailsTemplate = kendo.template($("#template").html());
+
+            $("#grid").on("click", "a.js-eliminar", function () {
+                var $tr = $(this).closest("tr"),
+                    grid = $("#grid").data("kendoGrid"),
+                    dataItem = grid.dataItem($tr);
+
+                var id = dataItem.Id;
+
+                bootbox.confirm({
+                    message: "¿Estás seguro de eliminar este empleado?",
+                    buttons: {
+                        "cancel": {
+                            label: "Cancelar"
+                        },
+                        "confirm": {
+                            label: "Eliminar"
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/empleados/" + id,
+                                method: "DELETE"
+                            })
+                            .done(function () {
+                                grid.dataSource.remove(dataItem);
+                                toastr.success("Empleado eliminado con éxito");                                       
+                            })
+                            .fail(function () {
+                                toastr.error("<p class='eliminar'>No se pudo eliminar el empleado.</p>");
+                            });
+                        }
+                    }
+                });
+                return false;
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 6000,
+                "extendedTimeOut": 1000
+            }
+
+            function showDetails(e) {
+                e.preventDefault();
+
+                var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+                wnd.content(detailsTemplate(dataItem));
+                wnd.center().open();
+            }
+        });
+    </script>
+
+    <script type="text/x-kendo-template" id="template">
+        <div id="details-container">
+            <h2>#= Nombre # #= Apellido #</h2>
+            @*<em>#= Title #</em>*@
+
+            <p><b>Dirección:</b> #= (Direccion == null) ? ' ' : Direccion #</p>
+            <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
+            <p><b>Fecha de Nacimiento:</b> #= kendo.toString(kendo.parseDate(FechaDeNacimiento), "g") #</p>
+            <p><b>Hora de Entrada:</b> #= (HoraDeEntrada == null) ? ' ' : HoraDeEntrada #</p>
+            <p><b>Hora de Salida:</b> #= (HoraDeSalida == null) ? ' ' : HoraDeSalida #</p>
+        </div>
+    </script>
+}

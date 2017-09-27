@@ -15,65 +15,96 @@
                 <div class="row">
                     <h4>@Html.ValidationSummary(true, "¡Por favor solucione los siguientes errores!")</h4>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Nombre)
-                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre del Empleado..." })
-                        @Html.ValidationMessageFor(m => m.Nombre)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Nombre)
+                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre del Empleado...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Nombre)
+                        </div>
                     </div>
-                    <div class="form-group" id="apellido">
-                        @Html.LabelFor(m => m.Apellido)
-                        @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", placeholder = "Apellido del Empleado..." })
-                        @Html.ValidationMessageFor(m => m.Apellido)
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Apellido)
+                            @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", placeholder = "Cédula...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Apellido)
+                        </div>                        
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Cedula)
-                        @Html.TextBoxFor(m => m.Cedula, new { @class = "form-control", placeholder = "Cédula..." })
-                        @Html.ValidationMessageFor(m => m.Cedula)
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Cedula)
+                            @Html.TextBoxFor(m => m.Cedula, new { @class = "form-control", placeholder = "Cédula...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Cedula)
+                        </div>                        
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.CargoId)
-                        @Html.DropDownListFor(m => m.CargoId, new SelectList(Model.Cargos, "Id", "Nombre"), "Seleccionar Cargo", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.CargoId)
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CargoId)
+                            @Html.DropDownListFor(m => m.CargoId, new SelectList(Model.Cargos, "Id", "Nombre"), "Seleccionar Cargo", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CargoId)
+                        </div>                        
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Direccion)
-                        @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control", placeholder = "Dirección..." })
-                        @Html.ValidationMessageFor(m => m.Direccion)
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Direccion)
+                            @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control", placeholder = "Dirección...", maxlength = 255, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Direccion)
+                        </div>                        
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.CorreoElectronico)
-                        @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control", placeholder = "Correo Electrónico..." })
-                        @Html.ValidationMessageFor(m => m.CorreoElectronico)
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CorreoElectronico)
+                            @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control", placeholder = "Correo Electrónico...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.CorreoElectronico)
+                        </div>                        
                     </div>
-
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Telefono)
+                            @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", placeholder = "Número de Teléfono...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Telefono)
+                        </div>                       
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Salario)
+                            @Html.TextBoxFor(m => m.Salario, new { @class = "form-control", placeholder = "Salario...", type = "number", min = "0", max = "5000000", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.ValidationMessageFor(m => m.Salario)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FechaDeNacimiento, new { id = "labelFecha" })
+                            @Html.TextBoxFor(m => m.FechaDeNacimiento, new { @class = "form-control", placeholder = "Fecha de Nacimiento...", onkeydown = "return false;", style = "width:74%; " })
+                            @Html.ValidationMessageFor(m => m.FechaDeNacimiento)
+                        </div>                        
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.HoraDeEntrada)
+                            @Html.TextBoxFor(m => m.HoraDeEntrada, new { @class = "form-control", placeholder = "Horario de Entrada...", onkeydown = "return false;", style = "width:74%; " })
+                            @Html.ValidationMessageFor(m => m.HoraDeEntrada)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.HoraDeSalida)
+                            @Html.TextBoxFor(m => m.HoraDeSalida, new { @class = "form-control", placeholder = "Horario de Salida...", onkeydown = "return false;", style = "width:74%; " })
+                            @Html.ValidationMessageFor(m => m.HoraDeSalida)
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Telefono)
-                        @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", placeholder = "Número de Teléfono..." })
-                        @Html.ValidationMessageFor(m => m.Telefono)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.FechaDeNacimiento, new { id = "labelFecha" })
-                        @Html.TextBoxFor(m => m.FechaDeNacimiento, "{0:d MMM yyyy}", new { @class = "form-control", placeholder = "Fecha de Nacimiento...", id = "inputFecha" })
-                        @Html.ValidationMessageFor(m => m.FechaDeNacimiento)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.HoraDeEntrada)
-                        @Html.TextBoxFor(m => m.HoraDeEntrada, new { @class = "form-control", placeholder = "Horario de Entrada..." })
-                        @Html.ValidationMessageFor(m => m.HoraDeEntrada)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.HoraDeSalida)
-                        @Html.TextBoxFor(m => m.HoraDeSalida, new { @class = "form-control", placeholder = "Horario de Salida..." })
-                        @Html.ValidationMessageFor(m => m.HoraDeSalida)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Salario)
-                        @Html.TextBoxFor(m => m.Salario, new { @class = "form-control", placeholder = "Salario..." })
-                        @Html.ValidationMessageFor(m => m.Salario)
-                    </div>
                     @Html.HiddenFor(m => m.Id)
                     @Html.AntiForgeryToken()
                 </div>
@@ -87,8 +118,36 @@
 
 @section Scripts{
     <script>
+        function maxLengthCheck(object) {
+            if (object.value.length > object.max.length)
+                object.value = object.value.slice(0, object.max.length);
+        }
+
         $(document).ready(function () {
             $("#menuTaller").addClass('active');
+            var id = $("#Id").val();
+
+            $("#FechaDeNacimiento").kendoDateTimePicker({
+                value: id == 0 ? new Date() : $("#FechaDeNacimiento").val(),
+                culture: "es-ES",
+                dateInput: true
+            });
+
+            $("#HoraDeEntrada").kendoTimePicker({
+                culture: "es-ES",
+                interval: 15,
+                min: new Date(2000, 0, 1, 7, 0, 0),
+                max: new Date(2000, 0, 1, 18, 0, 0), //date part is ignored
+                value: id == 0 ? new Date(2000, 0, 1, 7, 0, 0) : $("#HoraDeEntrada").val()
+            });
+
+            $("#HoraDeSalida").kendoTimePicker({
+                culture: "es-ES",
+                interval: 15,
+                min: new Date(2000, 0, 1, 7, 0, 0),
+                max: new Date(2000, 0, 1, 18, 0, 0), //date part is ignored
+                value: id == 0 ? new Date(2000, 0, 1, 18, 0, 0) : $("#HoraDeSalida").val()
+            });
         })
     </script>
 }

@@ -14,6 +14,10 @@ namespace TallerDeMotos.ViewModels
 
         public IEnumerable<Combustible> Combustibles { get; set; }
 
+        public IEnumerable<TipoMotor> TiposMotores { get; set; }
+
+        public IEnumerable<Cilindrada> Cilindradas { get; set; }
+
         public int Id { get; set; }
 
         [Display(Name = "Matrícula")]
@@ -25,9 +29,11 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Kilómetros")]
         public float? Kilometro { get; set; }
 
-        public string Motor { get; set; }
+        [Display(Name = "Tipo de Motor")]
+        public byte TipoMotorId { get; set; }
 
-        public int? Cilindrada { get; set; }
+        [Display(Name = "Cilindrada")]
+        public byte CilindradaId { get; set; }
 
         public string Color { get; set; }
 
@@ -62,8 +68,8 @@ namespace TallerDeMotos.ViewModels
             Matricula = vehiculo.Matricula;
             Chasis = vehiculo.Chasis;
             Kilometro = vehiculo.Kilometro;
-            Motor = vehiculo.Motor;
-            Cilindrada = vehiculo.Cilindrada;
+            TipoMotorId = vehiculo.TipoMotorId;
+            CilindradaId = vehiculo.CilindradaId;
             Color = vehiculo.Color;
             ModeloId = vehiculo.ModeloId;
             ClienteId = vehiculo.ClienteId;

@@ -74,7 +74,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Salario)
-                            @Html.TextBoxFor(m => m.Salario, new { @class = "form-control", placeholder = "Salario...", type = "number", min = "0", max = "5000000", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.TextBoxFor(m => m.Salario, new { @class = "form-control", placeholder = "Salario...", autocomplete = "off", type = "number", min = "0", max = "5000000", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
                             @Html.ValidationMessageFor(m => m.Salario)
                         </div>
                     </div>

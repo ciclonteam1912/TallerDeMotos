@@ -18,10 +18,13 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_Matricula", 1) { IsUnique = true }));
 
             Property(v => v.Chasis)
-                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_Chasis", 2) { IsUnique = true }));
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_Chasis", 2) { IsUnique = true }));            
 
             Property(v => v.AseguradoraId)
-                .HasColumnName("AseguradoraCodigo");            
+                .HasColumnName("AseguradoraCodigo");
+
+            Property(v => v.CilindradaId)
+                .HasColumnName("CilindradaCodigo");
 
             Property(v => v.ClienteId)
                 .HasColumnName("ClienteCodigo");
@@ -32,11 +35,14 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(v => v.ModeloId)
                 .HasColumnName("ModeloCodigo");
 
+            Property(v => v.TipoMotorId)
+                .HasColumnName("TipoMotorCodigo");
+
             HasRequired(v => v.Aseguradora)
                 .WithMany(a => a.Vehiculos)
                 .WillCascadeOnDelete(false);
 
-            HasRequired(v => v.Cliente)
+            HasRequired(v => v.Cilindrada)
                 .WithMany(c => c.Vehiculos)
                 .WillCascadeOnDelete(false);
 
@@ -44,8 +50,16 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
                 .WithMany(c => c.Vehiculos)
                 .WillCascadeOnDelete(false);
 
+            HasRequired(v => v.Cliente)
+                .WithMany(c => c.Vehiculos)
+                .WillCascadeOnDelete(false);
+            
             HasRequired(v => v.Modelo)
                 .WithMany(m => m.Vehiculos)
+                .WillCascadeOnDelete(false);
+
+            HasRequired(v => v.TipoMotor)
+                .WithMany(tm => tm.Vehiculos)
                 .WillCascadeOnDelete(false);
         }
     }

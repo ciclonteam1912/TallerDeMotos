@@ -36,13 +36,17 @@ namespace TallerDeMotos.Controllers
             var aseguradoras = _context.Aseguradoras.ToList();
             var modelos = _context.Modelos.ToList();
             var combustibles = _context.Combustibles.ToList();
+            var tiposMotores = _context.TiposMotores.ToList();
+            var cilindradas = _context.Cilindradas.ToList();
 
             var viewModel = new VehiculoViewModel()
             {
                 Clientes = clientes,
                 Aseguradoras = aseguradoras,
                 Modelos = modelos,
-                Combustibles = combustibles
+                Combustibles = combustibles,
+                TiposMotores = tiposMotores,
+                Cilindradas = cilindradas
             };
 
             return View("VehiculoFormulario", viewModel);
@@ -59,7 +63,9 @@ namespace TallerDeMotos.Controllers
                     Clientes = _context.Clientes.ToList(),
                     Aseguradoras = _context.Aseguradoras.ToList(),
                     Modelos = _context.Modelos.ToList(),
-                    Combustibles = _context.Combustibles.ToList()
+                    Combustibles = _context.Combustibles.ToList(),
+                    TiposMotores = _context.TiposMotores.ToList(),
+                    Cilindradas = _context.Cilindradas.ToList()
                 };
 
                 return View("VehiculoFormulario", viewModel);
@@ -93,7 +99,9 @@ namespace TallerDeMotos.Controllers
                 Clientes = _context.Clientes.ToList(),
                 Aseguradoras = _context.Aseguradoras.ToList(),
                 Modelos = _context.Modelos.ToList(),
-                Combustibles = _context.Combustibles.ToList()
+                Combustibles = _context.Combustibles.ToList(),
+                TiposMotores = _context.TiposMotores.ToList(),
+                Cilindradas = _context.Cilindradas.ToList()
             };
 
             return View("VehiculoFormulario", viewModel);

@@ -215,6 +215,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ConfiguracionDeEntidades\AseguradoraConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CargoConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\CilindradaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ClienteConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CombustibleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\EmpleadoConfiguracion.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="ConfiguracionDeEntidades\ServicioBasicoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TalonarioConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TipoDocumentoConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\TipoMotorConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\VehiculoConfiguracion.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APIs\AseguradorasController.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="Controllers\APIs\EmpleadosController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
+    <Compile Include="Controllers\APIs\VehiculosController.cs" />
     <Compile Include="Controllers\AseguradoraController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CombustibleController.cs" />
@@ -314,10 +317,27 @@
     <Compile Include="Migrations\201709220403432_CreacionDeTablaProveedores.Designer.cs">
       <DependentUpon>201709220403432_CreacionDeTablaProveedores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709270221555_EliminarColumnasCilindradaYMotorDeVehiculos.cs" />
+    <Compile Include="Migrations\201709270221555_EliminarColumnasCilindradaYMotorDeVehiculos.Designer.cs">
+      <DependentUpon>201709270221555_EliminarColumnasCilindradaYMotorDeVehiculos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709270234491_CreacionDeTablaTiposMotores.cs" />
+    <Compile Include="Migrations\201709270234491_CreacionDeTablaTiposMotores.Designer.cs">
+      <DependentUpon>201709270234491_CreacionDeTablaTiposMotores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709270251015_CreacionDeTablaCilindradas.cs" />
+    <Compile Include="Migrations\201709270251015_CreacionDeTablaCilindradas.Designer.cs">
+      <DependentUpon>201709270251015_CreacionDeTablaCilindradas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709270255075_CargasDatosEnTablasTiposMotoresYCilindradas.cs" />
+    <Compile Include="Migrations\201709270255075_CargasDatosEnTablasTiposMotoresYCilindradas.Designer.cs">
+      <DependentUpon>201709270255075_CargasDatosEnTablasTiposMotoresYCilindradas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\ModelosDeDominio\Aseguradora.cs" />
     <Compile Include="Models\ModelosDeDominio\Cargo.cs" />
+    <Compile Include="Models\ModelosDeDominio\Cilindrada.cs" />
     <Compile Include="Models\ModelosDeDominio\Cliente.cs" />
     <Compile Include="Models\ModelosDeDominio\Combustible.cs" />
     <Compile Include="Models\ModelosDeDominio\Empleado.cs" />
@@ -329,6 +349,7 @@
     <Compile Include="Models\ModelosDeDominio\ServicioBasico.cs" />
     <Compile Include="Models\ModelosDeDominio\Talonario.cs" />
     <Compile Include="Models\ModelosDeDominio\TipoDocumento.cs" />
+    <Compile Include="Models\ModelosDeDominio\TipoMotor.cs" />
     <Compile Include="Models\ModelosDeDominio\Vehiculo.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -2185,6 +2206,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709220403432_CreacionDeTablaProveedores.resx">
       <DependentUpon>201709220403432_CreacionDeTablaProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709270221555_EliminarColumnasCilindradaYMotorDeVehiculos.resx">
+      <DependentUpon>201709270221555_EliminarColumnasCilindradaYMotorDeVehiculos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709270234491_CreacionDeTablaTiposMotores.resx">
+      <DependentUpon>201709270234491_CreacionDeTablaTiposMotores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709270251015_CreacionDeTablaCilindradas.resx">
+      <DependentUpon>201709270251015_CreacionDeTablaCilindradas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709270255075_CargasDatosEnTablasTiposMotoresYCilindradas.resx">
+      <DependentUpon>201709270255075_CargasDatosEnTablasTiposMotoresYCilindradas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

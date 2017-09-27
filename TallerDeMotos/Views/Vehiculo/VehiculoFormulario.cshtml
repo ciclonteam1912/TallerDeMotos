@@ -58,7 +58,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(v => v.Chasis)
-                            @Html.TextBoxFor(v => v.Chasis, new { @class = "form-control", placeholder = "Chasis del Vehículo...", maxlength = 20, autocomplete = "off" })
+                            @Html.TextBoxFor(v => v.Chasis, new { @class = "form-control", placeholder = "Chasis del Vehículo...", maxlength = 20, autocomplete = "off", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
                             @Html.ValidationMessageFor(v => v.Chasis)
                         </div>
                     </div>
@@ -67,15 +67,16 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.Motor)
-                            @Html.TextBoxFor(v => v.Motor, new { @class = "form-control", placeholder = "Motor del Vehículo...", maxlength = 20, autocomplete = "off" })
+                            @Html.LabelFor(v => v.TipoMotorId)
+                            @Html.DropDownListFor(v => v.TipoMotorId, new SelectList(Model.TiposMotores, "Id", "Descripcion"), "Seleccione un Tipo de Motor", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(v => v.TipoMotorId)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.Cilindrada)
-                            @Html.TextBoxFor(v => v.Cilindrada, new { @class = "form-control", placeholder = "Cilindrada del Vehículo...", autocomplete = "off", type = "number", min = "0", max = "999", oninput = "maxLengthCheck(this)" })
-                            @Html.ValidationMessageFor(v => v.Cilindrada)
+                            @Html.LabelFor(v => v.CilindradaId)
+                            @Html.DropDownListFor(v => v.CilindradaId, new SelectList(Model.Cilindradas, "Id", "NumeroCilindrada"), "Seleccione una Cilindrada", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(v => v.CilindradaId)
                         </div>
                     </div>
                 </div>

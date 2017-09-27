@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -21,10 +18,15 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public float? Kilometro { get; set; }
 
-        [StringLength(20)]
-        public string Motor { get; set; }
+        public TipoMotor TipoMotor { get; set; }
 
-        public int? Cilindrada { get; set; }
+        [Display(Name = "Tipo de Motor")]
+        public byte TipoMotorId { get; set; }
+
+        public Cilindrada Cilindrada { get; set; }
+
+        [Display(Name = "Cilindrada")]
+        public byte CilindradaId { get; set; }
 
         public DateTime FechaDeIngreso { get; set; }
 

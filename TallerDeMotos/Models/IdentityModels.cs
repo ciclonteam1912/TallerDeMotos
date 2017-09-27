@@ -41,6 +41,8 @@ namespace TallerDeMotos.Models
         public DbSet<Talonario> Talonarios { get; set; }
         public DbSet<ServicioBasico> ServiciosBasicos { get; set; }
         public DbSet<Proveedor> Proveedores { get; set; }
+        public DbSet<TipoMotor> TiposMotores { get; set; }
+        public DbSet<Cilindrada> Cilindradas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -59,6 +61,8 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new TalonarioConfiguracion());
             modelBuilder.Configurations.Add(new ServicioBasicoConfiguracion());
             modelBuilder.Configurations.Add(new ProveedorConfiguracion());
+            modelBuilder.Configurations.Add(new TipoMotorConfiguracion());
+            modelBuilder.Configurations.Add(new CilindradaConfiguracion());
         }
 
         public static ApplicationDbContext Create()

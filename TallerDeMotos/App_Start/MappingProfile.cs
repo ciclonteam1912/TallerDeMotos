@@ -16,6 +16,8 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Aseguradora, Aseguradora>();
             Mapper.CreateMap<Empleado, Empleado>()
                 .ForMember(e => e.FechaDeIngreso, opt => opt.Ignore());
+            Mapper.CreateMap<Vehiculo, Vehiculo>()
+                .ForMember(v => v.FechaDeIngreso, opt => opt.Ignore());
         }
     }
 }

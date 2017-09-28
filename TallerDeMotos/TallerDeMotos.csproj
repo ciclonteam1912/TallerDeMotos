@@ -237,6 +237,7 @@
     <Compile Include="Controllers\APIs\FormasPagoController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
+    <Compile Include="Controllers\APIs\ProveedoresController.cs" />
     <Compile Include="Controllers\APIs\ServiciosBasicosController.cs" />
     <Compile Include="Controllers\APIs\TalonariosController.cs" />
     <Compile Include="Controllers\APIs\VehiculosController.cs" />

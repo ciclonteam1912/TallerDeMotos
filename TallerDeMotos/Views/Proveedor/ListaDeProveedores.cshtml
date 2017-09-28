@@ -1,8 +1,236 @@
-﻿
-@{
-    ViewBag.Title = "ListaDeProveedores";
+﻿@{
+    ViewBag.Title = "Lista de Proveedores";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista De Proveedores</h2>
 
-<h2>ListaDeProveedores</h2>
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+        <div id="details"></div>
+    </div>
+</div>
 
+@section Scripts{
+    <script>
+        /*
+            This demo renders the grid in "DejaVu Sans" font family, which is
+            declared in kendo.common.css. It also declares the paths to the
+            fonts below using <tt>kendo.pdf.defineFont</tt>, because the
+            stylesheet is hosted on a different domain.
+        */
+        kendo.pdf.defineFont({
+            "DejaVu Sans"             : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+            "DejaVu Sans|Bold"        : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+            "DejaVu Sans|Bold|Italic" : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+            "DejaVu Sans|Italic"      : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+            "WebComponentsIcons"      : "https://kendo.cdn.telerik.com/2017.1.223/styles/fonts/glyphs/WebComponentsIcons.ttf"
+        });
+    </script>
+    <script src="https://kendo.cdn.telerik.com/2017.3.913/js/pako_deflate.min.js"></script>
+
+    <script type="x/kendo-template" id="page-template">
+        <div class="page-template">
+            <div class="header">
+                <div style="float: right">Página #: pageNum # de #: totalPages #</div>
+                Lista de Proveedores - Taller de Motos Pedrozo
+            </div>
+            <div class="body-pdf">
+                Lista de Proveedores
+            </div>
+            <div class="watermark">Taller de Motos Pedrozo</div>
+            <div class="footer">
+                Página #: pageNum # de #: totalPages #
+            </div>
+        </div>
+    </script>
+    <script>
+        var wnd, detailsTemplate;
+        $(document).ready(function () {
+            $("#menuCompras").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                toolbar: ["pdf"],
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/proveedores",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                pdf: {
+                    fileName: "Lista de Proveedores - Taller de Motos Pedrozo.pdf",
+                    allPages: true,
+                    avoidLinks: true,
+                    paperSize: "A4",
+                    margin: { top: "3cm", left: "1cm", right: "1cm", bottom: "1cm" },
+                    landscape: true,
+                    repeatHeaders: true,
+                    template: $("#page-template").html(),
+                    scale: 0.8
+                },
+                pdfExport: function(e){
+                    var grid = $("#grid").data("kendoGrid");
+                    grid.hideColumn(0);
+                    grid.hideColumn(1);
+                    grid.hideColumn(7);
+                    e.promise
+                    .done(function () {
+                        grid.showColumn(0);
+                        grid.showColumn(1);
+                        grid.showColumn(7);
+                    });
+                },
+                height: 550,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de proveedores.</p>"
+                },
+                columns: [{
+                    template: "<a href='/Proveedor/EditarProveedor/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 50,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 50,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    field: "RazonSocial",
+                    title: "Razón Social",
+                    width: 130,
+                }, {
+                    field: "Ruc",
+                    title: "RUC",
+                    width: 90,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "Contacto",
+                    title: "Contacto",
+                    width: 100,
+                }, {
+                    field: "Telefono",
+                    title: "Teléfono",
+                    width: 120
+                }, {
+                    field: "Direccion",
+                    title: "Dirección",
+                    width: 120
+                }, { 
+                    command: { 
+                        text: "Ver Detalles", 
+                        click: showDetails
+                    },
+                    title: " ", 
+                    width: "130px"
+                }]
+            });
+
+            $(".k-grid-toolbar").append('<a href="Proveedor/NuevoProveedor" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Proveedor</span></a>');        
+
+            wnd = $("#details")
+                        .kendoWindow({
+                            title: "Detalles del Proveedor",
+                            modal: true,
+                            visible: false,
+                            resizable: false,
+                            width: 350
+                        }).data("kendoWindow");
+            detailsTemplate = kendo.template($("#template").html());
+
+            $("#grid").on("click", "a.js-eliminar", function () {
+                var $tr = $(this).closest("tr"),
+                    grid = $("#grid").data("kendoGrid"),
+                    dataItem = grid.dataItem($tr);
+
+                var id = dataItem.Id;
+
+                bootbox.confirm({
+                    message: "¿Estás seguro de eliminar este proveedor?",
+                    buttons: {
+                        "cancel": {
+                            label: "Cancelar"
+                        },
+                        "confirm": {
+                            label: "Eliminar"
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/proveedores/" + id,
+                                method: "DELETE"
+                            })
+                            .done(function (proveedor) {
+                                if (proveedor.Success) {
+                                    grid.dataSource.remove(dataItem);
+                                    toastr.success(proveedor.Message);
+                                } else {
+                                    if (proveedor.Message == "FK_dbo.Vehiculos_dbo.Clientes_ClienteCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el cliente. Elimine primero el vehículo de este cliente.</p>" +
+                                        "<a href='/Vehiculo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar vehículo</a>");
+                                }
+                            });
+                        }
+                    }
+                });
+
+                return false;
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 6000,
+                "extendedTimeOut": 1000
+            }
+        });
+
+        function showDetails(e) {
+            e.preventDefault();
+
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            wnd.content(detailsTemplate(dataItem));
+            wnd.center().open();
+        }
+    </script>    
+
+    <script type="text/x-kendo-template" id="template">
+
+    <div id="details-container">
+        <h2>#= RazonSocial #</h2>
+        @*<em>#= Title #</em>*@
+
+        <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
+        <p><b> Propietario</b> #= (Propietario == null) ? ' ' : Propietario #</p>
+
+    </div>
+    </script>       
+}

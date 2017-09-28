@@ -91,12 +91,12 @@
                                 url: "/api/serviciosBasicos/" + id,
                                 method: "DELETE"
                             })
-                            .done(function (formasPago) {
-                                if (formasPago.Success) {
+                            .done(function (servicioBasico) {
+                                if (servicioBasico.Success) {
                                     grid.dataSource.remove(dataItem);
-                                    toastr.success(formasPago.Message);
+                                    toastr.success(servicioBasico.Message);
                                 } else {
-                                    if (formasPago.Message == "FK_dbo.Modelos_dbo.Marcas_MarcaCodigo")
+                                    if (servicioBasico.Message == "FK_dbo.Modelos_dbo.Marcas_MarcaCodigo")
                                         toastr.error("<p class='eliminar'>No se pudo eliminar la marca. Elimine primero el o los modelos que correspondan a esta marca.</p>" +
                                         "<a href='/Modelo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar modelo</a>");
                                 }

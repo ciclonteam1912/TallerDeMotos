@@ -12,6 +12,10 @@ namespace TallerDeMotos.ViewModels
         public int? Timbrado { get; set; }
 
         [Required]
+        [StringLength(10)]
+        public string Ruc { get; set; }
+
+        [Required]
         [Display(Name = "Fecha de Inicio de Vigencia")]
         public DateTime? FechaInicioVigencia { get; set; }
 
@@ -50,6 +54,7 @@ namespace TallerDeMotos.ViewModels
         {
             Id = talonario.Id;
             Timbrado = talonario.Timbrado;
+            Ruc = talonario.Ruc;
             FechaInicioVigencia = talonario.FechaInicioVigencia;
             FechaFinVigencia = talonario.FechaFinVigencia;
             NumeroFacturaInicial = talonario.NumeroFacturaInicial;

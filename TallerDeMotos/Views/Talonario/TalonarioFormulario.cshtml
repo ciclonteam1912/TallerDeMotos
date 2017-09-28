@@ -1,6 +1,6 @@
 ﻿@model TallerDeMotos.ViewModels.TalonarioViewModel
 @{
-    ViewBag.Title = "TalonarioFormulario";
+    ViewBag.Title = Model.Titulo;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,43 +16,73 @@
                 <div class="row">
                     <h4>@Html.ValidationSummary(true, "¡Por favor solucione los siguientes errores!")</h4>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(t => t.Timbrado)
-                        @Html.TextBoxFor(t => t.Timbrado, new { @class = "form-control", placeholder = "Ingrese Timbrado..." })
-                        @Html.ValidationMessageFor(t => t.Timbrado)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(t => t.FechaInicioVigencia)
-                        @Html.TextBoxFor(t => t.FechaInicioVigencia, "{0:d MMM yyyy}", new { @class = "form-control", placeholder = "Ingrese Fecha de Inicio de Vigencia..." })
-                        @Html.ValidationMessageFor(t => t.FechaInicioVigencia)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(t => t.FechaFinVigencia)
-                        @Html.TextBoxFor(t => t.FechaFinVigencia, "{0:d MMM yyyy}", new { @class = "form-control", placeholder = "Ingrese Ruc de la Aseguradora..." })
-                        @Html.ValidationMessageFor(t => t.FechaFinVigencia)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.Timbrado)
+                            @Html.TextBoxFor(t => t.Timbrado, new { @class = "form-control", placeholder = "Ingrese Timbrado...", autocomplete = "off", type = "number", min = "0", max = "99999999", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.ValidationMessageFor(t => t.Timbrado)
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(t => t.NumeroFacturaInicial)
-                        @Html.TextBoxFor(t => t.NumeroFacturaInicial, new { @class = "form-control", placeholder = "Ingrese Dirección de la Aseguradora..." })
-                        @Html.ValidationMessageFor(t => t.NumeroFacturaInicial)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.FechaInicioVigencia)
+                            @Html.TextBoxFor(t => t.FechaInicioVigencia, new { @class = "form-control" , onkeydown = "return false;", style = "width:74%; " })
+                            @Html.ValidationMessageFor(t => t.FechaInicioVigencia)
+                        </div>
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(t => t.NumeroFacturaFinal)
-                        @Html.TextBoxFor(t => t.NumeroFacturaFinal, new { @class = "form-control", placeholder = "Ingrese Teléfono de la Aseguradora..." })
-                        @Html.ValidationMessageFor(t => t.NumeroFacturaFinal)
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.FechaFinVigencia)
+                            @Html.TextBoxFor(t => t.FechaFinVigencia, new { @class = "form-control", onkeydown = "return false;", style = "width:74%; " })
+                            <div class="row">
+                                @Html.ValidationMessageFor(t => t.FechaFinVigencia)
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(t => t.NumeroFacturaActual)
-                        @Html.TextBoxFor(t => t.NumeroFacturaActual, new { @class = "form-control", placeholder = "Ingrese Correo Electrónico de la Aseguradora..." })
-                        @Html.ValidationMessageFor(t => t.NumeroFacturaActual)
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.Ruc)
+                            @Html.TextBoxFor(t => t.Ruc, new { @class = "form-control", placeholder = "Ingrese Ruc...", autocomplete = "off", maxlength = 10 })
+                            @Html.ValidationMessageFor(t => t.Ruc)
+                        </div>
                     </div>
-                    <div class="checkbox">
-                        <label>
-                            @Html.CheckBoxFor(t => t.EstaActivo) ¿Se encuentra activo?
-                        </label>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.NumeroFacturaInicial)
+                            @Html.TextBoxFor(t => t.NumeroFacturaInicial, new { @class = "form-control", placeholder = "N° Factura Inicial...", autocomplete = "off", type = "number", min = "0", max = "9999999999999", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.ValidationMessageFor(t => t.NumeroFacturaInicial)
+                        </div>
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.NumeroFacturaFinal)
+                            @Html.TextBoxFor(t => t.NumeroFacturaFinal, new { @class = "form-control", placeholder = "N° Factura Final..." , autocomplete = "off", type = "number", min = "0", max = "9999999999999", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.ValidationMessageFor(t => t.NumeroFacturaFinal)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.NumeroFacturaActual)
+                            @Html.TextBoxFor(t => t.NumeroFacturaActual, new { @class = "form-control", placeholder = "N° Factura Actual...", autocomplete = "off", type = "number", min = "0", max = "9999999999999", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.ValidationMessageFor(t => t.NumeroFacturaActual)
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(t => t.EstaActivo) ¿Se encuentra activo?
+                            </label>
+                        </div>
                     </div>
                 </div>
                 @Html.HiddenFor(t => t.Id)
@@ -67,8 +97,29 @@
 
 @section Scripts {
     <script>
+        function maxLengthCheck(object) {
+            if (object.value.length > object.max.length)
+                object.value = object.value.slice(0, object.max.length);
+        }
+
         $(document).ready(function () {
             $("#menuVentas").addClass('active');
+
+            var id = $("#Id").val();
+
+            //kendo.culture("es-ES");
+            $("#FechaInicioVigencia").kendoDatePicker({
+                culture: "es-ES",
+                value: id == 0 ? new Date() : $("#FechaInicioVigencia").val(),
+                dateInput: true
+            });
+
+            //kendo.culture("es-ES");
+            $("#FechaFinVigencia").kendoDatePicker({
+                value: id == 0 ? new Date() : $("#FechaFinVigencia").val(),
+                culture: "es-ES",
+                dateInput: true
+            });
         });
     </script>
 }

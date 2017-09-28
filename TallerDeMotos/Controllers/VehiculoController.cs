@@ -70,7 +70,6 @@ namespace TallerDeMotos.Controllers
 
                 return View("VehiculoFormulario", viewModel);
             }
-
             if (vehiculo.Id == 0)
             {
                 vehiculo.FechaDeIngreso = DateTime.Now;

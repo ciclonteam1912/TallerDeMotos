@@ -237,3 +237,11 @@ a.k-grid-pdf {
 #details-container em {
     color: #8c8c8c;
 }
+
+.k-grid  .k-grid-header  .k-header  .k-link {
+    height: auto;
+}
+  
+.k-grid  .k-grid-header  .k-header {
+    white-space: normal;
+}

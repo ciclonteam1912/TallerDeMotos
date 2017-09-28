@@ -237,6 +237,7 @@
     <Compile Include="Controllers\APIs\FormasPagoController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
+    <Compile Include="Controllers\APIs\TalonariosController.cs" />
     <Compile Include="Controllers\APIs\VehiculosController.cs" />
     <Compile Include="Controllers\AseguradoraController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
@@ -334,7 +335,16 @@
     <Compile Include="Migrations\201709270255075_CargasDatosEnTablasTiposMotoresYCilindradas.Designer.cs">
       <DependentUpon>201709270255075_CargasDatosEnTablasTiposMotoresYCilindradas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709280147271_AgregarColumnaRucEnTablaTalonarios.cs" />
+    <Compile Include="Migrations\201709280147271_AgregarColumnaRucEnTablaTalonarios.Designer.cs">
+      <DependentUpon>201709280147271_AgregarColumnaRucEnTablaTalonarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AtributosDeValidacion\FacturaActual.cs" />
+    <Compile Include="Models\AtributosDeValidacion\FacturaFinalMayorAFacturaInicial.cs" />
+    <Compile Include="Models\AtributosDeValidacion\FechaFin.cs" />
+    <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />
+    <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\ModelosDeDominio\Aseguradora.cs" />
     <Compile Include="Models\ModelosDeDominio\Cargo.cs" />
@@ -2219,6 +2229,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709270255075_CargasDatosEnTablasTiposMotoresYCilindradas.resx">
       <DependentUpon>201709270255075_CargasDatosEnTablasTiposMotoresYCilindradas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709280147271_AgregarColumnaRucEnTablaTalonarios.resx">
+      <DependentUpon>201709280147271_AgregarColumnaRucEnTablaTalonarios.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

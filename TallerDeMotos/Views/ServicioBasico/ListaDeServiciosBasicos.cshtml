@@ -1,8 +1,124 @@
-﻿
-@{
-    ViewBag.Title = "ListaDeServiciosBasicos";
+﻿@{
+    ViewBag.Title = "Lista de Servicios Básicos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista de Servicios Básicos</h2>
 
-<h2>ListaDeServiciosBasicos</h2>
+    <p><a href="ServicioBasico/NuevoServicioBasico" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Servicio Básico</span></a></p>
 
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuCompras").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/serviciosBasicos",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 300,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de servicios básicos.</p>"
+                },
+                columns: [{
+                    template: "<a href='/ServicioBasico/EditarServicioBasico/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    field: "Nombre",
+                    title: "Nombre"
+                }, {
+                    field: "Descripcion",
+                    title: "Descripción"
+                }]
+            });
+
+            $("#grid").on("click", "a.js-eliminar", function () {
+                var $tr = $(this).closest("tr"),
+                    grid = $("#grid").data("kendoGrid"),
+                    dataItem = grid.dataItem($tr);
+
+                var id = dataItem.Id;
+
+                bootbox.confirm({
+                    message: "¿Estás seguro de eliminar este Servicio Básico?",
+                    buttons: {
+                        "cancel": {
+                            label: "Cancelar"
+                        },
+                        "confirm": {
+                            label: "Eliminar"
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/serviciosBasicos/" + id,
+                                method: "DELETE"
+                            })
+                            .done(function (formasPago) {
+                                if (formasPago.Success) {
+                                    grid.dataSource.remove(dataItem);
+                                    toastr.success(formasPago.Message);
+                                } else {
+                                    if (formasPago.Message == "FK_dbo.Modelos_dbo.Marcas_MarcaCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar la marca. Elimine primero el o los modelos que correspondan a esta marca.</p>" +
+                                        "<a href='/Modelo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar modelo</a>");
+                                }
+                            });
+                        }
+                    }
+                });
+
+                return false;
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 6000,
+                "extendedTimeOut": 1000
+            }
+        });
+    </script>
+}

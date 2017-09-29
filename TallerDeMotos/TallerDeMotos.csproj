@@ -348,6 +348,10 @@
     <Compile Include="Migrations\201709290154455_CreacionDeTablaProductos.Designer.cs">
       <DependentUpon>201709290154455_CreacionDeTablaProductos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709290909192_CrearUsuarioYRolPorDefecto.cs" />
+    <Compile Include="Migrations\201709290909192_CrearUsuarioYRolPorDefecto.Designer.cs">
+      <DependentUpon>201709290909192_CrearUsuarioYRolPorDefecto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
     <Compile Include="Models\AtributosDeValidacion\FacturaActual.cs" />
@@ -2250,6 +2254,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709290154455_CreacionDeTablaProductos.resx">
       <DependentUpon>201709290154455_CreacionDeTablaProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709290909192_CrearUsuarioYRolPorDefecto.resx">
+      <DependentUpon>201709290909192_CrearUsuarioYRolPorDefecto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

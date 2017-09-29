@@ -48,10 +48,13 @@ namespace TallerDeMotos.ViewModels
 
     public class LoginViewModel
     {
+        //[Required]
+        //[Display(Name = "Correo electrónico")]
+        //[EmailAddress]
+        //public string Email { get; set; }
         [Required]
-        [Display(Name = "Correo electrónico")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Nombre de Usuario")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,6 +67,10 @@ namespace TallerDeMotos.ViewModels
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "Nombre de Usuario")]
+        public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Correo electrónico")]

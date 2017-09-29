@@ -1,0 +1,87 @@
+﻿@model TallerDeMotos.ViewModels.ProductoViewModel
+@{
+    ViewBag.Title = Model.Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>@Model.Titulo</h2>
+
+    @using (Html.BeginForm("GuardarProducto", "Producto"))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">@Model.Titulo</div>
+            <div class="panel-body">
+                <div class="row">
+                    @Html.ValidationSummary(true, "¡Por favor soluciona los siguientes errores!")
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Descripcion)
+                            @Html.TextBoxFor(p => p.Descripcion, new { @class = "form-control", placeholder = "Ingrese Descripción del Producto...", autocomplete = "off", maxlength = 50 })
+                            @Html.ValidationMessageFor(p => p.Descripcion)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Marca)
+                            @Html.TextBoxFor(p => p.Marca, new { @class = "form-control", placeholder = "Ingrese Marca del Producto...", autocomplete = "off", maxlength = 50 })
+                            @Html.ValidationMessageFor(p => p.Marca)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.PrecioCosto)
+                            @Html.TextBoxFor(p => p.PrecioCosto, new { @class = "form-control", placeholder = "Ingrese Precio Costo del Producto...", autocomplete = "off", type = "number", min = "0", max = "99999999", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.ValidationMessageFor(p => p.PrecioCosto)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.PrecioVenta)
+                            @Html.TextBoxFor(p => p.PrecioVenta, new { @class = "form-control", placeholder = "Ingrese Precio Venta del Producto...", autocomplete = "off", type = "number", min = "0", max = "99999999", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.ValidationMessageFor(p => p.PrecioVenta)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.ExistenciaInicial)
+                            @Html.TextBoxFor(p => p.ExistenciaInicial, new { @class = "form-control", placeholder = "Ingrese Existencia Inicial del Producto...", autocomplete = "off", type = "number", min = "0", max = "999", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.ValidationMessageFor(p => p.ExistenciaInicial)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.ExistenciaMinima)
+                            @Html.TextBoxFor(p => p.ExistenciaMinima, new { @class = "form-control", placeholder = "Ingrese Existencia Mínima del Producto...", autocomplete = "off", type = "number", min = "0", max = "999", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.ValidationMessageFor(p => p.ExistenciaMinima)
+                        </div>
+                    </div>
+                </div>
+                @Html.HiddenFor(p => p.Id)
+                @Html.AntiForgeryToken()
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function maxLengthCheck(object) {
+            if (object.value.length > object.max.length)
+                object.value = object.value.slice(0, object.max.length);
+        }
+
+        $(document).ready(function () {
+            $("#menuStock").addClass('active');
+        });
+    </script>
+}

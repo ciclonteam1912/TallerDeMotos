@@ -1,0 +1,217 @@
+﻿@{
+    ViewBag.Title = "Lista de Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista De Productos</h2>
+
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+        <div id="details"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        /*
+            This demo renders the grid in "DejaVu Sans" font family, which is
+            declared in kendo.common.css. It also declares the paths to the
+            fonts below using <tt>kendo.pdf.defineFont</tt>, because the
+            stylesheet is hosted on a different domain.
+        */
+        kendo.pdf.defineFont({
+            "DejaVu Sans"             : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+            "DejaVu Sans|Bold"        : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+            "DejaVu Sans|Bold|Italic" : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+            "DejaVu Sans|Italic"      : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+            "WebComponentsIcons"      : "https://kendo.cdn.telerik.com/2017.1.223/styles/fonts/glyphs/WebComponentsIcons.ttf"
+        });
+    </script>
+    <script src="https://kendo.cdn.telerik.com/2017.3.913/js/pako_deflate.min.js"></script>
+
+    <script type="x/kendo-template" id="page-template">
+        <div class="page-template">
+            <div class="header">
+                <div style="float: right">Página #: pageNum # de #: totalPages #</div>
+                Lista de Productos - Taller de Motos Pedrozo
+            </div>
+            <div class="body-pdf">
+                Lista de Productos
+            </div>
+            <div class="watermark">Taller de Motos Pedrozo</div>
+            <div class="footer">
+                Página #: pageNum # de #: totalPages #
+            </div>
+        </div>
+    </script>
+    <script>
+        var wnd, detailsTemplate;
+        $(document).ready(function () {
+            $("#menuStock").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                toolbar: ["pdf"],
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/productos",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                pdf: {
+                    fileName: "Lista de Productos - Taller de Motos Pedrozo.pdf",
+                    allPages: true,
+                    avoidLinks: true,
+                    paperSize: "A4",
+                    margin: { top: "3cm", left: "1cm", right: "1cm", bottom: "1cm" },
+                    landscape: true,
+                    repeatHeaders: true,
+                    template: $("#page-template").html(),
+                    scale: 0.8
+                },
+                pdfExport: function(e){
+                    var grid = $("#grid").data("kendoGrid");
+                    grid.hideColumn(0);
+                    grid.hideColumn(1);
+                    e.promise
+                    .done(function () {
+                        grid.showColumn(0);
+                        grid.showColumn(1);
+                    });
+                },
+                height: 550,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de productos.</p>"
+                },
+                columns: [{
+                    template: "<a href='/Producto/EditarProducto/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 45,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 45,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    field: "Descripcion",
+                    title: "Descripción",
+                    width: 120,
+                }, {
+                    field: "Marca",
+                    title: "Marca",
+                    width: 90
+                }, {
+                    field: "ExistenciaInicial",
+                    title: "Existencia Inicial",
+                    width: 110,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "ExistenciaMinima",
+                    title: "Existencia Mínima",
+                    width: 110,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "ExistenciaActual",
+                    title: "Existencia Actual",
+                    width: 110,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "PrecioCosto",
+                    title: "Precio Costo",
+                    width: 90,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "PrecioVenta",
+                    title: "Precio Venta",
+                    width: 90,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }]
+            });
+
+            $(".k-grid-toolbar").append('<a href="Producto/NuevoProducto" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Producto</span></a>');
+
+            $("#grid").on("click", "a.js-eliminar", function () {
+                var $tr = $(this).closest("tr"),
+                    grid = $("#grid").data("kendoGrid"),
+                    dataItem = grid.dataItem($tr);
+
+                var id = dataItem.Id;
+
+                bootbox.confirm({
+                    message: "¿Estás seguro de eliminar este producto?",
+                    buttons: {
+                        "cancel": {
+                            label: "Cancelar"
+                        },
+                        "confirm": {
+                            label: "Eliminar"
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/productos/" + id,
+                                method: "DELETE"
+                            })
+                            .done(function (producto) {
+                                if (producto.Success) {
+                                    grid.dataSource.remove(dataItem);
+                                    toastr.success(producto.Message);
+                                } else {
+                                    if (producto.Message == "FK_dbo.Vehiculos_dbo.Clientes_ClienteCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el cliente. Elimine primero el vehículo de este cliente.</p>" +
+                                        "<a href='/Vehiculo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar vehículo</a>");
+                                }
+                            });
+                        }
+                    }
+                });
+
+                return false;
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 6000,
+                "extendedTimeOut": 1000
+            }
+        });
+    </script>    
+}

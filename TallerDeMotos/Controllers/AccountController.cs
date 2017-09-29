@@ -161,7 +161,7 @@ namespace TallerDeMotos.Controllers
                     //var roleManager = new RoleManager<IdentityRole>(roleStore);
                     //await roleManager.CreateAsync(new IdentityRole("Administrador"));
                     //await UserManager.AddToRoleAsync(user.Id, "Administrador");
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // Para obtener más información sobre cómo habilitar la confirmación de cuenta y el restablecimiento de contraseña, visite http://go.microsoft.com/fwlink/?LinkID=320771
                     // Enviar correo electrónico con este vínculo
@@ -169,7 +169,7 @@ namespace TallerDeMotos.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
 
-                    return RedirectToAction("Index", "Inicio");
+                    return RedirectToAction("Index", "Usuario");
                 }
                 AddErrors(result);
             }

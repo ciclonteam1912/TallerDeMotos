@@ -21,10 +21,7 @@
                 </button>
                 @Html.ActionLink("Taller de Motos", "Index", "Inicio", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Inicio")</li>
-                </ul>
+            <div class="navbar-collapse collapse">                
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

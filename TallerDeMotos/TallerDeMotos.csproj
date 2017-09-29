@@ -242,6 +242,7 @@
     <Compile Include="Controllers\APIs\ProveedoresController.cs" />
     <Compile Include="Controllers\APIs\ServiciosBasicosController.cs" />
     <Compile Include="Controllers\APIs\TalonariosController.cs" />
+    <Compile Include="Controllers\APIs\UsuariosController.cs" />
     <Compile Include="Controllers\APIs\VehiculosController.cs" />
     <Compile Include="Controllers\AseguradoraController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\ServicioBasicoController.cs" />
     <Compile Include="Controllers\TalonarioController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VehiculoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2178,6 +2180,7 @@
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-TW.min.js.map" />
     <Content Include="Views\Producto\ProductoFormulario.cshtml" />
     <Content Include="Views\Producto\ListaDeProductos.cshtml" />
+    <Content Include="Views\Usuario\ListaDeUsuarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

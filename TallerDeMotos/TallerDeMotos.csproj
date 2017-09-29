@@ -353,6 +353,7 @@
       <DependentUpon>201709290909192_CrearUsuarioYRolPorDefecto.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
     <Compile Include="Models\AtributosDeValidacion\FacturaActual.cs" />
     <Compile Include="Models\AtributosDeValidacion\FacturaFinalMayorAFacturaInicial.cs" />
@@ -378,6 +379,7 @@
     <Compile Include="Models\ModelosDeDominio\TipoDocumento.cs" />
     <Compile Include="Models\ModelosDeDominio\TipoMotor.cs" />
     <Compile Include="Models\ModelosDeDominio\Vehiculo.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />

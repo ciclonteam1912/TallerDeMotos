@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 
 namespace TallerDeMotos.Controllers
 {
@@ -30,6 +32,7 @@ namespace TallerDeMotos.Controllers
             return View();
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador)]
         public ActionResult Seguridad()
         {
             return View();

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers
@@ -26,12 +27,14 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeCombustibles");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevoCombustible()
         {
             var combustible = new Combustible();
             return View("CombustibleFormulario", combustible);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarCombustible(Combustible combustible)
@@ -52,6 +55,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult EditarCombustible(int id)
         {
             var combustibleBD = _context.Combustibles.SingleOrDefault(c => c.Id == id);

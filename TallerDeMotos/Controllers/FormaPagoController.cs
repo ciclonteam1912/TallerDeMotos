@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers
@@ -29,6 +30,7 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeFormasDePago");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevoFormaPago()
         {
             var formaPago = new FormaPago();
@@ -36,6 +38,7 @@ namespace TallerDeMotos.Controllers
             return View("FormaPagoFormulario", formaPago);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarFormaPago(FormaPago formaPago)
@@ -60,6 +63,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult EditarFormaPago(int id)
         {
             var formaPagoBD = _context.FormasPago.SingleOrDefault(c => c.Id == id);

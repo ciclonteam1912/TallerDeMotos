@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers
@@ -26,12 +27,14 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeMarcas");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevaMarca()
         {
             var marca = new Marca();
             return View("MarcaFormulario", marca);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarMarca(Marca marca)
@@ -52,6 +55,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult EditarMarca(int id)
         {
             var marcaBD = _context.Marcas.SingleOrDefault(c => c.Id == id);

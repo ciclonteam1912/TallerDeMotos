@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers
@@ -26,6 +27,7 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeProveedores");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevoProveedor()
         {
             var proveedor = new Proveedor();
@@ -33,6 +35,7 @@ namespace TallerDeMotos.Controllers
             return View("ProveedorFormulario", proveedor);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarProveedor(Proveedor proveedor)
@@ -53,6 +56,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult EditarProveedor(int id)
         {
             var proveedorBD = _context.Proveedores.SingleOrDefault(p => p.Id == id);

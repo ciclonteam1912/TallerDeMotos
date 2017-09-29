@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
@@ -30,6 +29,7 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeVehiculos");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevoVehiculo()
         {
             var clientes = _context.Clientes.ToList();
@@ -52,6 +52,7 @@ namespace TallerDeMotos.Controllers
             return View("VehiculoFormulario", viewModel);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarVehiculo(Vehiculo vehiculo)
@@ -86,6 +87,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult EditarVehiculo(int id)
         {
             var vehiculo = _context.Vehiculos.SingleOrDefault(c => c.Id == id);

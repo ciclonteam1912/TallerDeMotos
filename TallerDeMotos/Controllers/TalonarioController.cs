@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
@@ -27,6 +28,7 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeTalonarios");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevoTalonario()
         {
             var talonario = new TalonarioViewModel();
@@ -34,6 +36,7 @@ namespace TallerDeMotos.Controllers
             return View("TalonarioFormulario", talonario);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarTalonario(Talonario talonario)
@@ -58,6 +61,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult EditarTalonario(int id)
         {
             var talonario = _context.Talonarios.SingleOrDefault(t => t.Id == id);

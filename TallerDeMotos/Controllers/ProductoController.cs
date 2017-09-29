@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
@@ -25,6 +26,7 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeProductos");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult NuevoProducto()
         {
             var viewModel = new ProductoViewModel();
@@ -32,6 +34,7 @@ namespace TallerDeMotos.Controllers
             return View("ProductoFormulario", viewModel);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarProducto(Producto producto)
@@ -57,6 +60,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult EditarProducto(int id)
         {
             var productoBD = _context.Productos.SingleOrDefault(c => c.Id == id);

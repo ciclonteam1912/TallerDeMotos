@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
@@ -28,6 +29,7 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeEmpleados");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult NuevoEmpleado()
         {
             var cargos = _context.Cargos.ToList();
@@ -40,6 +42,7 @@ namespace TallerDeMotos.Controllers
             return View("EmpleadoFormulario", viewModel);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarEmpleado(Empleado empleado)
@@ -70,6 +73,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult EditarEmpleado(int id)
         {
             var empleado = _context.Empleados.SingleOrDefault(c => c.Id == id);

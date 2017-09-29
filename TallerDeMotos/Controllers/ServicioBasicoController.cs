@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers
@@ -29,6 +27,7 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeServiciosBasicos");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult NuevoServicioBasico()
         {
             var servicioBasico = new ServicioBasico();
@@ -36,6 +35,7 @@ namespace TallerDeMotos.Controllers
             return View("ServicioBasicoFormulario", servicioBasico);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarServicioBasico(ServicioBasico servicioBasico)
@@ -58,6 +58,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult EditarServicioBasico(int id)
         {
             var servicioBasicoBD = _context.ServiciosBasicos.SingleOrDefault(c => c.Id == id);

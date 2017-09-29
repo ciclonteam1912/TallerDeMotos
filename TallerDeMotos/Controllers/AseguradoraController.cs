@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers
@@ -26,6 +27,7 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeAseguradoras");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevaAseguradora()
         {
             var aseguradora = new Aseguradora();
@@ -33,6 +35,7 @@ namespace TallerDeMotos.Controllers
             return View("AseguradoraFormulario", aseguradora);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarAseguradora(Aseguradora aseguradora)
@@ -53,6 +56,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult EditarAseguradora(int id)
         {
             var aseguradoraBD = _context.Aseguradoras.SingleOrDefault(c => c.Id == id);

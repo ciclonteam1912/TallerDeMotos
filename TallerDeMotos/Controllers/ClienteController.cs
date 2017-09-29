@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
@@ -28,6 +29,7 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeClientes");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevoCliente()
         {
             var tiposDocumentos = _context.TipoDocumentos.ToList();
@@ -42,6 +44,7 @@ namespace TallerDeMotos.Controllers
             return View("ClienteFormulario", viewModel);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarCliente(Cliente cliente)
@@ -73,6 +76,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult EditarCliente(int id)
         {
             var cliente = _context.Clientes.SingleOrDefault(c => c.Id == id);

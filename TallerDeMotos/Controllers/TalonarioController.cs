@@ -25,7 +25,10 @@ namespace TallerDeMotos.Controllers
         // GET: Talonario
         public ActionResult Index()
         {
-            return View("ListaDeTalonarios");
+            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
+                return View("ListaDeTalonarios");
+
+            return View("ListaDeTalonariosSoloLectura");
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]

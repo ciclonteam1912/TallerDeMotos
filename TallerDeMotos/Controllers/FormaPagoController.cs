@@ -27,7 +27,10 @@ namespace TallerDeMotos.Controllers
         // GET: FormaPago
         public ActionResult Index()
         {
-            return View("ListaDeFormasDePago");
+            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
+                return View("ListaDeFormasDePago");
+
+            return View("ListaDeFormasDePagoSoloLectura");
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]

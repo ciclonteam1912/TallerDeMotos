@@ -249,6 +249,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CombustibleController.cs" />
     <Compile Include="Controllers\EmpleadoController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FormaPagoController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -2193,6 +2194,19 @@
     <Content Include="Views\Rol\EditarRol.cshtml" />
     <Content Include="Views\Rol\ManageUserRoles.cshtml" />
     <Content Include="Views\Rol\ListaDeRoles.cshtml" />
+    <Content Include="Views\Error\AccesoDenegado.cshtml" />
+    <Content Include="Views\Aseguradora\ListaDeAseguradorasSoloLectura.cshtml" />
+    <Content Include="Views\Cliente\ListaDeClientesSoloLectura.cshtml" />
+    <Content Include="Views\Combustible\ListaDeCombustiblesSoloLectura.cshtml" />
+    <Content Include="Views\Empleado\ListaDeEmpleadosSoloLectura.cshtml" />
+    <Content Include="Views\FormaPago\ListaDeFormasDePagoSoloLectura.cshtml" />
+    <Content Include="Views\Marca\ListaDeMarcasSoloLectura.cshtml" />
+    <Content Include="Views\Modelo\ListaDeModelosSoloLectura.cshtml" />
+    <Content Include="Views\Producto\ListaDeProductosSoloLectura.cshtml" />
+    <Content Include="Views\Proveedor\ListaDeProveedoresSoloLectura.cshtml" />
+    <Content Include="Views\ServicioBasico\ListaDeServiciosBasicosSoloLectura.cshtml" />
+    <Content Include="Views\Talonario\ListaDeTalonariosSoloLectura.cshtml" />
+    <Content Include="Views\Vehiculo\ListaDeVehiculosSoloLectura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

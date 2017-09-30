@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Lista de Vehículos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista de Vehículos</h2>
+
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+        <div id="details"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var wnd, detailsTemplate;
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/vehiculos",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },              
+                height: 500,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de vehículos.</p>"
+                },
+                columns: [{
+                    field: "Matricula",
+                    title: "Matrícula",
+                    width: 100
+                }, {
+                    field: "Chasis",
+                    title: "Chasís",
+                    width: 100
+                },
+                {
+                    field: "Modelo.Nombre",
+                    title: "Modelo",
+                    width: 120
+                },
+                 {
+                    field: "Cliente.Nombre",
+                    title: "Cliente",
+                    width: 120
+                },
+                 {
+                    field: "Combustible.Nombre",
+                    title: "Tipo Comb.",
+                    width: 120
+                 },
+                {
+                    command: {
+                        text: "Ver Detalles",
+                        click: showDetails
+                    },
+                    title: " ",
+                    width: "130px"
+                }]
+            });           
+
+            wnd = $("#details")
+                        .kendoWindow({
+                            title: "Detalles del Vehículo",
+                            modal: true,
+                            visible: false,
+                            resizable: false,
+                            width: 350
+                        }).data("kendoWindow");
+            detailsTemplate = kendo.template($("#template").html());
+
+            function showDetails(e) {
+                e.preventDefault();
+
+                var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+                wnd.content(detailsTemplate(dataItem));
+                wnd.center().open();
+            }
+        });
+    </script>
+
+    <script type="text/x-kendo-template" id="template">
+        <div id="details-container">
+            <h2>#= Matricula #</h2>
+            @*<em>#= Title #</em>*@
+
+            <p><b>Cilindrada:</b> #= (Cilindrada.NumeroCilindrada == null) ? ' ' : Cilindrada.NumeroCilindrada #</p>
+            <p><b>Tipo de Motor:</b> #= (TipoMotor.Descripcion == null) ? ' ' : TipoMotor.Descripcion #</p>
+            <p><b>Fecha de Ingreso:</b> #= kendo.toString(kendo.parseDate(FechaDeIngreso), "g") #</p>
+            <p><b>Kilometraje:</b> #= (Kilometro == null) ? ' ' : Kilometro # km.</p>
+            <p><b>Color:</b> #= (Color == null) ? ' ' : Color #</p>
+            <p><b>Aseguradora:</b> #= (Aseguradora.Nombre == null) ? ' ' : Aseguradora.Nombre #</p>
+        </div>
+    </script>
+}

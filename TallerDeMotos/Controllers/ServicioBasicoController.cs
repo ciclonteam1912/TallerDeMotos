@@ -24,7 +24,10 @@ namespace TallerDeMotos.Controllers
         // GET: ServicioBasico
         public ActionResult Index()
         {
-            return View("ListaDeServiciosBasicos");
+            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller))
+                return View("ListaDeServiciosBasicos");
+
+            return View("ListaDeServiciosBasicosSoloLectura");
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]

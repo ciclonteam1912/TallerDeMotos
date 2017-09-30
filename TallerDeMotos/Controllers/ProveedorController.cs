@@ -24,7 +24,10 @@ namespace TallerDeMotos.Controllers
         // GET: Proveedor
         public ActionResult Index()
         {
-            return View("ListaDeProveedores");
+            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
+                return View("ListaDeProveedores");
+
+            return View("ListaDeProveedoresSoloLectura");
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]

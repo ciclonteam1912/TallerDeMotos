@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Lista de Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista De Clientes</h2>
+
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+        <div id="details"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var wnd, detailsTemplate;
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/clientes",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 550,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de clientes.</p>"
+                },
+                columns: [{
+                    field: "Nombre",
+                    title: "Nombre",
+                    width: 100,
+                }, {
+                    field: "Apellido",
+                    title: "Apellido",
+                    width: 100,
+                }, {
+                    field: "TipoDocumento.Descripcion",
+                    title: "Tipo de Doc.",
+                    width: 150
+                }, {
+                    field: "ValorDocumento",
+                    title: "Valor",
+                    width: 100,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "Personeria.Descripcion",
+                    title: "Personería",
+                    width: 120
+                }, {
+                    command: {
+                        text: "Ver Detalles",
+                        click: showDetails
+                    },
+                    title: " ",
+                    width: "130px"
+                }]
+            });           
+
+            wnd = $("#details")
+                        .kendoWindow({
+                            title: "Detalles del Cliente",
+                            modal: true,
+                            visible: false,
+                            resizable: false,
+                            width: 350
+                        }).data("kendoWindow");
+            detailsTemplate = kendo.template($("#template").html());           
+        });
+
+        function showDetails(e) {
+            e.preventDefault();
+
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            wnd.content(detailsTemplate(dataItem));
+            wnd.center().open();
+        }
+    </script>
+
+    <script type="text/x-kendo-template" id="template">
+
+        <div id="details-container">
+            <h2>#= Nombre # #= (Apellido == null) ? ' ' : Apellido #</h2>
+            @*<em>#= Title #</em>*@
+
+            <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
+            <p><b> #= (Personeria.Descripcion == 'Física') ? 'Fecha de Nacimiento:' : 'Fecha de Fundación:' #</b> #= kendo.toString(kendo.parseDate(FechaDeNacimiento), "g") #</p>
+
+        </div>
+    </script>
+}

@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Lista de Talonarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista de Talonarios</h2>
+
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuVentas").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/talonarios",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 500,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de talonarios.</p>"
+                },
+                columns: [{
+                    field: "Timbrado",
+                    title: "Timbrado",
+                    width: 100,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "FechaInicioVigencia",
+                    title: "Fecha Inicio Vigencia",
+                    type: "date",
+                    format: "{0:dd/MM/yyyy}",
+                    width: 90
+                }, {
+                    field: "FechaFinVigencia",
+                    title: "Fecha Fin Vigencia",
+                    type: "date",
+                    format: "{0:dd/MM/yyyy}",
+                    width: 90
+                }, {
+                    field: "NumeroFacturaInicial",
+                    title: "N° Factura Inicial",
+                    width: 90,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "NumeroFacturaFinal",
+                    title: "N° Factura Final",
+                    width: 90,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "NumeroFacturaActual",
+                    title: "N° Factura Actual",
+                    width: 90,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "EstaActivo",
+                    title: "Estado",
+                    width: 100,
+                    template: "#= EstaActivo ? 'Activo' : 'Inactivo' #"
+                }]
+            });
+        });
+    </script>
+}

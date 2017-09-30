@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Lista de Tipos de Combustible";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista de Tipos de Combustible</h2>   
+
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuTaller").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/combustibles",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 300,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de tipos de combustibles.</p>"
+                },
+                columns: [{
+                    field: "Nombre",
+                    title: "Nombre"
+                }]
+            });           
+        });
+    </script>
+}

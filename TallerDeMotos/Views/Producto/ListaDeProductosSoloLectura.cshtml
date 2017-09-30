@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Lista de Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista De Productos</h2>
+
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+        <div id="details"></div>
+    </div>
+</div>
+
+@section Scripts{    
+    <script>
+        var wnd, detailsTemplate;
+        $(document).ready(function () {
+            $("#menuStock").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/productos",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },               
+                height: 550,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de productos.</p>"
+                },
+                columns: [{
+                    field: "Descripcion",
+                    title: "Descripción",
+                    width: 120,
+                }, {
+                    field: "Marca",
+                    title: "Marca",
+                    width: 90
+                }, {
+                    field: "ExistenciaInicial",
+                    title: "Existencia Inicial",
+                    width: 110,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "ExistenciaMinima",
+                    title: "Existencia Mínima",
+                    width: 110,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "ExistenciaActual",
+                    title: "Existencia Actual",
+                    width: 110,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "PrecioCosto",
+                    title: "Precio Costo",
+                    width: 90,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "PrecioVenta",
+                    title: "Precio Venta",
+                    width: 90,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "Iva",
+                    title: "Iva",
+                    width: 90,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }]
+            });
+        });
+    </script>
+}

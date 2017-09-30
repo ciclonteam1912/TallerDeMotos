@@ -23,7 +23,10 @@ namespace TallerDeMotos.Controllers
         // GET: Producto
         public ActionResult Index()
         {
-            return View("ListaDeProductos");
+            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller))
+                return View("ListaDeProductos");
+
+            return View("ListaDeProductosSoloLectura");
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]

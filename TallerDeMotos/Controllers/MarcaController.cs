@@ -24,7 +24,10 @@ namespace TallerDeMotos.Controllers
         // GET: Marca
         public ActionResult Index()
         {
-            return View("ListaDeMarcas");
+            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
+                return View("ListaDeMarcas");
+
+            return View("ListaDeMarcasSoloLectura");
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]

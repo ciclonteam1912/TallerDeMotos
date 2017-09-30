@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "Lista de Proveedores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista De Proveedores</h2>
+
+    <div id="example">
+        <div id="grid" style="width:100%"></div>
+        <div id="details"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var wnd, detailsTemplate;
+        $(document).ready(function () {
+            $("#menuCompras").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/proveedores",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 550,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de proveedores.</p>"
+                },
+                columns: [{
+                    field: "RazonSocial",
+                    title: "Razón Social",
+                    width: 130,
+                }, {
+                    field: "Ruc",
+                    title: "RUC",
+                    width: 90,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+                }, {
+                    field: "Contacto",
+                    title: "Contacto",
+                    width: 100,
+                }, {
+                    field: "Telefono",
+                    title: "Teléfono",
+                    width: 120
+                }, {
+                    field: "Direccion",
+                    title: "Dirección",
+                    width: 120
+                }, {
+                    command: {
+                        text: "Ver Detalles",
+                        click: showDetails
+                    },
+                    title: " ",
+                    width: "130px"
+                }]
+            }); 
+
+            wnd = $("#details")
+                        .kendoWindow({
+                            title: "Detalles del Proveedor",
+                            modal: true,
+                            visible: false,
+                            resizable: false,
+                            width: 350
+                        }).data("kendoWindow");
+            detailsTemplate = kendo.template($("#template").html());
+        });
+
+        function showDetails(e) {
+            e.preventDefault();
+
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            wnd.content(detailsTemplate(dataItem));
+            wnd.center().open();
+        }
+    </script>
+
+    <script type="text/x-kendo-template" id="template">
+
+        <div id="details-container">
+            <h2>#= RazonSocial #</h2>
+            @*<em>#= Title #</em>*@
+
+            <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
+            <p><b> Propietario</b> #= (Propietario == null) ? ' ' : Propietario #</p>
+        </div>
+    </script>
+}

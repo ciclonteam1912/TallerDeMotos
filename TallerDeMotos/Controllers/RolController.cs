@@ -69,6 +69,10 @@ namespace TallerDeMotos.Controllers
             var thisRole = _context.Roles
                 .Where(r => r.Id.Equals(id, StringComparison.CurrentCultureIgnoreCase))
                 .FirstOrDefault();
+
+            if (thisRole == null)
+                return RedirectToAction("Index");
+
             var viewModel = new RolViewModel(thisRole);
 
             return View(viewModel);

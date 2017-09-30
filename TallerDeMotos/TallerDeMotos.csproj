@@ -356,6 +356,10 @@
     <Compile Include="Migrations\201709290909192_CrearUsuarioYRolPorDefecto.Designer.cs">
       <DependentUpon>201709290909192_CrearUsuarioYRolPorDefecto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709300041041_AgregarColumnaIvaEnTablaProductos.cs" />
+    <Compile Include="Migrations\201709300041041_AgregarColumnaIvaEnTablaProductos.Designer.cs">
+      <DependentUpon>201709300041041_AgregarColumnaIvaEnTablaProductos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -2270,6 +2274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709290909192_CrearUsuarioYRolPorDefecto.resx">
       <DependentUpon>201709290909192_CrearUsuarioYRolPorDefecto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709300041041_AgregarColumnaIvaEnTablaProductos.resx">
+      <DependentUpon>201709300041041_AgregarColumnaIvaEnTablaProductos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

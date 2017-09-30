@@ -34,5 +34,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Range(0, int.MaxValue, ErrorMessage = "La existencia mínima debe ser mayor o igual a {1}")]
         [ExistenciaMinMenorExistenciaInicial]
         public int ExistenciaMinima { get; set; }
+
+        public byte Iva { get; set; }
     }
 }

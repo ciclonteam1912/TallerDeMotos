@@ -58,8 +58,17 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(p => p.ExistenciaMinima)
-                            @Html.TextBoxFor(p => p.ExistenciaMinima, new { @class = "form-control", placeholder = "Ingrese Existencia Mínima del Producto...", autocomplete = "off", type = "number", min = "0", max = "999", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.TextBoxFor(p => p.ExistenciaMinima, new { @class = "form-control", placeholder = "Ingrese Existencia Mínima del Producto...", autocomplete = "off", type = "number", min = "0", max = "99", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
                             @Html.ValidationMessageFor(p => p.ExistenciaMinima)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Iva)
+                            @Html.TextBoxFor(p => p.Iva, new { @class = "form-control", placeholder = "Ingrese Iva del Producto o Servicio...", autocomplete = "off", type = "number", min = "0", max = "99", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.ValidationMessageFor(p => p.Iva)
                         </div>
                     </div>
                 </div>

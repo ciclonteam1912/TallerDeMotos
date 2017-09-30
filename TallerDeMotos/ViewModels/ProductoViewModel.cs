@@ -25,6 +25,8 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Existencia Mínima")]
         public int? ExistenciaMinima { get; set; }
 
+        public byte? Iva { get; set; }
+
         public string Titulo
         {
             get
@@ -47,6 +49,7 @@ namespace TallerDeMotos.ViewModels
             PrecioVenta = producto.PrecioVenta;
             ExistenciaInicial = producto.ExistenciaInicial;
             ExistenciaMinima = producto.ExistenciaMinima;
+            Iva = producto.Iva;
         }
     }
 }

@@ -19,7 +19,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         @Html.LabelFor(r => r.Name)
-                        @Html.TextBoxFor(r => r.Name, new { @class = "form-control", maxlength = 50, autocomplete = "off" })
+                        @Html.TextBoxFor(r => r.Name, new { @class = "form-control", maxlength = 20, autocomplete = "off" })
                         @Html.ValidationMessageFor(r => r.Name)
                     </div>
                     @Html.HiddenFor(r => r.OriginalRoleName)
@@ -33,9 +33,10 @@
     }
 </div>
 
-<script>
+@section Scripts{
+    <script>
         $(document).ready(function () {
             $("#menuSeguridad").addClass('active');
         })
-</script>
+    </script>
 }

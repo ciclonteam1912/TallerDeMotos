@@ -1,0 +1,44 @@
+﻿@model TallerDeMotos.ViewModels.RolViewModel
+@{
+    ViewBag.Title = "Agregar Rol";
+}
+
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Agregar Rol</h2>
+
+    @using (Html.BeginForm())
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">Agregar Rol</div>
+            <div class="panel-body">
+                <div class="row">
+                    <h4>@Html.ValidationSummary(true, "¡Por favor solucione los siguientes errores!")</h4>
+                    @if (ViewBag.Message != "")
+                    {
+                        <p style="color: red">@ViewBag.Message</p>
+                    }
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(r => r.Name)
+                        @Html.TextBoxFor(r => r.Name, new { @class = "form-control", maxlength = 20, autocomplete = "off" })
+                        @Html.ValidationMessageFor(r => r.Name)
+                    </div>
+                    @Html.AntiForgeryToken()
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuSeguridad").addClass('active');
+        })
+    </script>
+}

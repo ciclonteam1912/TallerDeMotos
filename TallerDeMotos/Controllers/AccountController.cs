@@ -30,6 +30,12 @@ namespace TallerDeMotos.Controllers
             SignInManager = signInManager;
         }
 
+        public AccountController(ApplicationUserManager usrMgr)
+        {
+            this.UserManager = usrMgr;
+        }
+
+
         public ApplicationSignInManager SignInManager
         {
             get

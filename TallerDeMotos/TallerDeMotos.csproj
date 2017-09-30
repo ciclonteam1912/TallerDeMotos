@@ -240,6 +240,7 @@
     <Compile Include="Controllers\APIs\ModelosController.cs" />
     <Compile Include="Controllers\APIs\ProductosController.cs" />
     <Compile Include="Controllers\APIs\ProveedoresController.cs" />
+    <Compile Include="Controllers\APIs\RolesController.cs" />
     <Compile Include="Controllers\APIs\ServiciosBasicosController.cs" />
     <Compile Include="Controllers\APIs\TalonariosController.cs" />
     <Compile Include="Controllers\APIs\UsuariosController.cs" />
@@ -255,6 +256,7 @@
     <Compile Include="Controllers\ModeloController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
+    <Compile Include="Controllers\RolController.cs" />
     <Compile Include="Controllers\ServicioBasicoController.cs" />
     <Compile Include="Controllers\TalonarioController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -363,6 +365,7 @@
     <Compile Include="Models\AtributosDeValidacion\PrecioVentaMayorPrecioCosto.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />
+    <Compile Include="Models\IdentityManager.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\ModelosDeDominio\Aseguradora.cs" />
     <Compile Include="Models\ModelosDeDominio\Cargo.cs" />
@@ -391,6 +394,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ModeloViewModel.cs" />
     <Compile Include="ViewModels\ProductoViewModel.cs" />
+    <Compile Include="ViewModels\RolViewModel.cs" />
     <Compile Include="ViewModels\TalonarioViewModel.cs" />
     <Compile Include="ViewModels\VehiculoViewModel.cs" />
   </ItemGroup>
@@ -2181,6 +2185,10 @@
     <Content Include="Views\Producto\ProductoFormulario.cshtml" />
     <Content Include="Views\Producto\ListaDeProductos.cshtml" />
     <Content Include="Views\Usuario\ListaDeUsuarios.cshtml" />
+    <Content Include="Views\Rol\CrearRol.cshtml" />
+    <Content Include="Views\Rol\EditarRol.cshtml" />
+    <Content Include="Views\Rol\ManageUserRoles.cshtml" />
+    <Content Include="Views\Rol\ListaDeRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

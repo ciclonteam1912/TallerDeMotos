@@ -1,0 +1,235 @@
+﻿@{
+    ViewBag.Title = "Administrar roles de usuarios";
+}
+
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Administrar roles de usuarios</h2>
+    @Html.ActionLink("Crear nuevo rol", "CrearRol") | @Html.ActionLink("Administrar roles de usuarios", "ManageUserRoles")
+    <hr />
+    <h3>Agregar rol a usuario</h3>
+
+    <form id="agregarRolAUsuario">
+        <div class="row well">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Nombre de Usuario</label>
+                    <select id="usuario" class="form-control" required name="usuario">
+                        <option value="">Seleccione un usuario...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Nombre del Rol</label>
+                    <select id="rol" class="form-control" required name="rol">
+                        <option value="">Seleccione un rol...</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary pull-right">Guardar</button>
+            </div>
+        </div>
+    </form>
+    <hr />
+    <h3>Obtener roles para un usuario</h3>
+    <div class="row well">
+        <form id="obtenerRoles">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div class="form-group">
+                            <label>Nombre de Usuario</label>
+                            <select id="obtenerUsuario" class="form-control" required name="obtenerUsuario">
+                                <option value="">Seleccione un usuario...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button class="btn btn-primary pull-left">Obtener roles de este usuario</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ul id="rolesObtenidos"></ul>
+            </div>
+        </form>
+    </div>
+    <hr />
+    <h3>Eliminar rol de un usuario</h3>
+    <form id="eliminarRolAUsuario">
+        <div class="row well">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Nombre de Usuario</label>
+                    <select id="usuarioEliminarRol" class="form-control" required name="usuarioEliminarRol">
+                        <option value="">Seleccione un usuario...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Nombre del Rol</label>
+                    <select id="rolEliminarDeUsuario" class="form-control" required name="rolEliminarDeUsuario">
+                        <option value="">Seleccione un rol...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <button class="btn btn-primary pull-left">Eliminar rol de este usuario</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuSeguridad").addClass('active');
+            $.ajax({
+                type: "GET",
+                url: "/api/usuarios",
+                contentType: "application/json",
+                success: function (usuarios) {
+                    $.each(usuarios, function (i) {
+                        $("#usuario").append($('<option></option>').val(usuarios[i].Id).html(usuarios[i].UserName));
+                    });
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/api/roles",
+                contentType: "application/json",
+                success: function (roles) {
+                    $.each(roles, function (i) {
+                        $("#rol").append($('<option></option>').val(roles[i].Id).html(roles[i].Name));
+                    });
+                }
+            });
+
+
+            $.ajax({
+                type: "GET",
+                url: "/api/usuarios",
+                contentType: "application/json",
+                success: function (usuarios) {
+                    $.each(usuarios, function (i) {
+                        $("#obtenerUsuario").append($('<option></option>').val(usuarios[i].Id).html(usuarios[i].UserName));
+                    });
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/api/usuarios",
+                contentType: "application/json",
+                success: function (usuarios) {
+                    $.each(usuarios, function (i) {
+                        $("#usuarioEliminarRol").append($('<option></option>').val(usuarios[i].Id).html(usuarios[i].UserName));
+                    });
+                }
+            });
+
+            //Cascading Drop-down list.
+            $("#usuarioEliminarRol").change(function () {
+                var userName = $("#usuarioEliminarRol option:selected").text();
+                console.log(userName);
+                $("#rolEliminarDeUsuario").empty();
+                $("#rolEliminarDeUsuario").append($('<option></option>').val("").html('Seleccione un rol...'));
+                if ($("#usuarioEliminarRol").val() != "") {
+                    $.ajax({
+                        url: "@Url.Action("ObtenerRoles", "Rol")",
+                        method: "post",
+                        data: { UserName: userName },
+                        success: function (roles) {
+                            $.each(roles, function (i) {
+                                console.log(roles[i]);
+                                $("#rolEliminarDeUsuario").append($('<option></option>').val(roles[i]).html(roles[i]));
+                            })
+                        }
+                    });
+                }
+                return false;
+            });
+
+            $("#agregarRolAUsuario").submit(function (e) {
+                e.preventDefault();
+                var userName = $("#usuario option:selected").text();
+                var roleName = $("#rol option:selected").text();
+
+                $.ajax({
+                    url: "@Url.Action("RoleAddToUser", "Rol")",
+                    method: "post",
+                    data: { UserName: userName, RoleName: roleName }
+                })
+                .done(function () {
+                    console.log("done");
+                    toastr.success("El rol " + roleName + " fue asignado a " + userName + " con éxito.");
+                    $("#usuario").val("");
+                    $("#rol").val("");
+                })
+                .fail(function () {
+                    toastr.error("Rol no pudo ser asignado correctamente.");
+                });
+            });
+
+            $("#obtenerRoles").submit(function (e) {
+                e.preventDefault();
+                var userName = $("#obtenerUsuario option:selected").text();
+                var items = [];
+                $.ajax({
+                    url: "@Url.Action("ObtenerRoles", "Rol")",
+                    method: "post",
+                    data: { UserName: userName }
+                })
+                .done(function (roles) {
+                    $("#rolesObtenidos").empty();
+                    $("#rolesObtenidos").append("<h3>Roles de este Usuario<h3>");
+                    $.each(roles, function (i, item) {
+                        console.log(roles[i]);
+                        $("#rolesObtenidos").append("<li>" + roles[i] + "</li>");
+                    });
+                })
+                .fail(function () {
+
+                });
+            });
+
+            $("#eliminarRolAUsuario").submit(function (e) {
+                e.preventDefault();
+                var userName = $("#usuarioEliminarRol option:selected").text();
+                var roleName = $("#rolEliminarDeUsuario option:selected").text();
+
+                $.ajax({
+                    url: "@Url.Action("DeleteRoleForUser", "Rol")",
+                    method: "post",
+                    data: { UserName: userName, RoleName: roleName }
+                })
+                .done(function () {
+                    toastr.success("El rol " + roleName + " fue eliminado con éxito del usuario " + userName);
+                    $("#usuarioEliminarRol").val("");
+                    $("#rolEliminarDeUsuario").val("");
+                })
+                .fail(function () {
+                    toastr.error("Rol no pudo ser eliminado del usuario.");
+                });
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 5000,
+                "extendedTimeOut": 1000
+            }
+        });
+    </script>
+}

@@ -44,6 +44,9 @@ namespace TallerDeMotos.Models
         public DbSet<TipoMotor> TiposMotores { get; set; }
         public DbSet<Cilindrada> Cilindradas { get; set; }
         public DbSet<Producto> Productos { get; set; }
+        public DbSet<OrdenCompra> OrdenCompras { get; set; }
+        public DbSet<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
+        public DbSet<Estado> Estados { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -65,6 +68,9 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new TipoMotorConfiguracion());
             modelBuilder.Configurations.Add(new CilindradaConfiguracion());
             modelBuilder.Configurations.Add(new ProductoConfiguracion());
+            modelBuilder.Configurations.Add(new OrdenCompraConfiguracion());
+            modelBuilder.Configurations.Add(new OrdenCompraDetalleConfiguracion());
+            modelBuilder.Configurations.Add(new EstadoConfiguracion());
         }
 
         public static ApplicationDbContext Create()

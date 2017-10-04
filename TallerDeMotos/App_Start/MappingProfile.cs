@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TallerDeMotos.Dtos;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.App_Start
@@ -23,6 +24,10 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<ServicioBasico, ServicioBasico>();
             Mapper.CreateMap<Proveedor, Proveedor>();
             Mapper.CreateMap<Producto, Producto>();
+
+            //DTO a Dominio
+            Mapper.CreateMap<OrdenCompraDto, OrdenCompra>();
+            Mapper.CreateMap<OrdenCompraDetalleDto, OrdenCompraDetalle>();
         }
     }
 }

@@ -219,9 +219,12 @@
     <Compile Include="ConfiguracionDeEntidades\ClienteConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CombustibleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\EmpleadoConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\EstadoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FormaPagoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\MarcaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ModeloConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\OrdenCompraConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\OrdenCompraDetalleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\PersoneriaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ProductoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ProveedorConfiguracion.cs" />
@@ -238,6 +241,7 @@
     <Compile Include="Controllers\APIs\FormasPagoController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
+    <Compile Include="Controllers\APIs\OrdenComprasController.cs" />
     <Compile Include="Controllers\APIs\ProductosController.cs" />
     <Compile Include="Controllers\APIs\ProveedoresController.cs" />
     <Compile Include="Controllers\APIs\RolesController.cs" />
@@ -255,6 +259,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\ModeloController.cs" />
+    <Compile Include="Controllers\OrdenCompraController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\RolController.cs" />
@@ -262,6 +267,9 @@
     <Compile Include="Controllers\TalonarioController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VehiculoController.cs" />
+    <Compile Include="Dtos\NuevaOrdenCompraDto.cs" />
+    <Compile Include="Dtos\OrdenCompraDetalleDto.cs" />
+    <Compile Include="Dtos\OrdenCompraDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -361,6 +369,38 @@
     <Compile Include="Migrations\201709300041041_AgregarColumnaIvaEnTablaProductos.Designer.cs">
       <DependentUpon>201709300041041_AgregarColumnaIvaEnTablaProductos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709301939263_HacerNullableLasColumnasExistenciaInicialActualYMinimaEnTablaProductos.cs" />
+    <Compile Include="Migrations\201709301939263_HacerNullableLasColumnasExistenciaInicialActualYMinimaEnTablaProductos.Designer.cs">
+      <DependentUpon>201709301939263_HacerNullableLasColumnasExistenciaInicialActualYMinimaEnTablaProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709302228250_CreacionDeTablaOrdenCompras.cs" />
+    <Compile Include="Migrations\201709302228250_CreacionDeTablaOrdenCompras.Designer.cs">
+      <DependentUpon>201709302228250_CreacionDeTablaOrdenCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710010026487_CreacionDeTablaOrdenCompraDetalles.cs" />
+    <Compile Include="Migrations\201710010026487_CreacionDeTablaOrdenCompraDetalles.Designer.cs">
+      <DependentUpon>201710010026487_CreacionDeTablaOrdenCompraDetalles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710010035053_AgregarColumnaTotalEnTablaOrdenCompraDetalles.cs" />
+    <Compile Include="Migrations\201710010035053_AgregarColumnaTotalEnTablaOrdenCompraDetalles.Designer.cs">
+      <DependentUpon>201710010035053_AgregarColumnaTotalEnTablaOrdenCompraDetalles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710041520040_CreacionDeTablaEstados.cs" />
+    <Compile Include="Migrations\201710041520040_CreacionDeTablaEstados.Designer.cs">
+      <DependentUpon>201710041520040_CreacionDeTablaEstados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710041536479_CargarDatosEnLaTablaEstados.cs" />
+    <Compile Include="Migrations\201710041536479_CargarDatosEnLaTablaEstados.Designer.cs">
+      <DependentUpon>201710041536479_CargarDatosEnLaTablaEstados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710041547139_AgregarColumnaEstadoCodigoConValorPorDefectoEnLaTablaOrdenCompras.cs" />
+    <Compile Include="Migrations\201710041547139_AgregarColumnaEstadoCodigoConValorPorDefectoEnLaTablaOrdenCompras.Designer.cs">
+      <DependentUpon>201710041547139_AgregarColumnaEstadoCodigoConValorPorDefectoEnLaTablaOrdenCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710041603108_AgregarColumnaAseguradoraCodigoEnTablaOrdenCompras.cs" />
+    <Compile Include="Migrations\201710041603108_AgregarColumnaAseguradoraCodigoEnTablaOrdenCompras.Designer.cs">
+      <DependentUpon>201710041603108_AgregarColumnaAseguradoraCodigoEnTablaOrdenCompras.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -378,9 +418,12 @@
     <Compile Include="Models\ModelosDeDominio\Cliente.cs" />
     <Compile Include="Models\ModelosDeDominio\Combustible.cs" />
     <Compile Include="Models\ModelosDeDominio\Empleado.cs" />
+    <Compile Include="Models\ModelosDeDominio\Estado.cs" />
     <Compile Include="Models\ModelosDeDominio\FormaPago.cs" />
     <Compile Include="Models\ModelosDeDominio\Marca.cs" />
     <Compile Include="Models\ModelosDeDominio\Modelo.cs" />
+    <Compile Include="Models\ModelosDeDominio\OrdenCompra.cs" />
+    <Compile Include="Models\ModelosDeDominio\OrdenCompraDetalle.cs" />
     <Compile Include="Models\ModelosDeDominio\Personeria.cs" />
     <Compile Include="Models\ModelosDeDominio\Producto.cs" />
     <Compile Include="Models\ModelosDeDominio\Proveedor.cs" />
@@ -2207,6 +2250,7 @@
     <Content Include="Views\ServicioBasico\ListaDeServiciosBasicosSoloLectura.cshtml" />
     <Content Include="Views\Talonario\ListaDeTalonariosSoloLectura.cshtml" />
     <Content Include="Views\Vehiculo\ListaDeVehiculosSoloLectura.cshtml" />
+    <Content Include="Views\OrdenCompra\OrdenCompraFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2291,6 +2335,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709300041041_AgregarColumnaIvaEnTablaProductos.resx">
       <DependentUpon>201709300041041_AgregarColumnaIvaEnTablaProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709301939263_HacerNullableLasColumnasExistenciaInicialActualYMinimaEnTablaProductos.resx">
+      <DependentUpon>201709301939263_HacerNullableLasColumnasExistenciaInicialActualYMinimaEnTablaProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709302228250_CreacionDeTablaOrdenCompras.resx">
+      <DependentUpon>201709302228250_CreacionDeTablaOrdenCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710010026487_CreacionDeTablaOrdenCompraDetalles.resx">
+      <DependentUpon>201710010026487_CreacionDeTablaOrdenCompraDetalles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710010035053_AgregarColumnaTotalEnTablaOrdenCompraDetalles.resx">
+      <DependentUpon>201710010035053_AgregarColumnaTotalEnTablaOrdenCompraDetalles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710041520040_CreacionDeTablaEstados.resx">
+      <DependentUpon>201710041520040_CreacionDeTablaEstados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710041536479_CargarDatosEnLaTablaEstados.resx">
+      <DependentUpon>201710041536479_CargarDatosEnLaTablaEstados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710041547139_AgregarColumnaEstadoCodigoConValorPorDefectoEnLaTablaOrdenCompras.resx">
+      <DependentUpon>201710041547139_AgregarColumnaEstadoCodigoConValorPorDefectoEnLaTablaOrdenCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710041603108_AgregarColumnaAseguradoraCodigoEnTablaOrdenCompras.resx">
+      <DependentUpon>201710041603108_AgregarColumnaAseguradoraCodigoEnTablaOrdenCompras.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

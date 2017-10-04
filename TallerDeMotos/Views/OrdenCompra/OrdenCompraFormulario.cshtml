@@ -1,0 +1,352 @@
+﻿@{
+    ViewBag.Title = "Orden de Compra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_MenuVertical")
+<style>
+    span.error {
+        display: none;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <form id="ordenCompraFormulario">
+        <div class="row" id="ordenCabecera">
+            <h2>Orden de Compra</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Orden de Compra Nro.:</label>
+                        <input required type="number" id="ordenNro" class="form-control" autocomplete="off" min="0" max="999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" />
+                        <span class="error">Order no required</span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label style="display:block">Fecha de Emisión:</label>
+                        <input type="text" id="fechaDeEmision" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <label>Forma de Pago:</label>
+                    <select id="formaPago" class="form-control" required name="formaPago">
+                        <option value="">Seleccione una Forma de Pago...</option>
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <label>Aseguradora:</label>
+                    <select id="aseguradora" class="form-control" required name="aseguradora">
+                        <option value="">Seleccione una Aseguradora...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="ordenDetalle">
+            <h2>Orden de Compra Detalles</h2>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>IVA</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="mycontainer" id="mainrow">
+                        <td>
+                            <select id="productos" class="product form-control">
+                                <option value="">Selecciona un producto...</option>
+                            </select>   
+                            <span class="error">Selecciona un producto</span>      
+                            <a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none"><i class="fa fa-plus"></i>Agregar Producto</a>                                                                           
+                        </td>
+                        <td>
+                            <input type="number" id="precio" class="form-control" />
+                        </td>
+                        <td>
+                            <input type="number" id="cantidad" class="quantity form-control" />
+                            <span class="error">Cantidad no válida</span>
+                        </td>
+                        <td>
+                            <input type="number" id="iva" class="iva form-control" />
+                            <span class="error">IVA no válido</span>
+                        </td>
+                        @*<td>
+                            <input type="number" id="total" class="total form-control" />
+                            <span class="error">Total no válido</span>
+                        </td>*@
+                        <td>
+                            <input type="button" id="add" value="Agregar" style="width:80px" class="btn btn-success" />
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <div id="orderItems" style="display:none">
+                <table class="table table-responsive" id="ordenCompraDetalle">
+                    <thead>
+                        <tr>
+                            <th style="display: none">Producto Id</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>IVA</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <span id="orderItemError" style="color:red"></span>
+                <div class="form-group">
+                    <label>Total a Pagar: </label>
+                    <input type="text" name="totalAPagar" id="totalAPagar" value="" readonly class="form-control" />
+                </div>
+                <div style="padding:10px 0; text-align:right">
+                    <button id="submit" class="btn btn-warning" style="padding:10px 20px">Guardar Orden</button>
+                </div>
+            </div>            
+        </div>   
+    </form>      
+</div>
+
+@section Scripts{
+    <script>
+        function maxLengthCheck(object) {
+            if (object.value.length > object.max.length)
+                object.value = object.value.slice(0, object.max.length);
+        }
+
+        function probar() {
+            $('#ordenCompraDetalle tr.detalle').each(function (index, tr) {
+                var lines = $('td', tr).map(function (index, td) {
+                    return $(td).text();
+                });
+                    
+                // Here lines will contain an array of all td values for the current row:
+                // like ['value 1', 'value 2', 'value 3']
+                console.log(lines);
+
+            });
+        }
+
+        $(document).ready(function () {
+            $("#menuCompras").addClass('active');
+
+            var vm = {
+                OrdenCompra: {},
+                OrdenCompraDetalles: []
+            }
+
+            var total = 0;
+            var subTotal = 0;
+            var count = 0;
+            //Cabecera orden de compra
+            $.ajax({
+                type: "GET",
+                url: "/api/formasPago",
+                contentType: "application/json",
+                success: function (formasPago) {
+                    $.each(formasPago, function (i) {
+                        $("#formaPago").append($('<option></option>').val(formasPago[i].Id).html(formasPago[i].Nombre));
+                    });
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/api/aseguradoras",
+                contentType: "application/json",
+                success: function (aseguradoras) {
+                    $.each(aseguradoras, function (i) {
+                        $("#aseguradora").append($('<option></option>').val(aseguradoras[i].Id).html(aseguradoras[i].Nombre));
+                    });
+                }
+            });
+
+            $("#fechaDeEmision").kendoDateTimePicker({
+                value: new Date(),
+                culture: "es-ES",
+                dateInput: true,
+                attributes: {
+                   "width": "68%"
+                }
+            });
+
+            //Detalle orden de compra
+            $.ajax({
+                type: "GET",
+                url: "/api/productos",
+                contentType: "application/json",
+                success: function (productos) {
+                    $.each(productos, function (i) {
+                        $("#productos").append($('<option></option>').val(productos[i].Id).html(productos[i].Descripcion));
+                    });
+                }
+            });
+
+            $("#productos").change(function () {
+                var productoId = $("#productos").val();
+                $.ajax({
+                    url: "/api/productos/" + productoId,
+                    contentType: "application/json",
+                    method: "GET",
+                    success: function (data) {
+                        $(data).each(function (index, item) {
+                            $("#productos").val(item.Id);
+                            $("#precio").val(item.PrecioCosto);
+                            $("#iva").val(item.Iva);
+                        });
+                    }                    
+                });                               
+            });
+
+            $("#iva").prop("disabled", true);
+            $("#precio").prop("disabled", true);
+            $("#submit").prop("disabled", true);
+
+            $("#add").click(function(){                
+                var todoEsValido = true;
+                
+                if ($("#productos").val() == 0) {                    
+                    todoEsValido = false;
+                    $('#productos').siblings('span.error').css('display', 'block');
+                }
+                else {
+                    $('#productos').siblings('span.error').css('display', 'none');
+                }
+
+                if ($("#cantidad").val() == 0) {
+                    todoEsValido = false;
+                    $('#cantidad').siblings('span.error').css('visibility', 'visible');
+                }
+                else {
+                    $('#cantidad').siblings('span.error').css('visibility', 'hidden');
+                }
+
+                if (todoEsValido) {
+                    $("#submit").prop("disabled", false);
+                    $("#orderItems").show();
+                    count++;
+                    total = ($("#precio").val() * $("#cantidad").val()) + ((($("#precio").val() * $("#cantidad").val()) * $("#iva").val()) / 100);
+                    subTotal = subTotal + total;
+                    $("#totalAPagar").val(subTotal);
+                    var ordenCompra = '<tr class="detalle">' +
+                        '<td style="display:none">' + $("#productos").val() + '</td>' +
+                        '<td>' + $("#productos option:selected").text() + '</td>' +
+                        '<td>' + $("#precio").val() + '</td>' +
+                        '<td>' + $("#cantidad").val() + '</td>' +
+                        '<td>' + $("#iva").val() + '</td>' +
+                        '<td>' + total + '</td>' +
+                        '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
+                        '</tr>';
+
+                    $("#ordenCompraDetalle tbody").append(ordenCompra);
+
+                    $("tbody").on("click", ".eliminar", function () {
+                        valor = $(this).closest("tr").find("td").eq(5).text();
+                        //console.log(valor);
+                        $(this).parents("tr").fadeOut("normal", function () {
+                            $(this).remove();
+                            subTotal = subTotal - valor;
+                            $("#totalAPagar").val(subTotal);
+                        });
+
+                        if ($("#totalAPagar").val() == 0)
+                            console.log("ok");
+                            $("#submit").prop("disabled", true);
+                        //probar();
+                    });
+
+
+                    $("#productos").val("");
+                    $("#precio").val("");
+                    $("#iva").val("");
+
+                    $("#cantidad").val("");
+
+                    //probar();
+                }
+            });            
+
+            $("#ordenCompraFormulario").submit(function (e) {
+                e.preventDefault();
+
+                vm.OrdenCompra = {
+                    OrdenCompraNumero: $("#ordenNro").val(),
+                    FechaDeEmision: $("#fechaDeEmision").val(),
+                    FormaPagoId: $("#formaPago").val(),
+                    SubTotal: $("#totalAPagar").val(),
+                    AseguradoraId: $("#aseguradora").val()
+                }
+
+                $('#ordenCompraDetalle tr.detalle').each(function (index, tr) {
+
+                    var lines = $('td', tr).map(function (index, td) {
+
+                        if (index != 1 && index !=6)
+                            return $(td).text();                            
+                    });
+                    console.log(lines);
+                    vm.OrdenCompraDetalles.push({
+                        ProductoId: lines[0],
+                        Cantidad: lines[2],
+                        Total: lines[4]
+                    });
+
+                });
+
+                $.ajax({
+                    url: "/api/ordenCompras",
+                    method: "post",
+                    data: vm
+                })
+                .done(function (ordenCompra) {
+                    if (ordenCompra.Success)
+                        toastr.success(ordenCompra.Message);
+                    else {
+                        if (ordenCompra.Message == "IX_OrdenCompraNumero")
+                            toastr.error("<p class='eliminar'>No se pudo crear la Orden de Compra. El número de Orden de Compra con el valor '" + $("#ordenNro").val() + "' ya existe.</p>");
+                        else
+                            toastr.error("<p>Ocurrió algo inesperado</p>");
+                    }
+                    //$("#estado").val("");
+                    //$("#productos").val("");
+                    //$("#vehiculo").val("");
+                    //$("#clientes").val("");
+                    //$("#presupuestoDetalle tbody").empty();
+                    //$("#totalAPagar").val("");
+                    //subTotal = 0;
+
+                    //vm = {
+                    //    OrdenCompra: {},
+                    //    OrdenCompraDetalles: []
+                    //}
+
+                    //validator.resetForm();
+                });
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 6000,
+                "extendedTimeOut": 1000
+            }
+        });
+    </script>    
+}

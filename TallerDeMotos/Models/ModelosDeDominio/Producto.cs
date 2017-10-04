@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
@@ -26,15 +27,22 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Display(Name = "Existencia Inicial")]
         [Range(0, int.MaxValue, ErrorMessage = "La existencia inicial debe ser mayor o igual a {1}")]
-        public int ExistenciaInicial { get; set; }
+        public int? ExistenciaInicial { get; set; }
 
-        public int ExistenciaActual { get; set; }
+        public int? ExistenciaActual { get; set; }
 
         [Display(Name = "Existencia Mínima")]
         [Range(0, int.MaxValue, ErrorMessage = "La existencia mínima debe ser mayor o igual a {1}")]
         [ExistenciaMinMenorExistenciaInicial]
-        public int ExistenciaMinima { get; set; }
+        public int? ExistenciaMinima { get; set; }
 
         public byte Iva { get; set; }
+
+        public ICollection<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
+
+        public Producto()
+        {
+            OrdenCompraDetalles = new HashSet<OrdenCompraDetalle>();
+        }
     }
 }

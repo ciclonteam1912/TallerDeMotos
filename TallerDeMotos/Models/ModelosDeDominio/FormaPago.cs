@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -14,6 +15,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
+        public ICollection<OrdenCompra> OrdenCompras { get; set; }
+
         public string Titulo
         {
             get
@@ -24,7 +27,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public FormaPago()
         {
-
+            OrdenCompras = new HashSet<OrdenCompra>();
         }
 
         public FormaPago(FormaPago formaPago)
@@ -32,6 +35,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
             Id = formaPago.Id;
             Nombre = formaPago.Nombre;
             Descripcion = formaPago.Descripcion;
+            OrdenCompras = new HashSet<OrdenCompra>();
         }
     }
 }

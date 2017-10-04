@@ -41,9 +41,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public ICollection<Vehiculo> Vehiculos { get; set; }
 
+        public ICollection<OrdenCompra> OrdenCompras { get; set; }
+
         public Aseguradora()
         {
-            Vehiculos = new Collection<Vehiculo>();
+            Vehiculos = new HashSet<Vehiculo>();
+            OrdenCompras = new HashSet<OrdenCompra>();
         }
 
         public Aseguradora(Aseguradora aseguradora)
@@ -55,7 +58,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
             Direccion = aseguradora.Direccion;
             Telefono = aseguradora.Telefono;
             CorreoElectronico = aseguradora.CorreoElectronico;
-            Vehiculos = new Collection<Vehiculo>();
+            Vehiculos = new HashSet<Vehiculo>();
+            OrdenCompras = new HashSet<OrdenCompra>();
         }
     }
 }

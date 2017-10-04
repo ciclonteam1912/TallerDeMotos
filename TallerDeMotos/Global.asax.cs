@@ -11,6 +11,7 @@ namespace TallerDeMotos
     {
         protected void Application_Start()
         {
+            Telerik.Reporting.Services.WebApi.ReportsControllerConfiguration.RegisterRoutes(System.Web.Http.GlobalConfiguration.Configuration);
             Mapper.Initialize(c => c.AddProfile<MappingProfile>());
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings
                 .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

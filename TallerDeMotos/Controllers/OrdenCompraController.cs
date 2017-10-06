@@ -13,5 +13,10 @@ namespace TallerDeMotos.Controllers
         {
             return View("OrdenCompraFormulario");
         }
+
+        public ActionResult OrdenCompraReport()
+        {
+            return View();
+        }
     }
 }

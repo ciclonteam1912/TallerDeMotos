@@ -113,6 +113,8 @@
                 </div>
                 <div style="padding:10px 0; text-align:right">
                     <button id="submit" class="btn btn-warning" style="padding:10px 20px">Guardar Orden</button>
+                    @Html.ActionLink("Imprimir Orden", "OrdenCompraReport", "OrdenCompra", new { @class = "btn btn-primary" })
+                    @*<a id="imprimirOrden" href="#" class="btn btn-primary">Imprimir Orden</a>*@
                 </div>
             </div>            
         </div>   
@@ -196,6 +198,7 @@
 
             $("#productos").change(function () {
                 var productoId = $("#productos").val();
+                //console.log(productoId);
                 $.ajax({
                     url: "/api/productos/" + productoId,
                     contentType: "application/json",
@@ -333,6 +336,20 @@
                     //}
 
                     //validator.resetForm();
+                });               
+            });
+
+            $("#imprimirOrden").click(function () {
+                console.log($("#ordenNro").val());
+                var id = $("#ordenNro").val();
+                $.ajax({
+                    url: "@Url.Action("OrdenCompraReport", "OrdenCompra")",
+                    type: "get",
+                    data: { id: id },
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        console.log("success");
+                    }
                 });
             });
 

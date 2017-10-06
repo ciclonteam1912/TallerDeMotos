@@ -29,7 +29,7 @@ namespace TallerDeMotos.Controllers.APIs
         }
 
         [HttpGet]
-        public IHttpActionResult ObtenerProducto(int id)
+        public IHttpActionResult GetProducto(int id)
         {
             var producto = _context.Productos.SingleOrDefault(p => p.Id == id);
 

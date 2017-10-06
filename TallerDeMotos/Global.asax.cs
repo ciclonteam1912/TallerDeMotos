@@ -11,13 +11,13 @@ namespace TallerDeMotos
     {
         protected void Application_Start()
         {
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             Telerik.Reporting.Services.WebApi.ReportsControllerConfiguration.RegisterRoutes(System.Web.Http.GlobalConfiguration.Configuration);
             Mapper.Initialize(c => c.AddProfile<MappingProfile>());
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings
                 .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             GlobalConfiguration.Configuration.Formatters
-                .Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+                .Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);            
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

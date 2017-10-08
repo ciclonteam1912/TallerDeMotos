@@ -111,10 +111,8 @@
                     <label>Total a Pagar: </label>
                     <input type="text" name="totalAPagar" id="totalAPagar" value="" readonly class="form-control" />
                 </div>
-                <div style="padding:10px 0; text-align:right">
+                <div id="footerOrden" style="padding:10px 0; text-align:right">
                     <button id="submit" class="btn btn-warning" style="padding:10px 20px">Guardar Orden</button>
-                    @Html.ActionLink("Imprimir Orden", "OrdenCompraReport", "OrdenCompra", new { @class = "btn btn-primary" })
-                    @*<a id="imprimirOrden" href="#" class="btn btn-primary">Imprimir Orden</a>*@
                 </div>
             </div>            
         </div>   
@@ -128,19 +126,6 @@
                 object.value = object.value.slice(0, object.max.length);
         }
 
-        function probar() {
-            $('#ordenCompraDetalle tr.detalle').each(function (index, tr) {
-                var lines = $('td', tr).map(function (index, td) {
-                    return $(td).text();
-                });
-                    
-                // Here lines will contain an array of all td values for the current row:
-                // like ['value 1', 'value 2', 'value 3']
-                console.log(lines);
-
-            });
-        }
-
         $(document).ready(function () {
             $("#menuCompras").addClass('active');
 
@@ -152,6 +137,7 @@
             var total = 0;
             var subTotal = 0;
             var count = 0;
+
             //Cabecera orden de compra
             $.ajax({
                 type: "GET",
@@ -314,27 +300,28 @@
                     data: vm
                 })
                 .done(function (ordenCompra) {
-                    if (ordenCompra.Success)
+                    if (ordenCompra.Success){
                         toastr.success(ordenCompra.Message);
+                        $("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompra/OrdenCompraReport?ordenNro=' + $("#ordenNro").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>')
+                        $("#ordenNro").val("");
+                        $("#formaPago").val("");
+                        $("#aseguradora").val("");
+                        $("#ordenCompraDetalle tbody").empty();
+                        $("#totalAPagar").val("");
+                        subTotal = 0;
+
+                        vm = {
+                            OrdenCompra: {},
+                            OrdenCompraDetalles: []
+                        }
+
+                    }
                     else {
                         if (ordenCompra.Message == "IX_OrdenCompraNumero")
                             toastr.error("<p class='eliminar'>No se pudo crear la Orden de Compra. El número de Orden de Compra con el valor '" + $("#ordenNro").val() + "' ya existe.</p>");
                         else
                             toastr.error("<p>Ocurrió algo inesperado</p>");
                     }
-                    //$("#estado").val("");
-                    //$("#productos").val("");
-                    //$("#vehiculo").val("");
-                    //$("#clientes").val("");
-                    //$("#presupuestoDetalle tbody").empty();
-                    //$("#totalAPagar").val("");
-                    //subTotal = 0;
-
-                    //vm = {
-                    //    OrdenCompra: {},
-                    //    OrdenCompraDetalles: []
-                    //}
-
                     //validator.resetForm();
                 });               
             });

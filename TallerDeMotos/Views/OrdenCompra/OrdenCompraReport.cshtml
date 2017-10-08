@@ -39,8 +39,46 @@
 
 </head>
 <body>
-  
-@(Html.TelerikReporting().ReportViewer()
+    @*<label>Orden de Compra Nro.:</label>
+    <input type="number" id="ordenNro"/>*@
+    @*<div id="invoiceIdSelector">
+        <label for="invoiceId">Invoices</label>
+        <select id="invoiceId" title="Select the Invoice ID">
+            <option value="1" selected="selected">1</option>
+        </select>
+    </div>*@
+
+    <div id="reportViewer1">
+        loading...
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @*$("#invoiceId").append($('<option></option>').val(@ViewBag.OrdenNro).html(@ViewBag.OrdenNro));*@
+
+            @*$("#invoiceId").val(@ViewBag.OrdenNro);*@
+            $("#reportViewer1").telerik_ReportViewer({
+                    serviceUrl: "../api/reports/",
+                    reportSource: {
+                        report: "OrdenCompra.trdp",
+                        parameters: { OrdenNro: @ViewBag.OrdenNro }
+                    },
+            });
+            //$("input.k-textbox.trv-parameter-editor-number").val() = 1;
+          });
+
+            $('#invoiceId').change(function () {
+                var viewer = $("#reportViewer1").data("telerik_ReportViewer");
+                viewer.reportSource({
+                    report: viewer.reportSource().report,
+                    parameters: { OrdenNro: $(this).val() }
+                });
+                //setting the HTML5 Viewer's reportSource, causes a refresh automatically
+                //if you need to force a refresh for other case, use:
+                //viewer.refreshReport();
+            });
+    </script>
+@*@(Html.TelerikReporting().ReportViewer()
         // Each report viewer must have an id - it will be used by the initialization script
         // to find the element and initialize the report viewer.
         .Id("reportViewer1")
@@ -72,7 +110,7 @@
         .PersistSession(false)
         // Sets the print mode of the viewer.
         .PrintMode(PrintMode.AutoSelect)
-)
+)*@
 
 </body>
 </html>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace TallerDeMotos.Controllers
 {
@@ -14,8 +10,10 @@ namespace TallerDeMotos.Controllers
             return View("OrdenCompraFormulario");
         }
 
-        public ActionResult OrdenCompraReport()
+        public ActionResult OrdenCompraReport(int ordenNro = 0)
         {
+            if (ordenNro != 0)
+                ViewBag.OrdenNro = ordenNro;
             return View();
         }
     }

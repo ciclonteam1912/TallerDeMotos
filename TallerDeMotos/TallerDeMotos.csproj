@@ -245,6 +245,7 @@
     <Compile Include="Controllers\APIs\FormasPagoController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
+    <Compile Include="Controllers\APIs\OrdenCompraDetallesController.cs" />
     <Compile Include="Controllers\APIs\OrdenComprasController.cs" />
     <Compile Include="Controllers\APIs\ProductosController.cs" />
     <Compile Include="Controllers\APIs\ProveedoresController.cs" />
@@ -2265,6 +2266,7 @@
     <Content Include="Views\Talonario\ListaDeTalonariosSoloLectura.cshtml" />
     <Content Include="Views\Vehiculo\ListaDeVehiculosSoloLectura.cshtml" />
     <Content Include="Views\OrdenCompra\OrdenCompraFormulario.cshtml" />
+    <Content Include="Views\OrdenCompra\ListaDeOrdenDeCompras.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

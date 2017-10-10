@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using TallerDeMotos.Models;
 
 namespace TallerDeMotos.Controllers
 {
@@ -7,7 +8,9 @@ namespace TallerDeMotos.Controllers
         // GET: OrdenCompra
         public ActionResult Index()
         {
-            return View("OrdenCompraFormulario");
+            if (User.IsInRole(RoleName.Administrador))
+                return View("ListaDeOrdenDeCompras");
+            return View("ListaDeOrdenDeComprasSoloLectura");
         }
 
         public ActionResult OrdenCompraReport(int ordenNro = 0)

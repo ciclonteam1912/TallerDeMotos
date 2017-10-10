@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using System;
+using System.Data.Entity;
+using System.Threading.Tasks;
 using System.Web.Http;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
@@ -14,6 +16,24 @@ namespace TallerDeMotos.Controllers.APIs
         public OrdenComprasController()
         {
             _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
+        [Authorize(Roles = RoleName.Administrador)]
+        [HttpGet]
+        public async Task<IHttpActionResult> ObtenerOrdenDeCompras()
+        {
+            var ordenCompras = await _context.OrdenCompras
+                .Include(oc => oc.FormaPago)
+                .Include(oc => oc.Aseguradora)
+                .Include(oc => oc.Estado)
+                .ToListAsync();
+
+            return Ok(ordenCompras);
         }
 
         [Authorize(Roles = RoleName.Administrador)]

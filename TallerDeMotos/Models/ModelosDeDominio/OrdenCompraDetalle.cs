@@ -15,5 +15,20 @@
         public int Cantidad { get; set; }
 
         public int Total { get; set; }
+
+        public OrdenCompraDetalle()
+        {
+
+        }
+
+        public OrdenCompraDetalle(int id, string prod, int cant, int precio, byte iva, int total)
+        {
+            OrdenCompraId = id;
+            Producto.Descripcion = prod;
+            Cantidad = cant;
+            Producto.PrecioCosto = precio;
+            Producto.Iva = iva;
+            Total = total;
+        }
     }
 }

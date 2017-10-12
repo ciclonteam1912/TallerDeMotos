@@ -88,6 +88,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -242,6 +243,7 @@
     <Compile Include="Controllers\APIs\ClientesController.cs" />
     <Compile Include="Controllers\APIs\CombustiblesController.cs" />
     <Compile Include="Controllers\APIs\EmpleadosController.cs" />
+    <Compile Include="Controllers\APIs\EstadosController.cs" />
     <Compile Include="Controllers\APIs\FormasPagoController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
@@ -273,6 +275,9 @@
     <Compile Include="Controllers\TalonarioController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VehiculoController.cs" />
+    <Compile Include="Dtos\AseguradoraDto.cs" />
+    <Compile Include="Dtos\EstadoDto.cs" />
+    <Compile Include="Dtos\FormaPagoDto.cs" />
     <Compile Include="Dtos\NuevaOrdenCompraDto.cs" />
     <Compile Include="Dtos\OrdenCompraDetalleDto.cs" />
     <Compile Include="Dtos\OrdenCompraDto.cs" />
@@ -438,6 +443,7 @@
     <Compile Include="Models\ModelosDeDominio\TipoDocumento.cs" />
     <Compile Include="Models\ModelosDeDominio\TipoMotor.cs" />
     <Compile Include="Models\ModelosDeDominio\Vehiculo.cs" />
+    <Compile Include="Models\OrdenCompraServicio.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />

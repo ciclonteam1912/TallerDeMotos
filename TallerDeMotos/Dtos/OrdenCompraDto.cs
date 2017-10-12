@@ -10,11 +10,17 @@ namespace TallerDeMotos.Dtos
 
         public DateTime FechaDeEmision { get; set; }
 
+        public FormaPagoDto FormaPago { get; set; }
+
         public byte FormaPagoId { get; set; }
 
         public int SubTotal { get; set; }
 
+        public EstadoDto Estado { get; set; }
+
         public byte EstadoId { get; set; }
+
+        public AseguradoraDto Aseguradora { get; set; }
 
         public byte AseguradoraId { get; set; }
     }

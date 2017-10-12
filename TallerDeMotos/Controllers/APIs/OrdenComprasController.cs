@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using TallerDeMotos.Dtos;
@@ -25,13 +26,14 @@ namespace TallerDeMotos.Controllers.APIs
 
         [Authorize(Roles = RoleName.Administrador)]
         [HttpGet]
-        public async Task<IHttpActionResult> ObtenerOrdenDeCompras()
+        public IHttpActionResult ObtenerOrdenDeCompras()
         {
-            var ordenCompras = await _context.OrdenCompras
+            var ordenCompras =  _context.OrdenCompras
                 .Include(oc => oc.FormaPago)
                 .Include(oc => oc.Aseguradora)
                 .Include(oc => oc.Estado)
-                .ToListAsync();
+                .ToList()
+                .Select(Mapper.Map<OrdenCompra, OrdenCompraDto>);
 
             return Ok(ordenCompras);
         }

@@ -32,7 +32,7 @@ namespace TallerDeMotos.Models
                 OrdenCompraNumero = oc.OrdenCompraNumero,
                 FechaDeEmision = oc.FechaDeEmision,
                 FormaPagoId = oc.FormaPagoId,
-                AseguradoraId = oc.AseguradoraId,
+                ProveedorId = oc.ProveedorId,
                 SubTotal = oc.SubTotal,
                 EstadoId = oc.EstadoId,
                 Estado = new EstadoDto()
@@ -55,8 +55,8 @@ namespace TallerDeMotos.Models
                 if (target != null)
                 {
                     target.OrdenCompraNumero = ordenCompraDto.OrdenCompraNumero;
-                    target.FechaDeEmision = ordenCompraDto.FechaDeEmision;
-                    target.AseguradoraId = ordenCompraDto.AseguradoraId;
+                    target.FechaDeEmision = DateTime.Now;
+                    target.ProveedorId = ordenCompraDto.ProveedorId;
                     target.FormaPagoId = ordenCompraDto.FormaPagoId;
                     target.SubTotal = ordenCompraDto.SubTotal;
                     target.EstadoId = ordenCompraDto.EstadoId;
@@ -67,7 +67,7 @@ namespace TallerDeMotos.Models
                     entity.Id = target.Id;
                     entity.OrdenCompraNumero = target.OrdenCompraNumero;
                     entity.FechaDeEmision = target.FechaDeEmision;
-                    entity.AseguradoraId = target.AseguradoraId;
+                    entity.ProveedorId = target.ProveedorId;
                     entity.FormaPagoId = target.FormaPagoId;
                     entity.SubTotal = target.SubTotal;
                     entity.EstadoId = target.EstadoId;

@@ -17,7 +17,7 @@ namespace TallerDeMotos
                         "~/Scripts/toastr.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
-                "~/Scripts/kendo/jquery.min.js",
+                //"~/Scripts/kendo/jquery.min.js",
                 "~/Scripts/kendo/kendo.all.min.js",
                 "~/Scripts/kendo/messages/kendo.messages.es-ES.min.js",
                 "~/Scripts/kendo/cultures/kendo.culture.es-ES.min.js",

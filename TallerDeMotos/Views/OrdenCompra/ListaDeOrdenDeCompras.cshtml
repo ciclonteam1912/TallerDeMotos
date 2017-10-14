@@ -45,7 +45,7 @@
                             FormaPago: {
                                 editable: false
                             },
-                            Aseguradora: {
+                            Proveedor: {
                                 editable: false
                             },
                             SubTotal: {
@@ -72,7 +72,7 @@
                 detailInit: detailInit,
                 columns: [
                     {
-                        template: "<a href='/Cliente/EditarCliente/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                        template: "<a href='/OrdenCompra/EditarOrdenCompraDetalle/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
                         field: "Id",
                         title: "&nbsp;",
                         filterable: false,
@@ -100,10 +100,10 @@
                         template: "#=FormaPago.Nombre#"
                     },
                     {
-                        field: "Aseguradora",
-                        title: "Aseguradora",
+                        field: "Proveedor",
+                        title: "Proveedor",
                         width: "110px",
-                        template: "#=Aseguradora.Nombre#"
+                        template: "#=Proveedor.RazonSocial#"
                     },
                     {
                         field: "SubTotal",
@@ -168,7 +168,7 @@
                     { field: "Cantidad", title: "Cantidad", width: "100px" },
                     { field: "Producto.PrecioCosto", title: "Precio Unitario", width: "110px", format: "{0:n}" },
                     { field: "Producto.Iva", title: "Iva", width: "60px" },
-                    { field: "Total", title: "Total", width: "300px", width: "110px", format: "{0:n}" }
+                    { field: "Total", title: "Total", width: "110px", format: "{0:n}" }
                 ]
             });
         }

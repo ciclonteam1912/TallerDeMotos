@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "Editar Orden de Compra Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Editar Orden de Compra Detalles</h2>
+
+    <input type="number"  value="@ViewBag.Id" id="ordenNro" style="display:none"/>
+
+    <div id="example">
+        <div id="grid">
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuCompras").addClass('active');
+            $("#ordenNro").hide();
+
+            var value = $("#ordenNro").val();
+            console.log(value);
+
+            var dataSource = new kendo.data.DataSource({
+                    transport: {
+                        read:  {
+                            url: "/api/OrdenCompraDetalles/",
+                            dataType: "json"
+                        },
+                        update: {
+                            url: "/Products/Update",
+                            dataType: "jsonp"
+                        },
+                        destroy: {
+                            url: "/Products/Destroy",
+                            dataType: "jsonp"
+                        },
+                        create: {
+                            url:"/Products/Create",
+                            dataType: "jsonp"
+                        },
+                        parameterMap: function(options, operation) {
+                            if (operation !== "read" && options.models) {
+                                return {models: kendo.stringify(options.models)};
+                            }
+                        }
+                    },
+                    batch: true,
+                    pageSize: 20,
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                Id: { editable: false},
+                                OrdenCompraId : { editable: false },
+                                ProductoId: { editable: false },
+                                "Producto.Descripcion": { editable: false },
+                                Cantidad: { type: "number", validation: { required: true, min: 1} },
+                                "Producto.PrecioCosto": { editable: false },
+                                "Producto.Iva": {  editable: false },
+                                Total: { type: "number", editable: false }}
+                            }
+                        }
+                    });
+
+            var grid = $("#grid").kendoGrid({
+                dataSource: dataSource,
+                navigatable: true,
+                pageable: true,
+                height: 550,
+                toolbar: ["create", "save", "cancel"],
+                columns: [
+                    { field: "Id", title: "Cod. Detalle",  width: 90 },
+                    { field: "ProductoId", title: "Producto Cod.", width: 90 },
+                    { field: "Producto.Descripcion", title: "Descripción", width: 150 },
+                    { field: "Cantidad", title: "Cantidad", width: 90 },                    
+                    { field: "Producto.PrecioCosto", title: "Precio Unitario", width: 120, format: "{0:n}" },
+                    { field: "Producto.Iva", title: "Iva", width: 70 },
+                    {
+                        field: "Total",
+                        title: "Total",
+                        width: 120,
+                        format: "{0:n}",
+                        editor: function (cont, options) {
+                            $("<span>" + options.model.Total + "</span>").appendTo(cont);
+                        }
+                    },
+                    { command: "destroy", title: "&nbsp;", width: 100 }],
+                editable: true,
+                save: function (data) {
+                    console.log(data);
+                    if (data.values.Cantidad) {
+                        var test = data.model.set("Total", data.values.Cantidad * 2);
+                    }
+                }
+            });
+
+            if (value) {
+                grid.data("kendoGrid").dataSource.filter({ field: "OrdenCompraId", operator: "eq", value: value });
+            } else {
+                grid.data("kendoGrid").dataSource.filter({});
+            }
+        });
+    </script>    
+}

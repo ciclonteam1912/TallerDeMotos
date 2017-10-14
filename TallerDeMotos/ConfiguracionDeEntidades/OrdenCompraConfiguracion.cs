@@ -23,8 +23,9 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(oc => oc.EstadoId)
                 .HasColumnName("EstadoCodigo");
 
-            Property(oc => oc.AseguradoraId)
-                .HasColumnName("AseguradoraCodigo");
+            Property(oc => oc.ProveedorId)
+                .HasColumnName("ProveedorCodigo")
+                .HasColumnOrder(3);
 
             HasRequired(oc => oc.FormaPago)
                 .WithMany(fp => fp.OrdenCompras)
@@ -34,7 +35,7 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
                 .WithMany(e => e.OrdenCompras)
                 .WillCascadeOnDelete(false);
 
-            HasRequired(oc => oc.Aseguradora)
+            HasRequired(oc => oc.Proveedor)
                 .WithMany(e => e.OrdenCompras)
                 .WillCascadeOnDelete(false);
         }

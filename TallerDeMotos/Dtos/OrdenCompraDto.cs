@@ -20,8 +20,8 @@ namespace TallerDeMotos.Dtos
 
         public byte EstadoId { get; set; }
 
-        public AseguradoraDto Aseguradora { get; set; }
+        public ProveedorDto Proveedor { get; set; }
 
-        public byte AseguradoraId { get; set; }
+        public int ProveedorId { get; set; }
     }
 }

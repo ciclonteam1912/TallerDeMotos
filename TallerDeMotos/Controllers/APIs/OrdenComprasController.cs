@@ -30,7 +30,7 @@ namespace TallerDeMotos.Controllers.APIs
         {
             var ordenCompras =  _context.OrdenCompras
                 .Include(oc => oc.FormaPago)
-                .Include(oc => oc.Aseguradora)
+                .Include(oc => oc.Proveedor)
                 .Include(oc => oc.Estado)
                 .ToList()
                 .Select(Mapper.Map<OrdenCompra, OrdenCompraDto>);
@@ -47,11 +47,11 @@ namespace TallerDeMotos.Controllers.APIs
                 var ordenCompraDto = new OrdenCompraDto
                 {
                     OrdenCompraNumero = nuevaOrdenCompraDto.OrdenCompra.OrdenCompraNumero,
-                    FechaDeEmision = nuevaOrdenCompraDto.OrdenCompra.FechaDeEmision,
+                    FechaDeEmision = DateTime.Now,
                     FormaPagoId = nuevaOrdenCompraDto.OrdenCompra.FormaPagoId,
                     SubTotal = nuevaOrdenCompraDto.OrdenCompra.SubTotal,
                     EstadoId = 1,
-                    AseguradoraId = nuevaOrdenCompraDto.OrdenCompra.AseguradoraId
+                    ProveedorId = nuevaOrdenCompraDto.OrdenCompra.ProveedorId
                 };
 
                 var ordenCompra = Mapper.Map<OrdenCompraDto, OrdenCompra>(ordenCompraDto);

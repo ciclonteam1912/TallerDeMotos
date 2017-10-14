@@ -42,9 +42,9 @@
                     </select>
                 </div>
                 <div class="col-lg-6">
-                    <label>Aseguradora:</label>
-                    <select id="aseguradora" class="form-control" required name="aseguradora">
-                        <option value="">Seleccione una Aseguradora...</option>
+                    <label>Proveedor:</label>
+                    <select id="proveedor" class="form-control" required name="proveedor">
+                        <option value="">Seleccione un Proveedor...</option>
                     </select>
                 </div>
             </div>
@@ -81,10 +81,6 @@
                             <input type="number" id="iva" class="iva form-control" />
                             <span class="error">IVA no válido</span>
                         </td>
-                        @*<td>
-                            <input type="number" id="total" class="total form-control" />
-                            <span class="error">Total no válido</span>
-                        </td>*@
                         <td>
                             <input type="button" id="add" value="Agregar" style="width:80px" class="btn btn-success" />
                         </td>
@@ -152,11 +148,11 @@
 
             $.ajax({
                 type: "GET",
-                url: "/api/aseguradoras",
+                url: "/api/proveedores",
                 contentType: "application/json",
-                success: function (aseguradoras) {
-                    $.each(aseguradoras, function (i) {
-                        $("#aseguradora").append($('<option></option>').val(aseguradoras[i].Id).html(aseguradoras[i].Nombre));
+                success: function (proveedores) {
+                    $.each(proveedores, function (i) {
+                        $("#proveedor").append($('<option></option>').val(proveedores[i].Id).html(proveedores[i].RazonSocial));
                     });
                 }
             });
@@ -205,7 +201,7 @@
 
             $("#add").click(function(){                
                 var todoEsValido = true;
-                
+                console.log( $("#fechaDeEmision").val());
                 if ($("#productos").val() == 0) {                    
                     todoEsValido = false;
                     $('#productos').siblings('span.error').css('display', 'block');
@@ -275,7 +271,7 @@
                     FechaDeEmision: $("#fechaDeEmision").val(),
                     FormaPagoId: $("#formaPago").val(),
                     SubTotal: $("#totalAPagar").val(),
-                    AseguradoraId: $("#aseguradora").val()
+                    ProveedorId: $("#proveedor").val()
                 }
 
                 $('#ordenCompraDetalle tr.detalle').each(function (index, tr) {
@@ -302,10 +298,10 @@
                 .done(function (ordenCompra) {
                     if (ordenCompra.Success){
                         toastr.success(ordenCompra.Message);
-                        $("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompra/OrdenCompraReport?ordenNro=' + $("#ordenNro").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>')
+                        $("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompraReport?ordenNro=' + $("#ordenNro").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>')
                         $("#ordenNro").val("");
                         $("#formaPago").val("");
-                        $("#aseguradora").val("");
+                        $("#proveedor").val("");
                         $("#ordenCompraDetalle tbody").empty();
                         $("#totalAPagar").val("");
                         subTotal = 0;

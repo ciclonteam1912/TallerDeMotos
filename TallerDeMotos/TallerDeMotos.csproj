@@ -281,6 +281,7 @@
     <Compile Include="Dtos\NuevaOrdenCompraDto.cs" />
     <Compile Include="Dtos\OrdenCompraDetalleDto.cs" />
     <Compile Include="Dtos\OrdenCompraDto.cs" />
+    <Compile Include="Dtos\ProveedorDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -411,6 +412,14 @@
     <Compile Include="Migrations\201710041603108_AgregarColumnaAseguradoraCodigoEnTablaOrdenCompras.cs" />
     <Compile Include="Migrations\201710041603108_AgregarColumnaAseguradoraCodigoEnTablaOrdenCompras.Designer.cs">
       <DependentUpon>201710041603108_AgregarColumnaAseguradoraCodigoEnTablaOrdenCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710141408488_EliminarColumnaAseguradoraCodigoDeTablaOrdenCompras.cs" />
+    <Compile Include="Migrations\201710141408488_EliminarColumnaAseguradoraCodigoDeTablaOrdenCompras.Designer.cs">
+      <DependentUpon>201710141408488_EliminarColumnaAseguradoraCodigoDeTablaOrdenCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710141449233_AgregarColumnaProveedorCodigoEnTablaOrdenCompras.cs" />
+    <Compile Include="Migrations\201710141449233_AgregarColumnaProveedorCodigoEnTablaOrdenCompras.Designer.cs">
+      <DependentUpon>201710141449233_AgregarColumnaProveedorCodigoEnTablaOrdenCompras.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
@@ -2273,6 +2282,7 @@
     <Content Include="Views\Vehiculo\ListaDeVehiculosSoloLectura.cshtml" />
     <Content Include="Views\OrdenCompra\OrdenCompraFormulario.cshtml" />
     <Content Include="Views\OrdenCompra\ListaDeOrdenDeCompras.cshtml" />
+    <Content Include="Views\OrdenCompra\EditarOrdenCompraDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2381,6 +2391,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710041603108_AgregarColumnaAseguradoraCodigoEnTablaOrdenCompras.resx">
       <DependentUpon>201710041603108_AgregarColumnaAseguradoraCodigoEnTablaOrdenCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710141408488_EliminarColumnaAseguradoraCodigoDeTablaOrdenCompras.resx">
+      <DependentUpon>201710141408488_EliminarColumnaAseguradoraCodigoDeTablaOrdenCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710141449233_AgregarColumnaProveedorCodigoEnTablaOrdenCompras.resx">
+      <DependentUpon>201710141449233_AgregarColumnaProveedorCodigoEnTablaOrdenCompras.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

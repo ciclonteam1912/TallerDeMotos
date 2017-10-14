@@ -1,14 +1,6 @@
-﻿using AutoMapper;
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
-using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers
 {
@@ -35,6 +27,18 @@ namespace TallerDeMotos.Controllers
             if (User.IsInRole(RoleName.Administrador))
                 return View("ListaDeOrdenDeCompras");
             return View("ListaDeOrdenDeComprasSoloLectura");
+        }
+
+        public ActionResult EditarOrdenCompraDetalle(int id = 0)
+        {
+            if (id != 0)
+                ViewBag.Id = id;
+            return View();
+        }
+
+        public ActionResult OrdenCompraFormulario()
+        {
+            return View();
         }
 
         public ActionResult OrdenCompraReport(int ordenNro = 0)

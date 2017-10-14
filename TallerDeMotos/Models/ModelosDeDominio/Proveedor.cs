@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -35,6 +36,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Correo Electrónico")]
         public string CorreoElectronico { get; set; }
 
+        public ICollection<OrdenCompra> OrdenCompras { get; set; }
+
         public string Titulo
         {
             get
@@ -45,7 +48,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public Proveedor()
         {
-
+            OrdenCompras = new HashSet<OrdenCompra>();
         }
 
         public Proveedor(Proveedor proveedor)

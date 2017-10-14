@@ -21,9 +21,9 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public byte EstadoId { get; set; }
 
-        public Aseguradora Aseguradora { get; set; }
+        public Proveedor Proveedor { get; set; }
 
-        public byte AseguradoraId { get; set; }
+        public int ProveedorId { get; set; }
 
         public ICollection<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
 

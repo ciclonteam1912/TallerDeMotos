@@ -36,6 +36,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Correo Electrónico")]
         public string CorreoElectronico { get; set; }
 
+        public ICollection<Producto> Productos { get; set; }
+
         public ICollection<OrdenCompra> OrdenCompras { get; set; }
 
         public string Titulo
@@ -48,6 +50,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public Proveedor()
         {
+            Productos = new HashSet<Producto>();
             OrdenCompras = new HashSet<OrdenCompra>();
         }
 

@@ -225,6 +225,8 @@
     <Compile Include="ConfiguracionDeEntidades\CombustibleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\EmpleadoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\EstadoConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\FacturaCompraConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\FacturaCompraDetalleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FormaPagoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\MarcaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ModeloConfiguracion.cs" />
@@ -244,6 +246,7 @@
     <Compile Include="Controllers\APIs\CombustiblesController.cs" />
     <Compile Include="Controllers\APIs\EmpleadosController.cs" />
     <Compile Include="Controllers\APIs\EstadosController.cs" />
+    <Compile Include="Controllers\APIs\FacturaComprasController.cs" />
     <Compile Include="Controllers\APIs\FormasPagoController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
@@ -261,6 +264,7 @@
     <Compile Include="Controllers\CombustibleController.cs" />
     <Compile Include="Controllers\EmpleadoController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FacturaCompraController.cs" />
     <Compile Include="Controllers\FormaPagoController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -277,6 +281,7 @@
     <Compile Include="Controllers\VehiculoController.cs" />
     <Compile Include="Dtos\AseguradoraDto.cs" />
     <Compile Include="Dtos\EstadoDto.cs" />
+    <Compile Include="Dtos\FacturaCompraDto.cs" />
     <Compile Include="Dtos\FormaPagoDto.cs" />
     <Compile Include="Dtos\NuevaOrdenCompraDto.cs" />
     <Compile Include="Dtos\OrdenCompraDetalleDto.cs" />
@@ -421,6 +426,18 @@
     <Compile Include="Migrations\201710141449233_AgregarColumnaProveedorCodigoEnTablaOrdenCompras.Designer.cs">
       <DependentUpon>201710141449233_AgregarColumnaProveedorCodigoEnTablaOrdenCompras.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710141916161_CreacionDeTablaFacturaCompras.cs" />
+    <Compile Include="Migrations\201710141916161_CreacionDeTablaFacturaCompras.Designer.cs">
+      <DependentUpon>201710141916161_CreacionDeTablaFacturaCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710152104354_CreacionDeTablaFacturaCompraDetalles.cs" />
+    <Compile Include="Migrations\201710152104354_CreacionDeTablaFacturaCompraDetalles.Designer.cs">
+      <DependentUpon>201710152104354_CreacionDeTablaFacturaCompraDetalles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710161846213_CreacionDeTablaIntermediaProductoProveedores.cs" />
+    <Compile Include="Migrations\201710161846213_CreacionDeTablaIntermediaProductoProveedores.Designer.cs">
+      <DependentUpon>201710161846213_CreacionDeTablaIntermediaProductoProveedores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -439,6 +456,8 @@
     <Compile Include="Models\ModelosDeDominio\Combustible.cs" />
     <Compile Include="Models\ModelosDeDominio\Empleado.cs" />
     <Compile Include="Models\ModelosDeDominio\Estado.cs" />
+    <Compile Include="Models\ModelosDeDominio\FacturaCompra.cs" />
+    <Compile Include="Models\ModelosDeDominio\FacturaCompraDetalle.cs" />
     <Compile Include="Models\ModelosDeDominio\FormaPago.cs" />
     <Compile Include="Models\ModelosDeDominio\Marca.cs" />
     <Compile Include="Models\ModelosDeDominio\Modelo.cs" />
@@ -2283,6 +2302,7 @@
     <Content Include="Views\OrdenCompra\OrdenCompraFormulario.cshtml" />
     <Content Include="Views\OrdenCompra\ListaDeOrdenDeCompras.cshtml" />
     <Content Include="Views\OrdenCompra\EditarOrdenCompraDetalle.cshtml" />
+    <Content Include="Views\FacturaCompra\FacturaCompraFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2397,6 +2417,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710141449233_AgregarColumnaProveedorCodigoEnTablaOrdenCompras.resx">
       <DependentUpon>201710141449233_AgregarColumnaProveedorCodigoEnTablaOrdenCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710141916161_CreacionDeTablaFacturaCompras.resx">
+      <DependentUpon>201710141916161_CreacionDeTablaFacturaCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710152104354_CreacionDeTablaFacturaCompraDetalles.resx">
+      <DependentUpon>201710152104354_CreacionDeTablaFacturaCompraDetalles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710161846213_CreacionDeTablaIntermediaProductoProveedores.resx">
+      <DependentUpon>201710161846213_CreacionDeTablaIntermediaProductoProveedores.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

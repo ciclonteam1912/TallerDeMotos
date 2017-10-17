@@ -35,6 +35,7 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<OrdenCompraDto, OrdenCompra>();
             Mapper.CreateMap<OrdenCompraDetalleDto, OrdenCompraDetalle>();
             Mapper.CreateMap<EstadoDto, Estado>();
+            Mapper.CreateMap<FacturaCompraDto, FacturaCompra>();
         }
     }
 }

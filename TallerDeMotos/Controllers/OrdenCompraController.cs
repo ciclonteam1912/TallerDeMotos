@@ -1,6 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
+using System.Data.Entity;
+using TallerDeMotos.Models.ModelosDeDominio;
+using AutoMapper;
 
 namespace TallerDeMotos.Controllers
 {
@@ -57,6 +61,16 @@ namespace TallerDeMotos.Controllers
             }
 
             return Json(ordenCompraDto, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ObtenerOrdenCompraAceptado()
+        {
+            var ordenCompra = _context.OrdenCompras.Include(oc => oc.Estado)
+                .Where(oc => oc.Estado.Descripcion.Equals("Aceptado"))
+                .ToList()
+                .Select(Mapper.Map<OrdenCompra, OrdenCompraDto>);
+
+            return Json(ordenCompra, JsonRequestBehavior.AllowGet);
         }
     }
 }

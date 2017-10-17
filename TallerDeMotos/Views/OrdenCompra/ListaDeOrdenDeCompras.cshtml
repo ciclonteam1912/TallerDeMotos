@@ -13,6 +13,7 @@
 
 @section Scripts{
     <script>
+        kendo.culture().numberFormat.currency.symbol = "₲";
         $(document).ready(function () {
             var dataSource = new kendo.data.DataSource({
                 autoSync: false,
@@ -58,7 +59,7 @@
                     }
                 }
             });
-
+            
             $("#grid").kendoGrid({
                 dataSource: dataSource,
                 toolbar: ["save", "cancel"],
@@ -108,7 +109,8 @@
                     {
                         field: "SubTotal",
                         title: "Sub Total",
-                        format: "{0:n}",
+                        culture: "es-PY",
+                        format: "{0:c0}",
                         width: "110px"
                     },
                     {
@@ -120,8 +122,10 @@
                 ],
                 editable: true
             });
-            console.log($('#grid').data('kendoGrid'));
-            $("#grid").data("kendoGrid").dataSource.refresh();
+            //console.log($('#grid').data('kendoGrid'));
+            //$("#grid").data("kendoGrid").dataSource.refresh();
+
+            $(".k-grid-toolbar").append('<a href="#" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Factura</span></a>');
         });
 
         function estadoDropDownEditor(container, options) {

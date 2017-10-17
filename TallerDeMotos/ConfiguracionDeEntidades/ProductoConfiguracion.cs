@@ -11,6 +11,14 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
 
             Property(p => p.Id)
                 .HasColumnName("Codigo");
+
+            HasMany(prod => prod.Proveedores)
+                .WithMany(prov => prov.Productos)
+                .Map(m => {
+                    m.MapLeftKey("ProductoCodigo");
+                    m.MapRightKey("ProveedorCodigo");
+                    m.ToTable("ProductoProveedores");
+                });
         }
     }
 }

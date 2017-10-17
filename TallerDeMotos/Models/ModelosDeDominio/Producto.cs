@@ -38,10 +38,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public byte Iva { get; set; }
 
+        public ICollection<Proveedor> Proveedores { get; set; }
+
         public ICollection<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
 
         public Producto()
         {
+            Proveedores = new HashSet<Proveedor>();
             OrdenCompraDetalles = new HashSet<OrdenCompraDetalle>();
         }
     }

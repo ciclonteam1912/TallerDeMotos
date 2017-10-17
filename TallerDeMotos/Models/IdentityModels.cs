@@ -47,6 +47,8 @@ namespace TallerDeMotos.Models
         public DbSet<OrdenCompra> OrdenCompras { get; set; }
         public DbSet<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
         public DbSet<Estado> Estados { get; set; }
+        public DbSet<FacturaCompra> FacturaCompras { get; set; }
+        public DbSet<FacturaCompraDetalle> FacturaCompraDetalles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -71,6 +73,8 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new OrdenCompraConfiguracion());
             modelBuilder.Configurations.Add(new OrdenCompraDetalleConfiguracion());
             modelBuilder.Configurations.Add(new EstadoConfiguracion());
+            modelBuilder.Configurations.Add(new FacturaCompraConfiguracion());
+            modelBuilder.Configurations.Add(new FacturaCompraDetalleConfiguracion());
         }
 
         public static ApplicationDbContext Create()

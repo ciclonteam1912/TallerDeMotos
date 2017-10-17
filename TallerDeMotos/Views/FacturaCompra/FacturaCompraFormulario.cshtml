@@ -1,0 +1,211 @@
+﻿
+@{
+    ViewBag.Title = "Factura de Compra Formulario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <div class="row">
+        <h2>Factura de Compra Formulario</h2>
+        <form id="facturaCompraFormulario">
+            <div class="row well">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @*<div class="demo-section k-content">*@
+                                <label>Número de Orden:</label><br />
+                                <input id="nroOrden" style="width: 70%" />
+                            @*</div>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Fecha de Factura de Compra:</label><br />
+                            <input id="fechaFacturaCompra" style="width: 70%" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Timbrado:</label>
+                            <input required id="timbrado" class="form-control" name="timbrado" type="number" min="0" max="99999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Nro. de Factura de Compra:</label>
+                            <input required id="nroFactura" class="form-control" name="nroFactura" type="number" min="0" max="99999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="footerFactura" style="padding:10px 0; text-align:right">
+                        <button id="submit" class="btn btn-warning" style="padding:10px 20px">Registrar Factura de Compra</button>
+                    </div>
+                </div>
+            </div>            
+        </form>
+    </div>
+    <div class="row">
+        <h2>Factura de Compra Detalles</h2>
+        <div id="example">
+            <div id="grid">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function maxLengthCheck(object) {
+            if (object.value.length > object.max.length)
+                object.value = object.value.slice(0, object.max.length);
+        }
+        kendo.culture().numberFormat.currency.symbol = "₲";
+        $(document).ready(function () {
+            $("#menuCompras").addClass('active');
+
+            FacturaCompraDto: {}
+
+            $("#nroOrden").kendoDropDownList({
+                dataTextField: "OrdenCompraNumero",
+                dataValueField: "Id",
+                optionLabel: "Selecciona un Nro. de Orden...",
+                dataSource: {
+                    transport: {
+                        read: {
+                            dataType: "json",
+                            url: "@Url.Action("ObtenerOrdenCompraAceptado", "OrdenCompra")",
+                            type: "POST"
+                        }
+                    }
+                },
+                template: '<span>Orden Nro: #: OrdenCompraNumero # del #= kendo.toString(kendo.parseDate(FechaDeEmision), "MM/dd/yyyy HH:mm tt")#</span>'
+            });
+
+            $("#fechaFacturaCompra").kendoDateTimePicker({
+                culture: "es-ES",
+                animation: {
+                    close: {
+                        effects: "fadeOut zoom:out",
+                        duration: 300
+                    },
+                    open: {
+                        effects: "fadeIn zoom:in",
+                        duration: 300
+                    }
+                },
+                value: new Date(),
+                dateInput: true
+            });
+
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: "/api/OrdenCompraDetalles/",
+                        dataType: "json"
+                    }
+                },
+                batch: true,
+                pageSize: 20,
+                schema: {
+                    model: {
+                        id: "Id",
+                        fields: {
+                            Id: { editable: false },
+                            OrdenCompraId: { editable: false },
+                            ProductoId: { editable: false },
+                            "Producto.Descripcion": { editable: false },
+                            Cantidad: { type: "number", validation: { required: true, min: 1 } },
+                            "Producto.PrecioCosto": { editable: false },
+                            "Producto.Iva": { editable: false },
+                            Total: { type: "number", editable: false }
+                        }
+                    }
+                }
+            });
+
+            var grid = $("#grid").kendoGrid({
+                autoBind: false,
+                dataSource: dataSource,
+                navigatable: true,
+                pageable: true,                
+                height: 350,
+                columns: [
+                    //{ field: "Id", title: "Cod. Detalle", width: 90 },
+                    { field: "ProductoId", title: "Producto Cod.", width: 90, attributes: { style: "text-align: right" } },
+                    { field: "Producto.Descripcion", title: "Descripción", width: 150 },
+                    { field: "Cantidad", title: "Cantidad", width: 90, attributes: { style: "text-align: right" } },
+                    { field: "Producto.PrecioCosto", title: "Precio Unitario", width: 120, format: "{0:c0}", attributes: { style: "text-align: right" } },
+                    { field: "Producto.Iva", title: "Iva", width: 70, attributes: { style: "text-align: right" } },
+                    {
+                        field: "Total",
+                        title: "Total",
+                        width: 120,
+                        format: "{0:c0}",
+                        attributes: { style: "text-align: right" }
+                    },
+                ]
+            });
+
+            $("#nroOrden").change(function (e) {
+                var value = $(this).val();
+
+                if (value) {
+                    grid.data("kendoGrid").dataSource.filter({ field: "OrdenCompraId", operator: "eq", value: value });
+                }
+            });
+            
+            $("#facturaCompraFormulario").submit(function (e) {
+                e.preventDefault();
+
+                FacturaCompraDto = {
+                    Id: $("#nroOrden").val(),
+                    Timbrado: $("#timbrado").val(),
+                    FacturaNumero: $("#nroFactura").val(),
+                    FechaFacturaCompra: $("#fechaFacturaCompra").val(),
+                    OrdenCompraId: $("#nroOrden").val()
+                }
+
+                $.ajax({
+                    url: "/api/facturaCompras",
+                    method: "post",
+                    data: FacturaCompraDto
+                })
+                .done(function (facturaCompra) {
+                    if (facturaCompra.Success) {
+                        toastr.success(facturaCompra.Message);
+                        $("#nroOrden").data("kendoDropDownList").value("");                       
+                        $("#timbrado").val("");
+                        $("#nroFactura").val("");
+                        $("#grid tbody").empty();
+
+                        FacturaCompraDto: {}
+
+                    }
+                    else {
+                        if (facturaCompra.Message == "PK_dbo.FacturaCompras")
+                            toastr.error("<p class='eliminar'>No se pudo registrar la Factura de Compra. El número de Orden de Compra con el valor '" + $("#nroOrden").data("kendoDropDownList").text() + "' ya existe.</p>");
+                        else
+                            toastr.error("<p>Ocurrió algo inesperado</p>");
+                    }
+                });
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 6000,
+                "extendedTimeOut": 1000
+            }
+        });
+    </script>    
+}
+

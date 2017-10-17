@@ -25,6 +25,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public int ProveedorId { get; set; }
 
+        public FacturaCompra FacturaCompra { get; set; }
+
         public ICollection<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
 
         public OrdenCompra()

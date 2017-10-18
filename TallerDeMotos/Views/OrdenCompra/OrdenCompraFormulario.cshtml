@@ -313,6 +313,11 @@
 
                     }
                     else {
+                        vm = {
+                            OrdenCompra: {},
+                            OrdenCompraDetalles: []
+                        }
+
                         if (ordenCompra.Message == "IX_OrdenCompraNumero")
                             toastr.error("<p class='eliminar'>No se pudo crear la Orden de Compra. El número de Orden de Compra con el valor '" + $("#ordenNro").val() + "' ya existe.</p>");
                         else

@@ -2303,6 +2303,7 @@
     <Content Include="Views\OrdenCompra\ListaDeOrdenDeCompras.cshtml" />
     <Content Include="Views\OrdenCompra\EditarOrdenCompraDetalle.cshtml" />
     <Content Include="Views\FacturaCompra\FacturaCompraFormulario.cshtml" />
+    <Content Include="Views\FacturaCompra\ListaDeFacturaDeCompras.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

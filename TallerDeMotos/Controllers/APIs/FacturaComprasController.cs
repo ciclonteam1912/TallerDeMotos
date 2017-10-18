@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Web.Http;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
@@ -19,6 +21,17 @@ namespace TallerDeMotos.Controllers.APIs
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
+        }
+
+        [HttpGet]
+        public IHttpActionResult ObtenerFacturaCompra()
+        {
+            var facturaCompra = _context.FacturaCompras
+                .Include(fc => fc.OrdenCompra)
+                .ToList()
+                .Select(Mapper.Map<FacturaCompra, FacturaCompraDto>);
+
+            return Ok(facturaCompra);
         }
 
         [HttpPost]

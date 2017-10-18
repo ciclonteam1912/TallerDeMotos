@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Lista de Factura de Compras";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista de Factura de Compras</h2>
+
+    <div id="example">
+        <div id="grid"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        kendo.culture().numberFormat.currency.symbol = "₲";
+        $(document).ready(function () {
+            $("#menuCompras").addClass('active');
+
+            var dataSource = new kendo.data.DataSource({
+                autoSync: false,
+                transport: {
+                    read: {
+                        url: "/api/facturaCompras",
+                        dataType: "json"
+                    }
+                },
+                pageSize: 6,
+                serverPaging: false,
+                serverSorting: false,
+                schema: {
+                    model: {
+                        id: "Id"
+                    }
+                }
+            });
+
+            $("#grid").kendoGrid({
+                dataSource: dataSource,
+                height: 550,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                detailInit: detailInit,
+                columns: [
+                    {
+                        field: "OrdenCompra",
+                        title: "Orden Nro.",
+                        width: "70px",
+                        template: "#=OrdenCompra.OrdenCompraNumero#",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    },
+                    {
+                        field: "Timbrado",
+                        title: "Timbrado",
+                        width: "90px",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    },
+                    {
+                        field: "FacturaNumero",
+                        title: "Factura Nro.",
+                        width: "110px",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    },
+                    {
+                        field: "FechaFacturaCompra",
+                        title: "Fecha Factura de Compra",
+                        template: "#= kendo.toString(kendo.parseDate(FechaFacturaCompra), 'MM/dd/yyyy HH:mm tt')#",
+                        width: "110px"
+                    },
+                    {
+                        field: "OrdenCompra.SubTotal",
+                        title: "Sub Total",                       
+                        width: "110px",
+                        //template: "#=OrdenCompra.SubTotal#",
+                        format: "{0:c0}",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    }
+                ]
+            });
+        });
+
+        function detailInit(e) {
+            console.log(e);
+            $("<div/>").appendTo(e.detailCell).kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/ordenCompraDetalles",
+                            dataType: "json"
+                        }
+                    },
+                    serverPaging: false,
+                    serverSorting: false,
+                    serverFiltering: false,
+                    pageSize: 10,
+                    filter: { field: "OrdenCompraId", operator: "eq", value: e.data.Id }
+                },
+                scrollable: true,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    //{ field: "Id", title: "Cod. Detalle", width: "110px", attributes: { style: "text-align: right" } },
+                    { field: "ProductoId", title: "Producto Cod.", width: "110px", attributes: { style: "text-align: right" } },
+                    { field: "Producto.Descripcion", title: "Descripción", width: "150px" },
+                    { field: "Cantidad", title: "Cantidad", width: "90px", attributes: { style: "text-align: right" } },
+                    { field: "Producto.PrecioCosto", title: "Precio Unitario", width: "110px", format: "{0:c0}", attributes: { style: "text-align: right" } },
+                    { field: "Producto.Iva", title: "Iva", width: "60px", attributes: { style: "text-align: right" } },
+                    { field: "Total", title: "Total", width: "100px", format: "{0:c0}", attributes: { style: "text-align: right" } }
+                ]
+            });
+        }
+    </script>    
+}

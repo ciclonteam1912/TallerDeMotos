@@ -1,11 +1,14 @@
 ﻿
 @{
-    ViewBag.Title = "Lista De Orden De Compras";
+    ViewBag.Title = "Lista de Orden de Compras";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Html.Partial("_MenuVertical")
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
-    <h2>Lista De Orden De Compras</h2>
+    <h2>Lista de Orden de Compras</h2>
+
+    <p><a href="OrdenCompra/OrdenCompraFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Nueva Orden de Compra</span></a></p>
+
     <div id="example">
         <div id="grid"></div>        
     </div>
@@ -15,6 +18,8 @@
     <script>
         kendo.culture().numberFormat.currency.symbol = "₲";
         $(document).ready(function () {
+            $("#menuCompras").addClass('active');
+
             var dataSource = new kendo.data.DataSource({
                 autoSync: false,
                 transport: {
@@ -72,21 +77,24 @@
                 },
                 detailInit: detailInit,
                 columns: [
-                    {
-                        template: "<a href='/OrdenCompra/EditarOrdenCompraDetalle/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
-                        field: "Id",
-                        title: "&nbsp;",
-                        filterable: false,
-                        sortable: false,
-                        width: 50,
-                        attributes: {
-                            style: "text-align: center"
-                        }
-                    },
+                    //{
+                    //    template: "<a href='/OrdenCompra/EditarOrdenCompraDetalle/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    //    field: "Id",
+                    //    title: "&nbsp;",
+                    //    filterable: false,
+                    //    sortable: false,
+                    //    width: 50,
+                    //    attributes: {
+                    //        style: "text-align: center"
+                    //    }
+                    //},
                     {
                         field: "OrdenCompraNumero",
                         title: "Nro. Orden de Compra",
-                        width: "90px"
+                        width: "90px",
+                        attributes: {
+                            style: "text-align: right"
+                        }
                     },
                     {
                         field: "FechaDeEmision",
@@ -111,7 +119,10 @@
                         title: "Sub Total",
                         culture: "es-PY",
                         format: "{0:c0}",
-                        width: "110px"
+                        width: "110px",
+                        attributes: {
+                            style: "text-align: right"
+                        }
                     },
                     {
                         field: "Estado",
@@ -120,12 +131,16 @@
                         editor: estadoDropDownEditor, template: "#=Estado.Descripcion#"
                     }
                 ],
-                editable: true
+                editable: true,
+                edit: function (e) {                   
+                    if (e.model.EstadoId == 2) {
+                        var ddl = e.container.find('[data-role="dropdownlist"]').data('kendoDropDownList');
+                        ddl.enable(false);
+                    }
+                }
             });
-            //console.log($('#grid').data('kendoGrid'));
-            //$("#grid").data("kendoGrid").dataSource.refresh();
 
-            $(".k-grid-toolbar").append('<a href="#" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Factura</span></a>');
+            $(".k-grid-toolbar").append('<a href="FacturaCompra/FacturaCompraFormulario" class="btn btn-primary"><i class="fa fa-file-text icono izquierda"></i><span class="button-text">Registrar Factura</span></a>');
         });
 
         function estadoDropDownEditor(container, options) {
@@ -166,13 +181,13 @@
                 sortable: true,
                 pageable: true,
                 columns: [
-                    { field: "Id", title: "Cod. Detalle", width: "110px" },
-                    { field: "ProductoId", title: "Producto Cod.", width: "110px" },
+                    { field: "Id", title: "Cod. Detalle", width: "110px", attributes: { style: "text-align: right" } },
+                    { field: "ProductoId", title: "Producto Cod.", width: "110px", attributes: { style: "text-align: right" } },
                     { field: "Producto.Descripcion", title: "Descripción", width: "150px" },
-                    { field: "Cantidad", title: "Cantidad", width: "100px" },
-                    { field: "Producto.PrecioCosto", title: "Precio Unitario", width: "110px", format: "{0:n}" },
-                    { field: "Producto.Iva", title: "Iva", width: "60px" },
-                    { field: "Total", title: "Total", width: "110px", format: "{0:n}" }
+                    { field: "Cantidad", title: "Cantidad", width: "90px", attributes: { style: "text-align: right" } },
+                    { field: "Producto.PrecioCosto", title: "Precio Unitario", width: "110px", format: "{0:c0}", attributes: { style: "text-align: right" } },
+                    { field: "Producto.Iva", title: "Iva", width: "60px", attributes: { style: "text-align: right" } },
+                    { field: "Total", title: "Total", width: "100px", format: "{0:c0}", attributes: { style: "text-align: right" } }
                 ]
             });
         }

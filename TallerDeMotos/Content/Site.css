@@ -220,7 +220,7 @@ span.k-i-warning
     display: none;
 }
 
-a.k-grid-pdf {
+a.k-grid-pdf, a.k-grid-save-changes, a.k-grid-cancel-changes {
     float: right;
 }
 

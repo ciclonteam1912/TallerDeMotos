@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Http;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers.APIs
@@ -23,17 +24,21 @@ namespace TallerDeMotos.Controllers.APIs
             _context.Dispose();
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpGet]
         public IHttpActionResult ObtenerFacturaCompra()
         {
             var facturaCompra = _context.FacturaCompras
                 .Include(fc => fc.OrdenCompra)
+                .Include(fc => fc.OrdenCompra.Proveedor)
+                .Include(fc => fc.OrdenCompra.FormaPago)
                 .ToList()
                 .Select(Mapper.Map<FacturaCompra, FacturaCompraDto>);
 
             return Ok(facturaCompra);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpPost]
         public IHttpActionResult CrearFacturaCompra(FacturaCompraDto nuevaFacturaCompraDto)
         {

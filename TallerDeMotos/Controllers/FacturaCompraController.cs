@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 
 namespace TallerDeMotos.Controllers
 {
@@ -23,6 +24,7 @@ namespace TallerDeMotos.Controllers
             return View("ListaDeFacturaDeCompras");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult FacturaCompraFormulario()
         {
             return View();

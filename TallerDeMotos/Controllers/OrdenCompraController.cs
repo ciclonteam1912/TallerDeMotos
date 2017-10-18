@@ -5,6 +5,7 @@ using TallerDeMotos.Models;
 using System.Data.Entity;
 using TallerDeMotos.Models.ModelosDeDominio;
 using AutoMapper;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 
 namespace TallerDeMotos.Controllers
 {
@@ -28,8 +29,9 @@ namespace TallerDeMotos.Controllers
         // GET: OrdenCompra
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador))
+            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller))
                 return View("ListaDeOrdenDeCompras");
+
             return View("ListaDeOrdenDeComprasSoloLectura");
         }
 
@@ -40,11 +42,13 @@ namespace TallerDeMotos.Controllers
             return View();
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult OrdenCompraFormulario()
         {
             return View();
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult OrdenCompraReport(int ordenNro = 0)
         {
             if (ordenNro != 0)
@@ -52,6 +56,7 @@ namespace TallerDeMotos.Controllers
             return View();
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditarOrdenCompra(OrdenCompraDto ordenCompraDto)
         {
@@ -63,6 +68,7 @@ namespace TallerDeMotos.Controllers
             return Json(ordenCompraDto, JsonRequestBehavior.AllowGet);
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public JsonResult ObtenerOrdenCompraAceptado()
         {
             var ordenCompra = _context.OrdenCompras.Include(oc => oc.Estado)

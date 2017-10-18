@@ -5,9 +5,7 @@
 }
 @Html.Partial("_MenuVertical")
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
-    <h2>Lista de Orden de Compras</h2>
-
-    <p><a href="OrdenCompra/OrdenCompraFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Nueva Orden de Compra</span></a></p>
+    <h2>Lista de Orden de Compras</h2>   
 
     <div id="example">
         <div id="grid"></div>        
@@ -26,11 +24,6 @@
                     read: {
                         url: "/api/ordenCompras",
                         dataType: "json"
-                    },
-                    update: {
-                        url: "/OrdenCompra/EditarOrdenCompra",
-                         dataType: "json",
-                         type: "post"
                     }
                 },
                 pageSize: 6,
@@ -38,60 +31,22 @@
                 serverSorting: false,
                 schema: {
                     model: {
-                        id: "Id",                        
-                        fields: {
-                            Id: { editable: false },
-                            OrdenCompraNumero: {
-                                editable: false
-                            },
-                            FechaDeEmision: {
-                                template: "#= kendo.toString(kendo.parseDate(FechaDeEmision), 'MM/dd/yyyy HH:mm tt')#",
-                                editable: false
-                            },
-                            FormaPago: {
-                                editable: false
-                            },
-                            Proveedor: {
-                                editable: false
-                            },
-                            SubTotal: {
-                                editable: false
-                            },
-                            Estado: {
-                                nullable: false
-                            }
-                        }
+                        id: "Id"                      
                     }
                 }
             });
             
             $("#grid").kendoGrid({
                 dataSource: dataSource,
-                toolbar: ["save", "cancel"],
                 height: 550,
                 sortable: true,
-                filterable: true,
                 pageable: {
                     refresh: true,
                     pageSizes: true,
                     buttonCount: 5
                 },
-                noRecords: {
-                    template: "<p>No existe registro de orden de compras.</p>"
-                },
                 detailInit: detailInit,
                 columns: [
-                    //{
-                    //    template: "<a href='/OrdenCompra/EditarOrdenCompraDetalle/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
-                    //    field: "Id",
-                    //    title: "&nbsp;",
-                    //    filterable: false,
-                    //    sortable: false,
-                    //    width: 50,
-                    //    attributes: {
-                    //        style: "text-align: center"
-                    //    }
-                    //},
                     {
                         field: "OrdenCompraNumero",
                         title: "Nro. Orden de Compra",
@@ -132,38 +87,11 @@
                         field: "Estado",
                         title: "Estado",
                         width: "110px",
-                        editor: estadoDropDownEditor, template: "#=Estado.Descripcion#"
+                        template: "#=Estado.Descripcion#"
                     }
-                ],
-                editable: true,
-                edit: function (e) {                   
-                    if (e.model.EstadoId == 2) {
-                        var ddl = e.container.find('[data-role="dropdownlist"]').data('kendoDropDownList');
-                        ddl.enable(false);
-                    }
-                }
-            });
-
-            $(".k-grid-toolbar").append('<a href="FacturaCompra/FacturaCompraFormulario" class="btn btn-primary"><i class="fa fa-file-text icono izquierda"></i><span class="button-text">Registrar Factura</span></a>');
+                ]
+            });         
         });
-
-        function estadoDropDownEditor(container, options) {
-            $('<input required name="' + options.field + '"/>')
-                .appendTo(container)
-                .kendoDropDownList({
-                    autoBind: false,
-                    dataTextField: "Descripcion",
-                    dataValueField: "Id",
-                    dataSource: {
-                        transport: {
-                            read: {
-                                url: "/api/estados",
-                                dataType: "json"
-                            }
-                        }
-                    }
-                });
-        }
 
         function detailInit(e) {
             console.log(e);

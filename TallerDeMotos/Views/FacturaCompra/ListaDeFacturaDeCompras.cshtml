@@ -7,6 +7,8 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>Lista de Factura de Compras</h2>
 
+    <p><a href="FacturaCompra/FacturaCompraFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Factura de Compra</span></a></p>
+
     <div id="example">
         <div id="grid"></div>
     </div>
@@ -40,6 +42,7 @@
                 dataSource: dataSource,
                 height: 550,
                 sortable: true,
+                filterable: true,
                 pageable: {
                     refresh: true,
                     pageSizes: true,
@@ -67,7 +70,7 @@
                     {
                         field: "FacturaNumero",
                         title: "Factura Nro.",
-                        width: "110px",
+                        width: "90px",
                         attributes: {
                             style: "text-align: right"
                         }
@@ -79,10 +82,19 @@
                         width: "110px"
                     },
                     {
+                        field: "OrdenCompra.Proveedor.RazonSocial",
+                        title: "Proveedor",
+                        width: "110px"
+                    },
+                    {
+                        field: "OrdenCompra.FormaPago.Nombre",
+                        title: "Proveedor",
+                        width: "110px"
+                    },
+                    {
                         field: "OrdenCompra.SubTotal",
                         title: "Sub Total",                       
-                        width: "110px",
-                        //template: "#=OrdenCompra.SubTotal#",
+                        width: "90px",
                         format: "{0:c0}",
                         attributes: {
                             style: "text-align: right"
@@ -109,8 +121,11 @@
                     filter: { field: "OrdenCompraId", operator: "eq", value: e.data.Id }
                 },
                 scrollable: true,
-                sortable: true,
+                sortable: true,               
                 pageable: true,
+                noRecords: {
+                    template: "<p>No existe registro de factura de compras.</p>"
+                },
                 columns: [
                     //{ field: "Id", title: "Cod. Detalle", width: "110px", attributes: { style: "text-align: right" } },
                     { field: "ProductoId", title: "Producto Cod.", width: "110px", attributes: { style: "text-align: right" } },

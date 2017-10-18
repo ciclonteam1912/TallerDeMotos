@@ -109,6 +109,7 @@
                 </div>
                 <div id="footerOrden" style="padding:10px 0; text-align:right">
                     <button id="submit" class="btn btn-warning" style="padding:10px 20px">Guardar Orden</button>
+                    <a id="imprimirOrden" href="" class="btn btn-primary js-imprimir">Imprimir Orden</a>
                 </div>
             </div>            
         </div>   
@@ -124,6 +125,7 @@
 
         $(document).ready(function () {
             $("#menuCompras").addClass('active');
+            $('#imprimirOrden').hide();
 
             var vm = {
                 OrdenCompra: {},
@@ -180,7 +182,7 @@
 
             $("#productos").change(function () {
                 var productoId = $("#productos").val();
-                //console.log(productoId);
+
                 $.ajax({
                     url: "/api/productos/" + productoId,
                     contentType: "application/json",
@@ -201,7 +203,8 @@
 
             $("#add").click(function(){                
                 var todoEsValido = true;
-                console.log( $("#fechaDeEmision").val());
+                $("#footerOrden").remove("#imprimirOrden");
+
                 if ($("#productos").val() == 0) {                    
                     todoEsValido = false;
                     $('#productos').siblings('span.error').css('display', 'block');
@@ -219,8 +222,9 @@
                 }
 
                 if (todoEsValido) {
-                    $("#submit").prop("disabled", false);
+                    $("#submit").prop("disabled", false);                    
                     $("#orderItems").show();
+                   
                     count++;
                     total = ($("#precio").val() * $("#cantidad").val()) + ((($("#precio").val() * $("#cantidad").val()) * $("#iva").val()) / 100);
                     subTotal = subTotal + total;
@@ -239,7 +243,7 @@
 
                     $("tbody").on("click", ".eliminar", function () {
                         valor = $(this).closest("tr").find("td").eq(5).text();
-                        //console.log(valor);
+
                         $(this).parents("tr").fadeOut("normal", function () {
                             $(this).remove();
                             subTotal = subTotal - valor;
@@ -249,7 +253,7 @@
                         if ($("#totalAPagar").val() == 0)
                             console.log("ok");
                             $("#submit").prop("disabled", true);
-                        //probar();
+
                     });
 
 
@@ -258,8 +262,6 @@
                     $("#iva").val("");
 
                     $("#cantidad").val("");
-
-                    //probar();
                 }
             });            
 
@@ -295,22 +297,22 @@
                     method: "post",
                     data: vm
                 })
-                .done(function (ordenCompra) {
+                .done(function (ordenCompra) {                    
                     if (ordenCompra.Success){
                         toastr.success(ordenCompra.Message);
-                        $("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompraReport?ordenNro=' + $("#ordenNro").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>')
-                        $("#ordenNro").val("");
-                        $("#formaPago").val("");
-                        $("#proveedor").val("");
-                        $("#ordenCompraDetalle tbody").empty();
-                        $("#totalAPagar").val("");
-                        subTotal = 0;
+                          $("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompraReport?ordenNro=' + $("#ordenNro").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>')
+                        // $('#imprimirOrden').show();
+                          $("#ordenNro").val("");
+                          $("#formaPago").val("");
+                          $("#proveedor").val("");
+                          $("#ordenCompraDetalle tbody").empty();
+                          $("#totalAPagar").val("");
+                          subTotal = 0;
 
-                        vm = {
-                            OrdenCompra: {},
-                            OrdenCompraDetalles: []
-                        }
-
+                          vm = {
+                              OrdenCompra: {},
+                              OrdenCompraDetalles: []
+                          }
                     }
                     else {
                         vm = {
@@ -327,19 +329,24 @@
                 });               
             });
 
-            $("#imprimirOrden").click(function () {
+  
+            @*$("#imprimirOrden").click(function (e) {
+                console.log(e);
                 console.log($("#ordenNro").val());
-                var id = $("#ordenNro").val();
+                var ordenNro = $("#ordenNro").val();
                 $.ajax({
                     url: "@Url.Action("OrdenCompraReport", "OrdenCompra")",
+                    url: "/OrdenCompra/OrdenCompraReport?ordenNro=" + ordenNro,
                     type: "get",
-                    data: { id: id },
+                    //data: { ordenNro: ordenNro },
                     contentType: "application/json; charset=utf-8",
                     success: function () {
                         console.log("success");
+                       
+                        
                     }
                 });
-            });
+            });*@
 
             toastr.options = {
                 "closeButton": true,

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers.APIs
@@ -24,7 +25,7 @@ namespace TallerDeMotos.Controllers.APIs
             _context.Dispose();
         }
 
-        [Authorize(Roles = RoleName.Administrador)]
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpGet]
         public IHttpActionResult ObtenerOrdenDeCompras()
         {
@@ -38,7 +39,7 @@ namespace TallerDeMotos.Controllers.APIs
             return Ok(ordenCompras);
         }
 
-        [Authorize(Roles = RoleName.Administrador)]
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpPost]
         public IHttpActionResult CrearOrdenDeCompra(NuevaOrdenCompraDto nuevaOrdenCompraDto)
         {

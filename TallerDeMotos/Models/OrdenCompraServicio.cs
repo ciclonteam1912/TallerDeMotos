@@ -9,7 +9,6 @@ namespace TallerDeMotos.Models
 {
     public class OrdenCompraServicio : IDisposable
     {
-        private static bool UpdateDatabase = false;
         private ApplicationDbContext entities;
 
         public OrdenCompraServicio()

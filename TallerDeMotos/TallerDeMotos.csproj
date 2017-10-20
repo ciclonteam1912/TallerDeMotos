@@ -48,6 +48,9 @@
       <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Kendo.Mvc">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Telerik\UI for ASP.NET MVC R2 2017\wrappers\aspnetmvc\Binaries\Mvc5\Kendo.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -221,6 +224,7 @@
     <Compile Include="ConfiguracionDeEntidades\AseguradoraConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CargoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CilindradaConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\CiudadConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ClienteConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CombustibleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\EmpleadoConfiguracion.cs" />
@@ -242,6 +246,7 @@
     <Compile Include="ConfiguracionDeEntidades\VehiculoConfiguracion.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APIs\AseguradorasController.cs" />
+    <Compile Include="Controllers\APIs\CiudadesController.cs" />
     <Compile Include="Controllers\APIs\ClientesController.cs" />
     <Compile Include="Controllers\APIs\CombustiblesController.cs" />
     <Compile Include="Controllers\APIs\EmpleadosController.cs" />
@@ -260,6 +265,7 @@
     <Compile Include="Controllers\APIs\UsuariosController.cs" />
     <Compile Include="Controllers\APIs\VehiculosController.cs" />
     <Compile Include="Controllers\AseguradoraController.cs" />
+    <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CombustibleController.cs" />
     <Compile Include="Controllers\EmpleadoController.cs" />
@@ -280,6 +286,7 @@
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VehiculoController.cs" />
     <Compile Include="Dtos\AseguradoraDto.cs" />
+    <Compile Include="Dtos\CiudadDto.cs" />
     <Compile Include="Dtos\EstadoDto.cs" />
     <Compile Include="Dtos\FacturaCompraDto.cs" />
     <Compile Include="Dtos\FormaPagoDto.cs" />
@@ -438,6 +445,14 @@
     <Compile Include="Migrations\201710161846213_CreacionDeTablaIntermediaProductoProveedores.Designer.cs">
       <DependentUpon>201710161846213_CreacionDeTablaIntermediaProductoProveedores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710182227454_CreacionDeTablasCiudades.cs" />
+    <Compile Include="Migrations\201710182227454_CreacionDeTablasCiudades.Designer.cs">
+      <DependentUpon>201710182227454_CreacionDeTablasCiudades.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710182240026_AgregarColumnaCiudadCodigoEnTablaClientes.cs" />
+    <Compile Include="Migrations\201710182240026_AgregarColumnaCiudadCodigoEnTablaClientes.Designer.cs">
+      <DependentUpon>201710182240026_AgregarColumnaCiudadCodigoEnTablaClientes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -447,11 +462,13 @@
     <Compile Include="Models\AtributosDeValidacion\PrecioVentaMayorPrecioCosto.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />
+    <Compile Include="Models\CiudadServicio.cs" />
     <Compile Include="Models\IdentityManager.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\ModelosDeDominio\Aseguradora.cs" />
     <Compile Include="Models\ModelosDeDominio\Cargo.cs" />
     <Compile Include="Models\ModelosDeDominio\Cilindrada.cs" />
+    <Compile Include="Models\ModelosDeDominio\Ciudad.cs" />
     <Compile Include="Models\ModelosDeDominio\Cliente.cs" />
     <Compile Include="Models\ModelosDeDominio\Combustible.cs" />
     <Compile Include="Models\ModelosDeDominio\Empleado.cs" />
@@ -2308,6 +2325,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Ciudad\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -2428,6 +2446,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710161846213_CreacionDeTablaIntermediaProductoProveedores.resx">
       <DependentUpon>201710161846213_CreacionDeTablaIntermediaProductoProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710182227454_CreacionDeTablasCiudades.resx">
+      <DependentUpon>201710182227454_CreacionDeTablasCiudades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710182240026_AgregarColumnaCiudadCodigoEnTablaClientes.resx">
+      <DependentUpon>201710182240026_AgregarColumnaCiudadCodigoEnTablaClientes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -27,6 +27,7 @@ namespace TallerDeMotos.Controllers.APIs
             var clientes = _context.Clientes
                 .Include(c => c.Personeria)
                 .Include(c => c.TipoDocumento)
+                .Include(c => c.Ciudad)
                 .ToList()
                /* .Select(Mapper.Map<Cliente, ClienteDto>)*/;
 

@@ -245,3 +245,13 @@ a.k-grid-pdf, a.k-grid-save-changes, a.k-grid-cancel-changes {
 .k-grid  .k-grid-header  .k-header {
     white-space: normal;
 }
+
+/*********************Estilos para los label************/
+
+#labelCiudad{
+    display: block;
+}
+
+#ciudadId{
+    display: inline;
+}

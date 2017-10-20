@@ -11,6 +11,8 @@ namespace TallerDeMotos.ViewModels
 
         public IEnumerable<Personeria> Personerias { get; set; }
 
+        public IEnumerable<Ciudad> Ciudades { get; set; }
+
         public int Id { get; set; }
 
         [Required]
@@ -43,6 +45,9 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Valor del Documento")]
         public string ValorDocumento { get; set; }
 
+        [Display(Name = "Ciudad")]
+        public int CiudadId { get; set; }
+
         public string Titulo
         {
             get
@@ -69,6 +74,7 @@ namespace TallerDeMotos.ViewModels
             PersoneriaId = cliente.PersoneriaId;
             TipoDocumentoId = cliente.TipoDocumentoId;
             ValorDocumento = cliente.ValorDocumento;
+            CiudadId = cliente.CiudadId;
         }
     }
 }

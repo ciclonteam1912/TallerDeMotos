@@ -16,6 +16,9 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(c => c.TipoDocumentoId)
             .HasColumnName("TipoDocumentoCodigo");
 
+            Property(c => c.CiudadId)
+                .HasColumnName("CiudadCodigo");
+
             HasRequired(c => c.Personeria)
                 .WithMany(p => p.Clientes)
                 .WillCascadeOnDelete(false);

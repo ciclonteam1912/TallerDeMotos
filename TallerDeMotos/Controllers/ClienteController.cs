@@ -37,11 +37,13 @@ namespace TallerDeMotos.Controllers
         {
             var tiposDocumentos = _context.TipoDocumentos.ToList();
             var personerias = _context.Personerias.ToList();
+            var ciudades = _context.Ciudades.ToList();
 
             var viewModel = new ClienteViewModel()
             {
                 TiposDocumentos = tiposDocumentos,
-                Personerias = personerias
+                Personerias = personerias,
+                Ciudades = ciudades
             };
 
             return View("ClienteFormulario", viewModel);
@@ -57,7 +59,8 @@ namespace TallerDeMotos.Controllers
                 var viewModel = new ClienteViewModel(cliente)
                 {
                     Personerias = _context.Personerias.ToList(),
-                    TiposDocumentos = _context.TipoDocumentos.ToList()
+                    TiposDocumentos = _context.TipoDocumentos.ToList(),
+                    Ciudades = _context.Ciudades.ToList()
                 };
 
                 return View("ClienteFormulario", viewModel);
@@ -90,7 +93,8 @@ namespace TallerDeMotos.Controllers
             var viewModel = new ClienteViewModel(cliente)
             {
                 Personerias = _context.Personerias.ToList(),
-                TiposDocumentos = _context.TipoDocumentos.ToList()
+                TiposDocumentos = _context.TipoDocumentos.ToList(),
+                Ciudades = _context.Ciudades.ToList()
             };
 
             return View("ClienteFormulario", viewModel);

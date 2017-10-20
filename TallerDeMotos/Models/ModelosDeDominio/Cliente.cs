@@ -54,6 +54,11 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Valor del Documento")]
         public string ValorDocumento { get; set; }
 
+        public Ciudad Ciudad { get; set; }
+
+        [Display(Name = "Ciudad")]
+        public int CiudadId { get; set; }
+
         public string NombreCompleto
         {
             get

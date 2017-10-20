@@ -32,11 +32,14 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<FormaPago, FormaPagoDto>();
             Mapper.CreateMap<Proveedor, ProveedorDto>();
             Mapper.CreateMap<FacturaCompra, FacturaCompraDto>();
+            Mapper.CreateMap<Ciudad, CiudadDto>();
+
             //DTO a Dominio
             Mapper.CreateMap<OrdenCompraDto, OrdenCompra>();
             Mapper.CreateMap<OrdenCompraDetalleDto, OrdenCompraDetalle>();
             Mapper.CreateMap<EstadoDto, Estado>();
             Mapper.CreateMap<FacturaCompraDto, FacturaCompra>();
+            Mapper.CreateMap<CiudadDto, Ciudad>();
         }
     }
 }

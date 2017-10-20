@@ -48,9 +48,6 @@
       <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Kendo.Mvc">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Telerik\UI for ASP.NET MVC R2 2017\wrappers\aspnetmvc\Binaries\Mvc5\Kendo.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -453,6 +450,10 @@
     <Compile Include="Migrations\201710182240026_AgregarColumnaCiudadCodigoEnTablaClientes.Designer.cs">
       <DependentUpon>201710182240026_AgregarColumnaCiudadCodigoEnTablaClientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710202044173_AgregarColumnaCiudadCodigoEnTablaAseguradoras.cs" />
+    <Compile Include="Migrations\201710202044173_AgregarColumnaCiudadCodigoEnTablaAseguradoras.Designer.cs">
+      <DependentUpon>201710202044173_AgregarColumnaCiudadCodigoEnTablaAseguradoras.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -492,6 +493,7 @@
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="ViewModels\AseguradoraViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\EmpleadoViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -2452,6 +2454,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710182240026_AgregarColumnaCiudadCodigoEnTablaClientes.resx">
       <DependentUpon>201710182240026_AgregarColumnaCiudadCodigoEnTablaClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710202044173_AgregarColumnaCiudadCodigoEnTablaAseguradoras.resx">
+      <DependentUpon>201710202044173_AgregarColumnaCiudadCodigoEnTablaAseguradoras.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

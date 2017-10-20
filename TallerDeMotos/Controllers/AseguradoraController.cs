@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
+using TallerDeMotos.ViewModels;
 
 namespace TallerDeMotos.Controllers
 {
@@ -33,9 +34,14 @@ namespace TallerDeMotos.Controllers
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevaAseguradora()
         {
-            var aseguradora = new Aseguradora();
+            var ciudades = _context.Ciudades.ToList();
 
-            return View("AseguradoraFormulario", aseguradora);
+            var viewModel = new AseguradoraViewModel()
+            {
+                Ciudades = ciudades
+            };
+
+            return View("AseguradoraFormulario", viewModel);
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
@@ -44,7 +50,15 @@ namespace TallerDeMotos.Controllers
         public ActionResult GuardarAseguradora(Aseguradora aseguradora)
         {
             if (!ModelState.IsValid)
-                return View("AseguradoraFormulario", aseguradora);
+            {
+                var viewModel = new AseguradoraViewModel(aseguradora)
+                {
+                    Ciudades = _context.Ciudades.ToList()
+                };
+
+                return View("AseguradoraFormulario", viewModel);
+            }
+                
 
             if (aseguradora.Id == 0)
                 _context.Aseguradoras.Add(aseguradora);
@@ -67,9 +81,12 @@ namespace TallerDeMotos.Controllers
             if (aseguradoraBD == null)
                 return HttpNotFound();
 
-            var aseguradora = new Aseguradora(aseguradoraBD);
+            var viewModel = new AseguradoraViewModel(aseguradoraBD)
+            {
+                Ciudades = _context.Ciudades.ToList()
+            };
 
-            return View("AseguradoraFormulario", aseguradora);
+            return View("AseguradoraFormulario", viewModel);
         }
     }
 }

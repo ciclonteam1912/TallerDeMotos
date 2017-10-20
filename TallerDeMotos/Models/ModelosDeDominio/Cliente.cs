@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
@@ -71,7 +70,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public Cliente()
         {
-            Vehiculos = new Collection<Vehiculo>();
+            Vehiculos = new HashSet<Vehiculo>();
         }
     }
 }

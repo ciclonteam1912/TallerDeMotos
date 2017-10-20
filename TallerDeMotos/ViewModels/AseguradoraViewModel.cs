@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models.ModelosDeDominio;
 
-namespace TallerDeMotos.Models.ModelosDeDominio
+namespace TallerDeMotos.ViewModels
 {
-    public class Aseguradora
+    public class AseguradoraViewModel
     {
+        public IEnumerable<Ciudad> Ciudades { get; set; }
+
         public byte Id { get; set; }
 
         [Required]
@@ -30,16 +33,32 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Correo Electrónico")]
         public string CorreoElectronico { get; set; }
 
-        public Ciudad Ciudad { get; set; }
-
         [Display(Name = "Ciudad")]
         public int CiudadId { get; set; }
 
-        public ICollection<Vehiculo> Vehiculos { get; set; }        
-
-        public Aseguradora()
+        public string Titulo
         {
-            Vehiculos = new HashSet<Vehiculo>();            
+            get
+            {
+                return Id != 0 ? "Editar Aseguradora" : "Nueva Aseguradora";
+            }
+        }
+
+        public AseguradoraViewModel()
+        {
+
+        }
+
+        public AseguradoraViewModel(Aseguradora aseguradora)
+        {
+            Id = aseguradora.Id;
+            Nombre = aseguradora.Nombre;
+            Contacto = aseguradora.Contacto;
+            Ruc = aseguradora.Ruc;
+            Direccion = aseguradora.Direccion;
+            Telefono = aseguradora.Telefono;
+            CorreoElectronico = aseguradora.CorreoElectronico;
+            CiudadId = aseguradora.CiudadId;
         }
     }
 }

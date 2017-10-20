@@ -12,6 +12,10 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             HasMany(c => c.Clientes)
                 .WithRequired(c => c.Ciudad)
                 .WillCascadeOnDelete(false);
+
+            HasMany(a => a.Aseguradoras)
+                .WithRequired(c => c.Ciudad)
+                .WillCascadeOnDelete(false);
         }
     }
 }

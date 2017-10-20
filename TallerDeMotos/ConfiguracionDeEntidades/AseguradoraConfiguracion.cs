@@ -11,6 +11,9 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(a => a.Id)
                 .HasColumnName("Codigo")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            Property(c => c.CiudadId)
+                .HasColumnName("CiudadCodigo");
         }
     }
 }

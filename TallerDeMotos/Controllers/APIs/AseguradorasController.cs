@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using TallerDeMotos.Models;
 
@@ -21,6 +19,7 @@ namespace TallerDeMotos.Controllers.APIs
         public IHttpActionResult ObtenerAseguradoras()
         {
             var aseguradoras = _context.Aseguradoras
+                .Include(a => a.Ciudad)
                 .ToList();
                 //.Select(Mapper.Map<Aseguradora, AseguradoraDto>);
 

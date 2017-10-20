@@ -10,10 +10,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Required]
         public string Nombre { get; set; }
 
+        public ICollection<Aseguradora> Aseguradoras { get; set; }
+
         public ICollection<Cliente> Clientes { get; set; }
 
         public Ciudad()
         {
+            Aseguradoras = new HashSet<Aseguradora>();
             Clientes = new HashSet<Cliente>();
         }
     }

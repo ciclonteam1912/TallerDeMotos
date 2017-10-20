@@ -117,10 +117,10 @@
                         <div class="form-group">
                             @Html.LabelFor(m => m.CiudadId, new { id = "labelCiudad" })
                             @Html.DropDownListFor(m => m.CiudadId, new SelectList(Model.Ciudades, "Id", "Nombre"), "Seleccionar Ciudad...", new { @class = "form-control", id = "ciudadId" })
-                            @Html.ValidationMessageFor(m => m.CiudadId)
                             <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
-                        </div>
-                        
+                            <div>@Html.ValidationMessageFor(m => m.CiudadId)</div>
+                            
+                        </div>                        
                     </div>
                     <div class="col-lg-6">
                     </div>
@@ -219,12 +219,12 @@
                     },
                     create: {
                         url: "/Ciudad/CrearCiudad",
-                        dataType: "jsonp",
+                        dataType: "json",
                         type: "post"
                     }
                 },
                 //batch: true,
-                pageSize: 20,
+                pageSize: 10,
                 serverPaging: false,
                 serverSorting: false,
                 schema: {
@@ -246,6 +246,7 @@
                     buttonCount: 5
                 },
                 sortable: true,
+                filterable: true,
                 height: 500,
                 toolbar: ["create", "save", "cancel"],
                 columns: [

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
-using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers
 {
@@ -32,15 +27,9 @@ namespace TallerDeMotos.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CrearCiudad(CiudadDto ciudadDto)
         {
-           // var results = new List<CiudadDto>();
-
             if (ciudadDto != null)
             {
-                //foreach (var c in ciudades)
-                //{
-                    ciudadServicio.Create(ciudadDto);
-                  //  results.Add(c);
-                //}
+                ciudadServicio.Create(ciudadDto);
             }
 
             return Json(ciudadDto, JsonRequestBehavior.AllowGet);
@@ -51,10 +40,7 @@ namespace TallerDeMotos.Controllers
         {
             if (ciudadDto != null && ModelState.IsValid)
             {
-                //foreach (var ciudad in ciudades)
-                //{
-                    ciudadServicio.Update(ciudadDto);
-                //}
+                ciudadServicio.Update(ciudadDto);
             }
 
             return Json(ciudadDto, JsonRequestBehavior.AllowGet);

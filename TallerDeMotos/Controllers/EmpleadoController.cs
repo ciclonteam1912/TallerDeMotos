@@ -36,10 +36,12 @@ namespace TallerDeMotos.Controllers
         public ActionResult NuevoEmpleado()
         {
             var cargos = _context.Cargos.ToList();
+            var ciudades = _context.Ciudades.ToList();
 
             var viewModel = new EmpleadoViewModel()
             {
-                Cargos = cargos
+                Cargos = cargos,
+                Ciudades = ciudades
             };
 
             return View("EmpleadoFormulario", viewModel);
@@ -54,7 +56,8 @@ namespace TallerDeMotos.Controllers
             {
                 var viewModel = new EmpleadoViewModel(empleado)
                 {
-                    Cargos = _context.Cargos.ToList()
+                    Cargos = _context.Cargos.ToList(),
+                    Ciudades = _context.Ciudades.ToList()
                 };
 
                 return View("EmpleadoFormulario", viewModel);
@@ -86,7 +89,8 @@ namespace TallerDeMotos.Controllers
 
             var viewModel = new EmpleadoViewModel(empleado)
             {
-                Cargos = _context.Cargos.ToList()
+                Cargos = _context.Cargos.ToList(),
+                Ciudades = _context.Ciudades.ToList()
             };
 
             return View("EmpleadoFormulario", viewModel);

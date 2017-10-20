@@ -454,6 +454,10 @@
     <Compile Include="Migrations\201710202044173_AgregarColumnaCiudadCodigoEnTablaAseguradoras.Designer.cs">
       <DependentUpon>201710202044173_AgregarColumnaCiudadCodigoEnTablaAseguradoras.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710202240307_AgregarColumnaCiudadCodigoEnTablaEmpleados.cs" />
+    <Compile Include="Migrations\201710202240307_AgregarColumnaCiudadCodigoEnTablaEmpleados.Designer.cs">
+      <DependentUpon>201710202240307_AgregarColumnaCiudadCodigoEnTablaEmpleados.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -2457,6 +2461,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710202044173_AgregarColumnaCiudadCodigoEnTablaAseguradoras.resx">
       <DependentUpon>201710202044173_AgregarColumnaCiudadCodigoEnTablaAseguradoras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710202240307_AgregarColumnaCiudadCodigoEnTablaEmpleados.resx">
+      <DependentUpon>201710202240307_AgregarColumnaCiudadCodigoEnTablaEmpleados.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -9,11 +9,15 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
         {
             ToTable("Ciudades");
 
-            HasMany(c => c.Clientes)
+            HasMany(a => a.Aseguradoras)
                 .WithRequired(c => c.Ciudad)
                 .WillCascadeOnDelete(false);
 
-            HasMany(a => a.Aseguradoras)
+            HasMany(c => c.Clientes)
+                .WithRequired(c => c.Ciudad)
+                .WillCascadeOnDelete(false);
+            
+            HasMany(a => a.Empleados)
                 .WithRequired(c => c.Ciudad)
                 .WillCascadeOnDelete(false);
         }

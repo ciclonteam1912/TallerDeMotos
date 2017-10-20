@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Data.Entity;
 using System.Net.Http;
 using System.Web.Http;
 using TallerDeMotos.Models;
@@ -26,6 +27,8 @@ namespace TallerDeMotos.Controllers.APIs
         public IHttpActionResult ObtenerEmpleados()
         {
             var empleados = _context.Empleados
+                .Include(e => e.Ciudad)
+                .Include(e => e.Cargo)
                 .ToList();
                 //.Select(Mapper.Map<Empleado, EmpleadoDto>);
 

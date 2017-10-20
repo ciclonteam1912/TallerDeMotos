@@ -17,6 +17,7 @@
 @section Scripts{
     <script>
         var wnd, detailsTemplate;
+        kendo.culture().numberFormat.currency.symbol = "₲";
         $(document).ready(function () {
             $("#menuTaller").addClass('active');
 
@@ -81,7 +82,7 @@
                     field: "Salario",
                     title: "Salario",
                     width: 120,
-                    format: "{0:n}"
+                    format: "{0:c0}",
                 }, {
                     command: {
                         text: "Ver Detalles",
@@ -166,6 +167,7 @@
             @*<em>#= Title #</em>*@
 
             <p><b>Dirección:</b> #= (Direccion == null) ? ' ' : Direccion #</p>
+            <p><b>Ciudad:</b> #= Ciudad.Nombre #</p>
             <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
             <p><b>Fecha de Nacimiento:</b> #= kendo.toString(kendo.parseDate(FechaDeNacimiento), "g") #</p>
             <p><b>Hora de Entrada:</b> #= (HoraDeEntrada == null) ? ' ' : HoraDeEntrada #</p>

@@ -50,5 +50,10 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Display(Name = "Cargo")]
         public byte CargoId { get; set; }
+
+        public Ciudad Ciudad { get; set; }
+
+        [Display(Name = "Ciudad")]
+        public int CiudadId { get; set; }
     }
 }

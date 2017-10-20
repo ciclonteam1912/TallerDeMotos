@@ -9,6 +9,8 @@ namespace TallerDeMotos.ViewModels
     {
         public IEnumerable<Cargo> Cargos { get; set; }
 
+        public IEnumerable<Ciudad> Ciudades { get; set; }
+
         public int Id { get; set; }
 
         [Required]
@@ -44,6 +46,9 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Cargo")]
         public byte? CargoId { get; set; }
 
+        [Display(Name = "Ciudad")]
+        public int CiudadId { get; set; }
+
         public string Titulo
         {
             get
@@ -71,6 +76,7 @@ namespace TallerDeMotos.ViewModels
             HoraDeSalida = empleado.HoraDeSalida;
             Salario = empleado.Salario;
             CargoId = empleado.CargoId;
+            CiudadId = empleado.CiudadId;
         }
     }
 }

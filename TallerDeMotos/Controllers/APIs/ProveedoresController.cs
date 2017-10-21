@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using TallerDeMotos.Models;
 
@@ -25,7 +23,9 @@ namespace TallerDeMotos.Controllers.APIs
         [HttpGet]
         public IHttpActionResult ObtenerProveedores()
         {
-            var proveedores = _context.Proveedores.ToList();
+            var proveedores = _context.Proveedores
+                .Include(a => a.Ciudad)
+                .ToList();
                 //.Select(Mapper.Map<Proveedor, ProveedorDto>);
 
             return Ok(proveedores);

@@ -128,7 +128,6 @@
                             @Html.DropDownListFor(m => m.CiudadId, new SelectList(Model.Ciudades, "Id", "Nombre"), "Seleccionar Ciudad...", new { @class = "form-control", id = "ciudadId" })
                             <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
                             <div>@Html.ValidationMessageFor(m => m.CiudadId)</div>
-
                         </div>
                     </div>
                 </div>

@@ -16,11 +16,14 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public ICollection<Empleado> Empleados { get; set; }
 
+        public ICollection<Proveedor> Proveedores { get; set; }
+
         public Ciudad()
         {
             Aseguradoras = new HashSet<Aseguradora>();
             Clientes = new HashSet<Cliente>();
             Empleados = new HashSet<Empleado>();
+            Proveedores = new HashSet<Proveedor>();
         }
     }
 }

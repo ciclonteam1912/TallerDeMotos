@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
+using TallerDeMotos.ViewModels;
 
 namespace TallerDeMotos.Controllers
 {
@@ -33,9 +34,14 @@ namespace TallerDeMotos.Controllers
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevoProveedor()
         {
-            var proveedor = new Proveedor();
+            var ciudades = _context.Ciudades.ToList();
 
-            return View("ProveedorFormulario", proveedor);
+            var viewModel = new ProveedorViewModel()
+            {
+                Ciudades = ciudades
+            };
+
+            return View("ProveedorFormulario", viewModel);
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
@@ -44,7 +50,13 @@ namespace TallerDeMotos.Controllers
         public ActionResult GuardarProveedor(Proveedor proveedor)
         {
             if (!ModelState.IsValid)
-                return View("ProveedorFormulario", proveedor);
+            {
+                var viewModel = new ProveedorViewModel(proveedor)
+                {
+                    Ciudades = _context.Ciudades.ToList()
+                };
+                return View("ProveedorFormulario", viewModel);
+            }                
 
             if (proveedor.Id == 0)
                 _context.Proveedores.Add(proveedor);
@@ -67,9 +79,12 @@ namespace TallerDeMotos.Controllers
             if (proveedorBD == null)
                 return HttpNotFound();
 
-            var proveedor = new Proveedor(proveedorBD);
+            var viewModel = new ProveedorViewModel(proveedorBD)
+            {
+                Ciudades = _context.Ciudades.ToList()
+            };
 
-            return View("ProveedorFormulario", proveedor);
+            return View("ProveedorFormulario", viewModel);
         }
     }
 }

@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models.ModelosDeDominio;
 
-namespace TallerDeMotos.Models.ModelosDeDominio
+namespace TallerDeMotos.ViewModels
 {
-    public class Proveedor
+    public class ProveedorViewModel
     {
+        public IEnumerable<Ciudad> Ciudades { get; set; }
+
         public int Id { get; set; }
 
         [Required]
@@ -36,19 +39,33 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Correo Electrónico")]
         public string CorreoElectronico { get; set; }
 
-        public Ciudad Ciudad { get; set; }
-
         [Display(Name = "Ciudad")]
         public int CiudadId { get; set; }
 
-        public ICollection<Producto> Productos { get; set; }
-
-        public ICollection<OrdenCompra> OrdenCompras { get; set; }
-
-        public Proveedor()
+        public string Titulo
         {
-            Productos = new HashSet<Producto>();
-            OrdenCompras = new HashSet<OrdenCompra>();
+            get
+            {
+                return Id != 0 ? "Editar Proveedor" : "Nuevo Proveedor";
+            }
+        }
+
+        public ProveedorViewModel()
+        {
+
+        }
+
+        public ProveedorViewModel(Proveedor proveedor)
+        {
+            Id = proveedor.Id;
+            RazonSocial = proveedor.RazonSocial;
+            Contacto = proveedor.Contacto;
+            Propietario = proveedor.Propietario;
+            Ruc = proveedor.Ruc;
+            Direccion = proveedor.Direccion;
+            Telefono = proveedor.Telefono;
+            CorreoElectronico = proveedor.CorreoElectronico;
+            CiudadId = proveedor.CiudadId;
         }
     }
 }

@@ -458,6 +458,10 @@
     <Compile Include="Migrations\201710202240307_AgregarColumnaCiudadCodigoEnTablaEmpleados.Designer.cs">
       <DependentUpon>201710202240307_AgregarColumnaCiudadCodigoEnTablaEmpleados.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710210049120_AgregarColumnaCiudadCodigoEnTablaProveedores.cs" />
+    <Compile Include="Migrations\201710210049120_AgregarColumnaCiudadCodigoEnTablaProveedores.Designer.cs">
+      <DependentUpon>201710210049120_AgregarColumnaCiudadCodigoEnTablaProveedores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -505,6 +509,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ModeloViewModel.cs" />
     <Compile Include="ViewModels\ProductoViewModel.cs" />
+    <Compile Include="ViewModels\ProveedorViewModel.cs" />
     <Compile Include="ViewModels\RolViewModel.cs" />
     <Compile Include="ViewModels\TalonarioViewModel.cs" />
     <Compile Include="ViewModels\VehiculoViewModel.cs" />
@@ -2464,6 +2469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710202240307_AgregarColumnaCiudadCodigoEnTablaEmpleados.resx">
       <DependentUpon>201710202240307_AgregarColumnaCiudadCodigoEnTablaEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710210049120_AgregarColumnaCiudadCodigoEnTablaProveedores.resx">
+      <DependentUpon>201710210049120_AgregarColumnaCiudadCodigoEnTablaProveedores.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

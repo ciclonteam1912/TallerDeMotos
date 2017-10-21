@@ -11,6 +11,9 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
 
             Property(p => p.Id)
                 .HasColumnName("Codigo");
+
+            Property(c => c.CiudadId)
+                .HasColumnName("CiudadCodigo");
         }
     }
 }

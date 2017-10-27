@@ -42,10 +42,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public ICollection<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
 
+        public ICollection<FacturaCompraDetalle> FacturaCompraDetalles { get; set; }
+
         public Producto()
         {
             Proveedores = new HashSet<Proveedor>();
             OrdenCompraDetalles = new HashSet<OrdenCompraDetalle>();
+            FacturaCompraDetalles = new HashSet<FacturaCompraDetalle>();
         }
     }
 }

@@ -15,8 +15,15 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(fcd => fcd.FacturaCompraId)
                 .HasColumnName("FacturaCompraCodigo");
 
+            Property(ocd => ocd.ProductoId)
+                .HasColumnName("ProductoCodigo");
+
             HasRequired(fcd => fcd.FacturaCompra)
                 .WithMany(fc => fc.FacturaCompraDetalles)
+                .WillCascadeOnDelete(false);
+
+            HasRequired(fcd => fcd.Producto)
+                .WithMany(p => p.FacturaCompraDetalles)
                 .WillCascadeOnDelete(false);
         }
     }

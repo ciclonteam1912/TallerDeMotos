@@ -5,23 +5,22 @@
 }
 @Html.Partial("_MenuVertical")
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
-    <div class="row">
-        <h2>Factura de Compra Formulario</h2>
-        <form id="facturaCompraFormulario">
+    <form id="facturaCompraFormulario">
+        <div class="row">
+            <h2>Factura de Compra Formulario</h2>
+
             <div class="row well">
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="form-group">
-                            @*<div class="demo-section k-content">*@
-                                <label>Número de Orden:</label><br />
-                                <input id="nroOrden" style="width: 70%" />
-                            @*</div>*@
-                        </div>
+                        <label>Nro. Orden:</label>
+                        <select id="nroOrden" class="form-control" required name="nroOrden">
+                            <option value="">Seleccione un Nro. de Orden...</option>
+                        </select>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Fecha de Factura de Compra:</label><br />
-                            <input id="fechaFacturaCompra" style="width: 70%" />
+                            <input id="fechaFactura" style="width: 70%", onkeydown = "return false;"/>
                         </div>
                     </div>
                 </div>
@@ -39,22 +38,37 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div id="footerFactura" style="padding:10px 0; text-align:right">
-                        <button id="submit" class="btn btn-warning" style="padding:10px 20px">Registrar Factura de Compra</button>
-                    </div>
-                </div>
-            </div>            
-        </form>
-    </div>
-    <div class="row">
-        <h2>Factura de Compra Detalles</h2>
-        <div id="example">
-            <div id="grid">
+            </div>
 
+        </div>
+        <div class="row" id="facturaDetalle" style="display:none">
+            <h2>Factura de Compra Detalles</h2>
+            <table class="table table-responsive" id="facturaCompraDetalle">
+                <thead>
+                    <tr>
+                        <th>Producto Id</th>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>IVA</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            
+            <div class="row">
+                <hr />
+                <label>Subtotal:</label>
+                <input type="number" id="pagar" class="form-control" readonly/>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div id="footerFactura" style="padding:10px 0; text-align:right">
+                <button id="submit" class="btn btn-warning" style="padding:10px 20px">Registrar Factura de Compra</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 @section Scripts{
@@ -63,30 +77,94 @@
             if (object.value.length > object.max.length)
                 object.value = object.value.slice(0, object.max.length);
         }
-        kendo.culture().numberFormat.currency.symbol = "₲";
+
+        function myFunction(i) {
+            var subtotal = 0;
+            var precio = $("#precioCosto" + i).val();
+            var cantidad = $("#cantidad" + i).val();
+            var iva = $("#iva" + i).val();
+            var total = (precio * cantidad) + (((precio * cantidad) * iva) / 100);
+            $("#total" + i).val(function () {
+                return total;
+            });
+               
+            $("[id*=total]").each(function () {
+                console.log($(this).val());
+                subtotal = subtotal + parseInt($(this).val());
+            });
+            $("#pagar").val(subtotal);
+        }
+       
         $(document).ready(function () {
+            $("#facturaDetalle").hide();
+            var subTotal = 0;
             $("#menuCompras").addClass('active');
 
-            FacturaCompraDto: {}
+            var nuevaFacturaCompraDto = {
+                FacturaCompraDto: {},
+                FacturaCompraDetalles: []
+            }
 
-            $("#nroOrden").kendoDropDownList({
-                dataTextField: "OrdenCompraNumero",
-                dataValueField: "Id",
-                optionLabel: "Selecciona un Nro. de Orden...",
-                dataSource: {
-                    transport: {
-                        read: {
-                            dataType: "json",
-                            url: "@Url.Action("ObtenerOrdenCompraAceptado", "OrdenCompra")",
-                            type: "POST"
-                        }
-                    }
-                },
-                template: '<span>Orden Nro: #: OrdenCompraNumero # del #= kendo.toString(kendo.parseDate(FechaDeEmision), "MM/dd/yyyy HH:mm tt")#</span>'
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ObtenerOrdenCompraAceptado", "OrdenCompra")",
+                contentType: "application/json",
+                success: function (ordenCompras) {
+                    $.each(ordenCompras, function (i) {
+                        $("#nroOrden").append($('<option></option>').val(ordenCompras[i].Id).html(ordenCompras[i].OrdenCompraNumero));
+                    });
+                }
             });
 
-            $("#fechaFacturaCompra").kendoDateTimePicker({
+
+            $("#nroOrden").change(function () {
+                
+                $("#facturaCompraDetalle tbody").empty();
+                var id = $("#nroOrden option:selected").val();
+
+                if (id != "") {
+                    $("#facturaDetalle").show();
+                    subtotal = 0;
+                    $.ajax({
+                        url: "/api/ordenCompraDetalles/" + id,
+                        type: "get",
+                        contentType: "application/json",
+                        success: function (detalles) {
+                            $.each(detalles, function (i, item) {
+                                var ordenCompra = '<tr class="detalle">' +
+                                '<td><input type="number" value="' + item.ProductoId + '" class="form-control" id="productoId' + i + '" readonly/></td>' +
+                                '<td><input type="text" value="' + item.Producto.Descripcion + '" class="form-control" id="productoDescripcion' + i + '" readonly/></td>' +
+                                '<td><input type="number" value="' + item.Producto.PrecioCosto + '" class="form-control" id="precioCosto' + i + '" onfocusout="myFunction(' + i + ')" min="0" max="99999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true"/></td>' +
+                                '<td><input type="number" value="' + item.Cantidad + '" class="form-control" id="cantidad' + i + '" onfocusout="myFunction(' + i + ')" min="0" max="99" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true"/></td>' +
+                                '<td><input type="number" value="' + item.Producto.Iva + '" class="form-control" id="iva' + i + '" readonly/></td>' +
+                                '<td><input type="number" value="' + item.Total + '" class="form-control" id="total' + i + '" readonly/></td>' +
+                                '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
+                                '</tr>';
+                                subtotal = subtotal + item.Total;                                
+                                $("#pagar").val(subtotal);
+                                $("#facturaCompraDetalle tbody").append(ordenCompra);
+                            });
+                        }
+                    });
+                } else {
+                    $("#pagar").val("");
+                    $("#facturaDetalle").hide();
+                } 
+                
+                $("tbody").on("click", ".eliminar", function () {
+                    valor = $(this).closest("tr").find("td input").eq(5).val();
+                    $(this).parents("tr").fadeOut("normal", function () {
+                        $(this).remove();
+                        subtotal = subtotal - valor;
+                        $("#pagar").val(subtotal);
+                    });
+                });
+
+            });
+
+            $("#fechaFactura").kendoDateTimePicker({
                 culture: "es-ES",
+                format: "MM/dd/yyyy HH:mm",
                 animation: {
                     close: {
                         effects: "fadeOut zoom:out",
@@ -100,89 +178,53 @@
                 value: new Date(),
                 dateInput: true
             });
+          
 
-            var dataSource = new kendo.data.DataSource({
-                transport: {
-                    read: {
-                        url: "/api/OrdenCompraDetalles/",
-                        dataType: "json"
-                    }
-                },
-                batch: true,
-                pageSize: 20,
-                schema: {
-                    model: {
-                        id: "Id",
-                        fields: {
-                            Id: { editable: false },
-                            OrdenCompraId: { editable: false },
-                            ProductoId: { editable: false },
-                            "Producto.Descripcion": { editable: false },
-                            Cantidad: { type: "number", validation: { required: true, min: 1 } },
-                            "Producto.PrecioCosto": { editable: false },
-                            "Producto.Iva": { editable: false },
-                            Total: { type: "number", editable: false }
-                        }
-                    }
-                }
-            });
-
-            var grid = $("#grid").kendoGrid({
-                autoBind: false,
-                dataSource: dataSource,
-                navigatable: true,
-                pageable: true,                
-                height: 350,
-                columns: [
-                    //{ field: "Id", title: "Cod. Detalle", width: 90 },
-                    { field: "ProductoId", title: "Producto Cod.", width: 90, attributes: { style: "text-align: right" } },
-                    { field: "Producto.Descripcion", title: "Descripción", width: 150 },
-                    { field: "Cantidad", title: "Cantidad", width: 90, attributes: { style: "text-align: right" } },
-                    { field: "Producto.PrecioCosto", title: "Precio Unitario", width: 120, format: "{0:c0}", attributes: { style: "text-align: right" } },
-                    { field: "Producto.Iva", title: "Iva", width: 70, attributes: { style: "text-align: right" } },
-                    {
-                        field: "Total",
-                        title: "Total",
-                        width: 120,
-                        format: "{0:c0}",
-                        attributes: { style: "text-align: right" }
-                    },
-                ]
-            });
-
-            $("#nroOrden").change(function (e) {
-                var value = $(this).val();
-
-                if (value) {
-                    grid.data("kendoGrid").dataSource.filter({ field: "OrdenCompraId", operator: "eq", value: value });
-                }
-            });
-            
             $("#facturaCompraFormulario").submit(function (e) {
                 e.preventDefault();
 
-                FacturaCompraDto = {
+                nuevaFacturaCompraDto.FacturaCompraDto = {
+                    FechaFacturaCompra: $("#fechaFactura").val(),
                     Id: $("#nroOrden").val(),
                     Timbrado: $("#timbrado").val(),
-                    FacturaNumero: $("#nroFactura").val(),
-                    FechaFacturaCompra: $("#fechaFacturaCompra").val(),
-                    OrdenCompraId: $("#nroOrden").val()
+                    FacturaNumero: $("#nroFactura").val(),                    
+                    OrdenCompraId: $("#nroOrden").val(),
+                    Subtotal: $("#pagar").val()
                 }
+
+                $('#facturaCompraDetalle tr.detalle').each(function (index, tr) {
+                    var lines = $('td input', tr).map(function (index, td) {
+                        if (index != 1 && index != 6)
+                            return $(td).val();
+                    });
+                    console.log(lines);
+                    nuevaFacturaCompraDto.FacturaCompraDetalles.push({
+                        ProductoId: lines[0],
+                        PrecioProducto: lines[1],
+                        Cantidad: lines[2],
+                        Total: lines[4]
+                    });
+
+                });
 
                 $.ajax({
                     url: "/api/facturaCompras",
                     method: "post",
-                    data: FacturaCompraDto
+                    contentType: 'application/json; chartset=utf-8',
+                    data: JSON.stringify(nuevaFacturaCompraDto)
                 })
                 .done(function (facturaCompra) {
                     if (facturaCompra.Success) {
                         toastr.success(facturaCompra.Message);
-                        $("#nroOrden").data("kendoDropDownList").value("");                       
+                        $("#nroOrden").val("");
                         $("#timbrado").val("");
                         $("#nroFactura").val("");
-                        $("#grid tbody").empty();
+                        $("#facturaCompraDetalle tbody").empty();
 
-                        FacturaCompraDto: {}
+                        nuevaFacturaCompraDto = {
+                            FacturaCompraDto: {},
+                            FacturaCompraDetalles: []
+                        }
 
                     }
                     else {

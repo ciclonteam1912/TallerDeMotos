@@ -17,6 +17,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public int OrdenCompraId { get; set; }
 
+        public int Subtotal { get; set; }
+
         public ICollection<FacturaCompraDetalle> FacturaCompraDetalles { get; set; }
 
         public FacturaCompra()

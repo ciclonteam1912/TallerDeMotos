@@ -72,7 +72,7 @@ namespace TallerDeMotos.Controllers
         public JsonResult ObtenerOrdenCompraAceptado()
         {
             var ordenCompra = _context.OrdenCompras.Include(oc => oc.Estado)
-                .Where(oc => oc.Estado.Descripcion.Equals("Aceptado"))
+                .Where(oc => oc.Estado.Descripcion.Equals("Pendiente"))
                 .ToList()
                 .Select(Mapper.Map<OrdenCompra, OrdenCompraDto>);
 

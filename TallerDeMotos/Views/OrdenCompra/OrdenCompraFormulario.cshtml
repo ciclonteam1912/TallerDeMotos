@@ -30,7 +30,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label style="display:block">Fecha de Emisión:</label>
-                        <input type="text" id="fechaDeEmision" class="form-control" />
+                        <input id="fechaDeEmision" class="form-control" onkeydown = "return false;"/>
                     </div>
                 </div>
             </div>
@@ -160,8 +160,19 @@
             });
 
             $("#fechaDeEmision").kendoDateTimePicker({
-                value: new Date(),
                 culture: "es-ES",
+                format: "MM/dd/yyyy HH:mm",
+                animation: {
+                    close: {
+                        effects: "fadeOut zoom:out",
+                        duration: 300
+                    },
+                    open: {
+                        effects: "fadeIn zoom:in",
+                        duration: 300
+                    }
+                },
+                value: new Date(),
                 dateInput: true,
                 attributes: {
                    "width": "68%"

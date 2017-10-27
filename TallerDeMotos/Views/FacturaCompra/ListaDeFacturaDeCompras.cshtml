@@ -78,7 +78,7 @@
                     {
                         field: "FechaFacturaCompra",
                         title: "Fecha Factura de Compra",
-                        template: "#= kendo.toString(kendo.parseDate(FechaFacturaCompra), 'MM/dd/yyyy HH:mm tt')#",
+                        template: "#= kendo.toString(kendo.parseDate(FechaFacturaCompra), 'dd/MM/yyyy HH:mm tt')#",
                         width: "110px"
                     },
                     {
@@ -92,7 +92,7 @@
                         width: "110px"
                     },
                     {
-                        field: "OrdenCompra.SubTotal",
+                        field: "Subtotal",
                         title: "Sub Total",                       
                         width: "90px",
                         format: "{0:c0}",
@@ -110,7 +110,7 @@
                 dataSource: {
                     transport: {
                         read: {
-                            url: "/api/ordenCompraDetalles",
+                            url: "/api/facturaCompraDetalles",
                             dataType: "json"
                         }
                     },
@@ -118,7 +118,7 @@
                     serverSorting: false,
                     serverFiltering: false,
                     pageSize: 10,
-                    filter: { field: "OrdenCompraId", operator: "eq", value: e.data.Id }
+                    filter: { field: "FacturaCompraId", operator: "eq", value: e.data.Id }
                 },
                 scrollable: true,
                 sortable: true,               

@@ -1,14 +1,10 @@
-﻿namespace TallerDeMotos.Models.ModelosDeDominio
+﻿namespace TallerDeMotos.Dtos
 {
-    public class FacturaCompraDetalle
+    public class FacturaCompraDetalleDto
     {
         public int Id { get; set; }
 
-        public FacturaCompra FacturaCompra { get; set; }
-
         public int FacturaCompraId { get; set; }
-
-        public Producto Producto { get; set; }
 
         public int ProductoId { get; set; }
 

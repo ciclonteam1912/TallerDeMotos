@@ -2,7 +2,6 @@
 using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Http;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
@@ -48,7 +47,7 @@ namespace TallerDeMotos.Controllers.APIs
                 var ordenCompraDto = new OrdenCompraDto
                 {
                     OrdenCompraNumero = nuevaOrdenCompraDto.OrdenCompra.OrdenCompraNumero,
-                    FechaDeEmision = DateTime.Now,
+                    FechaDeEmision = nuevaOrdenCompraDto.OrdenCompra.FechaDeEmision,
                     FormaPagoId = nuevaOrdenCompraDto.OrdenCompra.FormaPagoId,
                     SubTotal = nuevaOrdenCompraDto.OrdenCompra.SubTotal,
                     EstadoId = 1,

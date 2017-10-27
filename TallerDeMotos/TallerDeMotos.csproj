@@ -248,6 +248,7 @@
     <Compile Include="Controllers\APIs\CombustiblesController.cs" />
     <Compile Include="Controllers\APIs\EmpleadosController.cs" />
     <Compile Include="Controllers\APIs\EstadosController.cs" />
+    <Compile Include="Controllers\APIs\FacturaCompraDetallesController.cs" />
     <Compile Include="Controllers\APIs\FacturaComprasController.cs" />
     <Compile Include="Controllers\APIs\FormasPagoController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
@@ -285,11 +286,14 @@
     <Compile Include="Dtos\AseguradoraDto.cs" />
     <Compile Include="Dtos\CiudadDto.cs" />
     <Compile Include="Dtos\EstadoDto.cs" />
+    <Compile Include="Dtos\FacturaCompraDetalleDto.cs" />
     <Compile Include="Dtos\FacturaCompraDto.cs" />
     <Compile Include="Dtos\FormaPagoDto.cs" />
+    <Compile Include="Dtos\NuevaFacturaCompraDto.cs" />
     <Compile Include="Dtos\NuevaOrdenCompraDto.cs" />
     <Compile Include="Dtos\OrdenCompraDetalleDto.cs" />
     <Compile Include="Dtos\OrdenCompraDto.cs" />
+    <Compile Include="Dtos\ProductoDto.cs" />
     <Compile Include="Dtos\ProveedorDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -461,6 +465,26 @@
     <Compile Include="Migrations\201710210049120_AgregarColumnaCiudadCodigoEnTablaProveedores.cs" />
     <Compile Include="Migrations\201710210049120_AgregarColumnaCiudadCodigoEnTablaProveedores.Designer.cs">
       <DependentUpon>201710210049120_AgregarColumnaCiudadCodigoEnTablaProveedores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710212120505_CreacionDeTablaOrdenCompraDetallesAux.cs" />
+    <Compile Include="Migrations\201710212120505_CreacionDeTablaOrdenCompraDetallesAux.Designer.cs">
+      <DependentUpon>201710212120505_CreacionDeTablaOrdenCompraDetallesAux.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710212323311_AgregarColumnasIgualesDeOrdenDetalleAFacturaCompraDetalles.cs" />
+    <Compile Include="Migrations\201710212323311_AgregarColumnasIgualesDeOrdenDetalleAFacturaCompraDetalles.Designer.cs">
+      <DependentUpon>201710212323311_AgregarColumnasIgualesDeOrdenDetalleAFacturaCompraDetalles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710251429469_AgregarColumnaPrecioProductoEnTablaFacturaCompraDetalles.cs" />
+    <Compile Include="Migrations\201710251429469_AgregarColumnaPrecioProductoEnTablaFacturaCompraDetalles.Designer.cs">
+      <DependentUpon>201710251429469_AgregarColumnaPrecioProductoEnTablaFacturaCompraDetalles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710261934381_AgregarColumnaSubtotalEnTablaFacturaCompras.cs" />
+    <Compile Include="Migrations\201710261934381_AgregarColumnaSubtotalEnTablaFacturaCompras.Designer.cs">
+      <DependentUpon>201710261934381_AgregarColumnaSubtotalEnTablaFacturaCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710270006352_EliminarTablaOrdenCompraDetallesAux.cs" />
+    <Compile Include="Migrations\201710270006352_EliminarTablaOrdenCompraDetallesAux.Designer.cs">
+      <DependentUpon>201710270006352_EliminarTablaOrdenCompraDetallesAux.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
@@ -2472,6 +2496,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710210049120_AgregarColumnaCiudadCodigoEnTablaProveedores.resx">
       <DependentUpon>201710210049120_AgregarColumnaCiudadCodigoEnTablaProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710212120505_CreacionDeTablaOrdenCompraDetallesAux.resx">
+      <DependentUpon>201710212120505_CreacionDeTablaOrdenCompraDetallesAux.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710212323311_AgregarColumnasIgualesDeOrdenDetalleAFacturaCompraDetalles.resx">
+      <DependentUpon>201710212323311_AgregarColumnasIgualesDeOrdenDetalleAFacturaCompraDetalles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710251429469_AgregarColumnaPrecioProductoEnTablaFacturaCompraDetalles.resx">
+      <DependentUpon>201710251429469_AgregarColumnaPrecioProductoEnTablaFacturaCompraDetalles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710261934381_AgregarColumnaSubtotalEnTablaFacturaCompras.resx">
+      <DependentUpon>201710261934381_AgregarColumnaSubtotalEnTablaFacturaCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710270006352_EliminarTablaOrdenCompraDetallesAux.resx">
+      <DependentUpon>201710270006352_EliminarTablaOrdenCompraDetallesAux.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

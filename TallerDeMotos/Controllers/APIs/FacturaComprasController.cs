@@ -40,21 +40,38 @@ namespace TallerDeMotos.Controllers.APIs
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpPost]
-        public IHttpActionResult CrearFacturaCompra(FacturaCompraDto nuevaFacturaCompraDto)
+        public IHttpActionResult CrearFacturaCompra(NuevaFacturaCompraDto nuevaFacturaCompraDto)
         {
             try
             {
                 var facturaCompraDto = new FacturaCompraDto
                 {
-                    Id = nuevaFacturaCompraDto.Id,
-                    FacturaNumero = nuevaFacturaCompraDto.FacturaNumero,
-                    Timbrado = nuevaFacturaCompraDto.Timbrado,
-                    FechaFacturaCompra = nuevaFacturaCompraDto.FechaFacturaCompra,
-                    OrdenCompraId = nuevaFacturaCompraDto.OrdenCompraId
+                    Id = nuevaFacturaCompraDto.FacturaCompraDto.Id,
+                    FacturaNumero = nuevaFacturaCompraDto.FacturaCompraDto.FacturaNumero,
+                    Timbrado = nuevaFacturaCompraDto.FacturaCompraDto.Timbrado,
+                    FechaFacturaCompra = nuevaFacturaCompraDto.FacturaCompraDto.FechaFacturaCompra,
+                    OrdenCompraId = nuevaFacturaCompraDto.FacturaCompraDto.OrdenCompraId,
+                    Subtotal = nuevaFacturaCompraDto.FacturaCompraDto.Subtotal                    
                 };
 
                 var facturaCompra = Mapper.Map<FacturaCompraDto, FacturaCompra>(facturaCompraDto);
                 _context.FacturaCompras.Add(facturaCompra);
+
+                foreach (var detalle in nuevaFacturaCompraDto.FacturaCompraDetalles)
+                {
+                    var facturaCompraDetalleDto = new FacturaCompraDetalleDto
+                    {
+                        FacturaCompraId = nuevaFacturaCompraDto.FacturaCompraDto.Id,
+                        ProductoId = detalle.ProductoId,
+                        PrecioProducto = detalle.PrecioProducto,
+                        Cantidad = detalle.Cantidad,
+                        Total = detalle.Total
+                    };                    
+
+                    var facturaCompraDetalle = Mapper.Map<FacturaCompraDetalleDto, FacturaCompraDetalle>(facturaCompraDetalleDto);
+                    _context.FacturaCompraDetalles.Add(facturaCompraDetalle);
+                }
+
 
                 _context.SaveChanges();
             }

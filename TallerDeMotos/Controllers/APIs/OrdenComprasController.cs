@@ -33,7 +33,8 @@ namespace TallerDeMotos.Controllers.APIs
                 .Include(oc => oc.Proveedor)
                 .Include(oc => oc.Estado)
                 .ToList()
-                .Select(Mapper.Map<OrdenCompra, OrdenCompraDto>);
+                .Select(Mapper.Map<OrdenCompra, OrdenCompraDto>)
+                .OrderByDescending(oc => oc.Id);
 
             return Ok(ordenCompras);
         }

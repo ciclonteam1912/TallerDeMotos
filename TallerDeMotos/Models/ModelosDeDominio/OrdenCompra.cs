@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -29,9 +30,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public ICollection<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
 
+        public ICollection<OrdenCompraAnulada> OrdenCompraAnuladas { get; set; }
+
         public OrdenCompra()
         {
             OrdenCompraDetalles = new HashSet<OrdenCompraDetalle>();
+            OrdenCompraAnuladas = new HashSet<OrdenCompraAnulada>();
         }
     }
 }

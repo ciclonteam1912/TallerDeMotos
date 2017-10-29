@@ -78,5 +78,60 @@ namespace TallerDeMotos.Controllers
 
             return Json(ordenCompra, JsonRequestBehavior.AllowGet);
         }
+
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        public ActionResult AnularOrdenCompra(int id)
+        {
+            var ordenCompraAAnular = _context.OrdenCompras.SingleOrDefault(oc => oc.Id == id);
+
+            if (ordenCompraAAnular == null)
+                return HttpNotFound();
+            
+            ViewBag.NroOrdenCompra = ordenCompraAAnular.OrdenCompraNumero;
+            ViewBag.OrdenCompraId = id;
+
+            return View("OrdenCompraAnularFormulario");
+        }
+
+        public ActionResult GuardarOrdenCompraAnulada()
+        {
+            int ordenCompraId = 0;
+                int.TryParse(Request.Form["ordenId"], out ordenCompraId);
+
+            string motivoAnulacion = Request.Form["motivoAnulacion"];
+
+            if(ordenCompraId == 0 || motivoAnulacion == "")
+            {
+                ViewBag.Message = "Ocurrió algo inesperado";
+                return View("OrdenCompraAnularFormulario");
+            }                
+
+            var ordenCompraAnular = _context.OrdenCompras.Single(oc => oc.Id == ordenCompraId);
+
+            if (ordenCompraAnular.EstadoId == 2)
+            {
+                ViewBag.Message = "Esta Orden de Compra ya fue Aceptada Anteriormente";
+                return View("OrdenCompraAnularFormulario");
+            }
+            else
+            {
+                if (ordenCompraAnular.EstadoId == 3)
+                {
+                    ViewBag.Message = "Esta Orden de Compra ya fue Anulada Anteriormente";
+                    return View("OrdenCompraAnularFormulario");
+                }
+            }
+
+            var ordenAnulada = new OrdenCompraAnulada
+            {
+                OrdenCompraId = ordenCompraId,
+                MotivoAnulacion = motivoAnulacion
+            };
+
+            _context.OrdenCompraAnuladas.Add(ordenAnulada);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }

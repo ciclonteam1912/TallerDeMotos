@@ -22,6 +22,6 @@ namespace TallerDeMotos.Dtos
 
         public ProveedorDto Proveedor { get; set; }
 
-        public int ProveedorId { get; set; }
+        public int ProveedorId { get; set; }        
     }
 }

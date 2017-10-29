@@ -50,6 +50,7 @@ namespace TallerDeMotos.Models
         public DbSet<FacturaCompra> FacturaCompras { get; set; }
         public DbSet<FacturaCompraDetalle> FacturaCompraDetalles { get; set; }
         public DbSet<Ciudad> Ciudades { get; set; }
+        public DbSet<OrdenCompraAnulada> OrdenCompraAnuladas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -77,6 +78,7 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new FacturaCompraConfiguracion());
             modelBuilder.Configurations.Add(new FacturaCompraDetalleConfiguracion());
             modelBuilder.Configurations.Add(new CiudadConfiguracion());
+            modelBuilder.Configurations.Add(new OrdenCompraAnuladaConfiguracion());
         }
 
         public static ApplicationDbContext Create()

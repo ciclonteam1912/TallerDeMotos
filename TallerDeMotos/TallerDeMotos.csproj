@@ -231,6 +231,7 @@
     <Compile Include="ConfiguracionDeEntidades\FormaPagoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\MarcaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ModeloConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\OrdenCompraAnuladaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\OrdenCompraConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\OrdenCompraDetalleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\PersoneriaConfiguracion.cs" />
@@ -486,6 +487,10 @@
     <Compile Include="Migrations\201710270006352_EliminarTablaOrdenCompraDetallesAux.Designer.cs">
       <DependentUpon>201710270006352_EliminarTablaOrdenCompraDetallesAux.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710272127529_CreacionDeTablaOrdenCompraAnuladas.cs" />
+    <Compile Include="Migrations\201710272127529_CreacionDeTablaOrdenCompraAnuladas.Designer.cs">
+      <DependentUpon>201710272127529_CreacionDeTablaOrdenCompraAnuladas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -512,6 +517,7 @@
     <Compile Include="Models\ModelosDeDominio\Marca.cs" />
     <Compile Include="Models\ModelosDeDominio\Modelo.cs" />
     <Compile Include="Models\ModelosDeDominio\OrdenCompra.cs" />
+    <Compile Include="Models\ModelosDeDominio\OrdenCompraAnulada.cs" />
     <Compile Include="Models\ModelosDeDominio\OrdenCompraDetalle.cs" />
     <Compile Include="Models\ModelosDeDominio\Personeria.cs" />
     <Compile Include="Models\ModelosDeDominio\Producto.cs" />
@@ -2357,6 +2363,7 @@
     <Content Include="Views\FacturaCompra\FacturaCompraFormulario.cshtml" />
     <Content Include="Views\FacturaCompra\ListaDeFacturaDeCompras.cshtml" />
     <Content Include="Views\OrdenCompra\ListaDeOrdenDeComprasSoloLectura.cshtml" />
+    <Content Include="Views\OrdenCompra\OrdenCompraAnularFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2511,6 +2518,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710270006352_EliminarTablaOrdenCompraDetallesAux.resx">
       <DependentUpon>201710270006352_EliminarTablaOrdenCompraDetallesAux.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710272127529_CreacionDeTablaOrdenCompraAnuladas.resx">
+      <DependentUpon>201710272127529_CreacionDeTablaOrdenCompraAnuladas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

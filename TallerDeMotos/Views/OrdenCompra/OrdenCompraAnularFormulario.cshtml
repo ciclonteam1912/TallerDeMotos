@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Anular Orden de Compra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Anular Orden de Compra</h2>
+
+    @using (Html.BeginForm("GuardarOrdenCompraAnulada", "OrdenCompra"))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">Anular Orden de Compra</div>
+            <div class="panel-body">
+                <div class="row">
+                    <p style="color: red">@ViewBag.Message</p>
+                </div>
+                <div class="row">
+                    <input type="number" class="form-control" id="ordenId" value="@ViewBag.OrdenCompraId" readonly name="ordenId" style="display:none"/>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Nro. Orden de Compra: </label>
+                            <input type="number" class="form-control" id="nroOrdenCompra" value="@ViewBag.NroOrdenCompra" readonly required/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Motivo de Anulación: </label>
+                            <textarea class="form-control" id="motivoAnulacion" name="motivoAnulacion" required></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function(){
+            $("#menuCompras").addClass('active');
+        });
+    </script>    
+}

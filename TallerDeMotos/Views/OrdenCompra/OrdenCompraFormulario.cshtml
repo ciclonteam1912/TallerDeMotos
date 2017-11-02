@@ -20,14 +20,14 @@
         <div class="row" id="ordenCabecera">
             <h2>Orden de Compra</h2>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Orden de Compra Nro.:</label>
-                        <input required type="number" id="ordenNro" class="form-control" autocomplete="off" min="0" max="999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" />
+                        <input readonly required type="number" id="ordenNro" class="form-control" autocomplete="off" min="0" max="999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" />
                         <span class="error">Order no required</span>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label style="display:block">Fecha de Emisión:</label>
                         <input id="fechaDeEmision" class="form-control" onkeydown = "return false;"/>
@@ -35,13 +35,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <label>Forma de Pago:</label>
                     <select id="formaPago" class="form-control" required name="formaPago">
                         <option value="">Seleccione una Forma de Pago...</option>
                     </select>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <label>Proveedor:</label>
                     <select id="proveedor" class="form-control" required name="proveedor">
                         <option value="">Seleccione un Proveedor...</option>
@@ -49,9 +49,10 @@
                 </div>
             </div>
         </div>
-        <div class="row" id="ordenDetalle">
-            <h2>Orden de Compra Detalles</h2>
-            <table class="table table-responsive">
+        <hr />
+        <h4>Orden de Compra Detalles</h4>
+        <div class="row table-responsive">
+            <table class="table"  id="ordenDetalle">
                 <thead>
                     <tr>
                         <th>Producto</th>
@@ -64,11 +65,13 @@
                 <tbody>
                     <tr class="mycontainer" id="mainrow">
                         <td>
-                            <select id="productos" class="product form-control">
+                            <select id="productos" class="product form-control" style="display: inline-block">
                                 <option value="">Selecciona un producto...</option>
-                            </select>   
-                            <span class="error">Selecciona un producto</span>      
-                            <a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none"><i class="fa fa-plus"></i>Agregar Producto</a>                                                                           
+                            </select>
+                            @*<input id="productos" style="width: 100%;" />*@
+                            <a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none" title="Agregar Producto"><i class="fa fa-plus"></i></a>
+                            <span class="error">Selecciona un producto</span>
+                            
                         </td>
                         <td>
                             <input type="number" id="precio" class="form-control" />
@@ -86,10 +89,11 @@
                         </td>
                     </tr>
                 </tbody>
-
             </table>
-            <div id="orderItems" style="display:none">
-                <table class="table table-responsive" id="ordenCompraDetalle">
+        </div> 
+        <div id="orderItems" style="display:none">
+            <div class="table-responsive">
+                <table class="table table-condensed" id="ordenCompraDetalle">
                     <thead>
                         <tr>
                             <th style="display: none">Producto Id</th>
@@ -98,21 +102,23 @@
                             <th>Cantidad</th>
                             <th>IVA</th>
                             <th>Total</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
                 <span id="orderItemError" style="color:red"></span>
-                <div class="form-group">
-                    <label>Total a Pagar: </label>
-                    <input type="text" name="totalAPagar" id="totalAPagar" value="" readonly class="form-control" />
-                </div>
-                <div id="footerOrden" style="padding:10px 0; text-align:right">
-                    <button id="submit" class="btn btn-warning" style="padding:10px 20px">Guardar Orden</button>
-                    <a id="imprimirOrden" href="" class="btn btn-primary js-imprimir">Imprimir Orden</a>
-                </div>
-            </div>            
-        </div>   
+            </div>
+            <div class="form-group">
+                <label>Total a Pagar: </label>
+                <input type="text" name="totalAPagar" id="totalAPagar" value="" readonly class="form-control" style="width: 150px"/>
+            </div>
+            <div id="footerOrden" style="padding:10px 0; text-align:right">
+                <button id="submit" class="btn btn-primary" style="padding:10px 20px">Guardar Orden</button>
+                <a id="imprimirOrden" href="" class="btn btn-primary js-imprimir">Imprimir Orden</a>
+            </div>
+        </div>            
+          
     </form>      
 </div>
 
@@ -123,9 +129,31 @@
                 object.value = object.value.slice(0, object.max.length);
         }
 
+        function CargarMaxCodOrdenCompra()
+        {
+            var ordenNro = document.getElementById('ordenNro');
+            $.ajax({
+                url: "@Url.Action("BuscarMaxCodOrdenNro", "OrdenCompra")",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    ordenNro.value = data;
+                },
+                error: function (request, status, error) {
+
+                },
+                failure: function (response) {
+                    alert("arriva al failure");
+                }
+            });
+        }
+
         $(document).ready(function () {
             $("#menuCompras").addClass('active');
             $('#imprimirOrden').hide();
+
+            CargarMaxCodOrdenCompra();
 
             var vm = {
                 OrdenCompra: {},
@@ -191,6 +219,20 @@
                 }
             });
 
+            //$("#productos").kendoDropDownList({
+            //    filter: "startswith",
+            //    dataTextField: "Descripcion",
+            //    dataValueField: "Id",
+            //    dataSource: {
+            //        serverFiltering: false,
+            //        transport: {
+            //            read: {
+            //                url: "/api/productos",
+            //            }
+            //        }
+            //    }
+            //});
+
             $("#productos").change(function () {
                 var productoId = $("#productos").val();
 
@@ -204,38 +246,39 @@
                             $("#precio").val(item.PrecioCosto);
                             $("#iva").val(item.Iva);
                         });
-                    }                    
-                });                               
+                    }
+                });
             });
 
             $("#iva").prop("disabled", true);
             $("#precio").prop("disabled", true);
             $("#submit").prop("disabled", true);
 
-            $("#add").click(function(){                
+            $("#add").click(function(event){
                 var todoEsValido = true;
+
                 $("#footerOrden").remove("#imprimirOrden");
 
-                if ($("#productos").val() == 0) {                    
+                if ($("#productos").val() == 0) {
                     todoEsValido = false;
                     $('#productos').siblings('span.error').css('display', 'block');
                 }
                 else {
-                    $('#productos').siblings('span.error').css('display', 'none');
+                    $('#productos').siblings('span.error').css('display', 'none');                    
                 }
 
                 if ($("#cantidad").val() == 0) {
                     todoEsValido = false;
-                    $('#cantidad').siblings('span.error').css('visibility', 'visible');
+                    $('#cantidad').siblings('span.error').css('display', 'block');
                 }
                 else {
-                    $('#cantidad').siblings('span.error').css('visibility', 'hidden');
+                    $('#cantidad').siblings('span.error').css('display', 'none');
                 }
 
                 if (todoEsValido) {
-                    $("#submit").prop("disabled", false);                    
-                    $("#orderItems").show();
+                    $("#submit").prop("disabled", false);
                    
+                    $("#orderItems").fadeIn(1000);
                     count++;
                     total = ($("#precio").val() * $("#cantidad").val()) + ((($("#precio").val() * $("#cantidad").val()) * $("#iva").val()) / 100);
                     subTotal = subTotal + total;
@@ -250,21 +293,29 @@
                         '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
                         '</tr>';
 
-                    $("#ordenCompraDetalle tbody").append(ordenCompra);
+                    $(ordenCompra).hide().appendTo("#ordenCompraDetalle tbody").fadeIn(1000);
+                    //console.log($("#productos option:selected").val());
 
+                    $("#productos option:selected").remove();
                     $("tbody").on("click", ".eliminar", function () {
+                        var codProducto = $(this).closest("tr").find("td").eq(0).text();
+                        var descProducto = $(this).closest("tr").find("td").eq(1).text();
+
                         valor = $(this).closest("tr").find("td").eq(5).text();
 
                         $(this).parents("tr").fadeOut("normal", function () {
                             $(this).remove();
                             subTotal = subTotal - valor;
                             $("#totalAPagar").val(subTotal);
-                        });
 
-                        if ($("#totalAPagar").val() == 0)
-                            console.log("ok");
-                            $("#submit").prop("disabled", true);
-
+                            if ($("#totalAPagar").val() == 0) {
+                                console.log("ok");
+                                $("#submit").prop("disabled", true);
+                            }
+                            $("#productos").append($('<option></option>').val(codProducto).html(descProducto));
+                        });                        
+                        
+                        
                     });
 
 
@@ -274,7 +325,7 @@
 
                     $("#cantidad").val("");
                 }
-            });            
+            });
 
             $("#ordenCompraFormulario").submit(function (e) {
                 e.preventDefault();
@@ -292,9 +343,9 @@
                     var lines = $('td', tr).map(function (index, td) {
 
                         if (index != 1 && index !=6)
-                            return $(td).text();                            
+                            return $(td).text();
                     });
-                    console.log(lines);
+
                     vm.OrdenCompraDetalles.push({
                         ProductoId: lines[0],
                         Cantidad: lines[2],
@@ -308,22 +359,29 @@
                     method: "post",
                     data: vm
                 })
-                .done(function (ordenCompra) {                    
+                .done(function (ordenCompra) {
                     if (ordenCompra.Success){
                         toastr.success(ordenCompra.Message);
-                          $("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompraReport?ordenNro=' + $("#ordenNro").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>')
-                        // $('#imprimirOrden').show();
-                          $("#ordenNro").val("");
-                          $("#formaPago").val("");
-                          $("#proveedor").val("");
-                          $("#ordenCompraDetalle tbody").empty();
-                          $("#totalAPagar").val("");
-                          subTotal = 0;
+                        $("#submit").prop("disabled", true);
+                        $("#imprimirOrden").remove();
+                        $("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompraReport?ordenNro=' + $("#ordenNro").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>');
 
-                          vm = {
-                              OrdenCompra: {},
-                              OrdenCompraDetalles: []
-                          }
+                        $("#imprimirOrden").click(function () {
+                            CargarMaxCodOrdenCompra();
+                            $("#formaPago").val("");
+                            $("#proveedor").val("");
+                            $("#ordenCompraDetalle tbody").empty();
+
+                            $("#totalAPagar").val("");
+                            subTotal = 0;
+
+                            vm = {
+                                OrdenCompra: {},
+                                OrdenCompraDetalles: []
+                            }
+                            $("#imprimirOrden").remove();
+                            $("#orderItems").fadeOut(3000);
+                        });                        
                     }
                     else {
                         vm = {
@@ -337,10 +395,10 @@
                             toastr.error("<p>Ocurrió algo inesperado</p>");
                     }
                     //validator.resetForm();
-                });               
+                });
             });
 
-  
+
             @*$("#imprimirOrden").click(function (e) {
                 console.log(e);
                 console.log($("#ordenNro").val());
@@ -353,8 +411,8 @@
                     contentType: "application/json; charset=utf-8",
                     success: function () {
                         console.log("success");
-                       
-                        
+
+
                     }
                 });
             });*@

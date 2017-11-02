@@ -48,6 +48,10 @@ p.eliminar {
     font-size: 12px;
 }
 
+table {
+    border: 1px solid #E9E9E9;
+}
+
 /*------------- MENÚ PRINCIPAL------------------*/
 .btn-menu {
     display: none;
@@ -254,4 +258,23 @@ a.k-grid-pdf, a.k-grid-save-changes, a.k-grid-cancel-changes {
 
 #ciudadId{
     display: inline;
+}
+
+
+/***********************Estilos para las tablas de Bootstrap********************/
+tr select{
+    width: 200px !important;
+}
+
+tr input[type=number]{
+    width: 120px !important;
+}
+
+#ordenCompraDetalle thead, #ordenDetalle thead{
+    background-color: #2C3E50;
+    color: #999999;
+}
+
+button#eliminar{
+    padding: 0px 5px;
 }

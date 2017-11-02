@@ -93,6 +93,7 @@ namespace TallerDeMotos.Controllers
             return View("OrdenCompraAnularFormulario");
         }
 
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult GuardarOrdenCompraAnulada()
         {
             int ordenCompraId = 0;
@@ -132,6 +133,13 @@ namespace TallerDeMotos.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public JsonResult BuscarMaxCodOrdenNro()
+        {
+            var maxOrdenNro = _context.OrdenCompras.Max(oc => oc.OrdenCompraNumero) + 1;
+
+            return Json(maxOrdenNro);
         }
     }
 }

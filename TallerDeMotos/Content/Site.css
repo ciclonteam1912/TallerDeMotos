@@ -270,7 +270,7 @@ tr input[type=number]{
     width: 120px !important;
 }
 
-#ordenCompraDetalle thead, #ordenDetalle thead{
+#ordenCompraDetalle thead, #ordenDetalle thead, #facturaCompraDetalle thead{
     background-color: #2C3E50;
     color: #999999;
 }

@@ -491,6 +491,14 @@
     <Compile Include="Migrations\201710272127529_CreacionDeTablaOrdenCompraAnuladas.Designer.cs">
       <DependentUpon>201710272127529_CreacionDeTablaOrdenCompraAnuladas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711031902136_CrearRelacionUnoAMuchosEntreFacturaComprasYUsuarios.cs" />
+    <Compile Include="Migrations\201711031902136_CrearRelacionUnoAMuchosEntreFacturaComprasYUsuarios.Designer.cs">
+      <DependentUpon>201711031902136_CrearRelacionUnoAMuchosEntreFacturaComprasYUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711032113579_AgregarColumnaFechaDeGuardadoEnTablaFacturaCompras.cs" />
+    <Compile Include="Migrations\201711032113579_AgregarColumnaFechaDeGuardadoEnTablaFacturaCompras.Designer.cs">
+      <DependentUpon>201711032113579_AgregarColumnaFechaDeGuardadoEnTablaFacturaCompras.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -2521,6 +2529,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710272127529_CreacionDeTablaOrdenCompraAnuladas.resx">
       <DependentUpon>201710272127529_CreacionDeTablaOrdenCompraAnuladas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711031902136_CrearRelacionUnoAMuchosEntreFacturaComprasYUsuarios.resx">
+      <DependentUpon>201711031902136_CrearRelacionUnoAMuchosEntreFacturaComprasYUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711032113579_AgregarColumnaFechaDeGuardadoEnTablaFacturaCompras.resx">
+      <DependentUpon>201711032113579_AgregarColumnaFechaDeGuardadoEnTablaFacturaCompras.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

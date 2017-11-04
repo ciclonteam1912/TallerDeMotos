@@ -25,7 +25,7 @@ namespace TallerDeMotos.Controllers.APIs
         {
             var ordenCompraDetalle = await _context.OrdenCompraDetalles
                 .Include(ocd => ocd.OrdenCompra)
-                .Include(ocd => ocd.Producto)
+                .Include(ocd => ocd.Producto)                
                 .ToListAsync();
 
             return Ok(ordenCompraDetalle);
@@ -36,7 +36,9 @@ namespace TallerDeMotos.Controllers.APIs
         {
             var ordenCompraDetalle = await _context.OrdenCompraDetalles
                 .Where(ocd => ocd.OrdenCompraId == Id)
-                //.Include(ocd => ocd.OrdenCompra)
+                .Include(ocd => ocd.OrdenCompra)
+                .Include(ocd => ocd.OrdenCompra.Proveedor)
+                .Include(ocd => ocd.OrdenCompra.FormaPago)
                 .Include(ocd => ocd.Producto)
                 .ToListAsync();            
 

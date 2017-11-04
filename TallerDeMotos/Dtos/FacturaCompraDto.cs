@@ -17,5 +17,9 @@ namespace TallerDeMotos.Dtos
         public int OrdenCompraId { get; set; }
 
         public int Subtotal { get; set; }
+
+        public string UsuarioId { get; set; }
+
+        public DateTime FechaDeGuardado { get; set; }
     }
 }

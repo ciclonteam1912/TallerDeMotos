@@ -15,6 +15,10 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             HasRequired(fc => fc.OrdenCompra)                
             .WithRequiredDependent(fc => fc.FacturaCompra)            
             .WillCascadeOnDelete(false);
+
+            HasRequired(fc => fc.Usuario)
+                .WithMany(u => u.FacturaCompras)
+                .WillCascadeOnDelete(false);
         }
     }
 }

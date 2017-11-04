@@ -7,6 +7,7 @@ using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
+using Microsoft.AspNet.Identity;
 
 namespace TallerDeMotos.Controllers.APIs
 {
@@ -33,7 +34,8 @@ namespace TallerDeMotos.Controllers.APIs
                 .Include(fc => fc.OrdenCompra.Proveedor)
                 .Include(fc => fc.OrdenCompra.FormaPago)
                 .ToList()
-                .Select(Mapper.Map<FacturaCompra, FacturaCompraDto>);
+                .Select(Mapper.Map<FacturaCompra, FacturaCompraDto>)
+                .OrderByDescending(fc => fc.FechaDeGuardado);
 
             return Ok(facturaCompra);
         }
@@ -51,7 +53,9 @@ namespace TallerDeMotos.Controllers.APIs
                     Timbrado = nuevaFacturaCompraDto.FacturaCompraDto.Timbrado,
                     FechaFacturaCompra = nuevaFacturaCompraDto.FacturaCompraDto.FechaFacturaCompra,
                     OrdenCompraId = nuevaFacturaCompraDto.FacturaCompraDto.OrdenCompraId,
-                    Subtotal = nuevaFacturaCompraDto.FacturaCompraDto.Subtotal                    
+                    Subtotal = nuevaFacturaCompraDto.FacturaCompraDto.Subtotal,
+                    FechaDeGuardado = DateTime.Now,
+                    UsuarioId = User.Identity.GetUserId()                              
                 };
 
                 var facturaCompra = Mapper.Map<FacturaCompraDto, FacturaCompra>(facturaCompraDto);

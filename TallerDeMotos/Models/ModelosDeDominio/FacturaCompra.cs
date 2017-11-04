@@ -19,6 +19,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public int Subtotal { get; set; }
 
+        public ApplicationUser Usuario { get; set; }
+
+        public string UsuarioId { get; set; }
+
+        public DateTime FechaDeGuardado { get; set; }
+
         public ICollection<FacturaCompraDetalle> FacturaCompraDetalles { get; set; }
 
         public FacturaCompra()

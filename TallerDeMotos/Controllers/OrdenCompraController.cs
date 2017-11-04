@@ -69,12 +69,13 @@ namespace TallerDeMotos.Controllers
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
-        public JsonResult ObtenerOrdenCompraAceptado()
+        public JsonResult ObtenerOrdenCompraPendiente()
         {
             var ordenCompra = _context.OrdenCompras.Include(oc => oc.Estado)
                 .Where(oc => oc.Estado.Descripcion.Equals("Pendiente"))
                 .ToList()
-                .Select(Mapper.Map<OrdenCompra, OrdenCompraDto>);
+                .Select(Mapper.Map<OrdenCompra, OrdenCompraDto>)
+                .OrderByDescending(oc => oc.Id);
 
             return Json(ordenCompra, JsonRequestBehavior.AllowGet);
         }

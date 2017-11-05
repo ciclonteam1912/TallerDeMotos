@@ -33,6 +33,7 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Proveedor, ProveedorDto>();
             Mapper.CreateMap<FacturaCompra, FacturaCompraDto>();
             Mapper.CreateMap<Ciudad, CiudadDto>();
+            Mapper.CreateMap<Presupuesto, PresupuestoDto>();
 
             //DTO a Dominio
             Mapper.CreateMap<OrdenCompraDto, OrdenCompra>();
@@ -40,8 +41,9 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<EstadoDto, Estado>();
             Mapper.CreateMap<FacturaCompraDto, FacturaCompra>();
             Mapper.CreateMap<FacturaCompraDetalleDto, FacturaCompraDetalle>();
-            //Mapper.CreateMap<ProductoDto, Producto>();
             Mapper.CreateMap<CiudadDto, Ciudad>();
+            Mapper.CreateMap<PresupuestoDto, Presupuesto>();
+            Mapper.CreateMap<PresupuestoDetalleDto, PresupuestoDetalle>();
         }
     }
 }

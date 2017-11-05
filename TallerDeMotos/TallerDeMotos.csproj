@@ -235,6 +235,8 @@
     <Compile Include="ConfiguracionDeEntidades\OrdenCompraConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\OrdenCompraDetalleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\PersoneriaConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\PresupuestoConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\PresupuestoDetalleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ProductoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ProveedorConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ServicioBasicoConfiguracion.cs" />
@@ -256,6 +258,7 @@
     <Compile Include="Controllers\APIs\ModelosController.cs" />
     <Compile Include="Controllers\APIs\OrdenCompraDetallesController.cs" />
     <Compile Include="Controllers\APIs\OrdenComprasController.cs" />
+    <Compile Include="Controllers\APIs\PresupuestosController.cs" />
     <Compile Include="Controllers\APIs\ProductosController.cs" />
     <Compile Include="Controllers\APIs\ProveedoresController.cs" />
     <Compile Include="Controllers\APIs\RolesController.cs" />
@@ -276,6 +279,7 @@
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\ModeloController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
+    <Compile Include="Controllers\PresupuestoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -292,8 +296,11 @@
     <Compile Include="Dtos\FormaPagoDto.cs" />
     <Compile Include="Dtos\NuevaFacturaCompraDto.cs" />
     <Compile Include="Dtos\NuevaOrdenCompraDto.cs" />
+    <Compile Include="Dtos\NuevoPresupuestoDto.cs" />
     <Compile Include="Dtos\OrdenCompraDetalleDto.cs" />
     <Compile Include="Dtos\OrdenCompraDto.cs" />
+    <Compile Include="Dtos\PresupuestoDetalleDto.cs" />
+    <Compile Include="Dtos\PresupuestoDto.cs" />
     <Compile Include="Dtos\ProductoDto.cs" />
     <Compile Include="Dtos\ProveedorDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -499,6 +506,14 @@
     <Compile Include="Migrations\201711032113579_AgregarColumnaFechaDeGuardadoEnTablaFacturaCompras.Designer.cs">
       <DependentUpon>201711032113579_AgregarColumnaFechaDeGuardadoEnTablaFacturaCompras.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711042105199_CreacionDeTablaPresupuestos.cs" />
+    <Compile Include="Migrations\201711042105199_CreacionDeTablaPresupuestos.Designer.cs">
+      <DependentUpon>201711042105199_CreacionDeTablaPresupuestos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711042219590_CreacionDeTablaPresupuestoDetalles.cs" />
+    <Compile Include="Migrations\201711042219590_CreacionDeTablaPresupuestoDetalles.Designer.cs">
+      <DependentUpon>201711042219590_CreacionDeTablaPresupuestoDetalles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -528,6 +543,8 @@
     <Compile Include="Models\ModelosDeDominio\OrdenCompraAnulada.cs" />
     <Compile Include="Models\ModelosDeDominio\OrdenCompraDetalle.cs" />
     <Compile Include="Models\ModelosDeDominio\Personeria.cs" />
+    <Compile Include="Models\ModelosDeDominio\Presupuesto.cs" />
+    <Compile Include="Models\ModelosDeDominio\PresupuestoDetalle.cs" />
     <Compile Include="Models\ModelosDeDominio\Producto.cs" />
     <Compile Include="Models\ModelosDeDominio\Proveedor.cs" />
     <Compile Include="Models\ModelosDeDominio\ServicioBasico.cs" />
@@ -2372,6 +2389,7 @@
     <Content Include="Views\FacturaCompra\ListaDeFacturaDeCompras.cshtml" />
     <Content Include="Views\OrdenCompra\ListaDeOrdenDeComprasSoloLectura.cshtml" />
     <Content Include="Views\OrdenCompra\OrdenCompraAnularFormulario.cshtml" />
+    <Content Include="Views\Presupuesto\PresupuestoFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2535,6 +2553,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711032113579_AgregarColumnaFechaDeGuardadoEnTablaFacturaCompras.resx">
       <DependentUpon>201711032113579_AgregarColumnaFechaDeGuardadoEnTablaFacturaCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711042105199_CreacionDeTablaPresupuestos.resx">
+      <DependentUpon>201711042105199_CreacionDeTablaPresupuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711042219590_CreacionDeTablaPresupuestoDetalles.resx">
+      <DependentUpon>201711042219590_CreacionDeTablaPresupuestoDetalles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

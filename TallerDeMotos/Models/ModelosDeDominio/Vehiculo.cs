@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TallerDeMotos.Models.AtributosDeValidacion;
 
@@ -55,5 +56,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Display(Name = "Aseguradora")]
         public byte AseguradoraId { get; set; }
+
+        public ICollection<Presupuesto> Presupuestos { get; set; }
+
+        public Vehiculo()
+        {
+            Presupuestos = new HashSet<Presupuesto>();
+        }
     }
 }

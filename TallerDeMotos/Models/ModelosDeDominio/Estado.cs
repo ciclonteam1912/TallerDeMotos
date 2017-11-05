@@ -12,10 +12,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public string Descripcion { get; set; }
 
         public ICollection<OrdenCompra> OrdenCompras { get; set; }
+        public ICollection<Presupuesto> Presupuestos { get; set; }
 
         public Estado()
         {
             OrdenCompras = new HashSet<OrdenCompra>();
+            Presupuestos = new HashSet<Presupuesto>();
         }
     }
 }

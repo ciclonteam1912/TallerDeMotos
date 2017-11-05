@@ -13,10 +13,12 @@ namespace TallerDeMotos.Models
     public class ApplicationUser : IdentityUser
     {
         public ICollection<FacturaCompra> FacturaCompras { get; set; }
+        public ICollection<Presupuesto> Presupuestos { get; set; }
 
         public ApplicationUser()
         {
             FacturaCompras = new HashSet<FacturaCompra>();
+            Presupuestos = new HashSet<Presupuesto>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -59,6 +61,8 @@ namespace TallerDeMotos.Models
         public DbSet<FacturaCompraDetalle> FacturaCompraDetalles { get; set; }
         public DbSet<Ciudad> Ciudades { get; set; }
         public DbSet<OrdenCompraAnulada> OrdenCompraAnuladas { get; set; }
+        public DbSet<Presupuesto> Presupuestos { get; set; }
+        public DbSet<PresupuestoDetalle> PresupuestoDetalles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -87,6 +91,8 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new FacturaCompraDetalleConfiguracion());
             modelBuilder.Configurations.Add(new CiudadConfiguracion());
             modelBuilder.Configurations.Add(new OrdenCompraAnuladaConfiguracion());
+            modelBuilder.Configurations.Add(new PresupuestoConfiguracion());
+            modelBuilder.Configurations.Add(new PresupuestoDetalleConfiguracion());
         }
 
         public static ApplicationDbContext Create()

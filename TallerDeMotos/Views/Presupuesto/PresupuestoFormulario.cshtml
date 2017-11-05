@@ -1,0 +1,400 @@
+﻿@{
+    ViewBag.Title = "Presupuesto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_MenuVertical")
+<style>
+    span.error {
+        display: none;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <form id="presupuestoFormulario">
+        <h2>Presupuesto</h2>
+        <div class="row well">            
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Cliente</label>
+                    <select id="clientes" class="form-control" required name="clientes">
+                        <option value="">Seleccione un Cliente...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Vehículo</label>
+                    <select id="vehiculo" class="form-control" required name="vehiculo">
+                        <option value="">Seleccione un Vehículo...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label style="display:block">Fecha de Emisión:</label>
+                    <input id="fechaDeEmision" class="form-control" onkeydown="return false;" />
+                </div>
+            </div>           
+        </div>
+
+        <hr />
+        <h4>Detalle del Presupuesto</h4>
+        <div class="row table-responsive">            
+            <table class="table" id="prepDetalle">
+                <thead>
+                    <tr>
+                        <th>Producto o Servicio</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>IVA</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select id="productos" class="form-control" style="display: inline-block">
+                                <option value="">Seleccione un Producto o Servicio...</option>
+                            </select>
+                            <span class="error">Selecciona un producto</span>
+                        </td>
+                        <td><input type="text" id="productoPrecio" readonly class="form-control" /></td>
+                        <td>
+                            <input type="number" id="productoCantidad" class="form-control" name="productoCantidad" />
+                            <span class="error">Cantidad no válida</span>
+                        </td>
+                        <td><input type="number" id="productoIva" class="form-control" readonly name="productoIva" /></td>
+                        <td>
+                            <input type="button" class="btn btn-primary" id="agregar" value="Agregar" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="prepItems" style="display:none">
+            <div class="row table-responsive">
+                <table id="presupuestoDetalle" class="table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto o Servicio</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>IVA</th>
+                            <th>Total</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <label>Total a Pagar: </label>
+                <input type="text" name="totalAPagar" id="totalAPagar" value="" readonly class="form-control" style="width: 150px" />
+            </div>
+
+            <div class="form-group" id="footerPresupuesto" style="padding:10px 0; text-align:right">
+                <button id="submit" class="btn btn-primary" style="padding:10px 20px">Guardar Presupuesto</button>
+                <a id="imprimirPresupuesto" href="" class="btn btn-primary js-imprimir">Imprimir Presupuesto</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+        function probar() {
+            $('#presupuestoDetalle tr.detalle').each(function (index, tr) {
+                var lines = $('td', tr).map(function (index, td) {
+                    return $(td).text();
+                });
+                // Here lines will contain an array of all td values for the current row:
+                // like ['value 1', 'value 2', 'value 3']
+                //console.log(lines);
+
+            });
+        }
+
+        $(document).ready(function () {
+            $("#menuVentas").addClass('active');
+            $('#imprimirPresupuesto').hide();
+            $("#productoIva").prop("disabled", true);
+            $("#productoPrecio").prop("disabled", true);
+            $("#submit").prop("disabled", true);
+
+            var vm = {
+                Presupuesto: {},
+                PresupuestoDetalles: []
+            }
+
+            var total = 0;
+            var subTotal = 0;
+
+            $("thead").show();
+            //Obtener los clientes y agregarlos al Drop-down List.
+            $.ajax({
+                type: "GET",
+                url: "/api/clientes",
+                contentType: "application/json",
+                success: function (clientes) {
+                    $.each(clientes, function (i) {
+                        $("#clientes").append($('<option></option>').val(clientes[i].Id).html(clientes[i].Nombre + ' ' + clientes[i].Apellido));
+                    });
+                }
+            });
+
+            //Cascading Drop-down list.
+            $("#clientes").change(function () {
+                $("#vehiculo").empty();
+                $("#vehiculo").append($('<option></option>').val("").html('Seleccione un Vehículo...'));
+                if ($("#clientes").val() != "") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/vehiculos/ " + $("#clientes").val(),
+                        contentType: "application/json",
+                        success: function (vehiculos) {
+                            $.each(vehiculos, function (i) {
+                                $("#vehiculo").append($('<option></option>').val(vehiculos[i].Id).html(vehiculos[i].Matricula));
+                            })
+                        }
+                    });
+                }
+                return false;
+            });
+
+            //Obtener los productos o servicios y agregarlos al Drop-down List.
+            $.ajax({
+                type: "GET",
+                url: "/api/productos",
+                contentType: "application/json",
+                success: function (result) {
+                    $.each(result, function (i) {
+                        $("#productos").append($('<option></option>').val(result[i].Id).html(result[i].Descripcion));
+                    });
+                }
+            });
+
+            $("#fechaDeEmision").kendoDateTimePicker({
+                culture: "es-ES",
+                format: "MM/dd/yyyy HH:mm",
+                animation: {
+                    close: {
+                        effects: "fadeOut zoom:out",
+                        duration: 300
+                    },
+                    open: {
+                        effects: "fadeIn zoom:in",
+                        duration: 300
+                    }
+                },
+                value: new Date(),
+                dateInput: true,
+                attributes: {
+                    "width": "68%"
+                }
+            });
+
+            $("#productos").change(function () {
+                $("#productoCantidad").prop("disabled", false);
+                $("#productoIva").prop("disabled", false);
+                $("#agregar").prop("disabled", false);
+
+                var productoId = $("#productos").val();
+                $.ajax({
+                    url: "/api/productos/" + productoId,
+                    contentType: "application/json",
+                    method: "GET",
+                    success: function (data) {
+                        $(data).each(function (index, item) {
+                            $("#productoDescripcion").val(item.Descripcion);
+                            $("#productoPrecio").val(item.PrecioVenta);
+                            $("#productoIva").val(item.Iva);
+                        });
+                    }
+
+                });
+            });
+
+
+            $("#agregar").click(function () {
+                var todoEsValido = true;               
+
+                $("#footerPresupuesto").remove("#imprimirPresupuesto");
+
+                if ($("#productos").val() == 0) {
+                    todoEsValido = false;
+                    $('#productos').siblings('span.error').css('display', 'block');
+                }
+                else {
+                    $('#productos').siblings('span.error').css('display', 'none');
+                }
+
+                //if ($("#productoCantidad").val() == 0) {
+                //    todoEsValido = false;
+                //    $('#productoCantidad').siblings('span.error').css('display', 'block');
+                //}
+                //else {
+                //    $('#productoCantidad').siblings('span.error').css('display', 'none');
+                //}
+
+                if (todoEsValido) {
+                    $("#prepItems").fadeIn(1000);
+                    $("#submit").prop("disabled", false);
+                    var productoId = $("#productos option:selected").val();
+                    var productoDescripcion = $("#productos option:selected").text();
+                    var productoPrecio = $("#productoPrecio").val();
+                    var productoCantidad = $("#productoCantidad").val();
+                    var cantidad = productoCantidad != "" ? productoCantidad : 1;
+
+                    var productoIva = $("#productoIva").val();
+
+                    if (productoIva != "") {
+                        total = (productoPrecio * cantidad) + (((productoPrecio * cantidad) * productoIva) / 100);
+                        productoIva = ((productoPrecio * cantidad) * productoIva) / 100;
+                    }
+                    else {
+                        productoIva = 0;
+                        total = productoPrecio * cantidad;
+                    }
+
+
+                    subTotal = subTotal + total;
+                    $("#totalAPagar").val(subTotal);
+                    var presupuesto = '<tr class="detalle">' +
+                        '<td>' + productoId + '</td>' +
+                        '<td>' + productoDescripcion + '</td>' +
+                        '<td>' + productoPrecio + '</td>' +
+                        '<td>' + cantidad + '</td>' +
+                        '<td>' + productoIva + '</td>' +
+                        '<td>' + total + '</td>' +
+                        '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
+                        '</tr>';
+
+                    //$("#presupuestoDetalle tbody").append(presupuesto);
+
+                    $(presupuesto).hide().appendTo("#presupuestoDetalle tbody").fadeIn(1000);
+
+                    $("#productos option:selected").remove();
+                    $("tbody").on("click", ".eliminar", function () {
+                        var codProducto = $(this).closest("tr").find("td").eq(0).text();
+                        var descProducto = $(this).closest("tr").find("td").eq(1).text();
+
+                        valor = $(this).closest("tr").find("td").eq(5).text();
+                        //console.log(valor);
+                        $(this).parents("tr").fadeOut("normal", function () {
+                            $(this).remove();
+                            subTotal = subTotal - valor;
+                            $("#totalAPagar").val(subTotal);
+
+                            if ($("#totalAPagar").val() == 0) {
+                                console.log("ok");
+                                $("#submit").prop("disabled", true);
+                            }
+                            $("#productos").append($('<option></option>').val(codProducto).html(descProducto));
+                        });
+                    });
+
+                    $("#productos").val("");
+                    $("#productoDescripcion").val("");
+                    $("#productoPrecio").val("");
+                    $("#productoCantidad").val("");
+                    $("#productoIva").val("");
+                }                
+            });
+
+
+            //Agregar validación al formulario al hacer submit.
+            var validator = $("#presupuestoFormulario").validate({
+
+                submitHandler: function () {
+
+                    vm.Presupuesto = {
+                        VehiculoId: $("#vehiculo").val(),
+                        SubTotal: $("#totalAPagar").val(),
+                        FechaDeEmision: $("#fechaDeEmision").val(),
+                    };
+
+                    $('#presupuestoDetalle tr.detalle').each(function (index, tr) {
+
+                        var lines = $('td', tr).map(function (index, td) {
+
+                            if (index != 6 && index != 1)
+                                return $(td).text();
+                        });
+
+                        vm.PresupuestoDetalles.push({
+                            ProductoId: lines[0],
+                            Cantidad: lines[2],
+                            Total: lines[4]
+                        });
+
+                    });
+
+                    $.ajax({
+                        url: "/api/presupuestos",
+                        method: "post",
+                        data: vm
+                    })
+                        .done(function (presupuesto) {
+                            if (presupuesto.Success) {
+                                console.log(presupuesto.Id);
+                                toastr.success("Hoja de Presupuesto creada con éxito.");
+                                $("#submit").prop("disabled", true);
+                                $("#imprimirPresupuesto").remove();
+                                $("#footerPresupuesto").append('<a id="imprimirPresupuesto" href="PresupuestoReport?id=' + presupuesto.Id + '" target="_blank" class="btn btn-primary">Imprimir Presupuesto</a>');
+
+                                $("#imprimirPresupuesto").click(function () {
+                                    $("#productos").val("");
+                                    $("#vehiculo").val("");
+                                    $("#clientes").val("");
+                                    $("#presupuestoDetalle tbody").empty();
+                                    $("#totalAPagar").val("");
+                                    subTotal = 0;
+
+                                    vm = {
+                                        Presupuesto: {},
+                                        PresupuestoDetalles: []
+                                    }
+
+                                    validator.resetForm();
+                                    $("#imprimirPresupuesto").remove();
+                                    $("#prepItems").fadeOut(3000);
+                                });
+                            }
+                            else {
+                                vm = {
+                                    Presupuesto: {},
+                                    PresupuestoDetalles: []
+                                }
+                                toastr.error("<p>Ocurrió algo inesperado</p>");
+                            }                            
+                        });
+
+                    console.log(vm);
+                    return false;
+                }
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 5000,
+                "extendedTimeOut": 1000
+            }
+        });
+    </script>
+}
+

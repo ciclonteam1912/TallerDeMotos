@@ -10,7 +10,16 @@ namespace TallerDeMotos.Controllers
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult Index()
         {
-            return View("PresupuestoFormulario");
+            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller))
+                return View("ListaDePresupuestos");
+
+            return View("ListaDePresupuestosSoloLectura");
+        }
+
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        public ActionResult PresupuestoFormulario()
+        {
+            return View();
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]

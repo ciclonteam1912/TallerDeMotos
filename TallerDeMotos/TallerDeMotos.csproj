@@ -258,6 +258,7 @@
     <Compile Include="Controllers\APIs\ModelosController.cs" />
     <Compile Include="Controllers\APIs\OrdenCompraDetallesController.cs" />
     <Compile Include="Controllers\APIs\OrdenComprasController.cs" />
+    <Compile Include="Controllers\APIs\PresupuestoDetallesController.cs" />
     <Compile Include="Controllers\APIs\PresupuestosController.cs" />
     <Compile Include="Controllers\APIs\ProductosController.cs" />
     <Compile Include="Controllers\APIs\ProveedoresController.cs" />
@@ -290,6 +291,7 @@
     <Compile Include="Controllers\VehiculoController.cs" />
     <Compile Include="Dtos\AseguradoraDto.cs" />
     <Compile Include="Dtos\CiudadDto.cs" />
+    <Compile Include="Dtos\ClienteDto.cs" />
     <Compile Include="Dtos\EstadoDto.cs" />
     <Compile Include="Dtos\FacturaCompraDetalleDto.cs" />
     <Compile Include="Dtos\FacturaCompraDto.cs" />
@@ -303,6 +305,7 @@
     <Compile Include="Dtos\PresupuestoDto.cs" />
     <Compile Include="Dtos\ProductoDto.cs" />
     <Compile Include="Dtos\ProveedorDto.cs" />
+    <Compile Include="Dtos\VehiculoDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2395,6 +2398,7 @@
     <Content Include="Views\OrdenCompra\ListaDeOrdenDeComprasSoloLectura.cshtml" />
     <Content Include="Views\OrdenCompra\OrdenCompraAnularFormulario.cshtml" />
     <Content Include="Views\Presupuesto\PresupuestoFormulario.cshtml" />
+    <Content Include="Views\Presupuesto\ListaDePresupuestos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

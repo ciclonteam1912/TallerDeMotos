@@ -8,9 +8,13 @@ namespace TallerDeMotos.Dtos
 
         public DateTime FechaDeEmision { get; set; }
 
+        public VehiculoDto Vehiculo { get; set; }
+
         public int VehiculoId { get; set; }
 
         public int SubTotal { get; set; }
+
+        public EstadoDto Estado { get; set; }
 
         public byte EstadoId { get; set; }
 

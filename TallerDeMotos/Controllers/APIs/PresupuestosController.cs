@@ -4,7 +4,10 @@ using System;
 using System.Web.Http;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
+using System.Data.Entity;
+using System.Linq;
 
 namespace TallerDeMotos.Controllers.APIs
 {
@@ -17,7 +20,22 @@ namespace TallerDeMotos.Controllers.APIs
             _context = new ApplicationDbContext();
         }
 
-        [Authorize(Roles = RoleName.Administrador)]
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HttpGet]
+        public IHttpActionResult ObtenerPresupuestos()
+        {
+            var presupuestos = _context.Presupuestos
+                .Include(p => p.Vehiculo)
+                .Include(p => p.Vehiculo.Cliente)
+                .Include(p => p.Estado)
+                .ToList()
+                .Select(Mapper.Map<Presupuesto, PresupuestoDto>)
+                .OrderByDescending(p => p.Id);
+
+            return Ok(presupuestos);
+        }
+
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         public IHttpActionResult CrearPresupuesto(NuevoPresupuestoDto nuevoPresupuestoDto)
         {

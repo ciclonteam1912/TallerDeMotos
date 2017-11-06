@@ -1,0 +1,178 @@
+﻿@{
+    ViewBag.Title = "Lista de Presupuestos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista de Presupuestos</h2>
+
+    <p>
+        <a href="Presupuesto/PresupuestoFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Nuevo Presupuesto</span></a>
+        <a href="FacturaVenta/FacturaVentaFormulario" class="btn btn-primary"><i class="fa fa-file-text icono izquierda"></i><span class="button-text">Registrar Factura</span></a>
+    </p>
+    <div id="example">
+        <div id="grid"></div>
+    </div>
+    <div id="details"></div>
+</div>
+
+@section Scripts{
+    <script>
+        var wnd, detailsTemplate;
+        kendo.culture().numberFormat.currency.symbol = "₲";
+        $(document).ready(function () {
+            $("#menuVentas").addClass('active');
+
+            var dataSource = new kendo.data.DataSource({
+                autoSync: false,
+                transport: {
+                    read: {
+                        url: "/api/presupuestos",
+                        dataType: "json"
+                    }
+                },
+                pageSize: 6,
+                serverPaging: false,
+                serverSorting: false,
+                schema: {
+                    model: {
+                        id: "Id",
+                        fields: {
+                            Id: { editable: false },
+                            Cliente: {
+                                editable: false
+                            },
+                            Vehiculo: {
+                                nullable: false,
+                                editable: false
+                            },
+                            FechaDeEmision: {
+                                template: "#= kendo.toString(kendo.parseDate(FechaDeEmision), 'MM/dd/yyyy HH:mm tt')#",
+                                editable: false
+                            },                            
+                            SubTotal: {
+                                editable: false
+                            },
+                            Estado: {
+                                nullable: false,
+                                editable: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            $("#grid").kendoGrid({
+                dataSource: dataSource,
+                height: 550,
+                sortable: true,
+                filterable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de presupuestos.</p>"
+                },
+                detailInit: detailInit,
+                columns: [
+                    {
+                        template: "<a href='/Presupuesto/AnularPresupuesto/ #: Id #' class='btn-link glyphicon glyphicon-edit anular' title='Anular'></a>",
+                        field: "Id",
+                        title: "&nbsp;",
+                        filterable: false,
+                        sortable: false,
+                        width: 50,
+                        attributes: {
+                            style: "text-align: center"
+                        }
+                    },
+                    {
+                        field: "Cliente",
+                        title: "Cliente",
+                        width: "90px",
+                        template: "#=Vehiculo.Cliente.Nombre# #=Vehiculo.Cliente.Apellido#",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    },
+                     {
+                         field: "Vehiculo",
+                         title: "Vehículo",
+                         width: "110px",
+                         template: "#=Vehiculo.Matricula#"
+                     },
+                    {
+                        field: "FechaDeEmision",
+                        title: "Fecha de Emisión",
+                        template: "#= kendo.toString(kendo.parseDate(FechaDeEmision), 'MM/dd/yyyy HH:mm tt')#",
+                        width: "110px"
+                    },                   
+                    {
+                        field: "SubTotal",
+                        title: "Sub Total",
+                        culture: "es-PY",
+                        format: "{0:c0}",
+                        width: "110px",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    },
+                    {
+                        field: "Estado",
+                        title: "Estado",
+                        width: "110px",
+                        template: "#=Estado.Descripcion#"
+                    }
+                ],
+                dataBound: dataBound
+            });
+        });
+
+        function dataBound(e) {
+            //Selects all delete buttons
+            $("#grid tbody tr .anular").each(function () {
+                var currentDataItem = $("#grid").data("kendoGrid").dataItem($(this).closest("tr"));
+                //Check in the current dataItem if the row is deletable
+
+                if (currentDataItem.EstadoId != 1) {
+                    $(this).remove();
+                }
+            })
+        }
+
+        function detailInit(e) {
+            console.log(e);
+            $("<div/>").appendTo(e.detailCell).kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/presupuestoDetalles",
+                            dataType: "json"
+                        }
+                    },
+                    serverPaging: false,
+                    serverSorting: false,
+                    serverFiltering: false,
+                    pageSize: 10,
+                    filter: { field: "PresupuestoId", operator: "eq", value: e.data.Id }
+                },
+                scrollable: true,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "Id", title: "Cod. Detalle", width: "110px", attributes: { style: "text-align: right" } },
+                    { field: "ProductoId", title: "Producto Cod.", width: "110px", attributes: { style: "text-align: right" } },
+                    { field: "Producto.Descripcion", title: "Descripción", width: "150px" },
+                    { field: "Cantidad", title: "Cantidad", width: "90px", attributes: { style: "text-align: right" } },
+                    { field: "Producto.PrecioVenta", title: "Precio Unitario", width: "110px", format: "{0:c0}", attributes: { style: "text-align: right" } },
+                    { field: "Producto.Iva", title: "Iva", width: "60px", attributes: { style: "text-align: right" } },
+                    { field: "Total", title: "Total", width: "100px", format: "{0:c0}", attributes: { style: "text-align: right" } }
+                ]
+            });
+        }
+    </script>
+}
+

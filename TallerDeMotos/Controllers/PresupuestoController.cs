@@ -12,5 +12,13 @@ namespace TallerDeMotos.Controllers
         {
             return View("PresupuestoFormulario");
         }
+
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        public ActionResult PresupuestoReport(int id = 0)
+        {
+            if (id != 0)
+                ViewBag.Id = id;
+            return View();
+        }
     }
 }

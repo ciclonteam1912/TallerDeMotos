@@ -349,7 +349,7 @@
                                 toastr.success("Hoja de Presupuesto creada con éxito.");
                                 $("#submit").prop("disabled", true);
                                 $("#imprimirPresupuesto").remove();
-                                $("#footerPresupuesto").append('<a id="imprimirPresupuesto" href="PresupuestoReport?id=' + presupuesto.Id + '" target="_blank" class="btn btn-primary">Imprimir Presupuesto</a>');
+                                $("#footerPresupuesto").append('<a id="imprimirPresupuesto" href="Presupuesto/PresupuestoReport?id=' + presupuesto.Id + '" target="_blank" class="btn btn-primary">Imprimir Presupuesto</a>');
 
                                 $("#imprimirPresupuesto").click(function () {
                                     $("#productos").val("");

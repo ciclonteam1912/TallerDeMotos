@@ -24,6 +24,13 @@
                             @Html.ValidationMessageFor(t => t.Timbrado)
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.UsuarioId)
+                            @Html.DropDownListFor(t => t.UsuarioId, new SelectList(Model.Usuarios, "Id", "UserName"), "Seleccionar Usuario", new { @class = "form-control", id = "usuarioId" })
+                            @Html.ValidationMessageFor(t => t.UsuarioId)
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">

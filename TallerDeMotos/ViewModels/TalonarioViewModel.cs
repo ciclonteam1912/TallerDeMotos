@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ViewModels
 {
     public class TalonarioViewModel
     {
+        public IEnumerable<ApplicationUser> Usuarios { get; set; }
+
         public int Id { get; set; }
 
         [Required]
@@ -37,6 +41,10 @@ namespace TallerDeMotos.ViewModels
 
         public bool EstaActivo { get; set; }
 
+        [Required]
+        [Display(Name = "Asignar Talonario a Usuario")]
+        public string UsuarioId { get; set; }
+
         public string Titulo
         {
             get
@@ -61,6 +69,7 @@ namespace TallerDeMotos.ViewModels
             NumeroFacturaFinal = talonario.NumeroFacturaFinal;
             NumeroFacturaActual = talonario.NumeroFacturaActual;
             EstaActivo = talonario.EstaActivo;
+            UsuarioId = talonario.UsuarioId;
         }
     }
 }

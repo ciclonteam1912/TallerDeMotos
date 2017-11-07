@@ -34,7 +34,10 @@ namespace TallerDeMotos.Controllers
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult NuevoTalonario()
         {
-            var talonario = new TalonarioViewModel();
+            var talonario = new TalonarioViewModel
+            {
+                Usuarios = _context.Users.ToList()
+            };
 
             return View("TalonarioFormulario", talonario);
         }
@@ -46,7 +49,10 @@ namespace TallerDeMotos.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = new TalonarioViewModel(talonario);
+                var viewModel = new TalonarioViewModel(talonario)
+                {
+                    Usuarios = _context.Users.ToList()
+                };
 
                 return View("TalonarioFormulario", viewModel);
             }
@@ -72,7 +78,10 @@ namespace TallerDeMotos.Controllers
             if (talonario == null)
                 return HttpNotFound();
 
-            var viewModel = new TalonarioViewModel(talonario);
+            var viewModel = new TalonarioViewModel(talonario)
+            {
+                Usuarios = _context.Users.ToList()
+            };
 
             return View("TalonarioFormulario", viewModel);
         }

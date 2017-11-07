@@ -36,6 +36,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public bool EstaActivo { get; set; }
 
+        public ApplicationUser Usuario { get; set; }
+
+        [Required]
+        [Display(Name = "Asignar Talonario a Usuario")]
+        public string UsuarioId { get; set; }
+
         public ICollection<FacturaVenta> FacturaVentas { get; set; }
 
         public Talonario()

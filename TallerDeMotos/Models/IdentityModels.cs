@@ -15,6 +15,7 @@ namespace TallerDeMotos.Models
         public ICollection<FacturaCompra> FacturaCompras { get; set; }
         public ICollection<Presupuesto> Presupuestos { get; set; }
         public ICollection<FacturaVenta> FacturaVentas { get; set; }
+        public ICollection<Talonario> Talonarios { get; set; }
 
         public ApplicationUser()
         {

@@ -9,6 +9,10 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
         {
             Property(t => t.Id)
                 .HasColumnName("Codigo");
+
+            HasRequired(t => t.Usuario)
+                .WithMany(u => u.Talonarios)
+                .WillCascadeOnDelete(false);
         }
     }
 }

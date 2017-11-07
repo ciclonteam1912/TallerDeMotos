@@ -544,6 +544,10 @@
     <Compile Include="Migrations\201711071358171_AgregarColumnaUsuarioIdEnTablaTalonarios.Designer.cs">
       <DependentUpon>201711071358171_AgregarColumnaUsuarioIdEnTablaTalonarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711072050046_AgregarColumnaNumeroFacturaEnTablaFacturaVentas.cs" />
+    <Compile Include="Migrations\201711072050046_AgregarColumnaNumeroFacturaEnTablaFacturaVentas.Designer.cs">
+      <DependentUpon>201711072050046_AgregarColumnaNumeroFacturaEnTablaFacturaVentas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -2613,6 +2617,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711071358171_AgregarColumnaUsuarioIdEnTablaTalonarios.resx">
       <DependentUpon>201711071358171_AgregarColumnaUsuarioIdEnTablaTalonarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711072050046_AgregarColumnaNumeroFacturaEnTablaFacturaVentas.resx">
+      <DependentUpon>201711072050046_AgregarColumnaNumeroFacturaEnTablaFacturaVentas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -38,6 +38,7 @@ namespace TallerDeMotos.Controllers.APIs
                 {
                     Id = nuevaFacturaVentaDto.FacturaVentaDto.Id,
                     PresupuestoId = nuevaFacturaVentaDto.FacturaVentaDto.PresupuestoId,
+                    NumeroFactura = nuevaFacturaVentaDto.FacturaVentaDto.NumeroFactura,
                     TalonarioId = nuevaFacturaVentaDto.FacturaVentaDto.TalonarioId,
                     FechaFacturaVenta = nuevaFacturaVentaDto.FacturaVentaDto.FechaFacturaVenta,
                     SubTotal = nuevaFacturaVentaDto.FacturaVentaDto.SubTotal,

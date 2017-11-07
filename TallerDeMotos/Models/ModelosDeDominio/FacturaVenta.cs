@@ -15,6 +15,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public int TalonarioId { get; set; }
 
+        public int NumeroFactura { get; set; }
+
         public DateTime FechaFacturaVenta { get; set; }
 
         public int SubTotal { get; set; }

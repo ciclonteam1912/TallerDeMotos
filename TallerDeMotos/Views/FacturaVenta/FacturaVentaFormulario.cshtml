@@ -17,26 +17,32 @@
                         </select>
                     </div>
                     <div class="col-lg-4">
-                        <label>Talonario:</label>
-                        <select id="talonarioCodigo" class="form-control" required name="talonarioCodigo">
-                            <option value="">Seleccione un Talonario...</option>
-                        </select>
-                    </div>
-                    <div class="col-lg-4">
                         <div class="form-group">
                             <label>Cliente:</label>
                             <input id="cliente" class="form-control" type="text" readonly />
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label>Vehículo:</label>
                             <input id="vehiculo" class="form-control" type="text" readonly />
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label>Talonario:</label>
+                        <select id="talonarioCodigo" class="form-control" required name="talonarioCodigo">
+                            <option value="">Seleccione un Talonario...</option>
+                        </select>
+                    </div>   
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Nro. de Factura:</label>
+                            <input id="nroFactura" class="form-control" type="text" readonly />
+                        </div>
+                    </div>                 
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label>Fecha de Factura de Venta:</label><br />
                             <input id="fechaFactura" style="width: 70%" , onkeydown="return false;" />
@@ -162,6 +168,7 @@
                                 console.log(item);
                                 if (i == 0) {
                                     $("#cliente").val(item.Presupuesto.Vehiculo.Cliente.NombreCompleto);
+                                    $("#vehiculo").val(item.Presupuesto.Vehiculo.Matricula + "-" + item.Presupuesto.Vehiculo.Modelo.Marca.Nombre + " " + item.Presupuesto.Vehiculo.Modelo.Nombre);
                                 }
 
                                 $(presupuesto).hide().appendTo("#facturaVentaDetalle tbody").fadeIn(1000);
@@ -191,6 +198,24 @@
 
             });
 
+            $("#talonarioCodigo").change(function () {
+                var id = $("#talonarioCodigo option:selected").val();
+
+                if (id != "") {
+                    $.ajax({
+                        url: "/api/talonarios/" + id,
+                        type: "get",
+                        contentType: "application/json",
+                        success: function (talonario) {
+                            $.each(talonario, function (i) {
+                                if (i == 0)
+                                    $("#nroFactura").val(talonario[i].NumeroFacturaActual);
+                            });                            
+                        }
+                    });
+                }
+            });
+
             $("#fechaFactura").kendoDateTimePicker({
                 culture: "es-ES",
                 format: "MM/dd/yyyy HH:mm",
@@ -215,6 +240,7 @@
                 nuevaFacturaVentaDto.FacturaVentaDto = {                    
                     Id: $("#presupuestoCodigo").val(),
                     PresupuestoId: $("#presupuestoCodigo").val(),
+                    NumeroFactura: $("#nroFactura").val(),
                     TalonarioId: $("#talonarioCodigo").val(),
                     FechaFacturaVenta: $("#fechaFactura").val(),
                     SubTotal: $("#pagar").val()
@@ -247,6 +273,7 @@
                         $("#presupuestoCodigo option:selected").remove();
                         $("#talonarioCodigo").val("");
                         $("#cliente").val("");
+                        $("#nroFactura").val("");
                         $("#facturaVentaDetalle tbody").empty();
                         $("#pagar").val("");
 

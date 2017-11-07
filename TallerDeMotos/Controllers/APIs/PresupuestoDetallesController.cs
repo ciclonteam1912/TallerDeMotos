@@ -39,6 +39,8 @@ namespace TallerDeMotos.Controllers.APIs
                 .Include(pd => pd.Presupuesto)
                 .Include(pd => pd.Presupuesto.Vehiculo)
                 .Include(pd => pd.Presupuesto.Vehiculo.Cliente)
+                .Include(pd => pd.Presupuesto.Vehiculo.Modelo)
+                .Include(pd => pd.Presupuesto.Vehiculo.Modelo.Marca)
                 .Include(pd => pd.Producto)
                 .ToListAsync();
 

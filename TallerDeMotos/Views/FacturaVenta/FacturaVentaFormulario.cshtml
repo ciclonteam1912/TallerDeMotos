@@ -1,0 +1,281 @@
+﻿@{
+    ViewBag.Title = "Factura de Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <form id="facturaVentaFormulario">
+        <div class="row" id="facturaCabecera" style="display: none">
+            <h2>Factura de Venta</h2>
+
+            <div class="row well">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label>Presupuesto Código:</label>
+                        <select id="presupuestoCodigo" class="form-control" required name="presupuestoCodigo">
+                            <option value="">Seleccione un Presupuesto...</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Talonario:</label>
+                        <select id="talonarioCodigo" class="form-control" required name="talonarioCodigo">
+                            <option value="">Seleccione un Talonario...</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Cliente:</label>
+                            <input id="cliente" class="form-control" type="text" readonly />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Vehículo:</label>
+                            <input id="vehiculo" class="form-control" type="text" readonly />
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Fecha de Factura de Venta:</label><br />
+                            <input id="fechaFactura" style="width: 70%" , onkeydown="return false;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="facturaDetalle" style="display:none">
+            <h4>Factura de Venta Detalles</h4>
+            <div class="table-responsive">
+                <table class="table" id="facturaVentaDetalle">
+                    <thead>
+                        <tr>
+                            <th>Producto Cod.</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>IVA</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="row">
+                <label>Total a Pagar:</label>
+                <input type="number" id="pagar" class="form-control" readonly style="width: 150px" />
+            </div>
+            <div class="row">
+                <div id="footerFactura" style="padding:10px 0; text-align:right">
+                    <button id="submit" class="btn btn-primary" style="padding:10px 20px">Registrar Factura de Venta</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        function maxLengthCheck(object) {
+            if (object.value.length > object.max.length)
+                object.value = object.value.slice(0, object.max.length);
+        }
+
+        function myFunction(i) {
+            var subtotal = 0;
+            var precio = $("#precioVenta" + i).val();
+            var cantidad = $("#cantidad" + i).val();
+            var iva = $("#iva" + i).val();
+            var total = (precio * cantidad) + (((precio * cantidad) * iva) / 100);
+            $("#total" + i).val(function () {
+                return total;
+            });
+
+            $("[id*=total]").each(function () {
+                subtotal = subtotal + parseInt($(this).val());
+            });
+            $("#pagar").val(subtotal);
+        }
+
+        $(document).ready(function () {
+            $("#facturaDetalle").hide();
+            $("#facturaCabecera").fadeIn(2000);
+            $("#menuVentas").addClass('active');
+
+            var nuevaFacturaVentaDto = {
+                FacturaVentaDto: {},
+                FacturaVentaDetalles: []
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ObtenerPresupuestosPendientes", "Presupuesto")",
+                contentType: "application/json",
+                success: function (presupuesto) {
+                    $.each(presupuesto, function (i) {
+                        $("#presupuestoCodigo").append($('<option></option>').val(presupuesto[i].Id).html(presupuesto[i].Id));
+                    });
+                }
+            });
+
+            $.ajax({
+                type: "get",
+                url: "/api/talonarios",
+                contentType: "application/json",
+                success: function (talonario) {
+                    $.each(talonario, function (i) {
+                        $("#talonarioCodigo").append($('<option></option>').val(talonario[i].Id).html(talonario[i].Id));
+                    });
+                }
+            });
+
+            $("#presupuestoCodigo").change(function () {
+                $("#submit").prop("disabled", false);
+                $("#facturaVentaDetalle tbody").empty();
+                var id = $("#presupuestoCodigo option:selected").val();
+
+                if (id != "") {
+                    $("#facturaDetalle").fadeIn(1000);
+                    var subtotal = 0;
+
+                    $.ajax({
+                        url: "/api/presupuestoDetalles/" + id,
+                        type: "get",
+                        contentType: "application/json",
+                        success: function (detalles) {
+                            $.each(detalles, function (i, item) {
+                                var presupuesto = '<tr class="detalle">' +
+                                '<td><input type="number" value="' + item.ProductoId + '" class="form-control" id="productoId' + i + '" readonly/></td>' +
+                                '<td><input type="text" value="' + item.Producto.Descripcion + '" class="form-control" id="productoDescripcion' + i + '" readonly/></td>' +
+                                '<td><input type="number" value="' + item.Producto.PrecioVenta + '" class="form-control" id="precioVenta' + i + '" onfocusout="myFunction(' + i + ')" min="0" max="99999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" required/></td>' +
+                                '<td><input type="number" value="' + item.Cantidad + '" class="form-control" id="cantidad' + i + '" onfocusout="myFunction(' + i + ')" min="1" max="99" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" required/></td>' +
+                                '<td><input type="number" value="' + item.Producto.Iva + '" class="form-control" id="iva' + i + '" readonly/></td>' +
+                                '<td><input type="number" value="' + item.Total + '" class="form-control" id="total' + i + '" readonly/></td>' +
+                                '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
+                                '</tr>';
+                                subtotal = subtotal + item.Total;
+                                $("#pagar").val(subtotal);
+
+                                console.log(item);
+                                if (i == 0) {
+                                    $("#cliente").val(item.Presupuesto.Vehiculo.Cliente.NombreCompleto);
+                                }
+
+                                $(presupuesto).hide().appendTo("#facturaVentaDetalle tbody").fadeIn(1000);
+                            });
+                        }
+                    });
+                } else {
+                    $("#pagar").val("");
+                    $("#cliente").val("");
+                    $("#facturaDetalle").hide();
+                }
+
+                $("tbody").on("click", ".eliminar", function () {
+                    var subTotal = $("#pagar").val();
+                    valor = $(this).closest("tr").find("td input").eq(5).val();
+
+                    $(this).parents("tr").fadeOut("normal", function () {
+                        $(this).remove();
+                        subTotal = subTotal - valor;
+                        $("#pagar").val(subTotal);
+
+                        if ($("#pagar").val() == 0) {
+                            $("#submit").prop("disabled", true);
+                        }
+                    });
+                });
+
+            });
+
+            $("#fechaFactura").kendoDateTimePicker({
+                culture: "es-ES",
+                format: "MM/dd/yyyy HH:mm",
+                animation: {
+                    close: {
+                        effects: "fadeOut zoom:out",
+                        duration: 300
+                    },
+                    open: {
+                        effects: "fadeIn zoom:in",
+                        duration: 300
+                    }
+                },
+                value: new Date(),
+                dateInput: true
+            });
+
+
+            $("#facturaVentaFormulario").submit(function (e) {
+                e.preventDefault();
+
+                nuevaFacturaVentaDto.FacturaVentaDto = {                    
+                    Id: $("#presupuestoCodigo").val(),
+                    PresupuestoId: $("#presupuestoCodigo").val(),
+                    TalonarioId: $("#talonarioCodigo").val(),
+                    FechaFacturaVenta: $("#fechaFactura").val(),
+                    SubTotal: $("#pagar").val()
+                }
+
+                $('#facturaVentaDetalle tr.detalle').each(function (index, tr) {
+                    var lines = $('td input', tr).map(function (index, td) {
+                        if (index != 1 && index != 6)
+                            return $(td).val();
+                    });
+
+                    nuevaFacturaVentaDto.FacturaVentaDetalles.push({
+                        ProductoId: lines[0],
+                        Precio: lines[1],
+                        Cantidad: lines[2],
+                        Total: lines[4]
+                    });
+
+                });
+
+                $.ajax({
+                    url: "/api/facturaVentas",
+                    method: "post",
+                    contentType: 'application/json; chartset=utf-8',
+                    data: JSON.stringify(nuevaFacturaVentaDto)
+                })
+                .done(function (facturaVenta) {
+                    if (facturaVenta.Success) {
+                        toastr.success(facturaVenta.Message);
+                        $("#presupuestoCodigo option:selected").remove();
+                        $("#talonarioCodigo").val("");
+                        $("#cliente").val("");
+                        $("#facturaVentaDetalle tbody").empty();
+                        $("#pagar").val("");
+
+                        nuevaFacturaVentaDto = {
+                            FacturaVentaDto: {},
+                            FacturaVentaDetalles: []
+                        }
+                        $("#facturaDetalle").fadeOut(1000);
+                    }
+                    else {
+                        if (facturaCompra.Message == "PK_dbo.FacturaCompras")
+                            toastr.error("<p class='eliminar'>No se pudo registrar la Factura de Compra. El número de Orden de Compra con el valor '" + $("#nroOrden").data("kendoDropDownList").text() + "' ya existe.</p>");
+                        else
+                            toastr.error("<p>Ocurrió algo inesperado</p>");
+                    }
+                });
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 6000,
+                "extendedTimeOut": 1000
+            }
+        });
+    </script>
+}

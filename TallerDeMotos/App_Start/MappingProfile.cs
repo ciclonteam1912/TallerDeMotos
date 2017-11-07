@@ -46,6 +46,8 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<CiudadDto, Ciudad>();
             Mapper.CreateMap<PresupuestoDto, Presupuesto>();
             Mapper.CreateMap<PresupuestoDetalleDto, PresupuestoDetalle>();
+            Mapper.CreateMap<FacturaVentaDto, FacturaVenta>();
+            Mapper.CreateMap<FacturaVentaDetalleDto, FacturaVentaDetalle>();
         }
     }
 }

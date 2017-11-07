@@ -14,6 +14,7 @@ namespace TallerDeMotos.Models
     {
         public ICollection<FacturaCompra> FacturaCompras { get; set; }
         public ICollection<Presupuesto> Presupuestos { get; set; }
+        public ICollection<FacturaVenta> FacturaVentas { get; set; }
 
         public ApplicationUser()
         {
@@ -63,6 +64,8 @@ namespace TallerDeMotos.Models
         public DbSet<OrdenCompraAnulada> OrdenCompraAnuladas { get; set; }
         public DbSet<Presupuesto> Presupuestos { get; set; }
         public DbSet<PresupuestoDetalle> PresupuestoDetalles { get; set; }
+        public DbSet<FacturaVenta> FacturaVentas { get; set; }
+        public DbSet<FacturaVentaDetalle> FacturaVentaDetalles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -93,6 +96,8 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new OrdenCompraAnuladaConfiguracion());
             modelBuilder.Configurations.Add(new PresupuestoConfiguracion());
             modelBuilder.Configurations.Add(new PresupuestoDetalleConfiguracion());
+            modelBuilder.Configurations.Add(new FacturaVentaConfiguracion());
+            modelBuilder.Configurations.Add(new FacturaVentaDetalleConfiguracion());
         }
 
         public static ApplicationDbContext Create()

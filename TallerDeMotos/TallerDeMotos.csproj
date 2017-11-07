@@ -228,6 +228,8 @@
     <Compile Include="ConfiguracionDeEntidades\EstadoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FacturaCompraConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FacturaCompraDetalleConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\FacturaVentaConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\FacturaVentaDetalleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FormaPagoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\MarcaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ModeloConfiguracion.cs" />
@@ -253,6 +255,7 @@
     <Compile Include="Controllers\APIs\EstadosController.cs" />
     <Compile Include="Controllers\APIs\FacturaCompraDetallesController.cs" />
     <Compile Include="Controllers\APIs\FacturaComprasController.cs" />
+    <Compile Include="Controllers\APIs\FacturaVentasController.cs" />
     <Compile Include="Controllers\APIs\FormasPagoController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
@@ -274,6 +277,7 @@
     <Compile Include="Controllers\EmpleadoController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FacturaCompraController.cs" />
+    <Compile Include="Controllers\FacturaVentaController.cs" />
     <Compile Include="Controllers\FormaPagoController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -295,8 +299,11 @@
     <Compile Include="Dtos\EstadoDto.cs" />
     <Compile Include="Dtos\FacturaCompraDetalleDto.cs" />
     <Compile Include="Dtos\FacturaCompraDto.cs" />
+    <Compile Include="Dtos\FacturaVentaDetalleDto.cs" />
+    <Compile Include="Dtos\FacturaVentaDto.cs" />
     <Compile Include="Dtos\FormaPagoDto.cs" />
     <Compile Include="Dtos\NuevaFacturaCompraDto.cs" />
+    <Compile Include="Dtos\NuevaFacturaVentaDto.cs" />
     <Compile Include="Dtos\NuevaOrdenCompraDto.cs" />
     <Compile Include="Dtos\NuevoPresupuestoDto.cs" />
     <Compile Include="Dtos\OrdenCompraDetalleDto.cs" />
@@ -517,6 +524,22 @@
     <Compile Include="Migrations\201711042219590_CreacionDeTablaPresupuestoDetalles.Designer.cs">
       <DependentUpon>201711042219590_CreacionDeTablaPresupuestoDetalles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711062300571_CreacionDeTablaFacturaVentas.cs" />
+    <Compile Include="Migrations\201711062300571_CreacionDeTablaFacturaVentas.Designer.cs">
+      <DependentUpon>201711062300571_CreacionDeTablaFacturaVentas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711070022210_CreacionDeTablaFacturaVentaDetalles.cs" />
+    <Compile Include="Migrations\201711070022210_CreacionDeTablaFacturaVentaDetalles.Designer.cs">
+      <DependentUpon>201711070022210_CreacionDeTablaFacturaVentaDetalles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711071312455_EliminarRelacionUnoAUnoEntreFacturaVentasYTalonarios.cs" />
+    <Compile Include="Migrations\201711071312455_EliminarRelacionUnoAUnoEntreFacturaVentasYTalonarios.Designer.cs">
+      <DependentUpon>201711071312455_EliminarRelacionUnoAUnoEntreFacturaVentasYTalonarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711071316578_AgregarColumnaTalonarioCodigoEnFacturaVentas.cs" />
+    <Compile Include="Migrations\201711071316578_AgregarColumnaTalonarioCodigoEnFacturaVentas.Designer.cs">
+      <DependentUpon>201711071316578_AgregarColumnaTalonarioCodigoEnFacturaVentas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -539,6 +562,8 @@
     <Compile Include="Models\ModelosDeDominio\Estado.cs" />
     <Compile Include="Models\ModelosDeDominio\FacturaCompra.cs" />
     <Compile Include="Models\ModelosDeDominio\FacturaCompraDetalle.cs" />
+    <Compile Include="Models\ModelosDeDominio\FacturaVenta.cs" />
+    <Compile Include="Models\ModelosDeDominio\FacturaVentaDetalle.cs" />
     <Compile Include="Models\ModelosDeDominio\FormaPago.cs" />
     <Compile Include="Models\ModelosDeDominio\Marca.cs" />
     <Compile Include="Models\ModelosDeDominio\Modelo.cs" />
@@ -2399,6 +2424,7 @@
     <Content Include="Views\OrdenCompra\OrdenCompraAnularFormulario.cshtml" />
     <Content Include="Views\Presupuesto\PresupuestoFormulario.cshtml" />
     <Content Include="Views\Presupuesto\ListaDePresupuestos.cshtml" />
+    <Content Include="Views\FacturaVenta\FacturaVentaFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2568,6 +2594,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711042219590_CreacionDeTablaPresupuestoDetalles.resx">
       <DependentUpon>201711042219590_CreacionDeTablaPresupuestoDetalles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711062300571_CreacionDeTablaFacturaVentas.resx">
+      <DependentUpon>201711062300571_CreacionDeTablaFacturaVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711070022210_CreacionDeTablaFacturaVentaDetalles.resx">
+      <DependentUpon>201711070022210_CreacionDeTablaFacturaVentaDetalles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711071312455_EliminarRelacionUnoAUnoEntreFacturaVentasYTalonarios.resx">
+      <DependentUpon>201711071312455_EliminarRelacionUnoAUnoEntreFacturaVentasYTalonarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711071316578_AgregarColumnaTalonarioCodigoEnFacturaVentas.resx">
+      <DependentUpon>201711071316578_AgregarColumnaTalonarioCodigoEnFacturaVentas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

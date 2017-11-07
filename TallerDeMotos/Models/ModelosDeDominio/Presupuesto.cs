@@ -23,6 +23,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public string UsuarioId { get; set; }
 
+        public FacturaVenta FacturaVenta { get; set; }
+
         public ICollection<PresupuestoDetalle> PresupuestoDetalles { get; set; }
 
         public Presupuesto()

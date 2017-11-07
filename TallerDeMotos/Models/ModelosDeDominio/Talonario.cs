@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TallerDeMotos.Models.AtributosDeValidacion;
 
@@ -34,5 +35,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public int NumeroFacturaActual { get; set; }
 
         public bool EstaActivo { get; set; }
+
+        public ICollection<FacturaVenta> FacturaVentas { get; set; }
+
+        public Talonario()
+        {
+            FacturaVentas = new HashSet<FacturaVenta>();
+        }
     }
 }

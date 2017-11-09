@@ -28,12 +28,10 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-        </footer>
     </div>
-
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Taller de Motos Pedrozo</p>
+    </footer>
     @Scripts.Render("~/bundles/lib")
     @Scripts.Render("~/bundles/kendo")
     @RenderSection("scripts", required: false)

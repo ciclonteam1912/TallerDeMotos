@@ -15,7 +15,7 @@
         background-color: rgba(255,0,0,0.35);
     }
 </style>
-<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido" style="display:none">
     <form id="ordenCompraFormulario">
         <div class="row" id="ordenCabecera">
             <h2>Orden de Compra</h2>
@@ -55,7 +55,9 @@
             <table class="table"  id="ordenDetalle">
                 <thead>
                     <tr>
-                        <th>Producto</th>
+                        <th>&nbsp;</th>
+                        <th>Producto Cod.</th>
+                        <th>Descripción</th>
                         <th>Precio</th>
                         <th>Cantidad</th>
                         <th>IVA</th>
@@ -65,19 +67,20 @@
                 <tbody>
                     <tr class="mycontainer" id="mainrow">
                         <td>
-                            <select id="productos" class="product form-control" style="display: inline-block">
-                                <option value="">Selecciona un producto...</option>
-                            </select>
-                            @*<input id="productos" style="width: 100%;" />*@
                             <a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none" title="Agregar Producto"><i class="fa fa-plus"></i></a>
+                        </td>
+                        <td>                           
+                            <input id="productosId" style="width: 90%; display:inline-block"/>                            
                             <span class="error">Selecciona un producto</span>
-                            
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="productoDesc"/>                                                
                         </td>
                         <td>
                             <input type="number" id="precio" class="form-control" />
                         </td>
                         <td>
-                            <input type="number" id="cantidad" class="quantity form-control" />
+                            <input type="number" id="cantidad" class="quantity form-control" min = "1" max = "9999" oninput = "maxLengthCheck(this)" onkeydown = "javascript: return event.keyCode == 69 ? false : true"/>
                             <span class="error">Cantidad no válida</span>
                         </td>
                         <td>
@@ -150,9 +153,10 @@
         }
 
         $(document).ready(function () {
+            $("#contenido").fadeIn(2000);
             $("#menuCompras").addClass('active');
             $('#imprimirOrden').hide();
-
+            $("#formaPago").focus();
             CargarMaxCodOrdenCompra();
 
             var vm = {
@@ -208,66 +212,70 @@
             });
 
             //Detalle orden de compra
-            $.ajax({
-                type: "GET",
-                url: "/api/productos",
-                contentType: "application/json",
-                success: function (productos) {
-                    $.each(productos, function (i) {
-                        $("#productos").append($('<option></option>').val(productos[i].Id).html(productos[i].Descripcion));
+            $("#productosId").kendoDropDownList({
+                filter: "eq",
+                dataTextField: "Id",
+                dataValueField: "Id",
+                optionLabel: "--Código--",
+                dataSource: {
+                    serverFiltering: false,
+                    transport: {
+                        read: {
+                            url: "/api/productos",
+                        }
+                    }
+                },
+                change: function(){
+                    var productoId = $("#productosId").val();
+                    console.log(productoId);
+                    $.ajax({
+                        url: "/api/productos/" + productoId,
+                        contentType: "application/json",
+                        method: "GET",
+                        success: function (data) {
+                            $(data).each(function (index, item) {
+                                $("#productos").val(item.Id);
+                                $("#productoDesc").val(item.Descripcion);
+                                $("#precio").val(item.PrecioCosto);
+                                $("#iva").val(item.Iva);
+                            });
+
+                            $("#cantidad").focus();
+                        }
                     });
                 }
             });
 
-            //$("#productos").kendoDropDownList({
-            //    filter: "startswith",
-            //    dataTextField: "Descripcion",
-            //    dataValueField: "Id",
-            //    dataSource: {
-            //        serverFiltering: false,
-            //        transport: {
-            //            read: {
-            //                url: "/api/productos",
-            //            }
-            //        }
-            //    }
-            //});
+            var ddl = $("#productosId").data("kendoDropDownList");
+            var wrapper = ddl.wrapper;
 
-            $("#productos").change(function () {
-                var productoId = $("#productos").val();
+            wrapper.keypress(function (e) {
 
-                $.ajax({
-                    url: "/api/productos/" + productoId,
-                    contentType: "application/json",
-                    method: "GET",
-                    success: function (data) {
-                        $(data).each(function (index, item) {
-                            $("#productos").val(item.Id);
-                            $("#precio").val(item.PrecioCosto);
-                            $("#iva").val(item.Iva);
-                        });
-                    }
-                });
+                console.log(e.keyCode);
+                ddl.open();
+               // ddl.select(ddl.ul.children().eq(1));
             });
 
             $("#iva").prop("disabled", true);
+            $("#productoDesc").prop("disabled", true);
             $("#precio").prop("disabled", true);
             $("#submit").prop("disabled", true);
 
             $("#add").click(function(event){
                 var todoEsValido = true;
-
+                var productoCodigo = $("#productosId").val();
                 $("#footerOrden").remove("#imprimirOrden");
 
-                if ($("#productos").val() == 0) {
+                if ($("#productosId").val() == "") {
                     todoEsValido = false;
-                    $('#productos').siblings('span.error').css('display', 'block');
+
+                    $('.k-dropdown').siblings('span.error').css('display', 'block');
                 }
                 else {
-                    $('#productos').siblings('span.error').css('display', 'none');                    
+                    $('.k-dropdown').siblings('span.error').css('display', 'none');
                 }
 
-                if ($("#cantidad").val() == 0) {
+                if ($("#cantidad").val() <= 0) {
                     todoEsValido = false;
                     $('#cantidad').siblings('span.error').css('display', 'block');
                 }
@@ -277,15 +285,16 @@
 
                 if (todoEsValido) {
                     $("#submit").prop("disabled", false);
-                   
+
+                    ddl.focus();
                     $("#orderItems").fadeIn(1000);
                     count++;
                     total = ($("#precio").val() * $("#cantidad").val()) + ((($("#precio").val() * $("#cantidad").val()) * $("#iva").val()) / 100);
                     subTotal = subTotal + total;
                     $("#totalAPagar").val(subTotal);
                     var ordenCompra = '<tr class="detalle">' +
-                        '<td style="display:none">' + $("#productos").val() + '</td>' +
-                        '<td>' + $("#productos option:selected").text() + '</td>' +
+                        '<td style="display:none">' + $("#productosId").val() + '</td>' +
+                        '<td>' + $("#productoDesc").val() + '</td>' +
                         '<td>' + $("#precio").val() + '</td>' +
                         '<td>' + $("#cantidad").val() + '</td>' +
                         '<td>' + $("#iva").val() + '</td>' +
@@ -294,9 +303,24 @@
                         '</tr>';
 
                     $(ordenCompra).hide().appendTo("#ordenCompraDetalle tbody").fadeIn(1000);
-                    //console.log($("#productos option:selected").val());
+                    //console.log($("#productos option:selected").val());                    
 
-                    $("#productos option:selected").remove();
+                    var oldData = ddl.dataSource.data();
+                    var length = oldData.length;
+                    console.log(length);
+
+                    // iterate and remove "done" items
+                    var item, i;
+                    for (i = length - 1; i >= 0; i--) {
+
+                        item = oldData[i];
+                        console.log(item);
+                        if (item.Id == productoCodigo) {
+                            ddl.dataSource.remove(item);
+                        }
+
+                    }
+
                     $("tbody").on("click", ".eliminar", function () {
                         var codProducto = $(this).closest("tr").find("td").eq(0).text();
                         var descProducto = $(this).closest("tr").find("td").eq(1).text();
@@ -312,14 +336,21 @@
                                 console.log("ok");
                                 $("#submit").prop("disabled", true);
                             }
-                            $("#productos").append($('<option></option>').val(codProducto).html(descProducto));
+
+                           ddl.dataSource.add({
+                                Id: codProducto,
+                                Descripcion: codProducto
+                           });
+
+                            //$("#productosId").append($('<option></option>').val(codProducto).html(descProducto));
                         });                        
                         
                         
                     });
 
 
-                    $("#productos").val("");
+                    $("#productosId").data("kendoDropDownList").value("");
+                    $("#productoDesc").val("");
                     $("#precio").val("");
                     $("#iva").val("");
 

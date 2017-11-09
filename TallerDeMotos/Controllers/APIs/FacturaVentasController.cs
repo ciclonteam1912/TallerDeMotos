@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
-using System.Data.Entity;
-using Microsoft.AspNet.Identity;
-using TallerDeMotos.Dtos;
 
 namespace TallerDeMotos.Controllers.APIs
 {

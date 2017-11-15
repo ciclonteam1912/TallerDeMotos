@@ -141,6 +141,9 @@ i.icono.izquierda{
 }
 
 @media screen and (max-width: 991px){
+    body{
+        display: block !important;
+    }
     .btn-menu{
         display: block;
     }
@@ -283,4 +286,19 @@ tr input[type=number]{
 
 button#eliminar{
     padding: 0px 5px;
+}
+
+span.error {
+        display: none;
+        color: red;
+        font-size: 90%;
+}
+
+tr.error {
+    background-color: rgba(255,0,0,0.35);
+}
+
+/******************Formulario Productos o Servicios****************/
+.producto, .servicio {
+    display: none;
 }

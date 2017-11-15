@@ -9,12 +9,16 @@ namespace TallerDeMotos.Models.AtributosDeValidacion
         {
             var producto = (Producto)validationContext.ObjectInstance;
 
-            if (producto.ExistenciaMinima <= producto.ExistenciaInicial)
-                return ValidationResult.Success;
-            else
+            if(producto.ProductoTipoId != 2)
             {
-                return new ValidationResult("La existencia mínima debe ser menor o igual a la existencia inicial.");
+                if ((producto.ExistenciaMinima <= producto.ExistenciaInicial) || (producto.ExistenciaInicial == null && producto.ExistenciaMinima == null))
+                    return ValidationResult.Success;
+                else
+                {
+                    return new ValidationResult("La existencia mínima debe ser menor o igual a la existencia inicial.");
+                }
             }
+            return ValidationResult.Success;
         }
     }
 }

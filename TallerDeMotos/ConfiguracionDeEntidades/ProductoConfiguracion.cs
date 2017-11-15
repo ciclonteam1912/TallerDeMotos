@@ -12,6 +12,9 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(p => p.Id)
                 .HasColumnName("Codigo");
 
+            Property(p => p.ProductoTipoId)
+                .HasColumnName("ProductoTipoCodigo");
+
             HasMany(prod => prod.Proveedores)
                 .WithMany(prov => prov.Productos)
                 .Map(m => {

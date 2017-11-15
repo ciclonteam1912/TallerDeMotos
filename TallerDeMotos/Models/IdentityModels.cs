@@ -67,6 +67,7 @@ namespace TallerDeMotos.Models
         public DbSet<PresupuestoDetalle> PresupuestoDetalles { get; set; }
         public DbSet<FacturaVenta> FacturaVentas { get; set; }
         public DbSet<FacturaVentaDetalle> FacturaVentaDetalles { get; set; }
+        public DbSet<ProductoTipo> ProductoTipos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -99,6 +100,7 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new PresupuestoDetalleConfiguracion());
             modelBuilder.Configurations.Add(new FacturaVentaConfiguracion());
             modelBuilder.Configurations.Add(new FacturaVentaDetalleConfiguracion());
+            modelBuilder.Configurations.Add(new ProductoTipoConfiguracion());
         }
 
         public static ApplicationDbContext Create()

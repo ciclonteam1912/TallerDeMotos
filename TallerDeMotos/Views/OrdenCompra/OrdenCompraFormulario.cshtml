@@ -4,17 +4,7 @@
 }
 
 @Html.Partial("_MenuVertical")
-<style>
-    span.error {
-        display: none;
-        color: red;
-        font-size: 90%;
-    }
 
-    tr.error {
-        background-color: rgba(255,0,0,0.35);
-    }
-</style>
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido" style="display:none">
     <form id="ordenCompraFormulario">
         <div class="row" id="ordenCabecera">
@@ -23,8 +13,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Orden de Compra Nro.:</label>
-                        <input readonly required type="number" id="ordenNro" class="form-control" autocomplete="off" min="0" max="999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" />
-                        <span class="error">Order no required</span>
+                        <input readonly type="number" id="ordenNro" class="form-control" />
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -65,12 +54,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="mycontainer" id="mainrow">
+                    <tr>
                         <td>
                             <a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none" title="Agregar Producto"><i class="fa fa-plus"></i></a>
                         </td>
                         <td>                           
-                            <input id="productosId" style="width: 90%; display:inline-block"/>                            
+                            <input id="productosId" style="width: 150px; display:inline-block"/>                            
                             <span class="error">Selecciona un producto</span>
                         </td>
                         <td>
@@ -85,7 +74,6 @@
                         </td>
                         <td>
                             <input type="number" id="iva" class="iva form-control" />
-                            <span class="error">IVA no válido</span>
                         </td>
                         <td>
                             <input type="button" id="add" value="Agregar" style="width:80px" class="btn btn-success" />
@@ -110,16 +98,17 @@
                     </thead>
                     <tbody></tbody>
                 </table>
-                <span id="orderItemError" style="color:red"></span>
             </div>
-            <div class="form-group">
-                <label>Total a Pagar: </label>
-                <input type="text" name="totalAPagar" id="totalAPagar" value="" readonly class="form-control" style="width: 150px"/>
-            </div>
-            <div id="footerOrden" style="padding:10px 0; text-align:right">
-                <button id="submit" class="btn btn-primary" style="padding:10px 20px">Guardar Orden</button>
-                <a id="imprimirOrden" href="" class="btn btn-primary js-imprimir">Imprimir Orden</a>
-            </div>
+            <div id="orderFooter">
+                <div class="form-group">
+                    <label>Total a Pagar: </label>
+                    <input type="text" name="totalAPagar" id="totalAPagar" value="" readonly class="form-control" style="width: 150px; display: inline-block" />
+                </div>
+                <div id="footerOrden" style="padding:10px 0; text-align:right">
+                    <button id="submit" class="btn btn-primary" style="padding:10px 20px">Guardar Orden</button>
+                    <a id="imprimirOrden" href="" class="btn btn-primary js-imprimir">Imprimir Orden</a>
+                </div>
+            </div>            
         </div>            
           
     </form>      
@@ -216,7 +205,7 @@
                 filter: "eq",
                 dataTextField: "Id",
                 dataValueField: "Id",
-                optionLabel: "--Código--",
+                optionLabel: "Selecciona un Código...",
                 dataSource: {
                     serverFiltering: false,
                     transport: {
@@ -253,7 +242,6 @@
 
                 console.log(e.keyCode);
                 ddl.open();
-               // ddl.select(ddl.ul.children().eq(1));
             });
 
             $("#iva").prop("disabled", true);
@@ -410,8 +398,11 @@
                                 OrdenCompra: {},
                                 OrdenCompraDetalles: []
                             }
+
+                            //Para recargar el dropdownlist
+                            ddl.dataSource.read();
                             $("#imprimirOrden").remove();
-                            $("#orderItems").fadeOut(3000);
+                            $("#orderItems").fadeOut(2000);
                         });                        
                     }
                     else {
@@ -425,28 +416,8 @@
                         else
                             toastr.error("<p>Ocurrió algo inesperado</p>");
                     }
-                    //validator.resetForm();
                 });
             });
-
-
-            @*$("#imprimirOrden").click(function (e) {
-                console.log(e);
-                console.log($("#ordenNro").val());
-                var ordenNro = $("#ordenNro").val();
-                $.ajax({
-                    url: "@Url.Action("OrdenCompraReport", "OrdenCompra")",
-                    url: "/OrdenCompra/OrdenCompraReport?ordenNro=" + ordenNro,
-                    type: "get",
-                    //data: { ordenNro: ordenNro },
-                    contentType: "application/json; charset=utf-8",
-                    success: function () {
-                        console.log("success");
-
-
-                    }
-                });
-            });*@
 
             toastr.options = {
                 "closeButton": true,

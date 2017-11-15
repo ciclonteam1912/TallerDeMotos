@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -21,8 +22,8 @@ namespace TallerDeMotos.Controllers.APIs
             return await Task.Run(() =>
             {
                 var productos = _context.Productos
+                .Include(p => p.ProductoTipo)
                 .ToList();
-                //.Select(Mapper.Map<Producto, ProductoDto>);
 
                 return Ok(productos);
             });
@@ -38,23 +39,6 @@ namespace TallerDeMotos.Controllers.APIs
 
             return Ok(producto);
         }
-
-        //[Authorize(Roles = RoleName.Administrador)]
-        //[HttpPost]
-        //public IHttpActionResult CrearProducto(ProductoDto productoDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
-
-        //    var producto = Mapper.Map<ProductoDto, Producto>(productoDto);
-
-        //    _context.Productos.Add(producto);
-        //    _context.SaveChanges();
-
-        //    var resultado = Mapper.Map<Producto, ProductoDto>(producto);
-
-        //    return Ok(resultado);
-        //}
 
         [HttpDelete]
         public IHttpActionResult EliminarProducto(int id)

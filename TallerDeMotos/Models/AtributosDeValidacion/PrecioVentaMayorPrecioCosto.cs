@@ -9,10 +9,14 @@ namespace TallerDeMotos.Models.AtributosDeValidacion
         {
             var producto = (Producto)validationContext.ObjectInstance;
 
-            if (producto.PrecioVenta >= producto.PrecioCosto)
-                return ValidationResult.Success;
-            else
-                return new ValidationResult("El precio de venta debe ser mayor o igual al precio de costo.");
+            if(producto.ProductoTipoId != 2)
+            {
+                if ((producto.PrecioVenta >= producto.PrecioCosto) || (producto.PrecioVenta == null && producto.PrecioCosto == null))
+                    return ValidationResult.Success;
+                else
+                    return new ValidationResult("El precio de venta debe ser mayor o igual al precio de costo.");
+            }
+            return ValidationResult.Success;
         }
     }
 }

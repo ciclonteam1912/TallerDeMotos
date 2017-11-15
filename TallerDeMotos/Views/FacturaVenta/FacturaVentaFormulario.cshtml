@@ -156,7 +156,7 @@
                                 var presupuesto = '<tr class="detalle">' +
                                 '<td><input type="number" value="' + item.ProductoId + '" class="form-control" id="productoId' + i + '" readonly/></td>' +
                                 '<td><input type="text" value="' + item.Producto.Descripcion + '" class="form-control" id="productoDescripcion' + i + '" readonly/></td>' +
-                                '<td><input type="number" value="' + item.Producto.PrecioVenta + '" class="form-control" id="precioVenta' + i + '" onfocusout="myFunction(' + i + ')" min="0" max="99999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" required/></td>' +
+                                '<td><input type="number" value="' + item.Producto.PrecioVenta + '" class="form-control" id="precioVenta' + i + '" readonly/></td>' +
                                 '<td><input type="number" value="' + item.Cantidad + '" class="form-control" id="cantidad' + i + '" onfocusout="myFunction(' + i + ')" min="1" max="99" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" required/></td>' +
                                 '<td><input type="number" value="' + item.Producto.Iva + '" class="form-control" id="iva' + i + '" readonly/></td>' +
                                 '<td><input type="number" value="' + item.Total + '" class="form-control" id="total' + i + '" readonly/></td>' +

@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
@@ -32,7 +29,10 @@ namespace TallerDeMotos.Controllers
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult NuevoProducto()
         {
-            var viewModel = new ProductoViewModel();
+            var viewModel = new ProductoViewModel
+            {
+                ProductoTipos = _context.ProductoTipos.ToList()
+            };
 
             return View("ProductoFormulario", viewModel);
         }
@@ -44,7 +44,10 @@ namespace TallerDeMotos.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = new ProductoViewModel(producto);
+                var viewModel = new ProductoViewModel(producto)
+                {
+                    ProductoTipos = _context.ProductoTipos.ToList()
+                };
 
                 return View("ProductoFormulario", viewModel);
             }
@@ -71,7 +74,10 @@ namespace TallerDeMotos.Controllers
             if (productoBD == null)
                 return HttpNotFound();
 
-            var producto = new ProductoViewModel(productoBD);
+            var producto = new ProductoViewModel(productoBD)
+            {
+                ProductoTipos = _context.ProductoTipos.ToList()
+            };
 
             return View("ProductoFormulario", producto);
         }

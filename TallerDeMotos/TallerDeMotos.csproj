@@ -240,6 +240,7 @@
     <Compile Include="ConfiguracionDeEntidades\PresupuestoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\PresupuestoDetalleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ProductoConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\ProductoTipoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ProveedorConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ServicioBasicoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TalonarioConfiguracion.cs" />
@@ -548,6 +549,22 @@
     <Compile Include="Migrations\201711072050046_AgregarColumnaNumeroFacturaEnTablaFacturaVentas.Designer.cs">
       <DependentUpon>201711072050046_AgregarColumnaNumeroFacturaEnTablaFacturaVentas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711101341208_CreacionDeTablaProductoTipos.cs" />
+    <Compile Include="Migrations\201711101341208_CreacionDeTablaProductoTipos.Designer.cs">
+      <DependentUpon>201711101341208_CreacionDeTablaProductoTipos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711101356258_AgregarColumnaProductoTipoCodigoEnTablaProductos.cs" />
+    <Compile Include="Migrations\201711101356258_AgregarColumnaProductoTipoCodigoEnTablaProductos.Designer.cs">
+      <DependentUpon>201711101356258_AgregarColumnaProductoTipoCodigoEnTablaProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711101401574_CargarDatosEnTablaProductoTipos.cs" />
+    <Compile Include="Migrations\201711101401574_CargarDatosEnTablaProductoTipos.Designer.cs">
+      <DependentUpon>201711101401574_CargarDatosEnTablaProductoTipos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711101432359_HacerNullablesLasColumnasNumericasEnTablaProductos.cs" />
+    <Compile Include="Migrations\201711101432359_HacerNullablesLasColumnasNumericasEnTablaProductos.Designer.cs">
+      <DependentUpon>201711101432359_HacerNullablesLasColumnasNumericasEnTablaProductos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -582,6 +599,7 @@
     <Compile Include="Models\ModelosDeDominio\Presupuesto.cs" />
     <Compile Include="Models\ModelosDeDominio\PresupuestoDetalle.cs" />
     <Compile Include="Models\ModelosDeDominio\Producto.cs" />
+    <Compile Include="Models\ModelosDeDominio\ProductoTipo.cs" />
     <Compile Include="Models\ModelosDeDominio\Proveedor.cs" />
     <Compile Include="Models\ModelosDeDominio\ServicioBasico.cs" />
     <Compile Include="Models\ModelosDeDominio\Talonario.cs" />
@@ -2620,6 +2638,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711072050046_AgregarColumnaNumeroFacturaEnTablaFacturaVentas.resx">
       <DependentUpon>201711072050046_AgregarColumnaNumeroFacturaEnTablaFacturaVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711101341208_CreacionDeTablaProductoTipos.resx">
+      <DependentUpon>201711101341208_CreacionDeTablaProductoTipos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711101356258_AgregarColumnaProductoTipoCodigoEnTablaProductos.resx">
+      <DependentUpon>201711101356258_AgregarColumnaProductoTipoCodigoEnTablaProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711101401574_CargarDatosEnTablaProductoTipos.resx">
+      <DependentUpon>201711101401574_CargarDatosEnTablaProductoTipos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711101432359_HacerNullablesLasColumnasNumericasEnTablaProductos.resx">
+      <DependentUpon>201711101432359_HacerNullablesLasColumnasNumericasEnTablaProductos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

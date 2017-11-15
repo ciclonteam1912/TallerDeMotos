@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ViewModels
 {
     public class ProductoViewModel
     {
+        public IEnumerable<ProductoTipo> ProductoTipos { get; set; }
+
         public int Id { get; set; }
 
         [Required]
@@ -27,11 +30,14 @@ namespace TallerDeMotos.ViewModels
 
         public byte? Iva { get; set; }
 
+        [Display(Name = "Tipo de Producto")]
+        public byte? ProductoTipoId { get; set; }
+
         public string Titulo
         {
             get
             {
-                return Id != 0 ? "Editar Producto" : "Nuevo Producto";
+                return Id != 0 ? "Editar Producto o Servicio" : "Nuevo Producto o Servicio";
             }
         }
 
@@ -50,6 +56,7 @@ namespace TallerDeMotos.ViewModels
             ExistenciaInicial = producto.ExistenciaInicial;
             ExistenciaMinima = producto.ExistenciaMinima;
             Iva = producto.Iva;
+            ProductoTipoId = producto.ProductoTipoId;
         }
     }
 }

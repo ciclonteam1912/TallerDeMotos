@@ -73,7 +73,7 @@
             </div>                                 
             <div class="row">
                 <label>Total a Pagar:</label>
-                <input type="number" id="pagar" class="form-control" readonly style="width: 150px"/>
+                <input type="number" id="pagar" class="form-control" readonly style="width: 150px; display: inline-block" />
             </div>
             <div class="row">
                 <div id="footerFactura" style="padding:10px 0; text-align:right">
@@ -105,8 +105,19 @@
                 subtotal = subtotal + parseInt($(this).val());
             });
             $("#pagar").val(subtotal);
+            if ($("#pagar").val() == 0) {
+                $("#submit").prop("disabled", true);
+            } else {
+                $("#submit").prop("disabled", false);
+            }
         }
        
+        function isNumberKey(e) {
+            if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
+                return false;
+            }
+        }
+
         $(document).ready(function () {
             $("#facturaDetalle").hide();
             $("#facturaCabecera").fadeIn(2000);
@@ -147,8 +158,8 @@
                                 var ordenCompra = '<tr class="detalle">' +
                                 '<td><input type="number" value="' + item.ProductoId + '" class="form-control" id="productoId' + i + '" readonly/></td>' +
                                 '<td><input type="text" value="' + item.Producto.Descripcion + '" class="form-control" id="productoDescripcion' + i + '" readonly/></td>' +
-                                '<td><input type="number" value="' + item.Producto.PrecioCosto + '" class="form-control" id="precioCosto' + i + '" onfocusout="myFunction(' + i + ')" min="0" max="99999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" required/></td>' +
-                                '<td><input type="number" value="' + item.Cantidad + '" class="form-control" id="cantidad' + i + '" onfocusout="myFunction(' + i + ')" min="1" max="99" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" required/></td>' +
+                                '<td><input type="number" value="' + item.Producto.PrecioCosto + '" class="form-control" id="precioCosto' + i + '" onfocusout="myFunction(' + i + ')" min="0" max="99999999" oninput="maxLengthCheck(this)" onkeydown="return isNumberKey(event)" required/></td>' +
+                                '<td><input type="number" value="' + item.Cantidad + '" class="form-control" id="cantidad' + i + '" onfocusout="myFunction(' + i + ')" min="1" max="999" oninput="maxLengthCheck(this)" onkeydown="return isNumberKey(event)" required/></td>' +
                                 '<td><input type="number" value="' + item.Producto.Iva + '" class="form-control" id="iva' + i + '" readonly/></td>' +
                                 '<td><input type="number" value="' + item.Total + '" class="form-control" id="total' + i + '" readonly/></td>' +
                                 '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +

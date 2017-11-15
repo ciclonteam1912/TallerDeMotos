@@ -18,12 +18,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Display(Name = "Precio Costo")]
         [Range(0, int.MaxValue, ErrorMessage = "El precio de costo debe ser mayor o igual a {1}")]
-        public int PrecioCosto { get; set; }
+        public int? PrecioCosto { get; set; }
 
         [Display(Name = "Precio Venta")]
         [Range(0, int.MaxValue, ErrorMessage = "El precio de venta debe ser mayor o igual a {1}")]
         [PrecioVentaMayorPrecioCosto]
-        public int PrecioVenta { get; set; }
+        public int? PrecioVenta { get; set; }
 
         [Display(Name = "Existencia Inicial")]
         [Range(0, int.MaxValue, ErrorMessage = "La existencia inicial debe ser mayor o igual a {1}")]
@@ -36,7 +36,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [ExistenciaMinMenorExistenciaInicial]
         public int? ExistenciaMinima { get; set; }
 
-        public byte Iva { get; set; }
+        public byte? Iva { get; set; }
+
+        public ProductoTipo ProductoTipo { get; set; }
+
+        [Display(Name = "Tipo de Producto")]
+        public byte ProductoTipoId { get; set; }
 
         public ICollection<Proveedor> Proveedores { get; set; }
 

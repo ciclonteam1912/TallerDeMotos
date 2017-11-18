@@ -4,17 +4,7 @@
 }
 
 @Html.Partial("_MenuVertical")
-<style>
-    span.error {
-        display: none;
-        color: red;
-        font-size: 90%;
-    }
 
-    tr.error {
-        background-color: rgba(255,0,0,0.35);
-    }
-</style>
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido" style="display:none">
     <form id="presupuestoFormulario">
         <h2>Presupuesto</h2>
@@ -49,34 +39,42 @@
             <table class="table" id="prepDetalle">
                 <thead>
                     <tr>
-                        <th>Producto o Servicio</th>
+                        <th>Tipo</th>
+                        <th>Código</th>
+                        <th>Descripción</th>
                         <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>IVA</th>
+                        <th>Cantidad</th>                       
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>
-                            <select id="productos" class="form-control" style="display: inline-block">
-                                <option value="">Seleccione un Producto o Servicio...</option>
-                            </select>
-                            <a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none" title="Agregar Producto"><i class="fa fa-plus"></i></a>
-                            <span class="error">Selecciona un producto</span>
+                            <input id="tipoProductos"/>
+                            <span class="error">Seleccionar Tipo de Producto</span>
+                        </td>
+                        <td>
+                            <input id="productosId" disabled="disabled" style="width: 150px; display:inline-block"/>
+                            <span class="error-repetido">Producto o Servicio ya seleccionado</span>
+                            <span class="error">Seleccionar Producto o Servicio</span>
+                        </td>
+                        <td>
+                            <input type="text" id="productoDesc" readonly class="form-control"/>
+                            @*<a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none" title="Agregar Producto"><i class="fa fa-plus"></i></a>*@                         
                         </td>
                         <td><input type="text" id="productoPrecio" readonly class="form-control" /></td>
                         <td>
                             <input type="number" id="productoCantidad" class="form-control" name="productoCantidad" />
                             <span class="error">Cantidad no válida</span>
-                        </td>
-                        <td><input type="number" id="productoIva" class="form-control" readonly name="productoIva" /></td>
+                        </td>                        
                         <td>
                             <input type="button" class="btn btn-primary" id="agregar" value="Agregar" />
                         </td>
+                        
                     </tr>
                 </tbody>
             </table>
+            <input type="number" id="productoIva" class="form-control" name="productoIva" style="display: none" />
         </div>
         <div id="prepItems" style="display:none">
             <div class="row table-responsive">
@@ -117,10 +115,6 @@
                 var lines = $('td', tr).map(function (index, td) {
                     return $(td).text();
                 });
-                // Here lines will contain an array of all td values for the current row:
-                // like ['value 1', 'value 2', 'value 3']
-                //console.log(lines);
-
             });
         }
 
@@ -128,8 +122,6 @@
             $("#contenido").fadeIn(2000);
             $("#menuVentas").addClass('active');
             $('#imprimirPresupuesto').hide();
-            $("#productoIva").prop("disabled", true);
-            $("#productoPrecio").prop("disabled", true);
             $("#submit").prop("disabled", true);
 
             var vm = {
@@ -140,7 +132,6 @@
             var total = 0;
             var subTotal = 0;
 
-            $("thead").show();
             //Obtener los clientes y agregarlos al Drop-down List.
             $.ajax({
                 type: "GET",
@@ -173,16 +164,80 @@
             });
 
             //Obtener los productos o servicios y agregarlos al Drop-down List.
-            $.ajax({
-                type: "GET",
-                url: "/api/productos",
-                contentType: "application/json",
-                success: function (result) {
-                    $.each(result, function (i) {
-                        $("#productos").append($('<option></option>').val(result[i].Id).html(result[i].Descripcion));
-                    });
+            var productsDataSource = new kendo.data.DataSource({
+                serverFiltering: false,
+                transport: {
+                    read: {
+                        url: "/api/productos"
+                    }
                 }
             });
+
+            var tipoProductos = $("#tipoProductos").kendoDropDownList({
+                optionLabel: "Selecciona Tipo de Producto...",
+                dataTextField: "Descripcion",
+                dataValueField: "Id",
+                dataSource: {
+                    serverFiltering: true,
+                    transport: {
+                        read: {
+                            url: "/api/tipoProductos"
+                        }
+                    }
+                },
+                change: function () {
+                    var value = this.value();
+
+                    if (value) {
+                        if (value == 2)
+                            $("#productoCantidad").prop("readonly", true);
+
+                        productsDataSource.filter({
+                            field: "ProductoTipoId",
+                            operator: "eq",
+                            value: parseInt(value)
+                        });
+                        productos.enable();
+                    } else {
+                        productos.enable(false);
+                    }
+                    productos.select(0);
+                    $("#productoDesc").val("");
+                    $("#productoPrecio").val("");
+                    $("#productoCantidad").val("");
+                    $("#productoIva").val("");
+                }
+            });
+
+            var productos = $("#productosId").kendoDropDownList({
+                filter: "eq",
+                autoBind: false,
+                optionLabel: "Selecciona Código Producto...",
+                dataTextField: "Id",
+                dataValueField: "Id",
+                dataSource: productsDataSource,
+                change: function () {
+                        $("#agregar").prop("disabled", false);
+
+                        var productoId = $("#productosId").val();
+                        $.ajax({
+                            url: "/api/productos/" + productoId,
+                            contentType: "application/json",
+                            method: "GET",
+                            success: function (data) {
+                                $(data).each(function (index, item) {
+                                    $("#productoDesc").val(item.Descripcion);
+                                    $("#productoPrecio").val(item.PrecioVenta);
+                                    $("#productoIva").val(item.Iva);
+                                });
+                            }
+
+                        });
+                        $("#productoCantidad").focus();
+                }
+            }).data("kendoDropDownList");
+
+            var ddl = $("#productosId").data("kendoDropDownList");
 
             $("#fechaDeEmision").kendoDateTimePicker({
                 culture: "es-ES",
@@ -204,69 +259,68 @@
                 }
             });
 
-            $("#productos").change(function () {
-                $("#productoCantidad").prop("disabled", false);
-                $("#productoIva").prop("disabled", false);
-                $("#agregar").prop("disabled", false);
-
-                var productoId = $("#productos").val();
-                $.ajax({
-                    url: "/api/productos/" + productoId,
-                    contentType: "application/json",
-                    method: "GET",
-                    success: function (data) {
-                        $(data).each(function (index, item) {
-                            $("#productoDescripcion").val(item.Descripcion);
-                            $("#productoPrecio").val(item.PrecioVenta);
-                            $("#productoIva").val(item.Iva);
-                        });
-                    }
-
-                });
-            });
-
-
             $("#agregar").click(function () {
                 var todoEsValido = true;               
-
+                var bandera = false;
+                var arreglo = [];
                 $("#footerPresupuesto").remove("#imprimirPresupuesto");
 
-                if ($("#productos").val() == 0) {
+                if($("#tipoProductos").val() == ""){
                     todoEsValido = false;
-                    $('#productos').siblings('span.error').css('display', 'block');
-                }
-                else {
-                    $('#productos').siblings('span.error').css('display', 'none');
+                    $('.k-dropdown').siblings('span.error').css('display', 'block');
+                } else {
+                    $('.k-dropdown').siblings('span.error').css('display', 'none');
                 }
 
-                //if ($("#productoCantidad").val() == 0) {
-                //    todoEsValido = false;
-                //    $('#productoCantidad').siblings('span.error').css('display', 'block');
-                //}
-                //else {
-                //    $('#productoCantidad').siblings('span.error').css('display', 'none');
-                //}
+                if ($("#productosId").val() == "") {
+                    todoEsValido = false;
+                    $('.k-dropdown').siblings('span.error').css('display', 'block');
+                }
+                else {
+                    $('.k-dropdown').siblings('span.error').css('display', 'none');
+                }
+
+                $('#presupuestoDetalle tr.detalle').each(function (index, tr) {
+                    var lines = $('td', tr).map(function (index, td) {
+                        if (index == 0)
+                            return $(td).text();
+                    });
+
+                    arreglo = lines;
+                });
+
+                console.log(arreglo);
+                for (var i = 0; i < arreglo.length; i++) {
+                    if ($("#productosId").val() == arreglo[0]) {
+                        bandera = true;
+                    }
+                        
+                }
+                
+                if (bandera) {
+                    todoEsValido = false;
+                    console.log("oike");
+                    $('.k-dropdown').siblings('span.error-repetido').css('display', 'block');
+                } else {
+                    $('.k-dropdown').siblings('span.error-repetido').css('display', 'none');
+                }
+
+
 
                 if (todoEsValido) {
                     $("#prepItems").fadeIn(1000);
                     $("#submit").prop("disabled", false);
-                    var productoId = $("#productos option:selected").val();
-                    var productoDescripcion = $("#productos option:selected").text();
+                    var productoId = $("#productosId").val();
+                    var productoDescripcion = $("#productoDesc").val();
                     var productoPrecio = $("#productoPrecio").val();
                     var productoCantidad = $("#productoCantidad").val();
                     var cantidad = productoCantidad != "" ? productoCantidad : 1;
 
                     var productoIva = $("#productoIva").val();
 
-                    if (productoIva != "") {
-                        total = (productoPrecio * cantidad) + (((productoPrecio * cantidad) * productoIva) / 100);
-                        productoIva = ((productoPrecio * cantidad) * productoIva) / 100;
-                    }
-                    else {
+                    if (productoIva == "")
                         productoIva = 0;
-                        total = productoPrecio * cantidad;
-                    }
-
+                    total = productoPrecio * cantidad;
 
                     subTotal = subTotal + total;
                     $("#totalAPagar").val(subTotal);
@@ -280,35 +334,34 @@
                         '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
                         '</tr>';
 
-                    //$("#presupuestoDetalle tbody").append(presupuesto);
-
                     $(presupuesto).hide().appendTo("#presupuestoDetalle tbody").fadeIn(1000);
 
-                    $("#productos option:selected").remove();
                     $("tbody").on("click", ".eliminar", function () {
                         var codProducto = $(this).closest("tr").find("td").eq(0).text();
                         var descProducto = $(this).closest("tr").find("td").eq(1).text();
 
                         valor = $(this).closest("tr").find("td").eq(5).text();
-                        //console.log(valor);
+
                         $(this).parents("tr").fadeOut("normal", function () {
                             $(this).remove();
                             subTotal = subTotal - valor;
                             $("#totalAPagar").val(subTotal);
 
                             if ($("#totalAPagar").val() == 0) {
-                                console.log("ok");
                                 $("#submit").prop("disabled", true);
                             }
-                            $("#productos").append($('<option></option>').val(codProducto).html(descProducto));
                         });
                     });
 
-                    $("#productos").val("");
-                    $("#productoDescripcion").val("");
+
+                    $("#productosId").data("kendoDropDownList").value("");
+                    $("#tipoProductos").data("kendoDropDownList").value("");
+                    $("#productoDesc").val("");
                     $("#productoPrecio").val("");
-                    $("#productoCantidad").val("");
                     $("#productoIva").val("");
+
+                    $("#productoCantidad").val("");
+                    productos.enable(false);
                 }                
             });
 

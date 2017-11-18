@@ -269,6 +269,7 @@
     <Compile Include="Controllers\APIs\RolesController.cs" />
     <Compile Include="Controllers\APIs\ServiciosBasicosController.cs" />
     <Compile Include="Controllers\APIs\TalonariosController.cs" />
+    <Compile Include="Controllers\APIs\TipoProductosController.cs" />
     <Compile Include="Controllers\APIs\UsuariosController.cs" />
     <Compile Include="Controllers\APIs\VehiculosController.cs" />
     <Compile Include="Controllers\AseguradoraController.cs" />

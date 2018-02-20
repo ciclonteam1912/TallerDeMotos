@@ -566,6 +566,14 @@
     <Compile Include="Migrations\201711101432359_HacerNullablesLasColumnasNumericasEnTablaProductos.Designer.cs">
       <DependentUpon>201711101432359_HacerNullablesLasColumnasNumericasEnTablaProductos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802171955542_AgregarCamposTotalesEnLaTablaFacturaVentas.cs" />
+    <Compile Include="Migrations\201802171955542_AgregarCamposTotalesEnLaTablaFacturaVentas.Designer.cs">
+      <DependentUpon>201802171955542_AgregarCamposTotalesEnLaTablaFacturaVentas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802182235576_AgregarCamposTotalesEnLaTablaPresupuestos.cs" />
+    <Compile Include="Migrations\201802182235576_AgregarCamposTotalesEnLaTablaPresupuestos.Designer.cs">
+      <DependentUpon>201802182235576_AgregarCamposTotalesEnLaTablaPresupuestos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -2651,6 +2659,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711101432359_HacerNullablesLasColumnasNumericasEnTablaProductos.resx">
       <DependentUpon>201711101432359_HacerNullablesLasColumnasNumericasEnTablaProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802171955542_AgregarCamposTotalesEnLaTablaFacturaVentas.resx">
+      <DependentUpon>201802171955542_AgregarCamposTotalesEnLaTablaFacturaVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802182235576_AgregarCamposTotalesEnLaTablaPresupuestos.resx">
+      <DependentUpon>201802182235576_AgregarCamposTotalesEnLaTablaPresupuestos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

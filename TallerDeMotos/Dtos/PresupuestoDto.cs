@@ -12,7 +12,13 @@ namespace TallerDeMotos.Dtos
 
         public int VehiculoId { get; set; }
 
-        public int SubTotal { get; set; }
+        public long TotalExenta { get; set; }
+
+        public long TotalIvaCincoPorCiento { get; set; }
+
+        public long TotalIvaDiezPorCiento { get; set; }
+
+        public long SubTotal { get; set; }
 
         public EstadoDto Estado { get; set; }
 

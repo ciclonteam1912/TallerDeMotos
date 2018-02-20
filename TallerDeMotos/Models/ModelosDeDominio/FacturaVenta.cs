@@ -19,7 +19,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public DateTime FechaFacturaVenta { get; set; }
 
-        public int SubTotal { get; set; }
+        public long SubTotal { get; set; }
+
+        public long TotalDiezPorCiento { get; set; }
+
+        public long TotalCincoPorCiento { get; set; }
+
+        public long TotalExenta { get; set; }
 
         public ApplicationUser Usuario { get; set; }
 

@@ -43,6 +43,9 @@ namespace TallerDeMotos.Controllers.APIs
             {
                 FechaDeEmision = nuevoPresupuestoDto.Presupuesto.FechaDeEmision,
                 VehiculoId = nuevoPresupuestoDto.Presupuesto.VehiculoId,
+                TotalExenta = nuevoPresupuestoDto.Presupuesto.TotalExenta,
+                TotalIvaCincoPorCiento = nuevoPresupuestoDto.Presupuesto.TotalIvaCincoPorCiento,
+                TotalIvaDiezPorCiento = nuevoPresupuestoDto.Presupuesto.TotalIvaDiezPorCiento,
                 SubTotal = nuevoPresupuestoDto.Presupuesto.SubTotal,
                 EstadoId = 1,
                 UsuarioId = User.Identity.GetUserId()

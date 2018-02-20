@@ -60,14 +60,14 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(p => p.ExistenciaInicial)
-                            @Html.TextBoxFor(p => p.ExistenciaInicial, new { @class = "form-control", placeholder = "Ingrese Existencia Inicial del Producto...", autocomplete = "off", type = "number", min = "1", max = "999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
+                            @Html.TextBoxFor(p => p.ExistenciaInicial, new { @class = "form-control", placeholder = "Ingrese Existencia Inicial del Producto...", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
                             @Html.ValidationMessageFor(p => p.ExistenciaInicial)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(p => p.ExistenciaMinima)
-                            @Html.TextBoxFor(p => p.ExistenciaMinima, new { @class = "form-control", placeholder = "Ingrese Existencia Mínima del Producto...", autocomplete = "off", type = "number", min = "1", max = "99", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
+                            @Html.TextBoxFor(p => p.ExistenciaMinima, new { @class = "form-control", placeholder = "Ingrese Existencia Mínima del Producto...", autocomplete = "off", type = "number", min = "1", max = "999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
                             @Html.ValidationMessageFor(p => p.ExistenciaMinima)
                         </div>
                     </div>

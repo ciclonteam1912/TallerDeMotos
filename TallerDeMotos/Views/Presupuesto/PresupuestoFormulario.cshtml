@@ -64,8 +64,7 @@
                         </td>
                         <td><input type="text" id="productoPrecio" readonly class="form-control" /></td>
                         <td>
-                            <input type="number" id="productoCantidad" class="form-control" name="productoCantidad" />
-                            <span class="error">Cantidad no válida</span>
+                            @Html.TextBox("productoCantidad", "", new { @class = "form-control", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
                         </td>                        
                         <td>
                             <input type="button" class="btn btn-primary" id="agregar" value="Agregar" />
@@ -93,9 +92,31 @@
                     <tbody></tbody>
                 </table>
             </div>
-            <div class="form-group">
-                <label>Total a Pagar: </label>
-                <input type="text" name="totalAPagar" id="totalAPagar" value="" readonly class="form-control" style="width: 150px" />
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Total Exentas:</label>
+                        <input type="text" readonly class="form-control" style="width: 150px" id="totalExentas" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Total IVA 5%:</label>
+                        <input type="text" readonly class="form-control" style="width: 150px" id="totalIvaCinco" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Total IVA 10%:</label>
+                        <input type="text" readonly class="form-control" style="width: 150px" id="totalIvaDiez" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Total a Pagar: </label>
+                        <input type="text" name="totalAPagar" id="totalAPagar" value="" readonly class="form-control" style="width: 150px" />
+                    </div>
+                </div>
             </div>
 
             <div class="form-group" id="footerPresupuesto" style="padding:10px 0; text-align:right">
@@ -109,6 +130,16 @@
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
+        function maxLengthCheck(object) {
+            if (object.value.length > object.max.length)
+                object.value = object.value.slice(0, object.max.length);
+        }
+
+        function isNumberKey(e) {
+            if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
+                return false;
+            }
+        }
 
         function probar() {
             $('#presupuestoDetalle tr.detalle').each(function (index, tr) {
@@ -130,6 +161,9 @@
             }
 
             var total = 0;
+            var totalExentas = 0;
+            var totalIVACinco = 0;
+            var totalIVADiez = 0;
             var subTotal = 0;
 
             //Obtener los clientes y agregarlos al Drop-down List.
@@ -289,7 +323,6 @@
                     arreglo = lines;
                 });
 
-                console.log(arreglo);
                 for (var i = 0; i < arreglo.length; i++) {
                     if ($("#productosId").val() == arreglo[0]) {
                         bandera = true;
@@ -320,10 +353,23 @@
 
                     if (productoIva == "")
                         productoIva = 0;
+
                     total = productoPrecio * cantidad;
 
                     subTotal = subTotal + total;
+
+                    if (productoIva == 0)
+                        totalExentas = subTotal;
+                    else if (productoIva == 5)
+                        totalIVACinco = Math.round(subTotal / 21);
+                    else
+                        totalIVADiez = Math.round(subTotal / 11);
+
                     $("#totalAPagar").val(subTotal);
+                    $("#totalExentas").val(totalExentas);
+                    $("#totalIvaCinco").val(totalIVACinco);
+                    $("#totalIvaDiez").val(totalIVADiez);
+
                     var presupuesto = '<tr class="detalle">' +
                         '<td>' + productoId + '</td>' +
                         '<td>' + productoDescripcion + '</td>' +
@@ -341,11 +387,23 @@
                         var descProducto = $(this).closest("tr").find("td").eq(1).text();
 
                         valor = $(this).closest("tr").find("td").eq(5).text();
+                        iva = $(this).closest("tr").find("td").eq(4).text();
 
                         $(this).parents("tr").fadeOut("normal", function () {
                             $(this).remove();
                             subTotal = subTotal - valor;
                             $("#totalAPagar").val(subTotal);
+
+                            if (iva == 10) {
+                                totalIVADiez = totalIVADiez - (Math.round(valor / 11));
+                                $("#totalIvaDiez").val(totalIVADiez);
+                            } else if(iva == 5) {
+                                totalIVACinco = totalIVACinco - (Math.round(valor / 21));
+                                $("#totalIvaCinco").val(totalIVACinco);
+                            } else {
+                                totalExentas = totalExentas - valor;
+                                $("#totalExentas").val(totalExentas);
+                            }
 
                             if ($("#totalAPagar").val() == 0) {
                                 $("#submit").prop("disabled", true);
@@ -375,6 +433,9 @@
                         VehiculoId: $("#vehiculo").val(),
                         SubTotal: $("#totalAPagar").val(),
                         FechaDeEmision: $("#fechaDeEmision").val(),
+                        TotalExenta: $("#totalExentas").val(),
+                        TotalIvaCincoPorCiento: $("#totalIvaCinco").val(),
+                        TotalIvaDiezPorCiento: $("#totalIvaDiez").val()
                     };
 
                     $('#presupuestoDetalle tr.detalle').each(function (index, tr) {
@@ -412,6 +473,9 @@
                                     $("#clientes").val("");
                                     $("#presupuestoDetalle tbody").empty();
                                     $("#totalAPagar").val("");
+                                    $("#totalExentas").val("");
+                                    $("#totalIvaCinco").val("");
+                                    $("#totalIvaDiez").val("");
                                     subTotal = 0;
 
                                     vm = {

@@ -15,7 +15,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public byte EstadoId { get; set; }
 
-        public int SubTotal { get; set; }
+        public long TotalExenta { get; set; }
+
+        public long TotalIvaCincoPorCiento { get; set; }
+
+        public long TotalIvaDiezPorCiento { get; set; }
+
+        public long SubTotal { get; set; }
 
         public DateTime FechaDeEmision { get; set; }
 

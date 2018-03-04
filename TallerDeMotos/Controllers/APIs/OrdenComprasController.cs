@@ -48,7 +48,7 @@ namespace TallerDeMotos.Controllers.APIs
                 var ordenCompraDto = new OrdenCompraDto
                 {
                     OrdenCompraNumero = nuevaOrdenCompraDto.OrdenCompra.OrdenCompraNumero,
-                    FechaDeEmision = nuevaOrdenCompraDto.OrdenCompra.FechaDeEmision,
+                    FechaDeEmision = DateTime.Now,
                     FormaPagoId = nuevaOrdenCompraDto.OrdenCompra.FormaPagoId,
                     SubTotal = nuevaOrdenCompraDto.OrdenCompra.SubTotal,
                     EstadoId = 1,

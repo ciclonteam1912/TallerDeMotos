@@ -6,6 +6,7 @@ using System.Data.Entity;
 using TallerDeMotos.Models.ModelosDeDominio;
 using AutoMapper;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
+using System;
 
 namespace TallerDeMotos.Controllers
 {
@@ -138,7 +139,15 @@ namespace TallerDeMotos.Controllers
 
         public JsonResult BuscarMaxCodOrdenNro()
         {
-            var maxOrdenNro = _context.OrdenCompras.Max(oc => oc.OrdenCompraNumero) + 1;
+            int maxOrdenNro = 0;
+            try
+            {
+                maxOrdenNro = _context.OrdenCompras.Max(oc => oc.OrdenCompraNumero + 1);
+            }
+            catch (InvalidOperationException)
+            {
+                maxOrdenNro = 1;
+            }
 
             return Json(maxOrdenNro);
         }

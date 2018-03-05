@@ -6,6 +6,7 @@ using System.Web.Http;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
+using TallerDeMotos.Models.AtributosDeValidacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Controllers.APIs
@@ -41,10 +42,14 @@ namespace TallerDeMotos.Controllers.APIs
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpPost]
+        //[ValidateModel]
         public IHttpActionResult CrearOrdenDeCompra(NuevaOrdenCompraDto nuevaOrdenCompraDto)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
                 var ordenCompraDto = new OrdenCompraDto
                 {
                     OrdenCompraNumero = nuevaOrdenCompraDto.OrdenCompra.OrdenCompraNumero,

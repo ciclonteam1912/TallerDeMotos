@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TallerDeMotos.ViewModels.OrdenCompraViewModel
+@{
     ViewBag.Title = "Orden de Compra";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -18,17 +19,26 @@
                     <div class="row" style="display:flex; justify-content:space-between">
                         <div class="col-lg-2 col-md-2 col-sm-2">
                             <div class="form-group">
-                                <label>Orden Nro.:</label>
-                                <input readonly type="number" id="ordenNro" class="form-control input-sm" />
+                                @Html.LabelFor(oc => oc.OrdenCompraNumero)
+                                @Html.TextBoxFor(oc => oc.OrdenCompraNumero, new { @class = "form-control", @disabled = "disabled"})
+                                @Html.ValidationMessageFor(oc => oc.OrdenCompraNumero)
+                                @*<label>Orden Nro.:</label>
+                                <input readonly type="number" id="ordenNro" class="form-control input-sm" />*@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
-                            <label>Forma de Pago:</label>
-                            <input id="formaPago" style="width: 100%;" required/>
+                            @*<label>Forma de Pago:</label>*@
+                            @Html.LabelFor(oc => oc.FormaPagoId)
+                            @*<input id="formaPago" style="width: 100%;"/>*@
+                            @Html.DropDownListFor(oc => oc.FormaPagoId, new SelectList(Model.FormaPagos, "Id", "Nombre"), "Seleccionar Forma de Pago", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(oc => oc.FormaPagoId)
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
-                            <label>Proveedor:</label>
-                            <input id="proveedor" style="width: 100%;" required/>
+                            @*<label>Proveedor:</label>*@
+                            @Html.LabelFor(oc => oc.ProveedorId)
+                            @*<input id="proveedor" style="width: 100%;"/>*@
+                            @Html.DropDownListFor(oc => oc.ProveedorId, new SelectList(Model.Proveedores, "Id", "RazonSocial"), "Seleccionar Proveedor", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(oc => oc.ProveedorId)
                         </div>
                     </div>
                 </div>
@@ -119,6 +129,7 @@
 </div>
 
 @section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
         function maxLengthCheck(object) {
             if (object.value.length > object.max.length)
@@ -127,7 +138,7 @@
 
         function CargarMaxCodOrdenCompra()
         {
-            var ordenNro = document.getElementById('ordenNro');
+            var ordenNro = document.getElementById('OrdenCompraNumero');
             $.ajax({
                 url: "@Url.Action("BuscarMaxCodOrdenNro", "OrdenCompra")",
                 dataType: "json",
@@ -161,35 +172,33 @@
             var count = 0;
 
             //Cabecera orden de compra
-            $("#formaPago").kendoDropDownList({
-                filter: "eq",
-                dataTextField: "Nombre",
-                dataValueField: "Id",
-                optionLabel: "Seleccione una Forma de Pago...",
-                dataSource: {
-                    serverFiltering: false,
-                    transport: {
-                        read: {
-                            url: "/api/formasPago"
-                        }
-                    }
-                },
-            });
+            //$("#FormaPagoId").kendoDropDownList({
+            //    filter: "eq",
+            //    dataTextField: "Nombre",
+            //    dataValueField: "Id",
+            //    dataSource: {
+            //        serverFiltering: false
+            //        //transport: {
+            //        //    read: {
+            //        //        url: "/api/formasPago"
+            //        //    }
+            //        //}
+            //    },
+            //});
 
-            $("#proveedor").kendoDropDownList({
-                filter: "eq",
-                dataTextField: "RazonSocial",
-                dataValueField: "Id",
-                optionLabel: "Seleccione un Proveedor...",
-                dataSource: {
-                    serverFiltering: false,
-                    transport: {
-                        read: {
-                            url: "/api/proveedores"
-                        }
-                    }
-                },
-            });
+            //$("#ProveedorId").kendoDropDownList({
+            //    filter: "eq",
+            //    dataTextField: "RazonSocial",
+            //    dataValueField: "Id",
+            //    dataSource: {
+            //        serverFiltering: false
+            //        //transport: {
+            //        //    read: {
+            //        //        url: "/api/proveedores"
+            //        //    }
+            //        //}
+            //    },
+            //});
 
             //Detalle orden de compra
             $("#productosId").kendoDropDownList({
@@ -268,7 +277,7 @@
                     ddl.focus();
                     $("#orderItems").fadeIn(1000);
                     count++;
-                    total = ($("#precio").val() * $("#cantidad").val()) + ((($("#precio").val() * $("#cantidad").val()) * $("#iva").val()) / 100);
+                    total = ($("#precio").val() * $("#cantidad").val());
                     subTotal = subTotal + total;
                     $("#totalAPagar").val(subTotal);
                     var ordenCompra = '<tr class="detalle">' +
@@ -337,11 +346,16 @@
             $("#ordenCompraFormulario").submit(function (e) {
                 e.preventDefault();
 
+                var form = $(this);
+                if (!form.valid()) {
+                    return false;
+                }
+
                 vm.OrdenCompra = {
-                    OrdenCompraNumero: $("#ordenNro").val(),
-                    FormaPagoId: $("#formaPago").val(),
+                    OrdenCompraNumero: $("#OrdenCompraNumero").val(),
+                    FormaPagoId: $("#FormaPagoId").val(),
                     SubTotal: $("#totalAPagar").val(),
-                    ProveedorId: $("#proveedor").val()
+                    ProveedorId: $("#ProveedorId").val()
                 }
 
                 $('#ordenCompraDetalle tr.detalle').each(function (index, tr) {
@@ -403,6 +417,11 @@
                         else
                             toastr.error("<p>Ocurrió algo inesperado</p>");
                     }
+                })
+                .failure(function (jqxhr) {
+                    //console.log(jqxhr);
+                    //var validationResult = $.parseJSON(jqxhr.responseText);
+                    //$.validator.unobtrusive.revalidate(form, validationResult);
                 });
             });
 

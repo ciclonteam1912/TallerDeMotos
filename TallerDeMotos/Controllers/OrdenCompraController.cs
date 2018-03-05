@@ -7,6 +7,7 @@ using TallerDeMotos.Models.ModelosDeDominio;
 using AutoMapper;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using System;
+using TallerDeMotos.ViewModels;
 
 namespace TallerDeMotos.Controllers
 {
@@ -46,7 +47,15 @@ namespace TallerDeMotos.Controllers
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult OrdenCompraFormulario()
         {
-            return View();
+            var formaPagos = _context.FormasPago.ToList();
+            var proveedores = _context.Proveedores.ToList();
+
+            var viewModel = new OrdenCompraViewModel()
+            {
+                FormaPagos = formaPagos,
+                Proveedores = proveedores
+            };
+            return View(viewModel);
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]

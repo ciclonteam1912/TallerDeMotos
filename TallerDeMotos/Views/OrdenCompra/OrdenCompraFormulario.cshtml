@@ -20,24 +20,41 @@
                         <div class="col-lg-2 col-md-2 col-sm-2">
                             <div class="form-group">
                                 @Html.LabelFor(oc => oc.OrdenCompraNumero)
-                                @Html.TextBoxFor(oc => oc.OrdenCompraNumero, new { @class = "form-control", @disabled = "disabled"})
+                                @Html.TextBoxFor(oc => oc.OrdenCompraNumero, new { @class = "form-control input-sm", @disabled = "disabled" })
                                 @Html.ValidationMessageFor(oc => oc.OrdenCompraNumero)
-                                @*<label>Orden Nro.:</label>
-                                <input readonly type="number" id="ordenNro" class="form-control input-sm" />*@
                             </div>
                         </div>
+
                         <div class="col-lg-4 col-md-4 col-sm-4">
-                            @*<label>Forma de Pago:</label>*@
-                            @Html.LabelFor(oc => oc.FormaPagoId)
-                            @*<input id="formaPago" style="width: 100%;"/>*@
-                            @Html.DropDownListFor(oc => oc.FormaPagoId, new SelectList(Model.FormaPagos, "Id", "Nombre"), "Seleccionar Forma de Pago", new { @class = "form-control" })
+                            @Html.LabelFor(oc => oc.FormaPagoId)                         
+                            @(Html.Kendo().DropDownList()
+                                .Name("FormaPagoId")
+                                .DataTextField("Nombre")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione una Forma de Pago")
+                                .HtmlAttributes(new { style = "width: 100%" })
+                                .Filter("contains")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/formasPago"));
+                                })
+                            )
                             @Html.ValidationMessageFor(oc => oc.FormaPagoId)
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
-                            @*<label>Proveedor:</label>*@
                             @Html.LabelFor(oc => oc.ProveedorId)
-                            @*<input id="proveedor" style="width: 100%;"/>*@
-                            @Html.DropDownListFor(oc => oc.ProveedorId, new SelectList(Model.Proveedores, "Id", "RazonSocial"), "Seleccionar Proveedor", new { @class = "form-control" })
+                                @(Html.Kendo().DropDownList()
+                                .Name("ProveedorId")
+                                .DataTextField("RazonSocial")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione un Proveedor")
+                                .HtmlAttributes(new { style = "width: 100%" })
+                                .Filter("contains")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/proveedores"));
+                                })
+                            )
                             @Html.ValidationMessageFor(oc => oc.ProveedorId)
                         </div>
                     </div>
@@ -124,39 +141,47 @@
                 </div>
 
             </div>
-        </div>  
+        </div>
     </form>      
 </div>
 
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        function maxLengthCheck(object) {
-            if (object.value.length > object.max.length)
-                object.value = object.value.slice(0, object.max.length);
-        }
-
-        function CargarMaxCodOrdenCompra()
-        {
-            var ordenNro = document.getElementById('OrdenCompraNumero');
-            $.ajax({
-                url: "@Url.Action("BuscarMaxCodOrdenNro", "OrdenCompra")",
-                dataType: "json",
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    ordenNro.value = data;
-                },
-                error: function (request, status, error) {
-
-                },
-                failure: function (response) {
-                    alert("arriva al failure");
-                }
-            });
-        }
-
+    <script>       
         $(document).ready(function () {
+            /* Bind Mutation Events */
+            var elements = $("#contenido").find("[data-role=combobox],[data-role=dropdownlist],[data-role=numerictextbox],[data-role^=date],[data-role=multiselect]");
+
+            //correct mutation event detection
+            var hasMutationEvents = ("MutationEvent" in window),
+                MutationObserver = window.WebKitMutationObserver || window.MutationObserver;
+
+            if (MutationObserver) {
+                var observer = new MutationObserver(function (mutations) {
+                    var idx = 0,
+                        mutation,
+                        length = mutations.length;
+
+                    for (; idx < length; idx++) {
+                        mutation = mutations[idx];
+                        if (mutation.attributeName === "class") {
+                            updateCssOnPropertyChange(mutation);
+                        }
+                    }
+                }),
+                config = { attributes: true, childList: false, characterData: false };
+
+                elements.each(function () {
+                    observer.observe(this, config);
+                });
+            } else if (hasMutationEvents) {
+                elements.bind("DOMAttrModified", updateCssOnPropertyChange);
+            } else {
+                elements.each(function () {
+                    this.attachEvent("onpropertychange", updateCssOnPropertyChange);
+                });
+            }
+
             $("#contenido").fadeIn(2000);
             $("#menuCompras").addClass('active');
             $('#imprimirOrden').hide();
@@ -170,35 +195,6 @@
             var total = 0;
             var subTotal = 0;
             var count = 0;
-
-            //Cabecera orden de compra
-            //$("#FormaPagoId").kendoDropDownList({
-            //    filter: "eq",
-            //    dataTextField: "Nombre",
-            //    dataValueField: "Id",
-            //    dataSource: {
-            //        serverFiltering: false
-            //        //transport: {
-            //        //    read: {
-            //        //        url: "/api/formasPago"
-            //        //    }
-            //        //}
-            //    },
-            //});
-
-            //$("#ProveedorId").kendoDropDownList({
-            //    filter: "eq",
-            //    dataTextField: "RazonSocial",
-            //    dataValueField: "Id",
-            //    dataSource: {
-            //        serverFiltering: false
-            //        //transport: {
-            //        //    read: {
-            //        //        url: "/api/proveedores"
-            //        //    }
-            //        //}
-            //    },
-            //});
 
             //Detalle orden de compra
             $("#productosId").kendoDropDownList({
@@ -384,12 +380,12 @@
                         toastr.success(ordenCompra.Message);
                         $("#submit").prop("disabled", true);
                         $("#imprimirOrden").remove();
-                        $("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompraReport?ordenNro=' + $("#ordenNro").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>');
+                        $("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompraReport?ordenNro=' + $("#OrdenCompraNumero").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>');
 
                         $("#imprimirOrden").click(function () {
                             CargarMaxCodOrdenCompra();
-                            $("#formaPago").val("");
-                            $("#proveedor").val("");
+                            $("#FormaPagoId").data("kendoDropDownList").value("");
+                            $("#ProveedorId").data("kendoDropDownList").value("");
                             $("#ordenCompraDetalle tbody").empty();
 
                             $("#totalAPagar").val("");
@@ -418,11 +414,6 @@
                             toastr.error("<p>Ocurrió algo inesperado</p>");
                     }
                 })
-                .failure(function (jqxhr) {
-                    //console.log(jqxhr);
-                    //var validationResult = $.parseJSON(jqxhr.responseText);
-                    //$.validator.unobtrusive.revalidate(form, validationResult);
-                });
             });
 
             toastr.options = {
@@ -437,5 +428,53 @@
                 "extendedTimeOut": 1000
             }
         });
+
+        function maxLengthCheck(object) {
+            if (object.value.length > object.max.length)
+                object.value = object.value.slice(0, object.max.length);
+        }
+
+        function CargarMaxCodOrdenCompra()
+        {
+            var ordenNro = document.getElementById('OrdenCompraNumero');
+            $.ajax({
+                url: "@Url.Action("BuscarMaxCodOrdenNro", "OrdenCompra")",
+                dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                ordenNro.value = data;
+            },
+            error: function (request, status, error) {
+
+            },
+            failure: function (response) {
+                alert("arriva al failure");
+            }
+        });
+        }
+
+        $.validator.setDefaults({
+            ignore: "",
+            // any other default options and/or rules,
+            //errorPlacement: function (error, element) {
+            //    console.log("error", error);
+            //    console.log("element", element);
+            //    if (element.is("[data-role=dropdownlist]")) {
+            //        element.closest(".k-widget").after(error);
+            //    }
+            //}
+        });
+
+
+        function updateCssOnPropertyChange(e) {
+            var element = $(e.target);
+
+            element.siblings("span.k-dropdown-wrap")
+                   .add(element.siblings("div.k-multiselect-wrap"))
+                   .add(element.parent("span.k-numeric-wrap"))
+                   .add(element.parent("span.k-picker-wrap"))
+                   .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
     </script>    
 }

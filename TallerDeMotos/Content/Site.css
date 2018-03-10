@@ -37,7 +37,8 @@ footer{
     color: red;
 }
 
-.input-validation-error, select.form-control.error, .input-validation-error .k-picker-wrap.k-state-default {
+.input-validation-error, select.form-control.error, .input-validation-error .k-picker-wrap.k-state-default,
+.k-widget > span.k-invalid, .k-widget > div.k-invalid, input.k-invalid {
     border: 2px solid red;
 }
 

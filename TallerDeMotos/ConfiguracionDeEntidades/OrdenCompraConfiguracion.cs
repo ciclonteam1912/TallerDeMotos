@@ -38,6 +38,10 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             HasRequired(oc => oc.Proveedor)
                 .WithMany(e => e.OrdenCompras)
                 .WillCascadeOnDelete(false);
+
+            HasRequired(oc => oc.Usuario)
+                .WithMany(e => e.OrdenCompras)
+                .WillCascadeOnDelete(false);
         }
     }
 }

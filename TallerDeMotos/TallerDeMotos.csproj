@@ -579,6 +579,10 @@
     <Compile Include="Migrations\201802182235576_AgregarCamposTotalesEnLaTablaPresupuestos.Designer.cs">
       <DependentUpon>201802182235576_AgregarCamposTotalesEnLaTablaPresupuestos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803111340206_SeAgregoLaColumnaUsuarioCodigoEnTablaOrdenCompras.cs" />
+    <Compile Include="Migrations\201803111340206_SeAgregoLaColumnaUsuarioCodigoEnTablaOrdenCompras.Designer.cs">
+      <DependentUpon>201803111340206_SeAgregoLaColumnaUsuarioCodigoEnTablaOrdenCompras.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -2677,6 +2681,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802182235576_AgregarCamposTotalesEnLaTablaPresupuestos.resx">
       <DependentUpon>201802182235576_AgregarCamposTotalesEnLaTablaPresupuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803111340206_SeAgregoLaColumnaUsuarioCodigoEnTablaOrdenCompras.resx">
+      <DependentUpon>201803111340206_SeAgregoLaColumnaUsuarioCodigoEnTablaOrdenCompras.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

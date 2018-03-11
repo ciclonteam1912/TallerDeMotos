@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Data.Entity;
 using System.Linq;
@@ -55,7 +56,8 @@ namespace TallerDeMotos.Controllers.APIs
                     FormaPagoId = nuevaOrdenCompraDto.OrdenCompra.FormaPagoId,
                     SubTotal = nuevaOrdenCompraDto.OrdenCompra.SubTotal,
                     EstadoId = 1,
-                    ProveedorId = nuevaOrdenCompraDto.OrdenCompra.ProveedorId
+                    ProveedorId = nuevaOrdenCompraDto.OrdenCompra.ProveedorId,
+                    UsuarioId = User.Identity.GetUserId()
                 };
 
                 var ordenCompra = Mapper.Map<OrdenCompraDto, OrdenCompra>(ordenCompraDto);

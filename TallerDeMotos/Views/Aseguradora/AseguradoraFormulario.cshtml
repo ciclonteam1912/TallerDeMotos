@@ -9,24 +9,7 @@
 
     @using (Html.BeginForm("GuardarAseguradora", "Aseguradora"))
     {
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">Agregar Ciudad</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div id="example">
-                            <div id="grid"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @Html.Partial("_Ciudad")
 
         <div class="panel panel-default">
             <div class="panel-heading">@Model.Titulo</div>
@@ -106,56 +89,7 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $("#menuTaller").addClass('active');
-
-            var dataSource = new kendo.data.DataSource({
-                autoSync: false,
-                transport: {
-                    read: {
-                        url: "/api/Ciudades",
-                        dataType: "json"
-                    },
-                    update: {
-                        url: "/Ciudad/EditarCiudad",
-                        dataType: "json",
-                        type: "post"
-                    },
-                    create: {
-                        url: "/Ciudad/CrearCiudad",
-                        dataType: "json",
-                        type: "post"
-                    }
-                },
-                pageSize: 10,
-                serverPaging: false,
-                serverSorting: false,
-                schema: {
-                    model: {
-                        id: "Id",
-                        fields: {
-                            Id: { editable: false },
-                            Nombre: { validation: { required: true } }
-                        }
-                    }
-                }
-            });
-
-            $("#grid").kendoGrid({
-                dataSource: dataSource,
-                pageable: {
-                    refresh: true,
-                    pageSizes: true,
-                    buttonCount: 5
-                },
-                sortable: true,
-                filterable: true,
-                height: 500,
-                toolbar: ["create", "save", "cancel"],
-                columns: [
-                    { field: "Nombre", title: "Nombre", width: 120 }
-                ],
-                editable: true
-            });
+            $("#menuTaller").addClass('active');                            
         });
     </script>
 }

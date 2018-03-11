@@ -12,6 +12,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Razón Social")]
         public string RazonSocial { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string Contacto { get; set; }
 
@@ -23,10 +24,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "RUC")]
         public string Ruc { get; set; }
 
+        [Required]
         [StringLength(255)]
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
+        [Required]
         [StringLength(50)]
         [Display(Name = "Teléfono")]
         public string Telefono { get; set; }

@@ -583,6 +583,10 @@
     <Compile Include="Migrations\201803111340206_SeAgregoLaColumnaUsuarioCodigoEnTablaOrdenCompras.Designer.cs">
       <DependentUpon>201803111340206_SeAgregoLaColumnaUsuarioCodigoEnTablaOrdenCompras.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.cs" />
+    <Compile Include="Migrations\201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.Designer.cs">
+      <DependentUpon>201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -2476,6 +2480,7 @@
     <Content Include="Views\Presupuesto\ListaDePresupuestos.cshtml" />
     <Content Include="Views\FacturaVenta\FacturaVentaFormulario.cshtml" />
     <Content Include="Scripts\kendo\kendo.aspnetmvc.min.js.map" />
+    <Content Include="Views\Shared\_Ciudad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2684,6 +2689,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803111340206_SeAgregoLaColumnaUsuarioCodigoEnTablaOrdenCompras.resx">
       <DependentUpon>201803111340206_SeAgregoLaColumnaUsuarioCodigoEnTablaOrdenCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.resx">
+      <DependentUpon>201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

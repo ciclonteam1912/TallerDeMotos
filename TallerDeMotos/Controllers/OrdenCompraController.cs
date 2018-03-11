@@ -63,7 +63,7 @@ namespace TallerDeMotos.Controllers
         {
             if (ordenNro != 0)
                 ViewBag.OrdenNro = ordenNro;
-            return View();
+            return View("OrdenCompraReport");
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]

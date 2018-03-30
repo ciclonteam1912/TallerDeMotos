@@ -8,6 +8,7 @@
 
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido" style="display:none">
     <form id="ordenCompraFormulario">
+        @Html.Partial("_Producto")
         <div class="row" id="ordenCabecera">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -31,7 +32,7 @@
                                 .Name("FormaPagoId")
                                 .DataTextField("Nombre")
                                 .DataValueField("Id")
-                                .OptionLabel("Seleccione una Forma de Pago")
+                                .OptionLabel("Seleccione una Forma de Pago")                                
                                 .HtmlAttributes(new { style = "width: 100%" })
                                 .Filter("contains")
                                 .DataSource(source =>
@@ -64,7 +65,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <p>Orden de Compra Detalles</p>
+                        <p>Detalles</p>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -84,7 +85,8 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none" title="Agregar Producto"><i class="fa fa-plus"></i></a>
+                                        <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
+                                        @*<a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none" title="Agregar Producto"><i class="fa fa-plus"></i></a>*@
                                     </td>
                                     <td>
                                         <input id="productosId" style="width: 150px; display:inline-block" />
@@ -275,7 +277,9 @@
                     count++;
                     total = ($("#precio").val() * $("#cantidad").val());
                     subTotal = subTotal + total;
+
                     $("#totalAPagar").val(subTotal);
+
                     var ordenCompra = '<tr class="detalle">' +
                         '<td style="display:none">' + $("#productosId").val() + '</td>' +
                         '<td>' + $("#productoDesc").val() + '</td>' +

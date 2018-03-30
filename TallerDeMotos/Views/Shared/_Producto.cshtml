@@ -1,0 +1,85 @@
+﻿<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Agregar Producto</h3>
+            </div>
+            <div class="modal-body">
+                <div id="example">
+                    <div id="grid"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var dataSource = new kendo.data.DataSource({
+        autoSync: false,
+        transport: {
+            read: {
+                url: "/api/productos",
+                dataType: "json"
+            },
+            update: {
+                url: "/Producto/EditarProducto",
+                dataType: "json",
+                type: "post"
+            },
+            create: {
+                url: "/Producto/CrearProducto",
+                dataType: "json",
+                type: "post"
+            }
+        },
+        pageSize: 10,
+        serverPaging: false,
+        serverSorting: false,
+        schema: {
+            model: {
+                id: "Id",
+                fields: {
+                    Id: { editable: false },
+                    Descripcion: {
+                        validation: {
+                            required: true,
+                            maxlength: function (input) {
+                                        if (input.val().length > 50) {
+                                            input.attr("data-maxlength-msg", "El campo Descripción debe ser una cadena con una longitud máxima de 50.");
+                                            return false;
+                                        }
+                                        return true;
+                                    }
+                        }
+                    },
+                    PrecioCosto: { validation: { required: true } },
+                    Iva: { validation: { required: true } }
+                }
+            }
+        }
+    });
+
+    $("#grid").kendoGrid({
+        dataSource: dataSource,
+        pageable: {
+            refresh: true,
+            pageSizes: true,
+            buttonCount: 5
+        },
+        sortable: true,
+        filterable: true,
+        height: 500,
+        toolbar: ["create", "save", "cancel"],
+        columns: [
+            { field: "Descripcion", title: "Descripción", width: 100 },
+            { field: "Marca", title: "Marca", width: 100 },
+            { field: "PrecioCosto", title: "Precio Costo", width: 50 },
+            { field: "Iva", title: "Iva", width: 50 }
+        ],
+        editable: true
+    });
+</script>

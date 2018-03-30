@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System.Linq;
 using System.Web.Mvc;
+using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
@@ -11,10 +12,12 @@ namespace TallerDeMotos.Controllers
     public class ProductoController : Controller
     {
         private ApplicationDbContext _context;
+        private ProductoServicio productoServicio;
 
         public ProductoController()
         {
             _context = new ApplicationDbContext();
+            productoServicio = new ProductoServicio();
         }
 
         // GET: Producto
@@ -80,6 +83,33 @@ namespace TallerDeMotos.Controllers
             };
 
             return View("ProductoFormulario", producto);
+        }
+
+        public ActionResult ObtenerProductos()
+        {
+            return Json(productoServicio.Read(), JsonRequestBehavior.AllowGet);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CrearProducto(ProductoDto productoDto)
+        {
+            if (productoDto != null)
+            {
+                productoServicio.Create(productoDto);
+            }
+
+            return Json(productoDto, JsonRequestBehavior.AllowGet);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditarProducto(ProductoDto productoDto)
+        {
+            if (productoDto != null && ModelState.IsValid)
+            {
+                productoServicio.Update(productoDto);
+            }
+
+            return Json(productoDto, JsonRequestBehavior.AllowGet);
         }
     }
 }

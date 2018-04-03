@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Lista de Cajas";
+}
+@Html.Partial("_MenuVertical")
+<div id="contenido" class="col-lg-9 col-md-9 col-xs-11">
+    <h2>Lista de Cajas</h2>
+
+    <div id="example">
+        <div id="grid"></div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuCaja").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/cajas",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 300,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de cajas.</p>"
+                },
+                columns: [{
+                    field: "Nombre",
+                    title: "Nombre"
+                }, {
+                    template: "#= EstadoActivo ? 'Abierta' : 'Cerrada' #",
+                    field: "EstadoActivo",
+                    title: "Caja",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+
+                }, {
+                    field: "Usuario.UserName",
+                    title: "Usuario",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }]
+            });
+        });
+    </script>
+}
+

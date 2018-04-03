@@ -17,11 +17,15 @@ namespace TallerDeMotos.Models
         public ICollection<FacturaVenta> FacturaVentas { get; set; }
         public ICollection<Talonario> Talonarios { get; set; }
         public ICollection<OrdenCompra> OrdenCompras { get; set; }
+        public Caja Caja { get; set; }
 
         public ApplicationUser()
         {
             FacturaCompras = new HashSet<FacturaCompra>();
             Presupuestos = new HashSet<Presupuesto>();
+            FacturaVentas = new HashSet<FacturaVenta>();
+            Talonarios = new HashSet<Talonario>();
+            OrdenCompras = new HashSet<OrdenCompra>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -69,6 +73,7 @@ namespace TallerDeMotos.Models
         public DbSet<FacturaVenta> FacturaVentas { get; set; }
         public DbSet<FacturaVentaDetalle> FacturaVentaDetalles { get; set; }
         public DbSet<ProductoTipo> ProductoTipos { get; set; }
+        public DbSet<Caja> Cajas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -102,6 +107,7 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new FacturaVentaConfiguracion());
             modelBuilder.Configurations.Add(new FacturaVentaDetalleConfiguracion());
             modelBuilder.Configurations.Add(new ProductoTipoConfiguracion());
+            modelBuilder.Configurations.Add(new CajaConfiguracion());
         }
 
         public static ApplicationDbContext Create()

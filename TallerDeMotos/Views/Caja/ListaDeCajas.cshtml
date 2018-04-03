@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "Lista de Cajas";
+}
+@Html.Partial("_MenuVertical")
+<div id="contenido" class="col-lg-9 col-md-9 col-xs-11">
+    <h2>Lista de Cajas</h2>
+
+    <p>
+        <a href="Caja/CajaFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Nueva Caja</span></a>
+    </p>
+
+    <div id="example">
+        <div id="grid"></div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#menuCaja").addClass('active');
+
+            var table = $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/cajas",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 300,
+                filterable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                noRecords: {
+                    template: "<p>No existe registro de cajas.</p>"
+                },
+                columns: [{
+                    template: "<a href='/Caja/EditarCaja/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
+                    field: "Nombre",
+                    title: "Nombre"
+                }, {
+                    template: "#= EstadoActivo ? 'Abierta' : 'Cerrada' #",
+                    field: "EstadoActivo",
+                    title: "Caja",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+
+                }, {
+                    field: "Usuario.UserName",
+                    title: "Usuario",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+
+                }]
+            });
+
+            $("#grid").on("click", "a.js-eliminar", function () {
+                var $tr = $(this).closest("tr"),
+                    grid = $("#grid").data("kendoGrid"),
+                    dataItem = grid.dataItem($tr);
+
+                var id = dataItem.Id;
+
+                bootbox.confirm({
+                    message: "¿Estás seguro de eliminar esta caja?",
+                    buttons: {
+                        "cancel": {
+                            label: "Cancelar"
+                        },
+                        "confirm": {
+                            label: "Eliminar"
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/cajas/" + id,
+                                method: "DELETE"
+                            })
+                            .done(function (caja) {
+                                if (caja.Success) {
+                                    grid.dataSource.remove(dataItem);
+                                    toastr.success(caja.Message);
+                                } else {
+                                    if (caja.Message == "FK_dbo.Vehiculos_dbo.Combustibles_CombustibleCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el tipo de combustible. Elimine primero el o los vehículos que utilizan este tipo de combustible.</p>" +
+                                        "<a href='/Modelo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar Vehículo</a>");
+                                }
+                            });
+                        }
+                    }
+                });
+
+                return false;
+            });
+
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 6000,
+                "extendedTimeOut": 1000
+            }
+        });
+    </script>
+}
+

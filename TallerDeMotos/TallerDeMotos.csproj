@@ -224,6 +224,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ConfiguracionDeEntidades\AseguradoraConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\CajaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CargoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CilindradaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CiudadConfiguracion.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="ConfiguracionDeEntidades\VehiculoConfiguracion.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APIs\AseguradorasController.cs" />
+    <Compile Include="Controllers\APIs\CajasController.cs" />
     <Compile Include="Controllers\APIs\CiudadesController.cs" />
     <Compile Include="Controllers\APIs\ClientesController.cs" />
     <Compile Include="Controllers\APIs\CombustiblesController.cs" />
@@ -278,6 +280,7 @@
     <Compile Include="Controllers\APIs\UsuariosController.cs" />
     <Compile Include="Controllers\APIs\VehiculosController.cs" />
     <Compile Include="Controllers\AseguradoraController.cs" />
+    <Compile Include="Controllers\CajaController.cs" />
     <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CombustibleController.cs" />
@@ -587,6 +590,10 @@
     <Compile Include="Migrations\201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.Designer.cs">
       <DependentUpon>201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803311850529_CreacionDeTablaCajas.cs" />
+    <Compile Include="Migrations\201803311850529_CreacionDeTablaCajas.Designer.cs">
+      <DependentUpon>201803311850529_CreacionDeTablaCajas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -602,6 +609,7 @@
     <Compile Include="Models\JsonObject.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\ModelosDeDominio\Aseguradora.cs" />
+    <Compile Include="Models\ModelosDeDominio\Caja.cs" />
     <Compile Include="Models\ModelosDeDominio\Cargo.cs" />
     <Compile Include="Models\ModelosDeDominio\Cilindrada.cs" />
     <Compile Include="Models\ModelosDeDominio\Ciudad.cs" />
@@ -2483,6 +2491,8 @@
     <Content Include="Scripts\kendo\kendo.aspnetmvc.min.js.map" />
     <Content Include="Views\Shared\_Ciudad.cshtml" />
     <Content Include="Views\Shared\_Producto.cshtml" />
+    <Content Include="Views\Caja\ListaDeCajas.cshtml" />
+    <Content Include="Views\Caja\ListaDeCajasSoloLectura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2694,6 +2704,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.resx">
       <DependentUpon>201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803311850529_CreacionDeTablaCajas.resx">
+      <DependentUpon>201803311850529_CreacionDeTablaCajas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

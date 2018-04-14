@@ -12,8 +12,8 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(c => c.Id)
                 .HasColumnName("Codigo");
 
-            HasRequired(c => c.Usuario)
-                .WithRequiredDependent(u => u.Caja)
+            HasRequired(t => t.Usuario)
+                .WithMany(u => u.Cajas)
                 .WillCascadeOnDelete(false);
         }
     }

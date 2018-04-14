@@ -590,9 +590,9 @@
     <Compile Include="Migrations\201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.Designer.cs">
       <DependentUpon>201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803311850529_CreacionDeTablaCajas.cs" />
-    <Compile Include="Migrations\201803311850529_CreacionDeTablaCajas.Designer.cs">
-      <DependentUpon>201803311850529_CreacionDeTablaCajas.cs</DependentUpon>
+    <Compile Include="Migrations\201804090100456_CreacionDeTablaCajas.cs" />
+    <Compile Include="Migrations\201804090100456_CreacionDeTablaCajas.Designer.cs">
+      <DependentUpon>201804090100456_CreacionDeTablaCajas.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
@@ -644,6 +644,7 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\AseguradoraViewModel.cs" />
+    <Compile Include="ViewModels\CajaViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\EmpleadoViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -2493,6 +2494,7 @@
     <Content Include="Views\Shared\_Producto.cshtml" />
     <Content Include="Views\Caja\ListaDeCajas.cshtml" />
     <Content Include="Views\Caja\ListaDeCajasSoloLectura.cshtml" />
+    <Content Include="Views\Caja\CajaFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2705,8 +2707,8 @@
     <EmbeddedResource Include="Migrations\201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.resx">
       <DependentUpon>201803112249298_HacerObligatoriosAlgunosCamposDeLaTablaProveedores.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803311850529_CreacionDeTablaCajas.resx">
-      <DependentUpon>201803311850529_CreacionDeTablaCajas.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804090100456_CreacionDeTablaCajas.resx">
+      <DependentUpon>201804090100456_CreacionDeTablaCajas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

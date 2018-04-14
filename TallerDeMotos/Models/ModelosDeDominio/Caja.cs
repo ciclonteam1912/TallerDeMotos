@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -10,8 +11,11 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [StringLength(50)]
         public string Nombre { get; set; }
 
-        public ApplicationUser Usuario { get; set; }        
+        public ApplicationUser Usuario { get; set; }
 
-        public bool EstadoActivo { get; set; }
+        [Required]
+        public string UsuarioId { get; set; }
+
+        public bool EstadoActivo { get; set; }                
     }
 }

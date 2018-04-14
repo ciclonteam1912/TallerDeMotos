@@ -17,7 +17,7 @@ namespace TallerDeMotos.Models
         public ICollection<FacturaVenta> FacturaVentas { get; set; }
         public ICollection<Talonario> Talonarios { get; set; }
         public ICollection<OrdenCompra> OrdenCompras { get; set; }
-        public Caja Caja { get; set; }
+        public ICollection<Caja> Cajas { get; set; }
 
         public ApplicationUser()
         {
@@ -26,6 +26,7 @@ namespace TallerDeMotos.Models
             FacturaVentas = new HashSet<FacturaVenta>();
             Talonarios = new HashSet<Talonario>();
             OrdenCompras = new HashSet<OrdenCompra>();
+            Cajas = new HashSet<Caja>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

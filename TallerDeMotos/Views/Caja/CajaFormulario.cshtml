@@ -1,0 +1,66 @@
+﻿@model TallerDeMotos.ViewModels.CajaViewModel
+@{
+    ViewBag.Title = Model.Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>@Model.Titulo</h2>
+
+    @using (Html.BeginForm("GuardarCaja", "Caja"))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">@Model.Titulo</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.Nombre)
+                            @Html.TextBoxFor(c => c.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre de la Caja...", autocomplete = "off" })
+                            @Html.ValidationMessageFor(c => c.Nombre)
+                        </div>                        
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.UsuarioId)
+                            @Html.DropDownListFor(c => c.UsuarioId, new SelectList(Model.Usuarios, "Id", "UserName"), "Asignar empleado a la caja...", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.UsuarioId)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(c => c.EstadoActivo) ¿Cerrar Caja?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                @Html.HiddenFor(c => c.Id)
+                @Html.AntiForgeryToken()
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $("#menuCaja").addClass('active');
+
+            //$("#cajaForm").submit(function (e) {
+            //    e.preventDefault();
+
+            //    var form = $(this);
+            //    if (!form.valid()) {
+            //        return false;
+            //    }
+            //});            
+        });
+    </script>
+}

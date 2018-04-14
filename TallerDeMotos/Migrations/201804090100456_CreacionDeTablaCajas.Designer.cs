@@ -13,7 +13,7 @@ namespace TallerDeMotos.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201803311850529_CreacionDeTablaCajas"; }
+            get { return "201804090100456_CreacionDeTablaCajas"; }
         }
         
         string IMigrationMetadata.Source

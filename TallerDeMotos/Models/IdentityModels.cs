@@ -75,6 +75,7 @@ namespace TallerDeMotos.Models
         public DbSet<FacturaVentaDetalle> FacturaVentaDetalles { get; set; }
         public DbSet<ProductoTipo> ProductoTipos { get; set; }
         public DbSet<Caja> Cajas { get; set; }
+        public DbSet<AperturaCierreCaja> CajaAperturaCierres { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -109,6 +110,7 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new FacturaVentaDetalleConfiguracion());
             modelBuilder.Configurations.Add(new ProductoTipoConfiguracion());
             modelBuilder.Configurations.Add(new CajaConfiguracion());
+            modelBuilder.Configurations.Add(new AperturaCierreCajaConfiguracion());
         }
 
         public static ApplicationDbContext Create()

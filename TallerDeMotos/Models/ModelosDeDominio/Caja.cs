@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -16,6 +16,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Required]
         public string UsuarioId { get; set; }
 
-        public bool EstadoActivo { get; set; }                
+        public bool EstadoActivo { get; set; }
+
+        public ICollection<AperturaCierreCaja> AperturaCierres { get; set; }
+
+        public Caja()
+        {
+            AperturaCierres = new HashSet<AperturaCierreCaja>();
+        }
     }
 }

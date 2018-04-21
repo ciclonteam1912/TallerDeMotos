@@ -149,7 +149,7 @@
             function CambiarFormulario(id) {
                 var personeriaId = id;
 
-                if (personeriaId == 4) {
+                if (personeriaId == 2) {
                     $("#apellido").hide();
                     $("#propietario").show();
                     $("#labelFecha").text("Fecha de Fundación");
@@ -169,7 +169,7 @@
 
                 $("#tipoDocumentoId").children('option').remove();
                 var addoptarr = [];
-                if (personeriaId == 4) {
+                if (personeriaId == 2) {
                     addoptarr.push(optarray[2].option);
                 }
                 else {

@@ -36,8 +36,8 @@ namespace TallerDeMotos.Controllers.APIs
             }
             catch (Exception ex)
             {
-                if (ex.InnerException.InnerException.Message.Contains("FK_dbo.Vehiculos_dbo.Modelos_ModeloCodigo"))
-                    return Json(new JsonResponse { Success = false, Message = "FK_dbo.Vehiculos_dbo.Modelos_ModeloCodigo" });
+                if (ex.InnerException.InnerException.Message.Contains("FK_dbo.CajaAperturaCierres_dbo.Cajas_CajaCodigo"))
+                    return Json(new JsonResponse { Success = false, Message = "FK_dbo.CajaAperturaCierres_dbo.Cajas_CajaCodigo" });
             }
 
             return Ok(new JsonResponse { Success = true, Message = "Caja eliminada con éxito" });

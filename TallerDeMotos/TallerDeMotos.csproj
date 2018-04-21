@@ -223,6 +223,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ConfiguracionDeEntidades\AperturaCierreCajaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\AseguradoraConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CajaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CargoConfiguracion.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="ConfiguracionDeEntidades\TipoMotorConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\VehiculoConfiguracion.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\APIs\AperturaCierresController.cs" />
     <Compile Include="Controllers\APIs\AseguradorasController.cs" />
     <Compile Include="Controllers\APIs\CajasController.cs" />
     <Compile Include="Controllers\APIs\CiudadesController.cs" />
@@ -280,6 +282,7 @@
     <Compile Include="Controllers\APIs\UsuariosController.cs" />
     <Compile Include="Controllers\APIs\VehiculosController.cs" />
     <Compile Include="Controllers\AseguradoraController.cs" />
+    <Compile Include="Controllers\CajaAperturaCierreController.cs" />
     <Compile Include="Controllers\CajaController.cs" />
     <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
@@ -594,6 +597,10 @@
     <Compile Include="Migrations\201804090100456_CreacionDeTablaCajas.Designer.cs">
       <DependentUpon>201804090100456_CreacionDeTablaCajas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804141430002_CreacionDeTablaCajaAperturaCierres.cs" />
+    <Compile Include="Migrations\201804141430002_CreacionDeTablaCajaAperturaCierres.Designer.cs">
+      <DependentUpon>201804141430002_CreacionDeTablaCajaAperturaCierres.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -608,6 +615,7 @@
     <Compile Include="Models\IdentityManager.cs" />
     <Compile Include="Models\JsonObject.cs" />
     <Compile Include="Models\JsonResponse.cs" />
+    <Compile Include="Models\ModelosDeDominio\AperturaCierreCaja.cs" />
     <Compile Include="Models\ModelosDeDominio\Aseguradora.cs" />
     <Compile Include="Models\ModelosDeDominio\Caja.cs" />
     <Compile Include="Models\ModelosDeDominio\Cargo.cs" />
@@ -644,6 +652,7 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\AseguradoraViewModel.cs" />
+    <Compile Include="ViewModels\CajaAperturaCierreViewModel.cs" />
     <Compile Include="ViewModels\CajaViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\EmpleadoViewModel.cs" />
@@ -2495,6 +2504,8 @@
     <Content Include="Views\Caja\ListaDeCajas.cshtml" />
     <Content Include="Views\Caja\ListaDeCajasSoloLectura.cshtml" />
     <Content Include="Views\Caja\CajaFormulario.cshtml" />
+    <Content Include="Views\CajaAperturaCierre\ListaDeAperturaCierresDeCaja.cshtml" />
+    <Content Include="Views\CajaAperturaCierre\CajaAperturaCierreFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2709,6 +2720,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804090100456_CreacionDeTablaCajas.resx">
       <DependentUpon>201804090100456_CreacionDeTablaCajas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804141430002_CreacionDeTablaCajaAperturaCierres.resx">
+      <DependentUpon>201804141430002_CreacionDeTablaCajaAperturaCierres.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

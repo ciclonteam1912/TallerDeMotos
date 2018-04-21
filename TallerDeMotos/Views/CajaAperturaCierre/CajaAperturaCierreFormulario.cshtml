@@ -1,0 +1,119 @@
+﻿@model TallerDeMotos.ViewModels.CajaAperturaCierreViewModel
+@{
+    ViewBag.Title = Model.Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>@Model.Titulo</h2>
+
+    @using (Html.BeginForm("GuardarAperturaCierre", "CajaAperturaCierre"))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">@Model.Titulo</div>
+            <div class="panel-body">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.CajaId)
+                            @Html.DropDownListFor(c => c.CajaId, new SelectList(Model.Cajas, "Id", "Nombre"), "Seleccionar una Caja..", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(c => c.CajaId)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.SaldoInicial)
+                            @Html.TextBoxFor(c => c.SaldoInicial, new { @class = "form-control", placeholder = "Ingrese el Saldo Inicial...", autocomplete = "off" })
+                            @Html.ValidationMessageFor(c => c.SaldoInicial)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.Fecha, new { id = "labelFecha"})
+                            @Html.TextBoxFor(c => c.Fecha, new { @class = "form-control", style = "width:74%;" })
+                            <div class="row">
+                                @Html.ValidationMessageFor(c => c.Fecha)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @Html.HiddenFor(c => c.Id)
+                @Html.AntiForgeryToken()
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $("#menuCaja").addClass('active');
+
+            console.log($("#Fecha").val());
+
+            ///* Bind Mutation Events */
+            //var elements = $("#contenido").find("[data-role=combobox],[data-role=dropdownlist],[data-role=numerictextbox],[data-role^=date],[data-role=multiselect]");
+
+            ////correct mutation event detection
+            //var hasMutationEvents = ("MutationEvent" in window),
+            //    MutationObserver = window.WebKitMutationObserver || window.MutationObserver;
+            //console.log(MutationObserver);
+
+            //if (MutationObserver) {
+            //    var observer = new MutationObserver(function (mutations) {
+                   
+            //        var idx = 0,
+            //            mutation,
+            //            length = mutations.length;
+
+            //        for (; idx < length; idx++) {
+            //            mutation = mutations[idx];
+            //            if (mutation.attributeName === "class") {
+            //                updateCssOnPropertyChange(mutation);
+            //            }
+            //        }
+            //    }),
+            //    config = { attributes: true, childList: false, characterData: false };
+
+            //    elements.each(function () {
+            //        observer.observe(this, config);
+            //    });
+            //} else if (hasMutationEvents) {
+            //    elements.bind("DOMAttrModified", updateCssOnPropertyChange);
+            //} else {
+            //    elements.each(function () {
+            //        this.attachEvent("onpropertychange", updateCssOnPropertyChange);
+            //    });
+            //}
+    
+
+            var id = $("#Id").val();
+            console.log(id);
+            jQuery.validator.methods["date"] = function (value, element) { return true; }
+            $("#Fecha").kendoDateTimePicker({
+                culture: "es-ES",
+                format: "dd/MM/yyyy HH:mm",
+                value: id == 0 ? kendo.parseDate(new Date(), "dd/MM/yyyy HH:mm") : $("#Fecha").val(),
+                dateInput: true
+            });
+        });
+
+        //function updateCssOnPropertyChange(e) {
+        //    var element = $(e.target);
+        //    console.log("element", element);
+        //    element.siblings("span.k-dropdown-wrap")
+        //           .add(element.siblings("div.k-multiselect-wrap"))
+        //           .add(element.parent("span.k-numeric-wrap"))
+        //           .add(element.parent("span.k-picker-wrap"))
+        //           .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        //}
+
+    </script>
+}

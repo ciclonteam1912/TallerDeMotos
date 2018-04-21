@@ -1,13 +1,13 @@
 ﻿
 @{
-    ViewBag.Title = "Lista de Cajas";
+    ViewBag.Title = "Lista de Aperturas y Cierres de Cajas";
 }
 @Html.Partial("_MenuVertical")
 <div id="contenido" class="col-lg-9 col-md-9 col-xs-11">
-    <h2>Lista de Cajas</h2>
+    <h2>Lista de Aperturas y Cierres de Cajas</h2>
 
     <p>
-        <a href="Caja/NuevaCaja" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Nueva Caja</span></a>
+        <a href="CajaAperturaCierre/NuevaAperturaCierre" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Nueva Apertura/Cierre</span></a>
     </p>
 
     <div id="example">
@@ -17,6 +17,8 @@
 
 @section scripts{
     <script>
+        kendo.culture().numberFormat.currency.symbol = "₲";
+
         $(document).ready(function () {
             $("#menuCaja").addClass('active');
 
@@ -24,7 +26,7 @@
                 dataSource: {
                     transport: {
                         read: {
-                            url: "/api/cajas",
+                            url: "/api/aperturaCierres",
                             dataType: "json"
                         }
                     },
@@ -39,10 +41,10 @@
                     buttonCount: 5
                 },
                 noRecords: {
-                    template: "<p>No existe registro de cajas.</p>"
+                    template: "<p>No existe registro de aperturas y cierres de cajas.</p>"
                 },
                 columns: [{
-                    template: "<a href='/Caja/EditarCaja/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    template: "<a href='/CajaAperturaCierre/EditarAperturaCierre/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
                     field: "Id",
                     title: "&nbsp;",
                     filterable: false,
@@ -62,25 +64,39 @@
                         style: "text-align: center"
                     }
                 }, {
-                    field: "Nombre",
-                    title: "Nombre"
+                    field: "Caja.Nombre",
+                    title: "Caja"
                 }, {
-                    template: "#= EstadoActivo ? 'Abierta' : 'Cerrada' #",
-                    field: "EstadoActivo",
-                    title: "Caja",
+                    template: "#= kendo.toString(kendo.parseDate(Fecha), 'MM/dd/yyyy HH:mm tt')#",
+                    field: "Fecha",
+                    title: "Fecha",
                     filterable: false,
                     sortable: false,
-                    width: 70,
+                    width: 170,
                     attributes: {
                         style: "text-align: center"
                     }
 
                 }, {
-                    field: "Usuario.UserName",
-                    title: "Usuario",
+                    field: "SaldoInicial",
+                    title: "Saldo Inicial",
                     filterable: false,
                     sortable: false,
-                    width: 70,
+                    culture: "es-PY",
+                    format: "{0:c0}",
+                    width: 150,
+                    attributes: {
+                        style: "text-align: right"
+                    }
+
+                }, {
+                    field: "SaldoFinal",
+                    title: "Saldo Final",
+                    filterable: false,
+                    sortable: false,
+                    culture: "es-PY",
+                    format: "{0:c0}",
+                    width: 150,
                     attributes: {
                         style: "text-align: center"
                     }
@@ -96,7 +112,7 @@
                 var id = dataItem.Id;
 
                 bootbox.confirm({
-                    message: "¿Estás seguro de eliminar esta caja?",
+                    message: "¿Estás seguro de eliminar esta apertura y cierre de caja?",
                     buttons: {
                         "cancel": {
                             label: "Cancelar"
@@ -108,7 +124,7 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/cajas/" + id,
+                                url: "/api/aperturaCierres/" + id,
                                 method: "DELETE"
                             })
                             .done(function (caja) {
@@ -116,9 +132,9 @@
                                     grid.dataSource.remove(dataItem);
                                     toastr.success(caja.Message);
                                 } else {
-                                    if (caja.Message == "FK_dbo.CajaAperturaCierres_dbo.Cajas_CajaCodigo")
-                                        toastr.error("<p class='eliminar'>No se pudo eliminar la caja. Elimine primero el registro de apertura o cierre asociado a esta caja.</p>" +
-                                        "<a href='/CajaAperturaCierre' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar Apertura/Cierre de Caja</a>");
+                                    if (caja.Message == "FK_dbo.Vehiculos_dbo.Combustibles_CombustibleCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el tipo de combustible. Elimine primero el o los vehículos que utilizan este tipo de combustible.</p>" +
+                                        "<a href='/Modelo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar Vehículo</a>");
                                 }
                             });
                         }

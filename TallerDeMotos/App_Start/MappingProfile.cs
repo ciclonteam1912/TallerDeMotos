@@ -25,6 +25,7 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Proveedor, Proveedor>();
             Mapper.CreateMap<Producto, Producto>();
             Mapper.CreateMap<Caja, Caja>();
+            Mapper.CreateMap<AperturaCierreCaja, AperturaCierreCaja>();
 
             //Dominio a DTO
             Mapper.CreateMap<OrdenCompra, OrdenCompraDto>();

@@ -1,0 +1,33 @@
+﻿@model TallerDeMotos.ViewModels.MovimientoCajaViewModel
+@{
+    ViewBag.Title = "Movimiento de Caja";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    @*<h2>Index</h2>*@
+    <br />
+    <div class="panel panel-default">
+        <div class="panel-heading">Movimiento de Caja</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.NombreCaja):
+                    @Html.DisplayTextFor(m => m.NombreCaja)
+                    <br />                    
+                    @Html.LabelFor(m => m.EstadoCaja):
+                    @Html.DisplayTextFor(m => m.EstadoCaja)
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.UsuarioCaja):
+                    @Html.DisplayTextFor(m => m.UsuarioCaja)
+                    <br />
+                    @Html.LabelFor(m => m.Fecha):
+                    @Html.DisplayTextFor(m => m.Fecha)
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+

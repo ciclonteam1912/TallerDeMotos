@@ -76,6 +76,11 @@ namespace TallerDeMotos.Models
         public DbSet<ProductoTipo> ProductoTipos { get; set; }
         public DbSet<Caja> Cajas { get; set; }
         public DbSet<AperturaCierreCaja> CajaAperturaCierres { get; set; }
+        public DbSet<TipoMovimiento> TipoMovimientos { get; set; }
+        public DbSet<MovimientoCaja> MovimientoCajas { get; set; }
+        public DbSet<Banco> Bancos { get; set; }
+        public DbSet<MovimientoCajaFormaPago> MovimientosFormaPagos { get; set; }
+        public DbSet<MovimientoFormaPagoBanco> MovimientoFormaPagosBancos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -111,6 +116,11 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new ProductoTipoConfiguracion());
             modelBuilder.Configurations.Add(new CajaConfiguracion());
             modelBuilder.Configurations.Add(new AperturaCierreCajaConfiguracion());
+            modelBuilder.Configurations.Add(new TipoMovimientoConfiguracion());
+            modelBuilder.Configurations.Add(new MovimientoCajaConfiguracion());
+            modelBuilder.Configurations.Add(new BancoConfiguracion());
+            modelBuilder.Configurations.Add(new MovimientoFormaPagoConfiguracion());
+            modelBuilder.Configurations.Add(new MovimientoFormaPagoBancoConfiguracion());
         }
 
         public static ApplicationDbContext Create()

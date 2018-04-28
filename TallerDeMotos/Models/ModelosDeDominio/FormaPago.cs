@@ -17,6 +17,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public ICollection<OrdenCompra> OrdenCompras { get; set; }
 
+        public ICollection<MovimientoCajaFormaPago> MovimientosFormaPagos { get; set; }
         public string Titulo
         {
             get
@@ -28,6 +29,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public FormaPago()
         {
             OrdenCompras = new HashSet<OrdenCompra>();
+            MovimientosFormaPagos = new HashSet<MovimientoCajaFormaPago>();
         }
 
         public FormaPago(FormaPago formaPago)
@@ -36,6 +38,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
             Nombre = formaPago.Nombre;
             Descripcion = formaPago.Descripcion;
             OrdenCompras = new HashSet<OrdenCompra>();
+            MovimientosFormaPagos = new HashSet<MovimientoCajaFormaPago>();
         }
     }
 }

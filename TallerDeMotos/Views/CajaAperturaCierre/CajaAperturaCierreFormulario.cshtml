@@ -58,42 +58,6 @@
 
             console.log($("#Fecha").val());
 
-            ///* Bind Mutation Events */
-            //var elements = $("#contenido").find("[data-role=combobox],[data-role=dropdownlist],[data-role=numerictextbox],[data-role^=date],[data-role=multiselect]");
-
-            ////correct mutation event detection
-            //var hasMutationEvents = ("MutationEvent" in window),
-            //    MutationObserver = window.WebKitMutationObserver || window.MutationObserver;
-            //console.log(MutationObserver);
-
-            //if (MutationObserver) {
-            //    var observer = new MutationObserver(function (mutations) {
-                   
-            //        var idx = 0,
-            //            mutation,
-            //            length = mutations.length;
-
-            //        for (; idx < length; idx++) {
-            //            mutation = mutations[idx];
-            //            if (mutation.attributeName === "class") {
-            //                updateCssOnPropertyChange(mutation);
-            //            }
-            //        }
-            //    }),
-            //    config = { attributes: true, childList: false, characterData: false };
-
-            //    elements.each(function () {
-            //        observer.observe(this, config);
-            //    });
-            //} else if (hasMutationEvents) {
-            //    elements.bind("DOMAttrModified", updateCssOnPropertyChange);
-            //} else {
-            //    elements.each(function () {
-            //        this.attachEvent("onpropertychange", updateCssOnPropertyChange);
-            //    });
-            //}
-    
-
             var id = $("#Id").val();
             console.log(id);
             jQuery.validator.methods["date"] = function (value, element) { return true; }
@@ -104,16 +68,6 @@
                 dateInput: true
             });
         });
-
-        //function updateCssOnPropertyChange(e) {
-        //    var element = $(e.target);
-        //    console.log("element", element);
-        //    element.siblings("span.k-dropdown-wrap")
-        //           .add(element.siblings("div.k-multiselect-wrap"))
-        //           .add(element.parent("span.k-numeric-wrap"))
-        //           .add(element.parent("span.k-picker-wrap"))
-        //           .toggleClass("k-invalid", element.hasClass("input-validation-error"));
-        //}
 
     </script>
 }

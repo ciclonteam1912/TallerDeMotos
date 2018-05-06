@@ -19,5 +19,7 @@ namespace TallerDeMotos.Dtos
         public int SubTotal { get; set; }
 
         public string UsuarioId { get; set; }
+
+        public byte EstadoId { get; set; }
     }
 }

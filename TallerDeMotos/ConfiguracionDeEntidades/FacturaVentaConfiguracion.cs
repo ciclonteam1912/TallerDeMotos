@@ -18,6 +18,9 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(fv => fv.TalonarioId)
                 .HasColumnName("TalonarioCodigo");
 
+            Property(fv => fv.EstadoId)
+                .HasColumnName("EstadoCodigo");
+
             HasRequired(fv => fv.Presupuesto)
                 .WithRequiredDependent(p => p.FacturaVenta)
                 .WillCascadeOnDelete(false);
@@ -28,6 +31,10 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
 
             HasRequired(fv => fv.Usuario)
                 .WithMany(u => u.FacturaVentas)
+                .WillCascadeOnDelete(false);
+
+            HasRequired(fv => fv.Estado)
+                .WithMany(e => e.FacturaVentas)
                 .WillCascadeOnDelete(false);
         }
     }

@@ -37,7 +37,8 @@ namespace TallerDeMotos.Controllers.APIs
                     TalonarioId = nuevaFacturaVentaDto.FacturaVentaDto.TalonarioId,
                     FechaFacturaVenta = nuevaFacturaVentaDto.FacturaVentaDto.FechaFacturaVenta,
                     SubTotal = nuevaFacturaVentaDto.FacturaVentaDto.SubTotal,
-                    UsuarioId = User.Identity.GetUserId()
+                    UsuarioId = User.Identity.GetUserId(),
+                    EstadoId = 1
                 };
 
                 var facturaVenta = Mapper.Map<FacturaVentaDto, FacturaVenta>(facturaVentaDto);

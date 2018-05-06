@@ -31,6 +31,10 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public string UsuarioId { get; set; }
 
+        public Estado Estado { get; set; }
+
+        public byte EstadoId { get; set; }
+
         public ICollection<FacturaVentaDetalle> FacturaVentaDetalles { get; set; }
 
         public FacturaVenta()

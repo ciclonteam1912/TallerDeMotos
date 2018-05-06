@@ -34,5 +34,33 @@ namespace TallerDeMotos.Models
             }
             return ds;
         }
+
+        public DataSet ObtenerDatosClientePorFacturas(int facturaId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["TallerDeMotos"].ConnectionString;
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd = new SqlCommand("ObtenerDatosClientePorFactura", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@FacturaId", facturaId);
+                da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+                con.Dispose();
+            }
+            return ds;
+        }
     }
 }

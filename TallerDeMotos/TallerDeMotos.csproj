@@ -631,6 +631,10 @@
     <Compile Include="Migrations\201804220101129_CreacionDeTablaMovimientoFormaPagosBancos.Designer.cs">
       <DependentUpon>201804220101129_CreacionDeTablaMovimientoFormaPagosBancos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804290111275_AgregarColumnaEstadoCodigoEnTablaFacturaVentas.cs" />
+    <Compile Include="Migrations\201804290111275_AgregarColumnaEstadoCodigoEnTablaFacturaVentas.Designer.cs">
+      <DependentUpon>201804290111275_AgregarColumnaEstadoCodigoEnTablaFacturaVentas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
@@ -2779,6 +2783,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804220101129_CreacionDeTablaMovimientoFormaPagosBancos.resx">
       <DependentUpon>201804220101129_CreacionDeTablaMovimientoFormaPagosBancos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804290111275_AgregarColumnaEstadoCodigoEnTablaFacturaVentas.resx">
+      <DependentUpon>201804290111275_AgregarColumnaEstadoCodigoEnTablaFacturaVentas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

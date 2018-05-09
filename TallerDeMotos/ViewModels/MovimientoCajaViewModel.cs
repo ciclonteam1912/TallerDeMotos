@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models.AtributosDeValidacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ViewModels
@@ -28,8 +29,15 @@ namespace TallerDeMotos.ViewModels
         public byte TipoMovimientoId { get; set; }
         public string Cliente { get; set; }
         public string Vehiculo { get; set; }
+
+        [Display(Name = "Forma de Pago en Efectivo")]
+        [PorLoMenosUnCheckBox("FormaPagoTarjeta", "FormaPagoCheque")]
         public bool FormaPagoEfectivo { get; set; }
+
+        [Display(Name = "Forma de Pago en Tarjeta")]    
         public bool FormaPagoTarjeta { get; set; }
+
+        [Display(Name = "Forma de Pago en Cheque")]
         public bool FormaPagoCheque { get; set; }
         public bool TarjetaDebito { get; set; }
         public bool TarjetaCredito { get; set; }

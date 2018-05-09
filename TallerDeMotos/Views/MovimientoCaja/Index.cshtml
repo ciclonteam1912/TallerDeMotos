@@ -31,201 +31,212 @@
                     </small>
                 </div>
             </div>
-            
+
         </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <span>Movimiento de Caja</span>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.TipoMovimientoId)
-                                    @Html.DropDownListFor(m => m.TipoMovimientoId, new SelectList(Model.TipoMovimientos, "Id", "Descripcion"), "Seleccione un tipo de movimiento...", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.TipoMovimientoId)
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.FacturaVentaId)
-                                    @Html.DropDownListFor(m => m.FacturaVentaId, new SelectList(Model.FacturaVentas, "Id", "NumeroFactura"), "Seleccione una factura", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.FacturaVentaId)
-                                </div>
-                            </div>
-                            <div class="row" id="divDatosCliente" style="display: none">
-                                <div class="col-md-6">
-                                    @Html.LabelFor(m => m.Cliente)
-                                    <small class="text-muted" id="cliente">
-                                        @Html.DisplayTextFor(m => m.Cliente)
-                                    </small>
-                                </div>
-                                <div class="col-md-6">
-                                    @Html.LabelFor(m => m.Vehiculo)
-                                    <small class="text-muted" id="vehiculo">
-                                        @Html.DisplayTextFor(m => m.Vehiculo)
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        @using (Html.BeginForm("GuardarMovimiento", "MovimientoCaja"))
+            {
+            <div class="panel-body">
 
-                </div>
-            </div>
-            
-
-            <div class="row">
-                <div class="col-md-12" style="text-align:center">
-                    <label>Formas de Pago</label>
-                    <div class="checkbox">
-                        <label>
-                            @Html.CheckBoxFor(m => m.FormaPagoEfectivo) Efectivo
-                        </label>
-                        <label>
-                            @Html.CheckBoxFor(m => m.FormaPagoCheque) Cheque
-                        </label>
-                        <label>
-                            @Html.CheckBoxFor(m => m.FormaPagoTarjeta) Tarjeta
-                        </label>
-                    </div>
-                </div>
-
-            </div>
-
-            <div id="divFormasPago">
-                <div class="row" id="divEfectivo"  style="display: none">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="panel-title">
-                                    <span>Pago Efectivo</span>
+                                    <span>Movimiento de Caja</span>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="col-lg-6">
-                                        @Html.LabelFor(m => m.MontoFactura)
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.TipoMovimientoId)
+                                        @Html.DropDownListFor(m => m.TipoMovimientoId, new SelectList(Model.TipoMovimientos, "Id", "Descripcion"), "Seleccione un tipo de movimiento...", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.TipoMovimientoId)
                                     </div>
-                                    <div class="col-lg-6">
-                                        @Html.TextBoxFor(m => m.MontoFactura, new { @class = "form-control input-sm", disabled = "disabled" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-6">
-                                        @Html.LabelFor(m => m.MontoPago)
-                                    </div>
-                                    <div class="col-lg-6">
-                                        @Html.TextBoxFor(m => m.MontoPago, new { @class = "form-control input-sm" })
-                                        @Html.ValidationMessageFor(m => m.MontoPago)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-6">
-                                        @Html.LabelFor(m => m.MontoVuelto)
-                                    </div>
-                                    <div class="col-lg-6">
-                                        @Html.TextBoxFor(m => m.MontoVuelto, new { @class = "form-control input-sm", disabled = "disabled" })
-                                        @Html.ValidationMessageFor(m => m.MontoVuelto)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" id="divCheque"  style="display: none">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="panel-title">
-                                    <span>Pago Cheque</span>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        @Html.LabelFor(m => m.BancoId)
-                                    </div>
-                                    <div class="col-md-6">
-                                        @Html.DropDownListFor(m => m.BancoId, new SelectList(Model.Bancos, "Id", "Nombre"), "Seleccione un Banco...", new { @class = "form-control input-sm" })
-                                        @Html.ValidationMessageFor(m => m.BancoId)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-6">
-                                        @Html.LabelFor(m => m.NroCheque)
-                                    </div>
-                                    <div class="col-lg-6">
-                                        @Html.TextBoxFor(m => m.NroCheque, new { @class = "form-control input-sm" })
-                                        @Html.ValidationMessageFor(m => m.NroCheque)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-6">
-                                        @Html.LabelFor(m => m.Librador)
-                                    </div>
-                                    <div class="col-md-6">
-                                        @Html.TextBoxFor(m => m.Librador, new { @class = "form-control input-sm" })
-                                        @Html.ValidationMessageFor(m => m.Librador)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row" id="divTarjeta"  style="display: none">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="panel-title">
-                                    <span>Pago Tarjeta</span>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="col-md-12" style="text-align:center">
-                                    <label>Tipos de Tarjeta</label>
-                                    <div class="checkbox">
-                                        <label>
-                                            @Html.CheckBoxFor(m => m.TarjetaCredito) Crédito
-                                        </label>
-                                        <label>
-                                            @Html.CheckBoxFor(m => m.FormaPagoCheque) Débito
-                                        </label>
-                                    </div>  
-                                </div>                                                                                           
-                                <br />
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        @Html.LabelFor(m => m.BancoId)
-                                    </div>
-                                    <div class="col-md-6">
-                                        @Html.DropDownListFor(m => m.BancoId, new SelectList(Model.Bancos, "Id", "Nombre"), "Seleccione un Banco...", new { @class = "form-control input-sm" })
-                                        @Html.ValidationMessageFor(m => m.BancoId)
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    @Html.LabelFor(m => m.NroAutorizacion)
                                 </div>
                                 <div class="col-md-6">
-                                    @Html.TextBoxFor(m => m.NroAutorizacion, new { @class = "form-control input-sm" })
-                                    @Html.ValidationMessageFor(m => m.NroAutorizacion)
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.FacturaVentaId)
+                                        @Html.DropDownListFor(m => m.FacturaVentaId, new SelectList(Model.FacturaVentas, "Id", "NumeroFactura"), "Seleccione una factura", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.FacturaVentaId)
+                                    </div>
+                                </div>
+                                <div class="row" id="divDatosCliente" style="display: none">
+                                    <div class="col-md-6">
+                                        @Html.LabelFor(m => m.Cliente)
+                                        <small class="text-muted" id="cliente">
+                                            @Html.DisplayTextFor(m => m.Cliente)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.LabelFor(m => m.Vehiculo)
+                                        <small class="text-muted" id="vehiculo">
+                                            @Html.DisplayTextFor(m => m.Vehiculo)
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center">
+                        <label>Formas de Pago</label>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.FormaPagoEfectivo) Efectivo
+                            </label>
+                            <label>
+                                @Html.CheckBoxFor(m => m.FormaPagoCheque) Cheque                                
+                            </label>
+                            <label>
+                                @Html.CheckBoxFor(m => m.FormaPagoTarjeta) Tarjeta
+                            </label>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.FormaPagoEfectivo)
+                    </div>
 
                 </div>
+
+                @*<div id="divFormasPago">
+                        <div class="row" id="divEfectivo" style="display: none">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="panel-title">
+                                            <span>Pago Efectivo</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <div class="col-lg-6">
+                                                @Html.LabelFor(m => m.MontoFactura)
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">&#8370</span>
+                                                    @Html.TextBoxFor(m => m.MontoFactura, new { @class = "form-control input-sm", disabled = "disabled" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-6">
+                                                @Html.LabelFor(m => m.MontoPago)
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">&#8370</span>
+                                                    @Html.TextBoxFor(m => m.MontoPago, new { @class = "form-control input-sm" })
+                                                    @Html.ValidationMessageFor(m => m.MontoPago)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-6">
+                                                @Html.LabelFor(m => m.MontoVuelto)
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">&#8370</span>
+                                                    @Html.TextBoxFor(m => m.MontoVuelto, new { @class = "form-control input-sm", disabled = "disabled" })
+                                                    @Html.ValidationMessageFor(m => m.MontoVuelto)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="divCheque" style="display: none">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="panel-title">
+                                            <span>Pago Cheque</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                                @Html.LabelFor(m => m.BancoId)
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.DropDownListFor(m => m.BancoId, new SelectList(Model.Bancos, "Id", "Nombre"), "Seleccione un Banco...", new { @class = "form-control input-sm" })
+                                                @Html.ValidationMessageFor(m => m.BancoId)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-6">
+                                                @Html.LabelFor(m => m.NroCheque)
+                                            </div>
+                                            <div class="col-lg-6">
+                                                @Html.TextBoxFor(m => m.NroCheque, new { @class = "form-control input-sm" })
+                                                @Html.ValidationMessageFor(m => m.NroCheque)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-6">
+                                                @Html.LabelFor(m => m.Librador)
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.TextBoxFor(m => m.Librador, new { @class = "form-control input-sm" })
+                                                @Html.ValidationMessageFor(m => m.Librador)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="divTarjeta" style="display: none">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="panel-title">
+                                            <span>Pago Tarjeta</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-md-12" style="text-align:center">
+                                            <label>Tipos de Tarjeta</label>
+                                            <div class="checkbox">
+                                                <label>
+                                                    @Html.CheckBoxFor(m => m.TarjetaCredito) Crédito
+                                                </label>
+                                                <label>
+                                                    @Html.CheckBoxFor(m => m.FormaPagoCheque) Débito
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                                @Html.LabelFor(m => m.BancoId)
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.DropDownListFor(m => m.BancoId, new SelectList(Model.Bancos, "Id", "Nombre"), "Seleccione un Banco...", new { @class = "form-control input-sm" })
+                                                @Html.ValidationMessageFor(m => m.BancoId)
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.LabelFor(m => m.NroAutorizacion)
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(m => m.NroAutorizacion, new { @class = "form-control input-sm" })
+                                            @Html.ValidationMessageFor(m => m.NroAutorizacion)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
             </div>
-        </div>
-        <div class="panel-footer">
-            <button class="btn btn-primary">Cobrar</button>
-        </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary">Cobrar</button>
+            </div>
+        }
     </div>
 </div>
 

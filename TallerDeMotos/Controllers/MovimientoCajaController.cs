@@ -63,6 +63,41 @@ namespace TallerDeMotos.Controllers
             return View(viewModel);
         }
 
+        public ActionResult GuardarMovimiento(MovimientoCajaViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                string usuarioId = User.Identity.GetUserId().ToString();
+
+                var facturasPendientes = _context.FacturaVentas
+                    .Where(fv => fv.EstadoId == 1 && fv.UsuarioId == usuarioId)
+                    .ToList();
+
+                MovimientoCajaViewModel model = new MovimientoCajaViewModel();
+                DataSet dsDatos = conexionBD.ObtenerDatosParaMovimientoCaja(usuarioId);
+                if(dsDatos.Tables.Count > 0)
+                {
+                    model = new MovimientoCajaViewModel()
+                    {
+                        UsuarioCaja = dsDatos.Tables[0].Rows[0]["UserName"].ToString(),
+                        Fecha = DateTime.Parse(dsDatos.Tables[0].Rows[0]["Fecha"].ToString()),
+                        NombreCaja = dsDatos.Tables[0].Rows[0]["Nombre"].ToString(),
+                        SaldoInicial = long.Parse(dsDatos.Tables[0].Rows[0]["SaldoInicial"].ToString()),
+                        EstadoCaja = bool.Parse(dsDatos.Tables[0].Rows[0]["EstadoActivo"].ToString()) == true ? "Abierta" : "Cerrada",
+                        TipoMovimientos = _context.TipoMovimientos.ToList(),
+                        FacturaVentas = facturasPendientes
+                    };
+                }
+                if(model.EstadoCaja == "Abierta")
+                    ViewBag.style = "label label-success";
+                else
+                    ViewBag.style = "label label-danger";
+
+                return View("Index", model);
+            }
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult ClientesPorFactura(int id)
         {

@@ -641,6 +641,7 @@
     <Compile Include="Models\AtributosDeValidacion\FacturaActual.cs" />
     <Compile Include="Models\AtributosDeValidacion\FacturaFinalMayorAFacturaInicial.cs" />
     <Compile Include="Models\AtributosDeValidacion\FechaFin.cs" />
+    <Compile Include="Models\AtributosDeValidacion\PorLoMenosUnCheckBox.cs" />
     <Compile Include="Models\AtributosDeValidacion\PrecioVentaMayorPrecioCosto.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />

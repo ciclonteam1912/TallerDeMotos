@@ -637,10 +637,18 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
+    <Compile Include="Models\AtributosDeValidacion\MontoPagoObligatorioSiEsTarjeta.cs" />
+    <Compile Include="Models\AtributosDeValidacion\MontoPagoObligatorioSiEsCheque.cs" />
+    <Compile Include="Models\AtributosDeValidacion\BancoObligatorioSiEsTarjeta.cs" />
+    <Compile Include="Models\AtributosDeValidacion\NroAutorizacionObligatorioSiEsTarjeta.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
     <Compile Include="Models\AtributosDeValidacion\FacturaActual.cs" />
     <Compile Include="Models\AtributosDeValidacion\FacturaFinalMayorAFacturaInicial.cs" />
     <Compile Include="Models\AtributosDeValidacion\FechaFin.cs" />
+    <Compile Include="Models\AtributosDeValidacion\BancoObligatorioSiEsCheque.cs" />
+    <Compile Include="Models\AtributosDeValidacion\NroChequeObligatorioSiEsCheque.cs" />
+    <Compile Include="Models\AtributosDeValidacion\LibradorObligatorioSiEsCheque.cs" />
+    <Compile Include="Models\AtributosDeValidacion\ObligatorioSiEsEfectivo.cs" />
     <Compile Include="Models\AtributosDeValidacion\PorLoMenosUnCheckBox.cs" />
     <Compile Include="Models\AtributosDeValidacion\PrecioVentaMayorPrecioCosto.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />

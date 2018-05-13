@@ -12,6 +12,7 @@ namespace TallerDeMotos.ViewModels
         public IEnumerable<Banco> Bancos { get; set; }
         public IEnumerable<TipoMovimiento> TipoMovimientos { get; set; }
 
+        #region Datos del Movimiento
         [Display(Name = "Caja")]
         public string NombreCaja { get; set; }
 
@@ -27,39 +28,70 @@ namespace TallerDeMotos.ViewModels
 
         [Display(Name = "Tipo de Movimiento")]
         public byte TipoMovimientoId { get; set; }
+
         public string Cliente { get; set; }
+
+        [Display(Name = "Vehículo")]
         public string Vehiculo { get; set; }
 
+        [Display(Name = "Monto de la Factura")]
+        public long? MontoFactura { get; set; }
+
+        [Display(Name = "Saldo Inicial")]
+        public long SaldoInicial { get; set; }
+        #endregion
+        
+        #region Forma de Pago Efectivo
         [Display(Name = "Forma de Pago en Efectivo")]
         [PorLoMenosUnCheckBox("FormaPagoTarjeta", "FormaPagoCheque")]
         public bool FormaPagoEfectivo { get; set; }
 
-        [Display(Name = "Forma de Pago en Tarjeta")]    
-        public bool FormaPagoTarjeta { get; set; }
-
-        [Display(Name = "Forma de Pago en Cheque")]
-        public bool FormaPagoCheque { get; set; }
-        public bool TarjetaDebito { get; set; }
-        public bool TarjetaCredito { get; set; }
-
-        [Display(Name = "Bancos")]
-        public int BancoId { get; set; }
-
-        [Display(Name = "Nro. de Autorización")]
-        public int NroAutorizacion { get; set; }
-
-        [Display(Name = "Nro. de Cheque")]
-        public int NroCheque { get; set; }
-        public int Librador { get; set; }
-
-        [Display(Name = "Monto de la Factura")]
-        public long MontoFactura { get; set; }
-
         [Display(Name = "Monto del Pago")]
-        public long MontoPago { get; set; }
+        [ObligatorioSiEsEfectivo]
+        public long? MontoPagoEfectivo { get; set; }
 
         [Display(Name = "Vuelto")]
-        public long MontoVuelto { get; set; }
-        public long SaldoInicial { get; set; }
+        public long? MontoVuelto { get; set; }
+        #endregion
+
+        #region Forma de Pago Cheque
+        [Display(Name = "Forma de Pago en Cheque")]
+        public bool FormaPagoCheque { get; set; }
+
+        [Display(Name = "Monto Pago")]
+        [MontoPagoObligatorioSiEsCheque]
+        public long? MontoPagoCheque { get; set; }
+
+        [Display(Name = "Bancos")]
+        [BancoObligatorioSiEsCheque]
+        public int? BancoIdCheque { get; set; }
+
+        [Display(Name = "Nro. de Cheque")]
+        [NroChequeObligatorioSiEsCheque]
+        public int? NroCheque { get; set; }
+
+        [LibradorObligatorioSiEsCheque]
+        public int? Librador { get; set; }
+        #endregion
+
+        #region Forma de Pago Tarjeta
+        [Display(Name = "Forma de Pago en Tarjeta")]
+        public bool FormaPagoTarjeta { get; set; }
+
+        [Display(Name = "Monto Pago")]
+        [MontoPagoObligatorioSiEsTarjeta]
+        public long? MontoPagoTarjeta { get; set; }
+
+        public string TipoTarjeta { get; set; }
+
+        [Display(Name = "Bancos")]
+        [BancoObligatorioSiEsTarjeta]
+        public int? BancoIdTarjeta { get; set; }
+
+
+        [Display(Name = "Nro. de Autorización")]
+        [NroAutorizacionObligatorioSiEsTarjeta]
+        public int? NroAutorizacion { get; set; }
+        #endregion        
     }
 }

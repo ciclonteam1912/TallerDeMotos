@@ -85,7 +85,8 @@ namespace TallerDeMotos.Controllers
                         SaldoInicial = long.Parse(dsDatos.Tables[0].Rows[0]["SaldoInicial"].ToString()),
                         EstadoCaja = bool.Parse(dsDatos.Tables[0].Rows[0]["EstadoActivo"].ToString()) == true ? "Abierta" : "Cerrada",
                         TipoMovimientos = _context.TipoMovimientos.ToList(),
-                        FacturaVentas = facturasPendientes
+                        FacturaVentas = facturasPendientes,
+                        Bancos = _context.Bancos.ToList()
                     };
                 }
                 if(model.EstadoCaja == "Abierta")

@@ -110,54 +110,96 @@ namespace TallerDeMotos.Controllers
             //             select new { ID = aperturaCierre.Id }).First();
 
             //int id = query.ID;
-
             if (viewModel.Id == 0)
             {
                 //viewModel.AperturaCierreCajaId = id;
                 var movimiento = Mapper.Map<MovimientoCajaViewModel, MovimientoCaja>(viewModel);
                 _context.MovimientoCajas.Add(movimiento);
 
-                #region Inserción de las de las distinatas Formas de Pago para un Movimiento
-                List<byte> formasDePago = new List<byte>();
-                byte formaPagoId = 0;
+                #region Inserción de las de las distintas Formas de Pago para un Movimiento
+                List<RelacionFormaPagoYBanco> lista = new List<RelacionFormaPagoYBanco>();
+                Dictionary<byte, int?> fpb = new Dictionary<byte, int?>();
+
                 if (viewModel.FormaPagoEfectivo)
                 {
                     var queryFormaPagoEfectivo = _context.FormasPago.Where(fp => fp.Nombre.Contains("Efectivo")).FirstOrDefault();
                     if(queryFormaPagoEfectivo != null)
                     {
-                        formaPagoId = queryFormaPagoEfectivo.Id;
-                        formasDePago.Add(formaPagoId);
+                        lista.Add(new RelacionFormaPagoYBanco
+                        {
+                            BancoId = null,
+                            FormaPagoId = queryFormaPagoEfectivo.Id
+                        });
+                        fpb.Add(queryFormaPagoEfectivo.Id, null);
                     }
                 }
 
                 if (viewModel.FormaPagoCheque)
                 {
                     var queryFormaPagoCheque = _context.FormasPago.Where(fp => fp.Nombre.Contains("Cheque")).FirstOrDefault();
-                    formaPagoId = queryFormaPagoCheque.Id;
-                    formasDePago.Add(formaPagoId);
+                    if(queryFormaPagoCheque != null)
+                    {
+                        lista.Add(new RelacionFormaPagoYBanco
+                        {
+                            BancoId = viewModel.BancoIdCheque,
+                            FormaPagoId = queryFormaPagoCheque.Id
+                        });
+                        fpb.Add(queryFormaPagoCheque.Id, viewModel.BancoIdCheque);
+
+                    }
                 }
 
                 if (viewModel.FormaPagoTarjeta)
                 {
                     var queryFormaPagoTarjeta = _context.FormasPago.Where(fp => fp.Nombre.Contains("Tarjeta")).FirstOrDefault();
-                    formaPagoId = queryFormaPagoTarjeta.Id;
-                    formasDePago.Add(formaPagoId);
+                    if(queryFormaPagoTarjeta != null)
+                    {
+                        lista.Add(new RelacionFormaPagoYBanco
+                        {                            
+                            BancoId = viewModel.BancoIdTarjeta,
+                            FormaPagoId = queryFormaPagoTarjeta.Id
+                        });
+                        fpb.Add(queryFormaPagoTarjeta.Id, viewModel.BancoIdTarjeta);
+
+                    }
                 }
 
-                foreach (var lista in formasDePago)
+                foreach (var item in lista)
                 {
                     var movimientosFormaPago = new MovimientoCajaFormaPago
                     {
-                        FormaPagoId = lista
+                        FormaPagoId = item.FormaPagoId
                     };
-                    _context.MovimientosFormaPagos.Add(movimientosFormaPago);
+
+                    _context.MovimientosFormaPagos.Add(movimientosFormaPago);                   
                 }
+
+                if (lista.Count > 0)
+                    _context.SaveChanges();
+
                 #endregion
 
+                #region Relacionar las distintas Formas de Pago con los Bancos
+                //Obtenemos el id del último movimiento insertado.
+                int ultimoMovimiento = _context.MovimientoCajas.Max(mc => mc.Id);
 
+                int valor = 0;
+                //Recorremos el diccionario con el key value pair de formas de pago y bancos.
+                foreach (KeyValuePair<byte, int?> kvp in fpb)
+                {
+                    if(kvp.Value != null) //id del banco
+                    {
+                        //Obtenemos el id
+                        var movFormasPagos = _context.MovimientosFormaPagos
+                            .Where(m => m.FormaPagoId == kvp.Key && 
+                            m.MovimientoCajaId == ultimoMovimiento).FirstOrDefault();
 
-                if (formasDePago.Count > 0)
-                    _context.SaveChanges();
+                        valor = movFormasPagos.Id;
+                        string respuesta = conexionBD.CrearRelacionFormaPagoYBancos(valor, kvp.Value, viewModel.NroCheque, viewModel.NroAutorizacion);
+
+                    }
+                }
+                #endregion
             }
             return RedirectToAction("Index");
         }

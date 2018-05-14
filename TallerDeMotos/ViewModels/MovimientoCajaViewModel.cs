@@ -17,6 +17,8 @@ namespace TallerDeMotos.ViewModels
 
         public int AperturaCierreCajaId { get; set; }
 
+        public int? BancoId { get; set; }
+
         [Display(Name = "Caja")]
         public string NombreCaja { get; set; }
 

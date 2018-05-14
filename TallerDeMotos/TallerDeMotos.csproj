@@ -705,6 +705,7 @@
     <Compile Include="Models\ModelosDeDominio\Vehiculo.cs" />
     <Compile Include="Models\OrdenCompraServicio.cs" />
     <Compile Include="Models\ProductoServicio.cs" />
+    <Compile Include="Models\RelacionFormaPagoYBanco.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />

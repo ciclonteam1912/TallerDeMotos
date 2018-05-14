@@ -53,17 +53,7 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<FacturaVentaDetalleDto, FacturaVentaDetalle>();
 
             Mapper.CreateMap<MovimientoCajaViewModel, MovimientoCaja>();
-            //Mapper.CreateMap<MovimientoCaja, MovimientoCajaViewModel>()
-            //    .ForMember(m => m.NombreCaja, opt => opt.Ignore())
-            //    .ForMember(m => m.EstadoCaja, opt => opt.Ignore())
-            //    .ForMember(m => m.UsuarioCaja, opt => opt.Ignore())
-            //    .ForMember(m => m.Cliente, opt => opt.Ignore())
-            //    .ForMember(m => m.Vehiculo, opt => opt.Ignore())
-            //    .ForMember(m => m.MontoFactura, opt => opt.Ignore())
-            //    .ForMember(m => m.SaldoInicial, opt => opt.Ignore())
-            //    .ForMember(m => m.MontoFactura, opt => opt.Ignore())
-            //    .ForMember(m => m.MontoFactura, opt => opt.Ignore())
-            //    ;
+            Mapper.CreateMap<MovimientoCajaViewModel, MovimientoFormaPagoBanco>();
         }
     }
 }

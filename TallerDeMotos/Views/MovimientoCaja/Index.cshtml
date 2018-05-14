@@ -353,19 +353,45 @@
         });
 
         $("#MontoPagoEfectivo").blur(function () {
-            var monto = $(this).val();
+            var montoEfectivo = $(this).val();
             var montoFactura = $("#MontoFactura").val();
+            var montoCheque = $("#MontoPagoCheque").val();
             var vuelto = 0;
+            var montoTotal = 0;
 
-            $("#Monto").val(monto);
+            if (montoCheque == "")
+                montoCheque = 0;
 
-            if (monto >= montoFactura) {
-                vuelto = monto - montoFactura;
+            if (montoEfectivo == "")
+                montoEfectivo = 0;
+
+            montoTotal = Number(montoEfectivo) + Number(montoCheque);
+            $("#Monto").val(montoTotal);
+
+            if (montoTotal >= montoFactura) {
+                vuelto = montoTotal - montoFactura;
             }
 
             $("#Vuelto").val(vuelto);
         });
 
+        $("#MontoPagoCheque").blur(function () {
+            var montoCheque = $(this).val();
+            var montoEfectivo = $("#MontoPagoEfectivo").val();
+            var montoFactura = $("#MontoFactura").val();
+            var vuelto = 0;
+            var montoTotal = 0;
 
+            if (montoCheque == "")
+                montoCheque = 0;
+
+            if (montoEfectivo == "")
+                montoEfectivo = 0;
+
+            montoTotal = Number(montoCheque) + Number(montoEfectivo);
+            $("#Monto").val(montoTotal);
+
+            $("#Vuelto").val(vuelto);
+        });
     });
 </script>

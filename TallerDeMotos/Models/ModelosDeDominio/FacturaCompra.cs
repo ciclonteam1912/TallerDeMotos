@@ -17,12 +17,10 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public DateTime FechaDeGuardado { get; set; }
 
         public ICollection<FacturaCompraDetalle> FacturaCompraDetalles { get; set; }
-        public ICollection<MovimientoCaja> MovimientoCajas { get; set; }
 
         public FacturaCompra()
         {
             FacturaCompraDetalles = new HashSet<FacturaCompraDetalle>();
-            MovimientoCajas = new HashSet<MovimientoCaja>();
         }
     }
 }

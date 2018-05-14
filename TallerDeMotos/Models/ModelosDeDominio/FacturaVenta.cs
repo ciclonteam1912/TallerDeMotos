@@ -36,10 +36,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public byte EstadoId { get; set; }
 
         public ICollection<FacturaVentaDetalle> FacturaVentaDetalles { get; set; }
+        public ICollection<MovimientoCaja> MovimientoCajas { get; set; }
 
         public FacturaVenta()
         {
             FacturaVentaDetalles = new HashSet<FacturaVentaDetalle>();
+            MovimientoCajas = new HashSet<MovimientoCaja>();
         }
     }
 }

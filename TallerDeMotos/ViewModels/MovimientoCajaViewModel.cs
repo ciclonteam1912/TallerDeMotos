@@ -13,6 +13,10 @@ namespace TallerDeMotos.ViewModels
         public IEnumerable<TipoMovimiento> TipoMovimientos { get; set; }
 
         #region Datos del Movimiento
+        public int Id { get; set; }
+
+        public int AperturaCierreCajaId { get; set; }
+
         [Display(Name = "Caja")]
         public string NombreCaja { get; set; }
 
@@ -39,8 +43,12 @@ namespace TallerDeMotos.ViewModels
 
         [Display(Name = "Saldo Inicial")]
         public long SaldoInicial { get; set; }
+
+        [Required]
+        [Display(Name = "Monto Total a Cobrar")]
+        public long? Monto { get; set; }
         #endregion
-        
+
         #region Forma de Pago Efectivo
         [Display(Name = "Forma de Pago en Efectivo")]
         [PorLoMenosUnCheckBox("FormaPagoTarjeta", "FormaPagoCheque")]
@@ -51,7 +59,7 @@ namespace TallerDeMotos.ViewModels
         public long? MontoPagoEfectivo { get; set; }
 
         [Display(Name = "Vuelto")]
-        public long? MontoVuelto { get; set; }
+        public long? Vuelto { get; set; }
         #endregion
 
         #region Forma de Pago Cheque

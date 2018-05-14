@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models.ModelosDeDominio;
+using TallerDeMotos.ViewModels;
 
 namespace TallerDeMotos.App_Start
 {
@@ -50,6 +51,19 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<PresupuestoDetalleDto, PresupuestoDetalle>();
             Mapper.CreateMap<FacturaVentaDto, FacturaVenta>();
             Mapper.CreateMap<FacturaVentaDetalleDto, FacturaVentaDetalle>();
+
+            Mapper.CreateMap<MovimientoCajaViewModel, MovimientoCaja>();
+            //Mapper.CreateMap<MovimientoCaja, MovimientoCajaViewModel>()
+            //    .ForMember(m => m.NombreCaja, opt => opt.Ignore())
+            //    .ForMember(m => m.EstadoCaja, opt => opt.Ignore())
+            //    .ForMember(m => m.UsuarioCaja, opt => opt.Ignore())
+            //    .ForMember(m => m.Cliente, opt => opt.Ignore())
+            //    .ForMember(m => m.Vehiculo, opt => opt.Ignore())
+            //    .ForMember(m => m.MontoFactura, opt => opt.Ignore())
+            //    .ForMember(m => m.SaldoInicial, opt => opt.Ignore())
+            //    .ForMember(m => m.MontoFactura, opt => opt.Ignore())
+            //    .ForMember(m => m.MontoFactura, opt => opt.Ignore())
+            //    ;
         }
     }
 }

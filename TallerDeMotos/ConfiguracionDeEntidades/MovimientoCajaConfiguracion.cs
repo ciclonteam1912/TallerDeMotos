@@ -15,8 +15,8 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(mc => mc.AperturaCierreCajaId)
                 .HasColumnName("AperturaCierreCodigo");
 
-            Property(mc => mc.FacturaCompraId)
-                .HasColumnName("FacturaCompraCodigo");
+            Property(mc => mc.FacturaVentaId)
+                .HasColumnName("FacturaVentaCodigo");
 
             Property(mc => mc.TipoMovimientoId)
                 .HasColumnName("TipoMovimientoCodigo");
@@ -25,7 +25,7 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
                 .WithMany(ac => ac.MovimientoCajas)
                 .WillCascadeOnDelete(false);
 
-            HasRequired(mc => mc.FacturaCompra)
+            HasRequired(mc => mc.FacturaVenta)
                 .WithMany(fc => fc.MovimientoCajas)
                 .WillCascadeOnDelete(false);
 

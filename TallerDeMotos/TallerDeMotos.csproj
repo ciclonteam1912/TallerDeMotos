@@ -635,6 +635,14 @@
     <Compile Include="Migrations\201804290111275_AgregarColumnaEstadoCodigoEnTablaFacturaVentas.Designer.cs">
       <DependentUpon>201804290111275_AgregarColumnaEstadoCodigoEnTablaFacturaVentas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805131203496_SacarColumnaFacturaCompraCodigoEnTablaMovimientoCajas.cs" />
+    <Compile Include="Migrations\201805131203496_SacarColumnaFacturaCompraCodigoEnTablaMovimientoCajas.Designer.cs">
+      <DependentUpon>201805131203496_SacarColumnaFacturaCompraCodigoEnTablaMovimientoCajas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805131207042_AgregarColumnaFacturaVentaCodigoEnTablaMovimientoCajas.cs" />
+    <Compile Include="Migrations\201805131207042_AgregarColumnaFacturaVentaCodigoEnTablaMovimientoCajas.Designer.cs">
+      <DependentUpon>201805131207042_AgregarColumnaFacturaVentaCodigoEnTablaMovimientoCajas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoPagoObligatorioSiEsTarjeta.cs" />
@@ -2795,6 +2803,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804290111275_AgregarColumnaEstadoCodigoEnTablaFacturaVentas.resx">
       <DependentUpon>201804290111275_AgregarColumnaEstadoCodigoEnTablaFacturaVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805131203496_SacarColumnaFacturaCompraCodigoEnTablaMovimientoCajas.resx">
+      <DependentUpon>201805131203496_SacarColumnaFacturaCompraCodigoEnTablaMovimientoCajas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805131207042_AgregarColumnaFacturaVentaCodigoEnTablaMovimientoCajas.resx">
+      <DependentUpon>201805131207042_AgregarColumnaFacturaVentaCodigoEnTablaMovimientoCajas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,8 +16,6 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Required]
         public string UsuarioId { get; set; }
 
-        public bool EstadoActivo { get; set; }
-
         public ICollection<AperturaCierreCaja> AperturaCierres { get; set; }
 
         public Caja()

@@ -11,6 +11,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public DateTime Fecha { get; set; }
         public long SaldoInicial { get; set; }
         public long? SaldoFinal { get; set; }
+        public bool EstaAbierta { get; set; }     
 
         public ICollection<MovimientoCaja> MovimientoCajas { get; set; }
 

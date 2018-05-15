@@ -30,13 +30,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <div class="form-group">
                             @Html.LabelFor(c => c.Fecha, new { id = "labelFecha"})
                             @Html.TextBoxFor(c => c.Fecha, new { @class = "form-control", style = "width:74%;" })
                             <div class="row">
                                 @Html.ValidationMessageFor(c => c.Fecha)
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(c => c.EstaAbierta) Está Abierta?
+                            </label>
                         </div>
                     </div>
                 </div>

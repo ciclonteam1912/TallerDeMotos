@@ -28,15 +28,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(c => c.EstadoActivo) ¿Cerrar Caja?
-                            </label>
-                        </div>
-                    </div>
-                </div>
                 @Html.HiddenFor(c => c.Id)
                 @Html.AntiForgeryToken()
             </div>

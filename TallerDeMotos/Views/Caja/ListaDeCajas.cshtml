@@ -64,18 +64,21 @@
                 }, {
                     field: "Nombre",
                     title: "Nombre"
-                }, {
-                    template: "#= EstadoActivo ? 'Abierta' : 'Cerrada' #",
-                    field: "EstadoActivo",
-                    title: "Caja",
-                    filterable: false,
-                    sortable: false,
-                    width: 70,
-                    attributes: {
-                        style: "text-align: center"
-                    }
+                },
+                //{
+                //    template: "#= EstadoActivo ? 'Abierta' : 'Cerrada' #",
+                //    field: "EstadoActivo",
+                //    title: "Caja",
+                //    filterable: false,
+                //    sortable: false,
+                //    width: 70,
+                //    attributes: {
+                //        style: "text-align: center"
+                //    }
 
-                }, {
+                //}
+                //,
+                {
                     field: "Usuario.UserName",
                     title: "Usuario",
                     filterable: false,

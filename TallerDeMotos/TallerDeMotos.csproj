@@ -262,6 +262,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APIs\AperturaCierresController.cs" />
     <Compile Include="Controllers\APIs\AseguradorasController.cs" />
+    <Compile Include="Controllers\APIs\BancosController.cs" />
     <Compile Include="Controllers\APIs\CajasController.cs" />
     <Compile Include="Controllers\APIs\CiudadesController.cs" />
     <Compile Include="Controllers\APIs\ClientesController.cs" />
@@ -287,6 +288,7 @@
     <Compile Include="Controllers\APIs\UsuariosController.cs" />
     <Compile Include="Controllers\APIs\VehiculosController.cs" />
     <Compile Include="Controllers\AseguradoraController.cs" />
+    <Compile Include="Controllers\BancoController.cs" />
     <Compile Include="Controllers\CajaAperturaCierreController.cs" />
     <Compile Include="Controllers\CajaController.cs" />
     <Compile Include="Controllers\CiudadController.cs" />
@@ -313,6 +315,7 @@
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VehiculoController.cs" />
     <Compile Include="Dtos\AseguradoraDto.cs" />
+    <Compile Include="Dtos\BancoDto.cs" />
     <Compile Include="Dtos\CiudadDto.cs" />
     <Compile Include="Dtos\ClienteDto.cs" />
     <Compile Include="Dtos\EstadoDto.cs" />
@@ -643,6 +646,14 @@
     <Compile Include="Migrations\201805131207042_AgregarColumnaFacturaVentaCodigoEnTablaMovimientoCajas.Designer.cs">
       <DependentUpon>201805131207042_AgregarColumnaFacturaVentaCodigoEnTablaMovimientoCajas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805152045042_SacarColumnaEstadoActivoDeLaTablaCajas.cs" />
+    <Compile Include="Migrations\201805152045042_SacarColumnaEstadoActivoDeLaTablaCajas.Designer.cs">
+      <DependentUpon>201805152045042_SacarColumnaEstadoActivoDeLaTablaCajas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805152049092_AgregarColumnaEstadoEnTablaCajaAperturaCierres.cs" />
+    <Compile Include="Migrations\201805152049092_AgregarColumnaEstadoEnTablaCajaAperturaCierres.Designer.cs">
+      <DependentUpon>201805152049092_AgregarColumnaEstadoEnTablaCajaAperturaCierres.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -656,6 +667,7 @@
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />
     <Compile Include="Models\AtributosDeValidacion\ValidateModelAttribute.cs" />
+    <Compile Include="Models\BancoServicio.cs" />
     <Compile Include="Models\CiudadServicio.cs" />
     <Compile Include="Models\ConexionBD.cs" />
     <Compile Include="Models\IdentityManager.cs" />
@@ -2561,9 +2573,11 @@
     <Content Include="Views\CajaAperturaCierre\ListaDeAperturaCierresDeCaja.cshtml" />
     <Content Include="Views\CajaAperturaCierre\CajaAperturaCierreFormulario.cshtml" />
     <Content Include="Views\MovimientoCaja\Index.cshtml" />
+    <Content Include="Views\Shared\_Banco.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Banco\" />
     <Folder Include="Views\Ciudad\" />
   </ItemGroup>
   <ItemGroup>
@@ -2805,6 +2819,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805131207042_AgregarColumnaFacturaVentaCodigoEnTablaMovimientoCajas.resx">
       <DependentUpon>201805131207042_AgregarColumnaFacturaVentaCodigoEnTablaMovimientoCajas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805152045042_SacarColumnaEstadoActivoDeLaTablaCajas.resx">
+      <DependentUpon>201805152045042_SacarColumnaEstadoActivoDeLaTablaCajas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805152049092_AgregarColumnaEstadoEnTablaCajaAperturaCierres.resx">
+      <DependentUpon>201805152049092_AgregarColumnaEstadoEnTablaCajaAperturaCierres.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

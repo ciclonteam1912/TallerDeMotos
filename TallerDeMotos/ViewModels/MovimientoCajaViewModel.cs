@@ -50,6 +50,9 @@ namespace TallerDeMotos.ViewModels
         [MontoTotalIgualAMontoFactura("MontoFactura")]
         [Display(Name = "Monto Total a Cobrar")]
         public long? Monto { get; set; }
+
+        public string MensajeError { get; set; }
+        public bool Resultado { get; set; }
         #endregion
 
         #region Forma de Pago Efectivo

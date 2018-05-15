@@ -15,8 +15,6 @@ namespace TallerDeMotos.ViewModels
         [StringLength(50)]
         public string Nombre { get; set; }
 
-        public bool EstadoActivo { get; set; }
-
         [Required]
         [Display(Name = "Asignar empleado a una Caja")]
         public string UsuarioId { get; set; }
@@ -39,7 +37,6 @@ namespace TallerDeMotos.ViewModels
             Id = caja.Id;
             Nombre = caja.Nombre;
             UsuarioId = caja.UsuarioId;
-            EstadoActivo = caja.EstadoActivo;
         }
     }
 }

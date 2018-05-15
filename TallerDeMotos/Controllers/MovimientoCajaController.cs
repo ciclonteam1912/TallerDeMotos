@@ -40,7 +40,7 @@ namespace TallerDeMotos.Controllers
             DataSet dsDatos = new DataSet();
             string usuarioId = User.Identity.GetUserId().ToString();
             dsDatos = conexionBD.ObtenerDatosParaMovimientoCaja(usuarioId);
-            if(dsDatos.Tables.Count > 0)
+            if(dsDatos.Tables[0].Rows.Count > 0)
             {
                 var facturasPendientes = _context.FacturaVentas
                     .Where(fv => fv.EstadoId == 1 && fv.UsuarioId == usuarioId)
@@ -53,7 +53,7 @@ namespace TallerDeMotos.Controllers
                     Fecha = DateTime.Parse(dsDatos.Tables[0].Rows[0]["Fecha"].ToString()),
                     NombreCaja = dsDatos.Tables[0].Rows[0]["Nombre"].ToString(),
                     SaldoInicial = long.Parse(dsDatos.Tables[0].Rows[0]["SaldoInicial"].ToString()),
-                    EstadoCaja = bool.Parse(dsDatos.Tables[0].Rows[0]["EstadoActivo"].ToString()) == true ? "Abierta" : "Cerrada",
+                    EstadoCaja = bool.Parse(dsDatos.Tables[0].Rows[0]["EstaAbierta"].ToString()) == true ? "Abierta" : "Cerrada",
                     FacturaVentas = facturasPendientes,
                     Bancos = _context.Bancos.ToList(),
                     TipoMovimientos = _context.TipoMovimientos.ToList()
@@ -63,6 +63,13 @@ namespace TallerDeMotos.Controllers
                     ViewBag.style = "label label-success";
                 else
                     ViewBag.style = "label label-danger";
+
+                viewModel.Resultado = true;
+            }
+            else
+            {
+                viewModel.MensajeError = "Primero debe realizar la apertura de la caja del día de hoy.";
+                viewModel.Resultado = false;
             }            
             return View(viewModel);
         }
@@ -90,16 +97,22 @@ namespace TallerDeMotos.Controllers
                         Fecha = DateTime.Parse(dsDatos.Tables[0].Rows[0]["Fecha"].ToString()),
                         NombreCaja = dsDatos.Tables[0].Rows[0]["Nombre"].ToString(),
                         SaldoInicial = long.Parse(dsDatos.Tables[0].Rows[0]["SaldoInicial"].ToString()),
-                        EstadoCaja = bool.Parse(dsDatos.Tables[0].Rows[0]["EstadoActivo"].ToString()) == true ? "Abierta" : "Cerrada",
+                        EstadoCaja = bool.Parse(dsDatos.Tables[0].Rows[0]["EstaAbierta"].ToString()) == true ? "Abierta" : "Cerrada",
                         TipoMovimientos = _context.TipoMovimientos.ToList(),
                         FacturaVentas = facturasPendientes,
                         Bancos = _context.Bancos.ToList()
                     };
+                    if (model.EstadoCaja == "Abierta")
+                        ViewBag.style = "label label-success";
+                    else
+                        ViewBag.style = "label label-danger";
+
+                    model.Resultado = true;
+                }else
+                {
+                    model.MensajeError = "Primero debe realizar la apertura de la caja del día de hoy.";
+                    model.Resultado = false;
                 }
-                if (model.EstadoCaja == "Abierta")
-                    ViewBag.style = "label label-success";
-                else
-                    ViewBag.style = "label label-danger";
 
                 return View("Index", model);
             }

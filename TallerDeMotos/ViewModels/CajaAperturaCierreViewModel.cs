@@ -23,6 +23,8 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Saldo Final")]
         public long? SaldoFinal { get; set; }
 
+        public bool EstaAbierta { get; set; }
+
         public string Titulo
         {
             get
@@ -42,6 +44,7 @@ namespace TallerDeMotos.ViewModels
             CajaId = aperturaCierre.CajaId;
             Fecha = aperturaCierre.Fecha;
             SaldoInicial = aperturaCierre.SaldoInicial;
+            EstaAbierta = aperturaCierre.EstaAbierta;
         }
     }
 }

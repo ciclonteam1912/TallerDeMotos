@@ -127,8 +127,9 @@ namespace TallerDeMotos.Controllers
                     {
                         lista.Add(new RelacionFormaPagoYBanco
                         {
-                            BancoId = null,
-                            FormaPagoId = queryFormaPagoEfectivo.Id
+                            FormaPagoId = queryFormaPagoEfectivo.Id,
+                            NroAutorizacion = 0,
+                            NroCheque = 0
                         });
                         fpb.Add(queryFormaPagoEfectivo.Id, null);
                     }
@@ -141,8 +142,9 @@ namespace TallerDeMotos.Controllers
                     {
                         lista.Add(new RelacionFormaPagoYBanco
                         {
-                            BancoId = viewModel.BancoIdCheque,
-                            FormaPagoId = queryFormaPagoCheque.Id
+                            FormaPagoId = queryFormaPagoCheque.Id,
+                            NroCheque = viewModel.NroCheque,
+                            NroAutorizacion = 0
                         });
                         fpb.Add(queryFormaPagoCheque.Id, viewModel.BancoIdCheque);
 
@@ -151,13 +153,14 @@ namespace TallerDeMotos.Controllers
 
                 if (viewModel.FormaPagoTarjeta)
                 {
-                    var queryFormaPagoTarjeta = _context.FormasPago.Where(fp => fp.Nombre.Contains("Tarjeta")).FirstOrDefault();
+                    var queryFormaPagoTarjeta = _context.FormasPago.Where(fp => fp.Nombre.Contains(viewModel.TipoTarjeta)).FirstOrDefault();
                     if(queryFormaPagoTarjeta != null)
                     {
                         lista.Add(new RelacionFormaPagoYBanco
                         {                            
-                            BancoId = viewModel.BancoIdTarjeta,
-                            FormaPagoId = queryFormaPagoTarjeta.Id
+                            FormaPagoId = queryFormaPagoTarjeta.Id,
+                            NroCheque = 0,
+                            NroAutorizacion = viewModel.NroAutorizacion
                         });
                         fpb.Add(queryFormaPagoTarjeta.Id, viewModel.BancoIdTarjeta);
 

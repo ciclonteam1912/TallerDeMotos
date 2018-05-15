@@ -165,7 +165,10 @@
                                             @Html.LabelFor(m => m.BancoIdCheque)
                                         </div>
                                         <div class="col-md-6">
-                                            @Html.DropDownListFor(m => m.BancoIdCheque, new SelectList(Model.Bancos, "Id", "Nombre"), "Seleccione un Banco...", new { @class = "form-control input-sm" })
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon"><i class="fa fa-bank"></i></span>
+                                                @Html.DropDownListFor(m => m.BancoIdCheque, new SelectList(Model.Bancos, "Id", "Nombre"), "Seleccione un Banco...", new { @class = "form-control input-sm" })
+                                            </div>
                                             @Html.ValidationMessageFor(m => m.BancoIdCheque)
                                         </div>
                                     </div>
@@ -175,7 +178,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="input-group input-group-sm">
-                                                <span class="input-group-addon">&#8370</span>
+                                                <span class="input-group-addon" style="padding-right: 13px !important">&#8370</span>
                                                 @Html.TextBoxFor(m => m.MontoPagoCheque, new { @class = "form-control input-sm" })
                                             </div>
                                             @Html.ValidationMessageFor(m => m.MontoPagoCheque)
@@ -186,17 +189,11 @@
                                             @Html.LabelFor(m => m.NroCheque)
                                         </div>
                                         <div class="col-lg-6">
-                                            @Html.TextBoxFor(m => m.NroCheque, new { @class = "form-control input-sm" })
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                @Html.TextBoxFor(m => m.NroCheque, new { @class = "form-control input-sm" })
+                                            </div>
                                             @Html.ValidationMessageFor(m => m.NroCheque)
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-lg-6">
-                                            @Html.LabelFor(m => m.Librador)
-                                        </div>
-                                        <div class="col-md-6">
-                                            @Html.TextBoxFor(m => m.Librador, new { @class = "form-control input-sm" })
-                                            @Html.ValidationMessageFor(m => m.Librador)
                                         </div>
                                     </div>
                                 </div>
@@ -230,7 +227,10 @@
                                             @Html.LabelFor(m => m.BancoIdTarjeta)
                                         </div>
                                         <div class="col-md-6">
-                                            @Html.DropDownListFor(m => m.BancoIdTarjeta, new SelectList(Model.Bancos, "Id", "Nombre"), "Seleccione un Banco...", new { @class = "form-control input-sm" })
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon"><i class="fa fa-bank"></i></span>
+                                                @Html.DropDownListFor(m => m.BancoIdTarjeta, new SelectList(Model.Bancos, "Id", "Nombre"), "Seleccione un Banco...", new { @class = "form-control input-sm" })
+                                            </div>
                                             @Html.ValidationMessageFor(m => m.BancoIdTarjeta)
                                         </div>
                                     </div>
@@ -240,7 +240,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="input-group input-group-sm">
-                                                <span class="input-group-addon">&#8370</span>
+                                                <span class="input-group-addon" style="padding-right: 13px !important">&#8370</span>
                                                 @Html.TextBoxFor(m => m.MontoPagoTarjeta, new { @class = "form-control input-sm" })
                                             </div>
                                             @Html.ValidationMessageFor(m => m.MontoPagoTarjeta)
@@ -250,7 +250,10 @@
                                         @Html.LabelFor(m => m.NroAutorizacion)
                                     </div>
                                     <div class="col-md-6">
-                                        @Html.TextBoxFor(m => m.NroAutorizacion, new { @class = "form-control input-sm" })
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                                            @Html.TextBoxFor(m => m.NroAutorizacion, new { @class = "form-control input-sm" })
+                                        </div>
                                         @Html.ValidationMessageFor(m => m.NroAutorizacion)
                                     </div>
                                 </div>
@@ -356,6 +359,8 @@
             var montoEfectivo = $(this).val();
             var montoFactura = $("#MontoFactura").val();
             var montoCheque = $("#MontoPagoCheque").val();
+            var montoTarjeta = $("#MontoPagoTarjeta").val();
+
             var vuelto = 0;
             var montoTotal = 0;
 
@@ -365,12 +370,17 @@
             if (montoEfectivo == "")
                 montoEfectivo = 0;
 
-            montoTotal = Number(montoEfectivo) + Number(montoCheque);
-            $("#Monto").val(montoTotal);
+            if (montoTarjeta == "")
+                montoTarjeta = 0;
+
+            montoTotal = Number(montoEfectivo) + Number(montoCheque) + Number(montoTarjeta);
 
             if (montoTotal >= montoFactura) {
                 vuelto = montoTotal - montoFactura;
+                montoTotal = montoTotal - vuelto;
             }
+
+            $("#Monto").val(montoTotal);
 
             $("#Vuelto").val(vuelto);
         });
@@ -379,6 +389,8 @@
             var montoCheque = $(this).val();
             var montoEfectivo = $("#MontoPagoEfectivo").val();
             var montoFactura = $("#MontoFactura").val();
+            var montoTarjeta = $("#MontoPagoTarjeta").val();
+
             var vuelto = 0;
             var montoTotal = 0;
 
@@ -388,7 +400,36 @@
             if (montoEfectivo == "")
                 montoEfectivo = 0;
 
-            montoTotal = Number(montoCheque) + Number(montoEfectivo);
+            if (montoTarjeta == "")
+                montoTarjeta = 0;
+
+            montoTotal = Number(montoEfectivo) + Number(montoCheque) + Number(montoTarjeta);
+
+            $("#Monto").val(montoTotal);
+
+            $("#Vuelto").val(vuelto);
+        });
+
+        $("#MontoPagoTarjeta").blur(function () {
+            var montoTarjeta = $(this).val();
+            var montoFactura = $("#MontoFactura").val();
+            var montoCheque = $("#MontoPagoCheque").val();
+            var montoEfectivo = $("#MontoPagoEfectivo").val();
+
+            var vuelto = 0;
+            var montoTotal = 0;
+
+            if (montoCheque == "")
+                montoCheque = 0;
+
+            if (montoEfectivo == "")
+                montoEfectivo = 0;
+
+            if (montoTarjeta == "")
+                montoTarjeta = 0;
+
+            montoTotal = Number(montoEfectivo) + Number(montoCheque) + Number(montoTarjeta);
+
             $("#Monto").val(montoTotal);
 
             $("#Vuelto").val(vuelto);

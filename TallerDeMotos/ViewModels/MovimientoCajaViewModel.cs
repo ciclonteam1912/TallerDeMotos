@@ -47,6 +47,7 @@ namespace TallerDeMotos.ViewModels
         public long SaldoInicial { get; set; }
 
         [Required]
+        [MontoTotalIgualAMontoFactura]
         [Display(Name = "Monto Total a Cobrar")]
         public long? Monto { get; set; }
         #endregion

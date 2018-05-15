@@ -648,6 +648,7 @@
     <Compile Include="Models\AtributosDeValidacion\MontoPagoObligatorioSiEsTarjeta.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoPagoObligatorioSiEsCheque.cs" />
     <Compile Include="Models\AtributosDeValidacion\BancoObligatorioSiEsTarjeta.cs" />
+    <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
     <Compile Include="Models\AtributosDeValidacion\NroAutorizacionObligatorioSiEsTarjeta.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
     <Compile Include="Models\AtributosDeValidacion\FacturaActual.cs" />

@@ -281,9 +281,10 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-
+@Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/custom-jquery-validation.js"></script>
+<script>    
+    $(document).ready(function () {        
         if ($("#FormaPagoEfectivo").is(":checked"))
             $("#divEfectivo").show();
 

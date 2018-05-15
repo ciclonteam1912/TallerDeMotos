@@ -47,7 +47,7 @@ namespace TallerDeMotos.ViewModels
         public long SaldoInicial { get; set; }
 
         [Required]
-        [MontoTotalIgualAMontoFactura]
+        [MontoTotalIgualAMontoFactura("MontoFactura")]
         [Display(Name = "Monto Total a Cobrar")]
         public long? Monto { get; set; }
         #endregion
@@ -58,7 +58,7 @@ namespace TallerDeMotos.ViewModels
         public bool FormaPagoEfectivo { get; set; }
 
         [Display(Name = "Monto del Pago")]
-        [ObligatorioSiEsEfectivo]
+        [RequiredIf("FormaPagoEfectivo", Comparison.IsEqualTo, true)]
         public long? MontoPagoEfectivo { get; set; }
 
         [Display(Name = "Vuelto")]
@@ -70,18 +70,18 @@ namespace TallerDeMotos.ViewModels
         public bool FormaPagoCheque { get; set; }
 
         [Display(Name = "Monto Pago")]
-        [MontoPagoObligatorioSiEsCheque]
+        [RequiredIf("FormaPagoCheque", Comparison.IsEqualTo, true)]        
         public long? MontoPagoCheque { get; set; }
 
         [Display(Name = "Bancos")]
-        [BancoObligatorioSiEsCheque]
+        [RequiredIf("FormaPagoCheque", Comparison.IsEqualTo, true)]
         public int? BancoIdCheque { get; set; }
 
         [Display(Name = "Nro. de Cheque")]
-        [NroChequeObligatorioSiEsCheque]
+        [RequiredIf("FormaPagoCheque", Comparison.IsEqualTo, true)]
         public int? NroCheque { get; set; }
 
-        [LibradorObligatorioSiEsCheque]
+        [RequiredIf("FormaPagoCheque", Comparison.IsEqualTo, true)]
         public int? Librador { get; set; }
         #endregion
 
@@ -90,18 +90,18 @@ namespace TallerDeMotos.ViewModels
         public bool FormaPagoTarjeta { get; set; }
 
         [Display(Name = "Monto Pago")]
-        [MontoPagoObligatorioSiEsTarjeta]
+        [RequiredIf("FormaPagoTarjeta", Comparison.IsEqualTo, true)]
         public long? MontoPagoTarjeta { get; set; }
 
         public string TipoTarjeta { get; set; }
 
         [Display(Name = "Bancos")]
-        [BancoObligatorioSiEsTarjeta]
+        [RequiredIf("FormaPagoTarjeta", Comparison.IsEqualTo, true)]
         public int? BancoIdTarjeta { get; set; }
 
 
         [Display(Name = "Nro. de Autorización")]
-        [NroAutorizacionObligatorioSiEsTarjeta]
+        [RequiredIf("FormaPagoTarjeta", Comparison.IsEqualTo, true)]
         public int? NroAutorizacion { get; set; }
         #endregion        
     }

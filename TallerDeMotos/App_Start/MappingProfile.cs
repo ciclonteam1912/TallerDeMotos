@@ -40,6 +40,11 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Vehiculo, VehiculoDto>();
             Mapper.CreateMap<Cliente, ClienteDto>();
             Mapper.CreateMap<Banco, BancoDto>();
+            Mapper.CreateMap<MovimientoCaja, MovimientoCajaDto>();
+            Mapper.CreateMap<AperturaCierreCaja, AperturaCierreDto>();
+            Mapper.CreateMap<FacturaVenta, FacturaVentaDto>();
+            Mapper.CreateMap<TipoMovimiento, TipoMovimientoDto>();
+            Mapper.CreateMap<Caja, CajaDto>();
 
             //DTO a Dominio
             Mapper.CreateMap<OrdenCompraDto, OrdenCompra>();

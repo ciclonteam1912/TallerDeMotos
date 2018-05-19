@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
@@ -34,8 +35,17 @@ namespace TallerDeMotos.Controllers
             _context.Dispose();
         }
 
-        // GET: MovimientoCaja
         public ActionResult Index()
+        {
+            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
+                return View("ListaDeMovimientos");
+
+            return View("ListaDeMovimientosSoloLectura");
+        }
+
+        // GET: MovimientoCaja
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        public ActionResult MovimientoCajaFormulario()
         {            
             DataSet dsDatos = new DataSet();
             string usuarioId = User.Identity.GetUserId().ToString();
@@ -114,7 +124,7 @@ namespace TallerDeMotos.Controllers
                     model.Resultado = false;
                 }
 
-                return View("Index", model);
+                return View("MovimientoCajaFormulario", model);
             }
 
             //var query = (from aperturaCierre in _context.CajaAperturaCierres

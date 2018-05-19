@@ -275,6 +275,7 @@
     <Compile Include="Controllers\APIs\FormasPagoController.cs" />
     <Compile Include="Controllers\APIs\MarcasController.cs" />
     <Compile Include="Controllers\APIs\ModelosController.cs" />
+    <Compile Include="Controllers\APIs\MovimientoCajasController.cs" />
     <Compile Include="Controllers\APIs\OrdenCompraDetallesController.cs" />
     <Compile Include="Controllers\APIs\OrdenComprasController.cs" />
     <Compile Include="Controllers\APIs\PresupuestoDetallesController.cs" />
@@ -314,8 +315,10 @@
     <Compile Include="Controllers\TalonarioController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VehiculoController.cs" />
+    <Compile Include="Dtos\AperturaCierreDto.cs" />
     <Compile Include="Dtos\AseguradoraDto.cs" />
     <Compile Include="Dtos\BancoDto.cs" />
+    <Compile Include="Dtos\CajaDto.cs" />
     <Compile Include="Dtos\CiudadDto.cs" />
     <Compile Include="Dtos\ClienteDto.cs" />
     <Compile Include="Dtos\EstadoDto.cs" />
@@ -324,6 +327,7 @@
     <Compile Include="Dtos\FacturaVentaDetalleDto.cs" />
     <Compile Include="Dtos\FacturaVentaDto.cs" />
     <Compile Include="Dtos\FormaPagoDto.cs" />
+    <Compile Include="Dtos\MovimientoCajaDto.cs" />
     <Compile Include="Dtos\NuevaFacturaCompraDto.cs" />
     <Compile Include="Dtos\NuevaFacturaVentaDto.cs" />
     <Compile Include="Dtos\NuevaOrdenCompraDto.cs" />
@@ -334,6 +338,7 @@
     <Compile Include="Dtos\PresupuestoDto.cs" />
     <Compile Include="Dtos\ProductoDto.cs" />
     <Compile Include="Dtos\ProveedorDto.cs" />
+    <Compile Include="Dtos\TipoMovimientoDto.cs" />
     <Compile Include="Dtos\VehiculoDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2572,8 +2577,9 @@
     <Content Include="Views\Caja\CajaFormulario.cshtml" />
     <Content Include="Views\CajaAperturaCierre\ListaDeAperturaCierresDeCaja.cshtml" />
     <Content Include="Views\CajaAperturaCierre\CajaAperturaCierreFormulario.cshtml" />
-    <Content Include="Views\MovimientoCaja\Index.cshtml" />
+    <Content Include="Views\MovimientoCaja\MovimientoCajaFormulario.cshtml" />
     <Content Include="Views\Shared\_Banco.cshtml" />
+    <Content Include="Views\MovimientoCaja\ListaDeMovimientos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

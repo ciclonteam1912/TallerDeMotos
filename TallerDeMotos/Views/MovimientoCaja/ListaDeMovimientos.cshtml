@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Listado de Movimientos de Caja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Listado de Movimientos de Caja</h2>
+
+    <p><a href="MovimientoCaja/MovimientoCajaFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Movimiento</span></a></p>
+
+    <div id="example">
+        <div id="grid"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        kendo.culture().numberFormat.currency.symbol = "₲";
+        $(document).ready(function () {
+            $("#menuCaja").addClass('active');
+
+            var dataSource = new kendo.data.DataSource({
+                autoSync: false,
+                transport: {
+                    read: {
+                        url: "/api/movimientoCajas",
+                        dataType: "json"
+                    }
+                },
+                pageSize: 6,
+                serverPaging: false,
+                serverSorting: false,
+                schema: {
+                    model: {
+                        id: "Id"
+                    }
+                }
+            });
+
+            $("#grid").kendoGrid({
+                dataSource: dataSource,
+                height: 550,
+                sortable: true,
+                filterable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "AperturaCierreCaja.Caja",
+                        title: "Caja",
+                        width: "70px",
+                        template: "#=AperturaCierreCaja.Caja.Nombre#",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    },
+                    {
+                        field: "FacturaVenta",
+                        title: "Factura Venta",
+                        width: "90px",
+                        template: "#=FacturaVenta.NumeroFactura#",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    },
+                    {
+                        field: "Monto",
+                        title: "Monto",
+                        width: "90px",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    },
+                    {
+                        field: "TipoMovimiento.Descripcion",
+                        title: "Tipo de Movimiento",
+                        width: "110px"
+                    },
+                    {
+                        field: "AperturaCierreCaja.Fecha",
+                        title: "Fecha",
+                        template: "#= kendo.toString(kendo.parseDate(AperturaCierreCaja.Fecha), 'MM/dd/yyyy HH:mm tt')#",
+                        width: "110px"
+                    }
+                ]
+            });
+        });
+    </script>
+}

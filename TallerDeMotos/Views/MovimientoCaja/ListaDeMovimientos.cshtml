@@ -85,6 +85,17 @@
                         title: "Fecha",
                         template: "#= kendo.toString(kendo.parseDate(AperturaCierreCaja.Fecha), 'MM/dd/yyyy HH:mm tt')#",
                         width: "110px"
+                    }, 
+                    {
+                        template: "<a href='/FacturaVenta/FacturaVentaReport?nroFactura=  #: FacturaVenta.NumeroFactura #' target='_blank' class=' btn btn-primary'>Ver Factura</a>",
+                        field: "FacturaVenta",
+                        title: "&nbsp;",
+                        filterable: false,
+                        sortable: false,
+                        width: 100,
+                        attributes: {
+                            style: "text-align: center"
+                        }
                     }
                 ]
             });

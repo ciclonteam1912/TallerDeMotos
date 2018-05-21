@@ -33,5 +33,13 @@ namespace TallerDeMotos.Controllers
         {
             return View();
         }
+
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        public ActionResult FacturaVentaReport(int nroFactura = 0)
+        {
+            if (nroFactura != 0)
+                ViewBag.NumeroFactura = nroFactura;
+            return View("FacturaVentaReport");
+        }
     }
 }

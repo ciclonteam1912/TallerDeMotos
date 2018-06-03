@@ -60,7 +60,10 @@ namespace TallerDeMotos.Controllers.APIs
                 {
                     ProductoId = detalle.ProductoId,
                     Cantidad = detalle.Cantidad,
-                    Total = detalle.Total
+                    Total = detalle.Total,
+                    TotalLineaExenta = detalle.TotalLineaExenta,
+                    TotalLineaCincoXCiento = detalle.TotalLineaCincoXCiento,
+                    TotalLineaDiezXCiento = detalle.TotalLineaDiezXCiento
                 };
 
                 var presupuestoDetalle = Mapper.Map<PresupuestoDetalleDto, PresupuestoDetalle>(presupuestoDetalleDto);

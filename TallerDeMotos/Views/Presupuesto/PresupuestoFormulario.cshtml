@@ -5,6 +5,12 @@
 
 @Html.Partial("_MenuVertical")
 
+<style>
+    .totales{
+        display: none;
+    }
+</style>
+
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido" style="display:none">
     <form id="presupuestoFormulario">
         <h2>Presupuesto</h2>
@@ -86,6 +92,9 @@
                             <th>Cantidad</th>
                             <th>IVA</th>
                             <th>Total</th>
+                            <th class="totales"></th>
+                            <th class="totales"></th>
+                            <th class="totales"></th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
@@ -165,6 +174,8 @@
             var totalIVACinco = 0;
             var totalIVADiez = 0;
             var subTotal = 0;
+            var subTotlaIva5PorCiento = 0;
+            var subTotalIva10PorCiento = 0;
 
             //Obtener los clientes y agregarlos al Drop-down List.
             $.ajax({
@@ -350,25 +361,34 @@
                     var cantidad = productoCantidad != "" ? productoCantidad : 1;
 
                     var productoIva = $("#productoIva").val();
+                   
 
                     if (productoIva == "")
                         productoIva = 0;
 
                     total = productoPrecio * cantidad;
 
-                    subTotal = subTotal + total;
-
                     if (productoIva == 0)
-                        totalExentas = subTotal;
-                    else if (productoIva == 5)
-                        totalIVACinco = Math.round(subTotal / 21);
-                    else
-                        totalIVADiez = Math.round(subTotal / 11);
+                        totalExentas += total;
+                    else if (productoIva == 5) {
+                        subTotlaIva5PorCiento += total;
+                        totalIVACinco = Math.round(subTotlaIva5PorCiento / 21);
+                    }
+                    else {
+                        subTotalIva10PorCiento += total;
+                        totalIVADiez = Math.round(subTotalIva10PorCiento / 11);
+                    }
+
+                    subTotal = totalExentas + subTotlaIva5PorCiento + subTotalIva10PorCiento;
 
                     $("#totalAPagar").val(subTotal);
                     $("#totalExentas").val(totalExentas);
                     $("#totalIvaCinco").val(totalIVACinco);
                     $("#totalIvaDiez").val(totalIVADiez);
+                    console.log(productoIva);
+                    var totalLineaExentas = productoIva == 0 ? total : 0;
+                    var totalLineaCincoXCiento = productoIva == 5 ? total : 0;
+                    var totalLineaDiezXCiento = productoIva == 10 ? total : 0;
 
                     var presupuesto = '<tr class="detalle">' +
                         '<td>' + productoId + '</td>' +
@@ -377,6 +397,9 @@
                         '<td>' + cantidad + '</td>' +
                         '<td>' + productoIva + '</td>' +
                         '<td>' + total + '</td>' +
+                        '<td class="totales">' + totalLineaExentas + '</td>' +
+                        '<td class="totales">' + totalLineaCincoXCiento + '</td>' +
+                        '<td class="totales">' + totalLineaDiezXCiento + '</td>' +
                         '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
                         '</tr>';
 
@@ -442,14 +465,18 @@
 
                         var lines = $('td', tr).map(function (index, td) {
 
-                            if (index != 6 && index != 1)
+                            if (index != 9 && index != 1) {                                
                                 return $(td).text();
+                            }
                         });
-
+                        console.log(lines);
                         vm.PresupuestoDetalles.push({
                             ProductoId: lines[0],
                             Cantidad: lines[2],
-                            Total: lines[4]
+                            Total: lines[4],
+                            TotalLineaExenta: lines[5],
+                            TotalLineaCincoXCiento: lines[6],
+                            TotalLineaDiezXCiento: lines[7]
                         });
 
                     });

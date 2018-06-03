@@ -659,6 +659,10 @@
     <Compile Include="Migrations\201805152049092_AgregarColumnaEstadoEnTablaCajaAperturaCierres.Designer.cs">
       <DependentUpon>201805152049092_AgregarColumnaEstadoEnTablaCajaAperturaCierres.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805261546460_AgregarColumnasParaCadaTotal.cs" />
+    <Compile Include="Migrations\201805261546460_AgregarColumnasParaCadaTotal.Designer.cs">
+      <DependentUpon>201805261546460_AgregarColumnasParaCadaTotal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -2836,6 +2840,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805152049092_AgregarColumnaEstadoEnTablaCajaAperturaCierres.resx">
       <DependentUpon>201805152049092_AgregarColumnaEstadoEnTablaCajaAperturaCierres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805261546460_AgregarColumnasParaCadaTotal.resx">
+      <DependentUpon>201805261546460_AgregarColumnasParaCadaTotal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

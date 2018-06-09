@@ -84,8 +84,8 @@ namespace TallerDeMotos.ViewModels
         [RequiredIf("FormaPagoCheque", Comparison.IsEqualTo, true)]
         public int? NroCheque { get; set; }
 
-        [RequiredIf("FormaPagoCheque", Comparison.IsEqualTo, true)]
-        public int? Librador { get; set; }
+        //[RequiredIf("FormaPagoCheque", Comparison.IsEqualTo, true)]
+        //public int? Librador { get; set; }
         #endregion
 
         #region Forma de Pago Tarjeta

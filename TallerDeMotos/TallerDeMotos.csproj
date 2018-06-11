@@ -735,6 +735,7 @@
     <Compile Include="ViewModels\ModeloViewModel.cs" />
     <Compile Include="ViewModels\MovimientoCajaViewModel.cs" />
     <Compile Include="ViewModels\OrdenCompraViewModel.cs" />
+    <Compile Include="ViewModels\PresupuestoViewModel.cs" />
     <Compile Include="ViewModels\ProductoViewModel.cs" />
     <Compile Include="ViewModels\ProveedorViewModel.cs" />
     <Compile Include="ViewModels\RolViewModel.cs" />

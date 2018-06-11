@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TallerDeMotos.ViewModels.PresupuestoViewModel
+@{
     ViewBag.Title = "Presupuesto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -14,21 +15,50 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido" style="display:none">
     <form id="presupuestoFormulario">
         <h2>Presupuesto</h2>
-        <div class="row well">            
+        <div class="row well">
             <div class="col-lg-4">
                 <div class="form-group">
-                    <label>Cliente</label>
-                    <select id="clientes" class="form-control" required name="clientes">
-                        <option value="">Seleccione un Cliente...</option>
-                    </select>
+                    @Html.LabelFor(m => m.ClienteId)
+                    @(Html.Kendo().DropDownList()
+                    .Name("ClienteId")
+                    .DataTextField("NombreCompleto")
+                    .DataValueField("Id")
+                    .OptionLabel("Seleccione un cliente...")
+                    .HtmlAttributes(new { style = "width: 100%" })
+                    .Filter("contains")
+                    .DataSource(source =>
+                    {
+                        source.Read(read => read.Url("/api/clientes"));
+                    })
+                    )
+                    @Html.ValidationMessageFor(m => m.ClienteId)
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
-                    <label>Vehículo</label>
-                    <select id="vehiculo" class="form-control" required name="vehiculo">
-                        <option value="">Seleccione un Vehículo...</option>
-                    </select>
+                    @Html.LabelFor(m => m.VehiculoId)
+                    @(Html.Kendo().DropDownList()
+                    .Name("VehiculoId")
+                    .DataTextField("NombreCompleto")
+                    .DataValueField("Id")
+                    .OptionLabel("Seleccione un vehículo...")
+                    .HtmlAttributes(new { style = "width: 100%" })
+                    .Filter("contains")
+                    .DataSource(source =>
+                    {
+                        source.Read(read => read.Url("/api/vehiculos").Data("filtrarVehiculos"));
+                    })
+                    .Enable(false)
+                    .CascadeFrom("ClienteId")
+                    )
+                    <script>
+                        function filtrarVehiculos() {
+                            return {
+                                ClienteId: $("ClienteId").val()
+                            };
+                        }
+                    </script>
+                    @Html.ValidationMessageFor(m => m.VehiculoId)
                 </div>
             </div>
             <div class="col-lg-4">
@@ -36,12 +66,12 @@
                     <label style="display:block">Fecha de Emisión:</label>
                     <input id="fechaDeEmision" class="form-control" onkeydown="return false;" />
                 </div>
-            </div>           
+            </div>
         </div>
 
         <hr />
         <h4>Detalle del Presupuesto</h4>
-        <div class="row table-responsive">            
+        <div class="row table-responsive">
             <table class="table" id="prepDetalle">
                 <thead>
                     <tr>
@@ -49,33 +79,32 @@
                         <th>Código</th>
                         <th>Descripción</th>
                         <th>Precio</th>
-                        <th>Cantidad</th>                       
+                        <th>Cantidad</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>
-                            <input id="tipoProductos"/>
+                            <input id="tipoProductos" />
                             <span class="error">Seleccionar Tipo de Producto</span>
                         </td>
                         <td>
-                            <input id="productosId" disabled="disabled" style="width: 150px; display:inline-block"/>
+                            <input id="productosId" disabled="disabled" style="width: 150px; display:inline-block" />
                             <span class="error-repetido">Producto o Servicio ya seleccionado</span>
                             <span class="error">Seleccionar Producto o Servicio</span>
                         </td>
                         <td>
-                            <input type="text" id="productoDesc" readonly class="form-control"/>
-                            @*<a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none" title="Agregar Producto"><i class="fa fa-plus"></i></a>*@                         
+                            <input type="text" id="productoDesc" readonly class="form-control" />                           
                         </td>
                         <td><input type="text" id="productoPrecio" readonly class="form-control" /></td>
                         <td>
                             @Html.TextBox("productoCantidad", "", new { @class = "form-control", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
-                        </td>                        
+                        </td>
                         <td>
                             <input type="button" class="btn btn-primary" id="agregar" value="Agregar" />
                         </td>
-                        
+
                     </tr>
                 </tbody>
             </table>
@@ -158,7 +187,63 @@
             });
         }
 
+        $.validator.setDefaults({
+            ignore: "",
+            // any other default options and/or rules,
+            //errorPlacement: function (error, element) {
+            //    console.log("error", error);
+            //    console.log("element", element);
+            //    if (element.is("[data-role=dropdownlist]")) {
+            //        element.closest(".k-widget").after(error);
+            //    }
+            //}
+        });
+
+
+        function updateCssOnPropertyChange(e) {
+            var element = $(e.target);
+
+            element.siblings("span.k-dropdown-wrap")
+                   .add(element.siblings("div.k-multiselect-wrap"))
+                   .add(element.parent("span.k-numeric-wrap"))
+                   .add(element.parent("span.k-picker-wrap"))
+                   .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
+
         $(document).ready(function () {
+            /* Bind Mutation Events */
+            var elements = $("#contenido").find("[data-role=combobox],[data-role=dropdownlist],[data-role=numerictextbox],[data-role^=date],[data-role=multiselect]");
+
+            //correct mutation event detection
+            var hasMutationEvents = ("MutationEvent" in window),
+                MutationObserver = window.WebKitMutationObserver || window.MutationObserver;
+
+            if (MutationObserver) {
+                var observer = new MutationObserver(function (mutations) {
+                    var idx = 0,
+                        mutation,
+                        length = mutations.length;
+
+                    for (; idx < length; idx++) {
+                        mutation = mutations[idx];
+                        if (mutation.attributeName === "class") {
+                            updateCssOnPropertyChange(mutation);
+                        }
+                    }
+                }),
+                config = { attributes: true, childList: false, characterData: false };
+
+                elements.each(function () {
+                    observer.observe(this, config);
+                });
+            } else if (hasMutationEvents) {
+                elements.bind("DOMAttrModified", updateCssOnPropertyChange);
+            } else {
+                elements.each(function () {
+                    this.attachEvent("onpropertychange", updateCssOnPropertyChange);
+                });
+            }
+
             $("#contenido").fadeIn(2000);
             $("#menuVentas").addClass('active');
             $('#imprimirPresupuesto').hide();
@@ -176,37 +261,6 @@
             var subTotal = 0;
             var subTotlaIva5PorCiento = 0;
             var subTotalIva10PorCiento = 0;
-
-            //Obtener los clientes y agregarlos al Drop-down List.
-            $.ajax({
-                type: "GET",
-                url: "/api/clientes",
-                contentType: "application/json",
-                success: function (clientes) {
-                    $.each(clientes, function (i) {
-                        $("#clientes").append($('<option></option>').val(clientes[i].Id).html(clientes[i].Nombre + ' ' + clientes[i].Apellido));
-                    });
-                }
-            });
-
-            //Cascading Drop-down list.
-            $("#clientes").change(function () {
-                $("#vehiculo").empty();
-                $("#vehiculo").append($('<option></option>').val("").html('Seleccione un Vehículo...'));
-                if ($("#clientes").val() != "") {
-                    $.ajax({
-                        type: "GET",
-                        url: "/api/vehiculos/ " + $("#clientes").val(),
-                        contentType: "application/json",
-                        success: function (vehiculos) {
-                            $.each(vehiculos, function (i) {
-                                $("#vehiculo").append($('<option></option>').val(vehiculos[i].Id).html(vehiculos[i].Matricula));
-                            })
-                        }
-                    });
-                }
-                return false;
-            });
 
             //Obtener los productos o servicios y agregarlos al Drop-down List.
             var productsDataSource = new kendo.data.DataSource({
@@ -448,44 +502,49 @@
 
 
             //Agregar validación al formulario al hacer submit.
-            var validator = $("#presupuestoFormulario").validate({
+            $("#presupuestoFormulario").submit(function (e) {
+                e.preventDefault();
 
-                submitHandler: function () {
+                var form = $(this);
 
-                    vm.Presupuesto = {
-                        VehiculoId: $("#vehiculo").val(),
-                        SubTotal: $("#totalAPagar").val(),
-                        FechaDeEmision: $("#fechaDeEmision").val(),
-                        TotalExenta: $("#totalExentas").val(),
-                        TotalIvaCincoPorCiento: $("#totalIvaCinco").val(),
-                        TotalIvaDiezPorCiento: $("#totalIvaDiez").val()
-                    };
+                if (!form.valid()) {
+                    return false;
+                }
 
-                    $('#presupuestoDetalle tr.detalle').each(function (index, tr) {
+                vm.Presupuesto = {
+                    VehiculoId: $("#VehiculoId").val(),
+                    SubTotal: $("#totalAPagar").val(),
+                    FechaDeEmision: $("#fechaDeEmision").val(),
+                    TotalExenta: $("#totalExentas").val(),
+                    TotalIvaCincoPorCiento: $("#totalIvaCinco").val(),
+                    TotalIvaDiezPorCiento: $("#totalIvaDiez").val()
+                };
 
-                        var lines = $('td', tr).map(function (index, td) {
+                $('#presupuestoDetalle tr.detalle').each(function (index, tr) {
 
-                            if (index != 9 && index != 1) {                                
-                                return $(td).text();
-                            }
-                        });
-                        console.log(lines);
-                        vm.PresupuestoDetalles.push({
-                            ProductoId: lines[0],
-                            Cantidad: lines[2],
-                            Total: lines[4],
-                            TotalLineaExenta: lines[5],
-                            TotalLineaCincoXCiento: lines[6],
-                            TotalLineaDiezXCiento: lines[7]
-                        });
+                    var lines = $('td', tr).map(function (index, td) {
 
+                        if (index != 9 && index != 1) {
+                            return $(td).text();
+                        }
+                    });
+                    console.log(lines);
+                    vm.PresupuestoDetalles.push({
+                        ProductoId: lines[0],
+                        Cantidad: lines[2],
+                        Total: lines[4],
+                        TotalLineaExenta: lines[5],
+                        TotalLineaCincoXCiento: lines[6],
+                        TotalLineaDiezXCiento: lines[7]
                     });
 
-                    $.ajax({
-                        url: "/api/presupuestos",
-                        method: "post",
-                        data: vm
-                    })
+                });
+
+                $.ajax({
+                    url: "/api/presupuestos",
+                    method: "post",
+                    data: vm
+                })
                         .done(function (presupuesto) {
                             if (presupuesto.Success) {
                                 console.log(presupuesto.Id);
@@ -521,12 +580,8 @@
                                     PresupuestoDetalles: []
                                 }
                                 toastr.error("<p>Ocurrió algo inesperado</p>");
-                            }                            
+                            }
                         });
-
-                    console.log(vm);
-                    return false;
-                }
             });
 
             toastr.options = {

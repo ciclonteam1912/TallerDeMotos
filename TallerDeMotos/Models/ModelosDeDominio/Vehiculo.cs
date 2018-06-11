@@ -57,6 +57,14 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Aseguradora")]
         public byte AseguradoraId { get; set; }
 
+        public string NombreCompleto
+        {
+            get
+            {
+                return Modelo.Marca.Nombre + " " + Modelo.Nombre?.ToUpper() + "-" + Matricula.ToUpper();
+            }
+        }
+
         public ICollection<Presupuesto> Presupuestos { get; set; }
 
         public Vehiculo()

@@ -39,6 +39,9 @@ namespace TallerDeMotos.Controllers.APIs
         [HttpPost]
         public IHttpActionResult CrearPresupuesto(NuevoPresupuestoDto nuevoPresupuestoDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             var presupuestoDto = new PresupuestoDto
             {
                 FechaDeEmision = nuevoPresupuestoDto.Presupuesto.FechaDeEmision,

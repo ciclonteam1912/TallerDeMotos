@@ -85,8 +85,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
-                                        @*<a id="linkModal" href="~/Producto/NuevoProducto" class="btn-link" target="_blank" style="text-decoration:none" title="Agregar Producto"><i class="fa fa-plus"></i></a>*@
+                                        <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>                                        
                                     </td>
                                     <td>
                                         <input id="productosId" style="width: 150px; display:inline-block" />
@@ -151,38 +150,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>       
         $(document).ready(function () {
-            /* Bind Mutation Events */
-            var elements = $("#contenido").find("[data-role=combobox],[data-role=dropdownlist],[data-role=numerictextbox],[data-role^=date],[data-role=multiselect]");
-
-            //correct mutation event detection
-            var hasMutationEvents = ("MutationEvent" in window),
-                MutationObserver = window.WebKitMutationObserver || window.MutationObserver;
-
-            if (MutationObserver) {
-                var observer = new MutationObserver(function (mutations) {
-                    var idx = 0,
-                        mutation,
-                        length = mutations.length;
-
-                    for (; idx < length; idx++) {
-                        mutation = mutations[idx];
-                        if (mutation.attributeName === "class") {
-                            updateCssOnPropertyChange(mutation);
-                        }
-                    }
-                }),
-                config = { attributes: true, childList: false, characterData: false };
-
-                elements.each(function () {
-                    observer.observe(this, config);
-                });
-            } else if (hasMutationEvents) {
-                elements.bind("DOMAttrModified", updateCssOnPropertyChange);
-            } else {
-                elements.each(function () {
-                    this.attachEvent("onpropertychange", updateCssOnPropertyChange);
-                });
-            }
+            UseMutationObserver();
 
             $("#contenido").fadeIn(2000);
             $("#menuCompras").addClass('active');

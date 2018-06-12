@@ -21,7 +21,9 @@ namespace TallerDeMotos
                 "~/Scripts/kendo/messages/kendo.messages.es-ES.min.js",
                 "~/Scripts/kendo/cultures/kendo.culture.es-ES.min.js",
                 // "~/Scripts/kendo/kendo.timezones.min.js", // uncomment if using the Scheduler
-                "~/Scripts/kendo/kendo.aspnetmvc.min.js"));
+                "~/Scripts/kendo/kendo.aspnetmvc.min.js",
+                "~/Scripts/kendo/mutationObserver.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*",

@@ -1242,6 +1242,7 @@
     </Content>
     <Content Include="Scripts\custom-jquery-validation.js" />
     <Content Include="Scripts\kendo\kendo.aspnetmvc.min.js" />
+    <Content Include="Scripts\kendo\mutationObserver.js" />
     <Content Include="Views\OrdenCompra\OrdenCompraReport.cshtml" />
     <Content Include="Reports\OrdenCompraDetalles.trdp" />
     <Content Include="Reports\Presupuesto.trdp">

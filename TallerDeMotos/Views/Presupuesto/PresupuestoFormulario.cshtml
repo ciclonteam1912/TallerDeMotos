@@ -185,7 +185,7 @@
                     return $(td).text();
                 });
             });
-        }
+        }        
 
         $.validator.setDefaults({
             ignore: "",
@@ -199,7 +199,6 @@
             //}
         });
 
-
         function updateCssOnPropertyChange(e) {
             var element = $(e.target);
 
@@ -210,39 +209,8 @@
                    .toggleClass("k-invalid", element.hasClass("input-validation-error"));
         }
 
-        $(document).ready(function () {
-            /* Bind Mutation Events */
-            var elements = $("#contenido").find("[data-role=combobox],[data-role=dropdownlist],[data-role=numerictextbox],[data-role^=date],[data-role=multiselect]");
-
-            //correct mutation event detection
-            var hasMutationEvents = ("MutationEvent" in window),
-                MutationObserver = window.WebKitMutationObserver || window.MutationObserver;
-
-            if (MutationObserver) {
-                var observer = new MutationObserver(function (mutations) {
-                    var idx = 0,
-                        mutation,
-                        length = mutations.length;
-
-                    for (; idx < length; idx++) {
-                        mutation = mutations[idx];
-                        if (mutation.attributeName === "class") {
-                            updateCssOnPropertyChange(mutation);
-                        }
-                    }
-                }),
-                config = { attributes: true, childList: false, characterData: false };
-
-                elements.each(function () {
-                    observer.observe(this, config);
-                });
-            } else if (hasMutationEvents) {
-                elements.bind("DOMAttrModified", updateCssOnPropertyChange);
-            } else {
-                elements.each(function () {
-                    this.attachEvent("onpropertychange", updateCssOnPropertyChange);
-                });
-            }
+        $(document).ready(function () {            
+            UseMutationObserver();
 
             $("#contenido").fadeIn(2000);
             $("#menuVentas").addClass('active');
@@ -397,7 +365,6 @@
                 
                 if (bandera) {
                     todoEsValido = false;
-                    console.log("oike");
                     $('.k-dropdown').siblings('span.error-repetido').css('display', 'block');
                 } else {
                     $('.k-dropdown').siblings('span.error-repetido').css('display', 'none');
@@ -439,7 +406,7 @@
                     $("#totalExentas").val(totalExentas);
                     $("#totalIvaCinco").val(totalIVACinco);
                     $("#totalIvaDiez").val(totalIVADiez);
-                    console.log(productoIva);
+
                     var totalLineaExentas = productoIva == 0 ? total : 0;
                     var totalLineaCincoXCiento = productoIva == 5 ? total : 0;
                     var totalLineaDiezXCiento = productoIva == 10 ? total : 0;
@@ -528,7 +495,7 @@
                             return $(td).text();
                         }
                     });
-                    console.log(lines);
+
                     vm.PresupuestoDetalles.push({
                         ProductoId: lines[0],
                         Cantidad: lines[2],
@@ -547,7 +514,7 @@
                 })
                         .done(function (presupuesto) {
                             if (presupuesto.Success) {
-                                console.log(presupuesto.Id);
+                                
                                 toastr.success("Hoja de Presupuesto creada con éxito.");
                                 $("#submit").prop("disabled", true);
                                 $("#imprimirPresupuesto").remove();

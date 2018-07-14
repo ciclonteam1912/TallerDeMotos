@@ -12,10 +12,12 @@ namespace TallerDeMotos.Controllers.APIs
     public class FacturaVentasController : ApiController
     {
         private ApplicationDbContext _context;
+        private ConexionBD conexionBD;
 
         public FacturaVentasController()
         {
             _context = new ApplicationDbContext();
+            conexionBD = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)
@@ -25,14 +27,12 @@ namespace TallerDeMotos.Controllers.APIs
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
-        public IHttpActionResult CrearFacturaCompra(NuevaFacturaVentaDto nuevaFacturaVentaDto)
+        public IHttpActionResult CrearFacturaVenta(NuevaFacturaVentaDto nuevaFacturaVentaDto)
         {
             try
             {
                 var facturaVentaDto = new FacturaVentaDto
                 {
-                    Id = nuevaFacturaVentaDto.FacturaVentaDto.Id,
-                    PresupuestoId = nuevaFacturaVentaDto.FacturaVentaDto.PresupuestoId,
                     NumeroFactura = nuevaFacturaVentaDto.FacturaVentaDto.NumeroFactura,
                     TalonarioId = nuevaFacturaVentaDto.FacturaVentaDto.TalonarioId,
                     FechaFacturaVenta = nuevaFacturaVentaDto.FacturaVentaDto.FechaFacturaVenta,
@@ -44,11 +44,18 @@ namespace TallerDeMotos.Controllers.APIs
                 var facturaVenta = Mapper.Map<FacturaVentaDto, FacturaVenta>(facturaVentaDto);
                 _context.FacturaVentas.Add(facturaVenta);
 
+                if(nuevaFacturaVentaDto.FacturaVentaDto.PresupuestoCodigo > 0)
+                {
+                    var presupuesto = _context.Presupuestos.Find(nuevaFacturaVentaDto.FacturaVentaDto.PresupuestoCodigo);
+                    _context.Presupuestos.Attach(presupuesto);
+                    facturaVenta.Presupuesto = presupuesto;
+                }
+
                 foreach (var detalle in nuevaFacturaVentaDto.FacturaVentaDetalles)
                 {
+                   
                     var facturaVentaDetalleDto = new FacturaVentaDetalleDto
-                    {
-                        FacturaVentaId = nuevaFacturaVentaDto.FacturaVentaDto.Id,
+                    {                        
                         ProductoId = detalle.ProductoId,
                         Precio = detalle.Precio,
                         Cantidad = detalle.Cantidad,
@@ -57,15 +64,14 @@ namespace TallerDeMotos.Controllers.APIs
 
                     var facturaVentaDetalle = Mapper.Map<FacturaVentaDetalleDto, FacturaVentaDetalle>(facturaVentaDetalleDto);
                     _context.FacturaVentaDetalles.Add(facturaVentaDetalle);
-                }
-
+                }               
 
                 _context.SaveChanges();
             }
             catch (Exception ex)
             {
                 var exceptionMessage = "PK_dbo.FacturaVentas";
-                if (ex.InnerException.InnerException.Message.Contains(exceptionMessage))
+                if (ex.InnerException.Message.Contains(exceptionMessage))
                     return Json(new JsonResponse { Success = false, Message = exceptionMessage });
             }
 

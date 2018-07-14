@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Html.Partial("_MenuVertical")
+
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <form id="facturaVentaFormulario">
         <div class="row" id="facturaCabecera" style="display: none">
@@ -154,12 +155,12 @@
                         success: function (detalles) {
                             $.each(detalles, function (i, item) {
                                 var presupuesto = '<tr class="detalle">' +
-                                '<td><input type="number" value="' + item.ProductoId + '" class="form-control" id="productoId' + i + '" readonly/></td>' +
-                                '<td><input type="text" value="' + item.Producto.Descripcion + '" class="form-control" id="productoDescripcion' + i + '" readonly/></td>' +
-                                '<td><input type="number" value="' + item.Producto.PrecioVenta + '" class="form-control" id="precioVenta' + i + '" readonly/></td>' +
-                                '<td><input type="number" value="' + item.Cantidad + '" class="form-control" id="cantidad' + i + '" onfocusout="myFunction(' + i + ')" min="1" max="99" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" required/></td>' +
-                                '<td><input type="number" value="' + item.Producto.Iva + '" class="form-control" id="iva' + i + '" readonly/></td>' +
-                                '<td><input type="number" value="' + item.Total + '" class="form-control" id="total' + i + '" readonly/></td>' +
+                                '<td>' + item.ProductoId + '</td>' +
+                                '<td>' + item.Producto.Descripcion + '</td>' +
+                                '<td>' + item.Producto.PrecioVenta + '</td>' +
+                                '<td>' + item.Cantidad + '</td>' +
+                                '<td>' + item.Producto.Iva + '</td>' +
+                                '<td>' + item.Total + '</td>' +
                                 '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
                                 '</tr>';
                                 subtotal = subtotal + item.Total;
@@ -239,7 +240,7 @@
 
                 nuevaFacturaVentaDto.FacturaVentaDto = {                    
                     Id: $("#presupuestoCodigo").val(),
-                    PresupuestoId: $("#presupuestoCodigo").val(),
+                    PresupuestoCodigo: $("#presupuestoCodigo").val(),
                     NumeroFactura: $("#nroFactura").val(),
                     TalonarioId: $("#talonarioCodigo").val(),
                     FechaFacturaVenta: $("#fechaFactura").val(),
@@ -247,9 +248,16 @@
                 }
 
                 $('#facturaVentaDetalle tr.detalle').each(function (index, tr) {
-                    var lines = $('td input', tr).map(function (index, td) {
-                        if (index != 1 && index != 6)
-                            return $(td).val();
+                    //var lines = $('td input', tr).map(function (index, td) {
+                    //    if (index != 1 && index != 6)
+                    //        return $(td).val();
+                    //});
+
+                    var lines = $('td', tr).map(function (index, td) {
+
+                        if (index != 1 && index != 6) {
+                            return $(td).text();
+                        }
                     });
 
                     nuevaFacturaVentaDto.FacturaVentaDetalles.push({

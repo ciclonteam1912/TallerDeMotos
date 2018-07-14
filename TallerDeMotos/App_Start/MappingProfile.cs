@@ -57,7 +57,6 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<PresupuestoDetalleDto, PresupuestoDetalle>();
             Mapper.CreateMap<FacturaVentaDto, FacturaVenta>();
             Mapper.CreateMap<FacturaVentaDetalleDto, FacturaVentaDetalle>();
-
             Mapper.CreateMap<MovimientoCajaViewModel, MovimientoCaja>();
             Mapper.CreateMap<MovimientoCajaViewModel, MovimientoFormaPagoBanco>();
         }

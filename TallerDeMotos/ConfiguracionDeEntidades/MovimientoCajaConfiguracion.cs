@@ -15,20 +15,27 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(mc => mc.AperturaCierreCajaId)
                 .HasColumnName("AperturaCierreCodigo");
 
-            Property(mc => mc.FacturaVentaId)
-                .HasColumnName("FacturaVentaCodigo");
+            //Property(mc => mc.FacturaVentaId)
+            //    .HasColumnName("FacturaVentaCodigo");
 
             Property(mc => mc.TipoMovimientoId)
                 .HasColumnName("TipoMovimientoCodigo");
 
+            //Relación de uno a muchos.
             HasRequired(mc => mc.AperturaCierreCaja)
                 .WithMany(ac => ac.MovimientoCajas)
                 .WillCascadeOnDelete(false);
 
-            HasRequired(mc => mc.FacturaVenta)
-                .WithMany(fc => fc.MovimientoCajas)
-                .WillCascadeOnDelete(false);
+            //HasRequired(mc => mc.FacturaVenta)
+            //    .WithMany(fv => fv.MovimientoCajas)
+            //    .WillCascadeOnDelete(false);
+            //Relación de uno a uno.
+            //HasRequired(mc => mc.FacturaVenta)
+            //    .WithRequiredDependent(fv => fv.MovimientoCaja)                
+            //    .Map(mc => mc.MapKey("FacturaVentaCodigo"))
+            //    .WillCascadeOnDelete(false);
 
+            //Relación de uno a muchos
             HasRequired(mc => mc.TipoMovimiento)
                 .WithMany(tm => tm.MovimientoCajas)
                 .WillCascadeOnDelete(false);

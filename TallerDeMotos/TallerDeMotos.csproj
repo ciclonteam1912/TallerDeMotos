@@ -663,6 +663,58 @@
     <Compile Include="Migrations\201805261546460_AgregarColumnasParaCadaTotal.Designer.cs">
       <DependentUpon>201805261546460_AgregarColumnasParaCadaTotal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807081213459_ArreglandoMigracion.cs" />
+    <Compile Include="Migrations\201807081213459_ArreglandoMigracion.Designer.cs">
+      <DependentUpon>201807081213459_ArreglandoMigracion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807081220373_AgregarRelacionUnoACeroOUnoEntreFacturaVentasYPresupuestos.cs" />
+    <Compile Include="Migrations\201807081220373_AgregarRelacionUnoACeroOUnoEntreFacturaVentasYPresupuestos.Designer.cs">
+      <DependentUpon>201807081220373_AgregarRelacionUnoACeroOUnoEntreFacturaVentasYPresupuestos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082127486_EliminarColumnaPresupuestoCodigoDeFacturaVentas.cs" />
+    <Compile Include="Migrations\201807082127486_EliminarColumnaPresupuestoCodigoDeFacturaVentas.Designer.cs">
+      <DependentUpon>201807082127486_EliminarColumnaPresupuestoCodigoDeFacturaVentas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082141219_EliminarColumnaFacturaVentaCodigoEnMovimientoCajas.cs" />
+    <Compile Include="Migrations\201807082141219_EliminarColumnaFacturaVentaCodigoEnMovimientoCajas.Designer.cs">
+      <DependentUpon>201807082141219_EliminarColumnaFacturaVentaCodigoEnMovimientoCajas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082153119_EliminarColumnaFacturaVentaCodigoEnFacturaVentaDetalles.cs" />
+    <Compile Include="Migrations\201807082153119_EliminarColumnaFacturaVentaCodigoEnFacturaVentaDetalles.Designer.cs">
+      <DependentUpon>201807082153119_EliminarColumnaFacturaVentaCodigoEnFacturaVentaDetalles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082201543_EliminarTablaFacturaVentas.cs" />
+    <Compile Include="Migrations\201807082201543_EliminarTablaFacturaVentas.Designer.cs">
+      <DependentUpon>201807082201543_EliminarTablaFacturaVentas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082208471_CreacionDeTablaFacturaVentas1.cs" />
+    <Compile Include="Migrations\201807082208471_CreacionDeTablaFacturaVentas1.Designer.cs">
+      <DependentUpon>201807082208471_CreacionDeTablaFacturaVentas1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082214137_AgregarColumnaUsuarioCodigoEnFacturaVentas.cs" />
+    <Compile Include="Migrations\201807082214137_AgregarColumnaUsuarioCodigoEnFacturaVentas.Designer.cs">
+      <DependentUpon>201807082214137_AgregarColumnaUsuarioCodigoEnFacturaVentas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082220085_AgregarColumnaTalonarioCodigoEnFacturaVentas1.cs" />
+    <Compile Include="Migrations\201807082220085_AgregarColumnaTalonarioCodigoEnFacturaVentas1.Designer.cs">
+      <DependentUpon>201807082220085_AgregarColumnaTalonarioCodigoEnFacturaVentas1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082223114_AgregarColumnaEstadoCodigoEnFacturaVentas.cs" />
+    <Compile Include="Migrations\201807082223114_AgregarColumnaEstadoCodigoEnFacturaVentas.Designer.cs">
+      <DependentUpon>201807082223114_AgregarColumnaEstadoCodigoEnFacturaVentas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082229583_AgregarColumnaOpcionalPresupuestoCodigoEnFacturaVentas.cs" />
+    <Compile Include="Migrations\201807082229583_AgregarColumnaOpcionalPresupuestoCodigoEnFacturaVentas.Designer.cs">
+      <DependentUpon>201807082229583_AgregarColumnaOpcionalPresupuestoCodigoEnFacturaVentas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082244550_EliminarTablaFacturaVentaDetalles.cs" />
+    <Compile Include="Migrations\201807082244550_EliminarTablaFacturaVentaDetalles.Designer.cs">
+      <DependentUpon>201807082244550_EliminarTablaFacturaVentaDetalles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082250425_CreacionDeTablaFacturaVentaDetalles1.cs" />
+    <Compile Include="Migrations\201807082250425_CreacionDeTablaFacturaVentaDetalles1.Designer.cs">
+      <DependentUpon>201807082250425_CreacionDeTablaFacturaVentaDetalles1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -2845,6 +2897,45 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805261546460_AgregarColumnasParaCadaTotal.resx">
       <DependentUpon>201805261546460_AgregarColumnasParaCadaTotal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807081213459_ArreglandoMigracion.resx">
+      <DependentUpon>201807081213459_ArreglandoMigracion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807081220373_AgregarRelacionUnoACeroOUnoEntreFacturaVentasYPresupuestos.resx">
+      <DependentUpon>201807081220373_AgregarRelacionUnoACeroOUnoEntreFacturaVentasYPresupuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082127486_EliminarColumnaPresupuestoCodigoDeFacturaVentas.resx">
+      <DependentUpon>201807082127486_EliminarColumnaPresupuestoCodigoDeFacturaVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082141219_EliminarColumnaFacturaVentaCodigoEnMovimientoCajas.resx">
+      <DependentUpon>201807082141219_EliminarColumnaFacturaVentaCodigoEnMovimientoCajas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082153119_EliminarColumnaFacturaVentaCodigoEnFacturaVentaDetalles.resx">
+      <DependentUpon>201807082153119_EliminarColumnaFacturaVentaCodigoEnFacturaVentaDetalles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082201543_EliminarTablaFacturaVentas.resx">
+      <DependentUpon>201807082201543_EliminarTablaFacturaVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082208471_CreacionDeTablaFacturaVentas1.resx">
+      <DependentUpon>201807082208471_CreacionDeTablaFacturaVentas1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082214137_AgregarColumnaUsuarioCodigoEnFacturaVentas.resx">
+      <DependentUpon>201807082214137_AgregarColumnaUsuarioCodigoEnFacturaVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082220085_AgregarColumnaTalonarioCodigoEnFacturaVentas1.resx">
+      <DependentUpon>201807082220085_AgregarColumnaTalonarioCodigoEnFacturaVentas1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082223114_AgregarColumnaEstadoCodigoEnFacturaVentas.resx">
+      <DependentUpon>201807082223114_AgregarColumnaEstadoCodigoEnFacturaVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082229583_AgregarColumnaOpcionalPresupuestoCodigoEnFacturaVentas.resx">
+      <DependentUpon>201807082229583_AgregarColumnaOpcionalPresupuestoCodigoEnFacturaVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082244550_EliminarTablaFacturaVentaDetalles.resx">
+      <DependentUpon>201807082244550_EliminarTablaFacturaVentaDetalles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082250425_CreacionDeTablaFacturaVentaDetalles1.resx">
+      <DependentUpon>201807082250425_CreacionDeTablaFacturaVentaDetalles1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

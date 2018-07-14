@@ -30,7 +30,7 @@ namespace TallerDeMotos.Controllers.APIs
             var movimientos = _context.MovimientoCajas
                 .Include(mov => mov.AperturaCierreCaja)
                 .Include(mov => mov.AperturaCierreCaja.Caja)
-                .Include(mov => mov.FacturaVenta)
+                //.Include(mov => mov.FacturaVenta)
                 .Include(mov => mov.TipoMovimiento)
                 .ToList()
                 .Select(Mapper.Map<MovimientoCaja, MovimientoCajaDto>)

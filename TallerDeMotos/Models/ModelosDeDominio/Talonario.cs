@@ -12,10 +12,6 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [RestriccionUnicaEnTalonario]
         public int Timbrado { get; set; }
 
-        [Required]
-        [StringLength(10)]
-        public string Ruc { get; set; }
-
         [Display(Name = "Fecha de Inicio de Vigencia")]
         public DateTime FechaInicioVigencia { get; set; }
 
@@ -36,11 +32,14 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public bool EstaActivo { get; set; }
 
-        public ApplicationUser Usuario { get; set; }
+        public Caja Caja { get; set; }
 
-        [Required]
-        [Display(Name = "Asignar Talonario a Usuario")]
-        public string UsuarioId { get; set; }
+        [Display(Name = "Asignar Talonario a una Caja")]
+        public int CajaId { get; set; }
+        public Sucursal Sucursal { get; set; }
+
+        [Display(Name = "Asignar Talonario a una Sucursal")]
+        public int SucursalId { get; set; }
 
         public ICollection<FacturaVenta> FacturaVentas { get; set; }
 

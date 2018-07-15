@@ -1,0 +1,30 @@
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace TallerDeMotos.Models.ModelosDeDominio
+{
+    public class Sucursal
+    {
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public string Direccion { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Telefono { get; set; }
+
+        public Empresa Empresa { get; set; }
+        public int EmpresaId { get; set; }
+        public Ciudad Ciudad { get; set; }
+        public int CiudadId { get; set; }
+
+        public ICollection<Talonario> Talonarios { get; set; }
+
+        public Sucursal()
+        {
+            Talonarios = new HashSet<Talonario>();
+        }
+    }
+}

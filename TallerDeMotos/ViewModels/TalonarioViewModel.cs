@@ -8,7 +8,8 @@ namespace TallerDeMotos.ViewModels
 {
     public class TalonarioViewModel
     {
-        public IEnumerable<ApplicationUser> Usuarios { get; set; }
+        public IEnumerable<Caja> Cajas { get; set; }
+        public IEnumerable<Sucursal> Sucursales { get; set; }
 
         public int Id { get; set; }
 
@@ -41,9 +42,11 @@ namespace TallerDeMotos.ViewModels
 
         public bool EstaActivo { get; set; }
 
-        [Required]
-        [Display(Name = "Asignar Talonario a Usuario")]
-        public string UsuarioId { get; set; }
+        [Display(Name = "Asignar Talonario a una Caja")]
+        public int CajaId { get; set; }
+
+        [Display(Name = "Asignar Talonario a una Sucursal")]
+        public int SucursalId { get; set; }
 
         public string Titulo
         {
@@ -62,14 +65,14 @@ namespace TallerDeMotos.ViewModels
         {
             Id = talonario.Id;
             Timbrado = talonario.Timbrado;
-            Ruc = talonario.Ruc;
             FechaInicioVigencia = talonario.FechaInicioVigencia;
             FechaFinVigencia = talonario.FechaFinVigencia;
             NumeroFacturaInicial = talonario.NumeroFacturaInicial;
             NumeroFacturaFinal = talonario.NumeroFacturaFinal;
             NumeroFacturaActual = talonario.NumeroFacturaActual;
             EstaActivo = talonario.EstaActivo;
-            UsuarioId = talonario.UsuarioId;
+            CajaId = talonario.CajaId;
+            SucursalId = talonario.SucursalId;
         }
     }
 }

@@ -36,7 +36,8 @@ namespace TallerDeMotos.Controllers
         {
             var talonario = new TalonarioViewModel
             {
-                Usuarios = _context.Users.ToList()
+                Cajas = _context.Cajas.ToList(),
+                Sucursales = _context.Sucursales.ToList()
             };
 
             return View("TalonarioFormulario", talonario);
@@ -51,7 +52,8 @@ namespace TallerDeMotos.Controllers
             {
                 var viewModel = new TalonarioViewModel(talonario)
                 {
-                    Usuarios = _context.Users.ToList()
+                    Cajas = _context.Cajas.ToList(),
+                    Sucursales = _context.Sucursales.ToList()
                 };
 
                 return View("TalonarioFormulario", viewModel);
@@ -80,7 +82,8 @@ namespace TallerDeMotos.Controllers
 
             var viewModel = new TalonarioViewModel(talonario)
             {
-                Usuarios = _context.Users.ToList()
+                Cajas = _context.Cajas.ToList(),
+                Sucursales = _context.Sucursales.ToList()
             };
 
             return View("TalonarioFormulario", viewModel);

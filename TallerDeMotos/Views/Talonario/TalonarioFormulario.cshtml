@@ -10,6 +10,8 @@
 
     @using (Html.BeginForm("GuardarTalonario", "Talonario"))
     {
+        @Html.Partial("_Sucursal")
+
         <div class="panel panel-default">
             <div class="panel-heading">@Model.Titulo</div>
             <div class="panel-body">
@@ -26,9 +28,9 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(t => t.UsuarioId)
-                            @Html.DropDownListFor(t => t.UsuarioId, new SelectList(Model.Usuarios, "Id", "UserName"), "Seleccionar Usuario", new { @class = "form-control", id = "usuarioId" })
-                            @Html.ValidationMessageFor(t => t.UsuarioId)
+                            @Html.LabelFor(t => t.CajaId)
+                            @Html.DropDownListFor(t => t.CajaId, new SelectList(Model.Cajas, "Id", "Nombre"), "Seleccionar Caja", new { @class = "form-control", id = "cajaId" })
+                            @Html.ValidationMessageFor(t => t.CajaId)
                         </div>
                     </div>
                 </div>
@@ -53,9 +55,20 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(t => t.Ruc)
-                            @Html.TextBoxFor(t => t.Ruc, new { @class = "form-control", placeholder = "Ingrese Ruc...", autocomplete = "off", maxlength = 10 })
-                            @Html.ValidationMessageFor(t => t.Ruc)
+                            @Html.LabelFor(t => t.SucursalId, new { id = "labelSucursal" })                            
+                            @(Html.Kendo().DropDownList()
+                                .Name("SucursalId")
+                                .DataTextField("Id")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione una Sucursal...")
+                                .HtmlAttributes(new { style = "width: 75%" })
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/sucursales"));
+                                })
+                            )
+                            <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
+                            <div>@Html.ValidationMessageFor(t => t.SucursalId)</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -64,7 +77,7 @@
                             @Html.TextBoxFor(t => t.NumeroFacturaInicial, new { @class = "form-control", placeholder = "N° Factura Inicial...", autocomplete = "off", type = "number", min = "0", max = "9999999999999", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
                             @Html.ValidationMessageFor(t => t.NumeroFacturaInicial)
                         </div>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
@@ -113,19 +126,22 @@
             $("#menuVentas").addClass('active');
 
             var id = $("#Id").val();
+            var ddl = $("#SucursalId").data("kendoDropDownList");
 
-            //kendo.culture("es-ES");
             $("#FechaInicioVigencia").kendoDatePicker({
                 culture: "es-ES",
                 value: id == 0 ? new Date() : $("#FechaInicioVigencia").val(),
                 dateInput: true
             });
 
-            //kendo.culture("es-ES");
             $("#FechaFinVigencia").kendoDatePicker({
                 value: id == 0 ? new Date() : $("#FechaFinVigencia").val(),
                 culture: "es-ES",
                 dateInput: true
+            });
+
+            $('#myModal').on('hidden.bs.modal', function () {
+                ddl.dataSource.read();
             });
         });
     </script>

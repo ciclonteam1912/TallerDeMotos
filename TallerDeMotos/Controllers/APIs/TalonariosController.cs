@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using TallerDeMotos.Models;
@@ -22,22 +22,25 @@ namespace TallerDeMotos.Controllers.APIs
         [HttpGet]
         public IHttpActionResult ObtenerTalonarios()
         {
-            var usuarioId = User.Identity.GetUserId();
-            var talonarios = _context.Talonarios.Where(t => t.UsuarioId == usuarioId).ToList();
+            //var usuarioId = User.Identity.GetUserId();
+            var talonarios = _context.Talonarios
+                .Include(t => t.Caja)
+                .Include(t => t.Sucursal)
+                .ToList();
             return Ok(talonarios);
         }
 
-        [HttpGet]
-        public IHttpActionResult ObtenerTalonarios(int id)
-        {
-            var usuarioId = User.Identity.GetUserId();
-            var talonarios = _context.Talonarios.Where(t => t.Id == id && t.UsuarioId == usuarioId).ToList();
+        //[HttpGet]
+        //public IHttpActionResult ObtenerTalonarios(int id)
+        //{
+        //    var usuarioId = User.Identity.GetUserId();
+        //    var talonarios = _context.Talonarios.Where(t => t.Id == id && t.UsuarioId == usuarioId).ToList();
 
-            if (talonarios == null)
-                return NotFound();
+        //    if (talonarios == null)
+        //        return NotFound();
 
-            return Ok(talonarios);
-        }
+        //    return Ok(talonarios);
+        //}
 
         [HttpDelete]
         public IHttpActionResult EliminarTalonario(int id)

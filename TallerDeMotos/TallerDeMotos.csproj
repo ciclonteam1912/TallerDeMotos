@@ -233,6 +233,7 @@
     <Compile Include="ConfiguracionDeEntidades\ClienteConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CombustibleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\EmpleadoConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\EmpresaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\EstadoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FacturaCompraConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FacturaCompraDetalleConfiguracion.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="ConfiguracionDeEntidades\ProductoTipoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ProveedorConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ServicioBasicoConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\SucursalConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TalonarioConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TipoDocumentoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TipoMotorConfiguracion.cs" />
@@ -268,6 +270,7 @@
     <Compile Include="Controllers\APIs\ClientesController.cs" />
     <Compile Include="Controllers\APIs\CombustiblesController.cs" />
     <Compile Include="Controllers\APIs\EmpleadosController.cs" />
+    <Compile Include="Controllers\APIs\EmpresasController.cs" />
     <Compile Include="Controllers\APIs\EstadosController.cs" />
     <Compile Include="Controllers\APIs\FacturaCompraDetallesController.cs" />
     <Compile Include="Controllers\APIs\FacturaComprasController.cs" />
@@ -284,6 +287,7 @@
     <Compile Include="Controllers\APIs\ProveedoresController.cs" />
     <Compile Include="Controllers\APIs\RolesController.cs" />
     <Compile Include="Controllers\APIs\ServiciosBasicosController.cs" />
+    <Compile Include="Controllers\APIs\SucursalesController.cs" />
     <Compile Include="Controllers\APIs\TalonariosController.cs" />
     <Compile Include="Controllers\APIs\TipoProductosController.cs" />
     <Compile Include="Controllers\APIs\UsuariosController.cs" />
@@ -312,6 +316,7 @@
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RolController.cs" />
     <Compile Include="Controllers\ServicioBasicoController.cs" />
+    <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Controllers\TalonarioController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VehiculoController.cs" />
@@ -321,6 +326,7 @@
     <Compile Include="Dtos\CajaDto.cs" />
     <Compile Include="Dtos\CiudadDto.cs" />
     <Compile Include="Dtos\ClienteDto.cs" />
+    <Compile Include="Dtos\EmpresaDto.cs" />
     <Compile Include="Dtos\EstadoDto.cs" />
     <Compile Include="Dtos\FacturaCompraDetalleDto.cs" />
     <Compile Include="Dtos\FacturaCompraDto.cs" />
@@ -338,6 +344,7 @@
     <Compile Include="Dtos\PresupuestoDto.cs" />
     <Compile Include="Dtos\ProductoDto.cs" />
     <Compile Include="Dtos\ProveedorDto.cs" />
+    <Compile Include="Dtos\SucursalDto.cs" />
     <Compile Include="Dtos\TipoMovimientoDto.cs" />
     <Compile Include="Dtos\VehiculoDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -715,6 +722,30 @@
     <Compile Include="Migrations\201807082250425_CreacionDeTablaFacturaVentaDetalles1.Designer.cs">
       <DependentUpon>201807082250425_CreacionDeTablaFacturaVentaDetalles1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807141458267_CreacionDeTablaEmpresas.cs" />
+    <Compile Include="Migrations\201807141458267_CreacionDeTablaEmpresas.Designer.cs">
+      <DependentUpon>201807141458267_CreacionDeTablaEmpresas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807141508576_AgregarDatosEnTablaEmpresas.cs" />
+    <Compile Include="Migrations\201807141508576_AgregarDatosEnTablaEmpresas.Designer.cs">
+      <DependentUpon>201807141508576_AgregarDatosEnTablaEmpresas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807141558549_CreacionDeTablaSucursales.cs" />
+    <Compile Include="Migrations\201807141558549_CreacionDeTablaSucursales.Designer.cs">
+      <DependentUpon>201807141558549_CreacionDeTablaSucursales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807141617110_EliminarCamposUsuarioIdYRucDeTalonarios.cs" />
+    <Compile Include="Migrations\201807141617110_EliminarCamposUsuarioIdYRucDeTalonarios.Designer.cs">
+      <DependentUpon>201807141617110_EliminarCamposUsuarioIdYRucDeTalonarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807141630279_AgregarCampoCajaCodigoEnTalonarios.cs" />
+    <Compile Include="Migrations\201807141630279_AgregarCampoCajaCodigoEnTalonarios.Designer.cs">
+      <DependentUpon>201807141630279_AgregarCampoCajaCodigoEnTalonarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807141639316_AgregarCampoSucursalCodigoEnTalonarios.cs" />
+    <Compile Include="Migrations\201807141639316_AgregarCampoSucursalCodigoEnTalonarios.Designer.cs">
+      <DependentUpon>201807141639316_AgregarCampoSucursalCodigoEnTalonarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -744,6 +775,7 @@
     <Compile Include="Models\ModelosDeDominio\Cliente.cs" />
     <Compile Include="Models\ModelosDeDominio\Combustible.cs" />
     <Compile Include="Models\ModelosDeDominio\Empleado.cs" />
+    <Compile Include="Models\ModelosDeDominio\Empresa.cs" />
     <Compile Include="Models\ModelosDeDominio\Estado.cs" />
     <Compile Include="Models\ModelosDeDominio\FacturaCompra.cs" />
     <Compile Include="Models\ModelosDeDominio\FacturaCompraDetalle.cs" />
@@ -765,6 +797,7 @@
     <Compile Include="Models\ModelosDeDominio\ProductoTipo.cs" />
     <Compile Include="Models\ModelosDeDominio\Proveedor.cs" />
     <Compile Include="Models\ModelosDeDominio\ServicioBasico.cs" />
+    <Compile Include="Models\ModelosDeDominio\Sucursal.cs" />
     <Compile Include="Models\ModelosDeDominio\Talonario.cs" />
     <Compile Include="Models\ModelosDeDominio\TipoDocumento.cs" />
     <Compile Include="Models\ModelosDeDominio\TipoMotor.cs" />
@@ -774,6 +807,7 @@
     <Compile Include="Models\ProductoServicio.cs" />
     <Compile Include="Models\RelacionFormaPagoYBanco.cs" />
     <Compile Include="Models\RoleName.cs" />
+    <Compile Include="Models\SucursalServicio.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\AseguradoraViewModel.cs" />
@@ -2643,11 +2677,13 @@
     <Content Include="Views\MovimientoCaja\MovimientoCajaFormulario.cshtml" />
     <Content Include="Views\Shared\_Banco.cshtml" />
     <Content Include="Views\MovimientoCaja\ListaDeMovimientos.cshtml" />
+    <Content Include="Views\Shared\_Sucursal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Banco\" />
     <Folder Include="Views\Ciudad\" />
+    <Folder Include="Views\Sucursal\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -2936,6 +2972,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807082250425_CreacionDeTablaFacturaVentaDetalles1.resx">
       <DependentUpon>201807082250425_CreacionDeTablaFacturaVentaDetalles1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807141458267_CreacionDeTablaEmpresas.resx">
+      <DependentUpon>201807141458267_CreacionDeTablaEmpresas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807141508576_AgregarDatosEnTablaEmpresas.resx">
+      <DependentUpon>201807141508576_AgregarDatosEnTablaEmpresas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807141558549_CreacionDeTablaSucursales.resx">
+      <DependentUpon>201807141558549_CreacionDeTablaSucursales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807141617110_EliminarCamposUsuarioIdYRucDeTalonarios.resx">
+      <DependentUpon>201807141617110_EliminarCamposUsuarioIdYRucDeTalonarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807141630279_AgregarCampoCajaCodigoEnTalonarios.resx">
+      <DependentUpon>201807141630279_AgregarCampoCajaCodigoEnTalonarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807141639316_AgregarCampoSucursalCodigoEnTalonarios.resx">
+      <DependentUpon>201807141639316_AgregarCampoSucursalCodigoEnTalonarios.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

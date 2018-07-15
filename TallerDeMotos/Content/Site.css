@@ -38,7 +38,7 @@ footer{
 }
 
 .input-validation-error, select.form-control.error, .input-validation-error .k-picker-wrap.k-state-default,
-.k-widget > span.k-invalid, .k-widget > div.k-invalid, input.k-invalid {
+.k-widget > span.k-invalid, .k-widget > div.k-invalid, input.k-invalid, .k-dropdown.input-validation-error {
     border: 2px solid red;
 }
 
@@ -262,11 +262,11 @@ a.k-grid-pdf, a.k-grid-save-changes, a.k-grid-cancel-changes {
 
 /*********************Estilos para los label************/
 
-#labelCiudad, #labelFecha{
+#labelCiudad, #labelFecha, #labelSucursal{
     display: block;
 }
 
-#ciudadId{
+#ciudadId, #sucursalId{
     display: inline;
 }
 

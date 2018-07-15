@@ -15,7 +15,6 @@ namespace TallerDeMotos.Models
         public ICollection<FacturaCompra> FacturaCompras { get; set; }
         public ICollection<Presupuesto> Presupuestos { get; set; }
         public ICollection<FacturaVenta> FacturaVentas { get; set; }
-        public ICollection<Talonario> Talonarios { get; set; }
         public ICollection<OrdenCompra> OrdenCompras { get; set; }
         public ICollection<Caja> Cajas { get; set; }
 
@@ -24,7 +23,6 @@ namespace TallerDeMotos.Models
             FacturaCompras = new HashSet<FacturaCompra>();
             Presupuestos = new HashSet<Presupuesto>();
             FacturaVentas = new HashSet<FacturaVenta>();
-            Talonarios = new HashSet<Talonario>();
             OrdenCompras = new HashSet<OrdenCompra>();
             Cajas = new HashSet<Caja>();
         }
@@ -81,6 +79,8 @@ namespace TallerDeMotos.Models
         public DbSet<Banco> Bancos { get; set; }
         public DbSet<MovimientoCajaFormaPago> MovimientosFormaPagos { get; set; }
         public DbSet<MovimientoFormaPagoBanco> MovimientoFormaPagosBancos { get; set; }
+        public DbSet<Empresa> Empresas { get; set; }
+        public DbSet<Sucursal> Sucursales { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -121,6 +121,8 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new BancoConfiguracion());
             modelBuilder.Configurations.Add(new MovimientoFormaPagoConfiguracion());
             modelBuilder.Configurations.Add(new MovimientoFormaPagoBancoConfiguracion());
+            modelBuilder.Configurations.Add(new EmpresaConfiguracion());
+            modelBuilder.Configurations.Add(new SucursalConfiguracion());
         }
 
         public static ApplicationDbContext Create()

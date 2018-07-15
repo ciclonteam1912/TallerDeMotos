@@ -17,10 +17,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public string UsuarioId { get; set; }
 
         public ICollection<AperturaCierreCaja> AperturaCierres { get; set; }
+        public ICollection<Talonario> Talonarios { get; set; }
 
         public Caja()
         {
             AperturaCierres = new HashSet<AperturaCierreCaja>();
+            Talonarios = new HashSet<Talonario>();
         }
     }
 }

@@ -237,6 +237,7 @@
     <Compile Include="ConfiguracionDeEntidades\EstadoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FacturaCompraConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FacturaCompraDetalleConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\FacturaVentaClienteConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FacturaVentaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FacturaVentaDetalleConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\FormaPagoConfiguracion.cs" />
@@ -746,6 +747,18 @@
     <Compile Include="Migrations\201807141639316_AgregarCampoSucursalCodigoEnTalonarios.Designer.cs">
       <DependentUpon>201807141639316_AgregarCampoSucursalCodigoEnTalonarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807152252249_AgregarRestriccionUnicaEnColumnaUsuarioCodigo.cs" />
+    <Compile Include="Migrations\201807152252249_AgregarRestriccionUnicaEnColumnaUsuarioCodigo.Designer.cs">
+      <DependentUpon>201807152252249_AgregarRestriccionUnicaEnColumnaUsuarioCodigo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807152340417_CambiarColumnaUsuarioCodigoAUsuarioIdEnCajas.cs" />
+    <Compile Include="Migrations\201807152340417_CambiarColumnaUsuarioCodigoAUsuarioIdEnCajas.Designer.cs">
+      <DependentUpon>201807152340417_CambiarColumnaUsuarioCodigoAUsuarioIdEnCajas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807221312001_AgregarTablaFacturaVentaClientes.cs" />
+    <Compile Include="Migrations\201807221312001_AgregarTablaFacturaVentaClientes.Designer.cs">
+      <DependentUpon>201807221312001_AgregarTablaFacturaVentaClientes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -757,6 +770,7 @@
     <Compile Include="Models\AtributosDeValidacion\PrecioVentaMayorPrecioCosto.cs" />
     <Compile Include="Models\AtributosDeValidacion\RequiredIf.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />
+    <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnCaja.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />
     <Compile Include="Models\AtributosDeValidacion\ValidateModelAttribute.cs" />
     <Compile Include="Models\BancoServicio.cs" />
@@ -780,6 +794,7 @@
     <Compile Include="Models\ModelosDeDominio\FacturaCompra.cs" />
     <Compile Include="Models\ModelosDeDominio\FacturaCompraDetalle.cs" />
     <Compile Include="Models\ModelosDeDominio\FacturaVenta.cs" />
+    <Compile Include="Models\ModelosDeDominio\FacturaVentaCliente.cs" />
     <Compile Include="Models\ModelosDeDominio\FacturaVentaDetalle.cs" />
     <Compile Include="Models\ModelosDeDominio\FormaPago.cs" />
     <Compile Include="Models\ModelosDeDominio\Marca.cs" />
@@ -815,6 +830,7 @@
     <Compile Include="ViewModels\CajaViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\EmpleadoViewModel.cs" />
+    <Compile Include="ViewModels\FacturaVentaViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -2990,6 +3006,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807141639316_AgregarCampoSucursalCodigoEnTalonarios.resx">
       <DependentUpon>201807141639316_AgregarCampoSucursalCodigoEnTalonarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807152252249_AgregarRestriccionUnicaEnColumnaUsuarioCodigo.resx">
+      <DependentUpon>201807152252249_AgregarRestriccionUnicaEnColumnaUsuarioCodigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807152340417_CambiarColumnaUsuarioCodigoAUsuarioIdEnCajas.resx">
+      <DependentUpon>201807152340417_CambiarColumnaUsuarioCodigoAUsuarioIdEnCajas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807221312001_AgregarTablaFacturaVentaClientes.resx">
+      <DependentUpon>201807221312001_AgregarTablaFacturaVentaClientes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

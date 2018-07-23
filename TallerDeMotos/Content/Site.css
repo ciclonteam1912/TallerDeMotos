@@ -280,7 +280,7 @@ tr input[type=number]{
     width: 120px !important;
 }
 
-#ordenCompraDetalle thead, #ordenDetalle thead, #facturaCompraDetalle thead, #prepDetalle thead, #presupuestoDetalle thead, #facturaVentaDetalle thead{
+#ordenCompraDetalle thead, #ordenDetalle thead, #facturaCompraDetalle thead, #prepDetalle thead, #presupuestoDetalle thead, #facturaVentaDetalle thead, #facturaVentaDetallePre thead{
     background-color: #2C3E50;
     color: #999999;
 }

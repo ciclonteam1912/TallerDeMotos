@@ -23,7 +23,7 @@ namespace TallerDeMotos.Controllers.APIs
             //.Select(Mapper.Map<Modelo, ModeloDto>);
 
             return Ok(cajas);
-        }        
+        }
 
         [HttpDelete]
         public IHttpActionResult EliminarCaja(int id)

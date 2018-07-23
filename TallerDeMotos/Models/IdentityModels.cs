@@ -81,6 +81,7 @@ namespace TallerDeMotos.Models
         public DbSet<MovimientoFormaPagoBanco> MovimientoFormaPagosBancos { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Sucursal> Sucursales { get; set; }
+        public DbSet<FacturaVentaCliente> FacturaVentaClientes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -123,6 +124,7 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new MovimientoFormaPagoBancoConfiguracion());
             modelBuilder.Configurations.Add(new EmpresaConfiguracion());
             modelBuilder.Configurations.Add(new SucursalConfiguracion());
+            modelBuilder.Configurations.Add(new FacturaVentaClienteConfiguracion());
         }
 
         public static ApplicationDbContext Create()

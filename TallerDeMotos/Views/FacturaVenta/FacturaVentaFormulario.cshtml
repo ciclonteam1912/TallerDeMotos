@@ -1,19 +1,31 @@
-﻿@{
+﻿@model TallerDeMotos.Dtos.NuevaFacturaVentaDto
+@{
     ViewBag.Title = "Factura de Venta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Html.Partial("_MenuVertical")
 
+<style>
+    .totales {
+        display: none;
+    }
+</style>
+
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <form id="facturaVentaFormulario">
-        <div class="row" id="facturaCabecera" style="display: none">
-            <h2>Factura de Venta</h2>
+        <h2>Factura de Venta</h2>
 
-            <div class="row well">
+        <div class="row">
+            <div class="checkbox">
+                <input type="checkbox" value="" id="chbPresupuesto" /> ¿Crear Factura de Venta sin Presupuesto?
+            </div>
+        </div>
+        <div class="row" id="facturaCabecera" style="display: none">            
+            <div class="row well" id="facturaConPresupuesto">
                 <div class="row">
                     <div class="col-lg-4">
                         <label>Presupuesto Código:</label>
-                        <select id="presupuestoCodigo" class="form-control" required name="presupuestoCodigo">
+                        <select id="presupuestoCodigo" class="form-control" name="presupuestoCodigo">
                             <option value="">Seleccione un Presupuesto...</option>
                         </select>
                     </div>
@@ -30,28 +42,71 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <label>Talonario:</label>
-                        <select id="talonarioCodigo" class="form-control" required name="talonarioCodigo">
-                            <option value="">Seleccione un Talonario...</option>
-                        </select>
-                    </div>   
+            </div>
+
+            <div class="row" id="facturaSinPresupuesto" style="display:none">
+                <div class="row well">
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label>Nro. de Factura:</label>
-                            <input id="nroFactura" class="form-control" type="text" readonly />
-                        </div>
-                    </div>                 
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label>Fecha de Factura de Venta:</label><br />
-                            <input id="fechaFactura" style="width: 70%" , onkeydown="return false;" />
+                            @Html.LabelFor(m => m.ClienteId)
+                            @(Html.Kendo().DropDownList()
+                                .Name("ClienteId")
+                                .DataTextField("NombreCompleto")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione un cliente...")
+                                .HtmlAttributes(new { style = "width: 100%" })
+                                .Filter("contains")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/clientes"));
+                                })
+                            )
+                            @Html.ValidationMessageFor(m => m.ClienteId)
                         </div>
                     </div>
                 </div>
+                <br />
+                <div class="row table-responsive">
+                    <table class="table" id="facturaVentaDetallePre">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input id="tipoProductos" />
+                                    <span class="error">Seleccionar Tipo de Producto</span>
+                                </td>
+                                <td>
+                                    <input id="productosId" disabled="disabled" style="width: 150px; display:inline-block" />
+                                    <span class="error-repetido">Producto o Servicio ya seleccionado</span>
+                                    <span class="error">Seleccionar Producto o Servicio</span>
+                                </td>
+                                <td>
+                                    <input type="text" id="productoDesc" readonly class="form-control" />
+                                </td>
+                                <td><input type="text" id="productoPrecio" readonly class="form-control" /></td>
+                                <td>
+                                    @Html.TextBox("productoCantidad", "", new { @class = "form-control", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
+                                </td>
+                                <td>
+                                    <input type="button" class="btn btn-primary" id="agregar" value="Agregar" />
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="number" id="productoIva" class="form-control" name="productoIva" style="display: none" />
+                </div>
             </div>
-        </div>
+        </div>        
 
         <div class="row" id="facturaDetalle" style="display:none">
             <h4>Factura de Venta Detalles</h4>
@@ -65,6 +120,9 @@
                             <th>Cantidad</th>
                             <th>IVA</th>
                             <th>Total</th>
+                            <th class="totales"></th>
+                            <th class="totales"></th>
+                            <th class="totales"></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -72,8 +130,30 @@
                 </table>
             </div>
             <div class="row">
-                <label>Total a Pagar:</label>
-                <input type="number" id="pagar" class="form-control" readonly style="width: 150px" />
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Total Exentas:</label>
+                        <input type="text" readonly class="form-control" style="width: 150px" id="totalExentas" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Total IVA 5%:</label>
+                        <input type="text" readonly class="form-control" style="width: 150px" id="totalIvaCinco" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Total IVA 10%:</label>
+                        <input type="text" readonly class="form-control" style="width: 150px" id="totalIvaDiez" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Total a Pagar:</label>
+                        <input type="number" id="pagar" class="form-control" readonly style="width: 150px" />
+                    </div>
+                </div>                
             </div>
             <div class="row">
                 <div id="footerFactura" style="padding:10px 0; text-align:right">
@@ -108,6 +188,16 @@
         }
 
         $(document).ready(function () {
+            var total = 0;
+            var totalExentas = 0;
+            var totalIVACinco = 0;
+            var totalIVADiez = 0;
+            var subTotal = 0;
+            var subTotlaIva5PorCiento = 0;
+            var subTotalIva10PorCiento = 0;
+
+            var ddlCliente = $("#ClienteId").data("kendoDropDownList");
+
             $("#facturaDetalle").hide();
             $("#facturaCabecera").fadeIn(2000);
             $("#menuVentas").addClass('active');
@@ -128,14 +218,18 @@
                 }
             });
 
-            $.ajax({
-                type: "get",
-                url: "/api/talonarios",
-                contentType: "application/json",
-                success: function (talonario) {
-                    $.each(talonario, function (i) {
-                        $("#talonarioCodigo").append($('<option></option>').val(talonario[i].Id).html(talonario[i].Id));
-                    });
+            $("#chbPresupuesto").change(function () {
+                if ($(this).is(":checked")) {
+                    $("#facturaSinPresupuesto").show();
+                    $("#facturaConPresupuesto").hide();
+                    $("#presupuestoCodigo").val("");
+                    $("#cliente").val("");
+                    $("#vehiculo").val("");
+                }
+                else {
+                    $("#facturaSinPresupuesto").hide();
+                    $("#facturaConPresupuesto").show();
+                    ddlCliente.text("");
                 }
             });
 
@@ -144,7 +238,8 @@
                 $("#facturaVentaDetalle tbody").empty();
                 var id = $("#presupuestoCodigo option:selected").val();
 
-                if (id != "") {
+                if (id != "")
+                {
                     $("#facturaDetalle").fadeIn(1000);
                     var subtotal = 0;
 
@@ -154,19 +249,25 @@
                         contentType: "application/json",
                         success: function (detalles) {
                             $.each(detalles, function (i, item) {
+                                var iva = item.Producto.Iva == null ? 0 : item.Producto.Iva;
                                 var presupuesto = '<tr class="detalle">' +
                                 '<td>' + item.ProductoId + '</td>' +
                                 '<td>' + item.Producto.Descripcion + '</td>' +
                                 '<td>' + item.Producto.PrecioVenta + '</td>' +
                                 '<td>' + item.Cantidad + '</td>' +
-                                '<td>' + item.Producto.Iva + '</td>' +
+                                '<td>' + iva + '</td>' +
                                 '<td>' + item.Total + '</td>' +
+                                '<td class="totales">' + item.TotalLineaExenta + '</td>' +
+                                '<td class="totales">' + item.TotalLineaCincoXCiento + '</td>' +
+                                '<td class="totales">' + item.TotalLineaDiezXCiento + '</td>' +
                                 '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
                                 '</tr>';
                                 subtotal = subtotal + item.Total;
                                 $("#pagar").val(subtotal);
+                                $("#totalExentas").val(item.Presupuesto.TotalExenta);
+                                $("#totalIvaCinco").val(item.Presupuesto.TotalIvaCincoPorCiento);
+                                $("#totalIvaDiez").val(item.Presupuesto.TotalIvaDiezPorCiento);
 
-                                console.log(item);
                                 if (i == 0) {
                                     $("#cliente").val(item.Presupuesto.Vehiculo.Cliente.NombreCompleto);
                                     $("#vehiculo").val(item.Presupuesto.Vehiculo.Matricula + "-" + item.Presupuesto.Vehiculo.Modelo.Marca.Nombre + " " + item.Presupuesto.Vehiculo.Modelo.Nombre);
@@ -176,7 +277,9 @@
                             });
                         }
                     });
-                } else {
+                }
+                else
+                {
                     $("#pagar").val("");
                     $("#cliente").val("");
                     $("#facturaDetalle").hide();
@@ -199,63 +302,241 @@
 
             });
 
-            $("#talonarioCodigo").change(function () {
-                var id = $("#talonarioCodigo option:selected").val();
-
-                if (id != "") {
-                    $.ajax({
-                        url: "/api/talonarios/" + id,
-                        type: "get",
-                        contentType: "application/json",
-                        success: function (talonario) {
-                            $.each(talonario, function (i) {
-                                if (i == 0)
-                                    $("#nroFactura").val(talonario[i].NumeroFacturaActual);
-                            });                            
-                        }
-                    });
+            //Obtener los productos o servicios y agregarlos al Drop-down List.
+            var productsDataSource = new kendo.data.DataSource({
+                serverFiltering: false,
+                transport: {
+                    read: {
+                        url: "/api/productos"
+                    }
                 }
             });
 
-            $("#fechaFactura").kendoDateTimePicker({
-                culture: "es-ES",
-                format: "MM/dd/yyyy HH:mm",
-                animation: {
-                    close: {
-                        effects: "fadeOut zoom:out",
-                        duration: 300
-                    },
-                    open: {
-                        effects: "fadeIn zoom:in",
-                        duration: 300
+            var tipoProductos = $("#tipoProductos").kendoDropDownList({
+                optionLabel: "Selecciona Tipo de Producto...",
+                dataTextField: "Descripcion",
+                dataValueField: "Id",
+                dataSource: {
+                    serverFiltering: true,
+                    transport: {
+                        read: {
+                            url: "/api/tipoProductos"
+                        }
                     }
                 },
-                value: new Date(),
-                dateInput: true
+                change: function () {
+                    var value = this.value();
+
+                    if (value) {
+                        if (value == 2)
+                            $("#productoCantidad").prop("readonly", true);
+
+                        productsDataSource.filter({
+                            field: "ProductoTipoId",
+                            operator: "eq",
+                            value: parseInt(value)
+                        });
+                        productos.enable();
+                    } else {
+                        productos.enable(false);
+                    }
+                    productos.select(0);
+                    $("#productoDesc").val("");
+                    $("#productoPrecio").val("");
+                    $("#productoCantidad").val("");
+                    $("#productoIva").val("");
+                }
             });
 
+            var productos = $("#productosId").kendoDropDownList({
+                filter: "eq",
+                autoBind: false,
+                optionLabel: "Selecciona Código Producto...",
+                dataTextField: "Id",
+                dataValueField: "Id",
+                dataSource: productsDataSource,
+                change: function () {
+                    $("#agregar").prop("disabled", false);
+
+                    var productoId = $("#productosId").val();
+                    $.ajax({
+                        url: "/api/productos/" + productoId,
+                        contentType: "application/json",
+                        method: "GET",
+                        success: function (data) {
+                            $(data).each(function (index, item) {
+                                $("#productoDesc").val(item.Descripcion);
+                                $("#productoPrecio").val(item.PrecioVenta);
+                                $("#productoIva").val(item.Iva);
+                            });
+                        }
+
+                    });
+                    $("#productoCantidad").focus();
+                }
+            }).data("kendoDropDownList");
+
+            var ddl = $("#productosId").data("kendoDropDownList");
+
+            $("#agregar").click(function () {
+                var todoEsValido = true;
+                var bandera = false;
+                var arreglo = [];
+
+                if ($("#tipoProductos").val() == "") {
+                    todoEsValido = false;
+                    $('.k-dropdown').siblings('span.error').css('display', 'block');
+                } else {
+                    $('.k-dropdown').siblings('span.error').css('display', 'none');
+                }
+
+                if ($("#productosId").val() == "") {
+                    todoEsValido = false;
+                    $('.k-dropdown').siblings('span.error').css('display', 'block');
+                }
+                else {
+                    $('.k-dropdown').siblings('span.error').css('display', 'none');
+                }
+
+                $('#facturaVentaDetalle tr.detalle').each(function (index, tr) {
+                    var lines = $('td', tr).map(function (index, td) {
+                        if (index == 0)
+                            return $(td).text();
+                    });
+
+                    arreglo = lines;
+                });
+
+                for (var i = 0; i < arreglo.length; i++) {
+                    if ($("#productosId").val() == arreglo[0]) {
+                        bandera = true;
+                    }
+
+                }
+
+                if (bandera) {
+                    todoEsValido = false;
+                    $('.k-dropdown').siblings('span.error-repetido').css('display', 'block');
+                } else {
+                    $('.k-dropdown').siblings('span.error-repetido').css('display', 'none');
+                }
+
+
+
+                if (todoEsValido) {
+                    $("#facturaDetalle").fadeIn(1000);
+                    $("#submit").prop("disabled", false);
+                    var productoId = $("#productosId").val();
+                    var productoDescripcion = $("#productoDesc").val();
+                    var productoPrecio = $("#productoPrecio").val();
+                    var productoCantidad = $("#productoCantidad").val();
+                    var cantidad = productoCantidad != "" ? productoCantidad : 1;
+
+                    var productoIva = $("#productoIva").val();
+
+
+                    if (productoIva == "")
+                        productoIva = 0;
+
+                    total = productoPrecio * cantidad;
+
+                    if (productoIva == 0)
+                        totalExentas += total;
+                    else if (productoIva == 5) {
+                        subTotlaIva5PorCiento += total;
+                        totalIVACinco = Math.round(subTotlaIva5PorCiento / 21);
+                    }
+                    else {
+                        subTotalIva10PorCiento += total;
+                        totalIVADiez = Math.round(subTotalIva10PorCiento / 11);
+                    }
+
+                    subTotal = totalExentas + subTotlaIva5PorCiento + subTotalIva10PorCiento;
+
+                    $("#pagar").val(subTotal);
+                    $("#totalExentas").val(totalExentas);
+                    $("#totalIvaCinco").val(totalIVACinco);
+                    $("#totalIvaDiez").val(totalIVADiez);
+
+                    var totalLineaExentas = productoIva == 0 ? total : 0;
+                    var totalLineaCincoXCiento = productoIva == 5 ? total : 0;
+                    var totalLineaDiezXCiento = productoIva == 10 ? total : 0;
+
+                    var presupuesto = '<tr class="detalle">' +
+                        '<td>' + productoId + '</td>' +
+                        '<td>' + productoDescripcion + '</td>' +
+                        '<td>' + productoPrecio + '</td>' +
+                        '<td>' + cantidad + '</td>' +
+                        '<td>' + productoIva + '</td>' +
+                        '<td>' + total + '</td>' +
+                        '<td class="totales">' + totalLineaExentas + '</td>' +
+                        '<td class="totales">' + totalLineaCincoXCiento + '</td>' +
+                        '<td class="totales">' + totalLineaDiezXCiento + '</td>' +
+                        '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
+                        '</tr>';
+
+                    $(presupuesto).hide().appendTo("#facturaVentaDetalle tbody").fadeIn(1000);
+
+                    $("tbody").on("click", ".eliminar", function () {
+                        var codProducto = $(this).closest("tr").find("td").eq(0).text();
+                        var descProducto = $(this).closest("tr").find("td").eq(1).text();
+
+                        valor = $(this).closest("tr").find("td").eq(5).text();
+                        iva = $(this).closest("tr").find("td").eq(4).text();
+
+                        $(this).parents("tr").fadeOut("normal", function () {
+                            $(this).remove();
+                            subTotal = subTotal - valor;
+                            $("#pagar").val(subTotal);
+
+                            if (iva == 10) {
+                                totalIVADiez = totalIVADiez - (Math.round(valor / 11));
+                                $("#totalIvaDiez").val(totalIVADiez);
+                            } else if (iva == 5) {
+                                totalIVACinco = totalIVACinco - (Math.round(valor / 21));
+                                $("#totalIvaCinco").val(totalIVACinco);
+                            } else {
+                                totalExentas = totalExentas - valor;
+                                $("#totalExentas").val(totalExentas);
+                            }
+
+                            if ($("#pagar").val() == 0) {
+                                $("#submit").prop("disabled", true);
+                            }
+                        });
+                    });
+
+
+                    $("#productosId").data("kendoDropDownList").value("");
+                    $("#tipoProductos").data("kendoDropDownList").value("");
+                    $("#productoDesc").val("");
+                    $("#productoPrecio").val("");
+                    $("#productoIva").val("");
+
+                    $("#productoCantidad").val("");
+                    productos.enable(false);
+                }
+            });
 
             $("#facturaVentaFormulario").submit(function (e) {
                 e.preventDefault();
 
                 nuevaFacturaVentaDto.FacturaVentaDto = {                    
-                    Id: $("#presupuestoCodigo").val(),
                     PresupuestoCodigo: $("#presupuestoCodigo").val(),
-                    NumeroFactura: $("#nroFactura").val(),
-                    TalonarioId: $("#talonarioCodigo").val(),
-                    FechaFacturaVenta: $("#fechaFactura").val(),
-                    SubTotal: $("#pagar").val()
+                    SubTotal: $("#pagar").val(),
+                    TotalExenta: $("#totalExentas").val(),
+                    TotalCincoPorCiento: $("#totalIvaCinco").val(),
+                    TotalDiezPorCiento: $("#totalIvaDiez").val()
                 }
 
+                nuevaFacturaVentaDto.ClienteId = $("#ClienteId").val();
+
+
                 $('#facturaVentaDetalle tr.detalle').each(function (index, tr) {
-                    //var lines = $('td input', tr).map(function (index, td) {
-                    //    if (index != 1 && index != 6)
-                    //        return $(td).val();
-                    //});
 
                     var lines = $('td', tr).map(function (index, td) {
 
-                        if (index != 1 && index != 6) {
+                        if (index != 1 && index != 9) {
                             return $(td).text();
                         }
                     });
@@ -264,7 +545,10 @@
                         ProductoId: lines[0],
                         Precio: lines[1],
                         Cantidad: lines[2],
-                        Total: lines[4]
+                        Total: lines[4],
+                        TotalLineaExenta: lines[5],
+                        TotalLineaCincoXCiento: lines[6],
+                        TotalLineaDiezXCiento: lines[7]
                     });
 
                 });
@@ -278,10 +562,8 @@
                 .done(function (facturaVenta) {
                     if (facturaVenta.Success) {
                         toastr.success(facturaVenta.Message);
-                        $("#presupuestoCodigo option:selected").remove();
-                        $("#talonarioCodigo").val("");
+                        //$("#presupuestoCodigo option:selected").remove();
                         $("#cliente").val("");
-                        $("#nroFactura").val("");
                         $("#facturaVentaDetalle tbody").empty();
                         $("#pagar").val("");
 

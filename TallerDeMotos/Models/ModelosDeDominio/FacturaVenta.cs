@@ -23,11 +23,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public Estado Estado { get; set; }
         public byte EstadoId { get; set; }
         public ICollection<FacturaVentaDetalle> FacturaVentaDetalles { get; set; }
+        public ICollection<FacturaVentaCliente> FacturaVentaClientes { get; set; }
         //public ICollection<MovimientoCaja> MovimientoCajas { get; set; }
 
         public FacturaVenta()
         {
             FacturaVentaDetalles = new HashSet<FacturaVentaDetalle>();
+            FacturaVentaClientes = new HashSet<FacturaVentaCliente>();
             //MovimientoCajas = new HashSet<MovimientoCaja>();
         }
     }

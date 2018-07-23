@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -13,6 +14,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public ApplicationUser Usuario { get; set; }
 
+        [RestriccionUnicaEnCaja]
         [Required]
         public string UsuarioId { get; set; }
 

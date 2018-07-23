@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Linq;
 using System.Web.Http;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
@@ -28,45 +29,78 @@ namespace TallerDeMotos.Controllers.APIs
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         public IHttpActionResult CrearFacturaVenta(NuevaFacturaVentaDto nuevaFacturaVentaDto)
-        {
+        {            
             try
             {
-                var facturaVentaDto = new FacturaVentaDto
-                {
-                    NumeroFactura = nuevaFacturaVentaDto.FacturaVentaDto.NumeroFactura,
-                    TalonarioId = nuevaFacturaVentaDto.FacturaVentaDto.TalonarioId,
-                    FechaFacturaVenta = nuevaFacturaVentaDto.FacturaVentaDto.FechaFacturaVenta,
-                    SubTotal = nuevaFacturaVentaDto.FacturaVentaDto.SubTotal,
-                    UsuarioId = User.Identity.GetUserId(),
-                    EstadoId = 1
-                };
+                var usuarioId = User.Identity.GetUserId();
+                var caja = _context.Cajas.Where(c => c.UsuarioId == usuarioId).SingleOrDefault();
 
-                var facturaVenta = Mapper.Map<FacturaVentaDto, FacturaVenta>(facturaVentaDto);
-                _context.FacturaVentas.Add(facturaVenta);
-
-                if(nuevaFacturaVentaDto.FacturaVentaDto.PresupuestoCodigo > 0)
+                if (caja != null)
                 {
-                    var presupuesto = _context.Presupuestos.Find(nuevaFacturaVentaDto.FacturaVentaDto.PresupuestoCodigo);
-                    _context.Presupuestos.Attach(presupuesto);
-                    facturaVenta.Presupuesto = presupuesto;
+                    var talonario = _context.Talonarios
+                    .Where(t => t.EstaActivo && t.CajaId == caja.Id)
+                    .Select(t => new { t.Id, t.NumeroFacturaActual })
+                    .SingleOrDefault();
+
+                    if (talonario != null)
+                    {
+                        var facturaVentaDto = new FacturaVentaDto
+                        {
+                            NumeroFactura = talonario.NumeroFacturaActual,
+                            TalonarioId = talonario.Id,
+                            FechaFacturaVenta = DateTime.Now,
+                            SubTotal = nuevaFacturaVentaDto.FacturaVentaDto.SubTotal,
+                            TotalExenta = nuevaFacturaVentaDto.FacturaVentaDto.TotalExenta,
+                            TotalCincoPorCiento = nuevaFacturaVentaDto.FacturaVentaDto.TotalCincoPorCiento,
+                            TotalDiezPorCiento = nuevaFacturaVentaDto.FacturaVentaDto.TotalDiezPorCiento,
+                            UsuarioId = User.Identity.GetUserId(),
+                            EstadoId = 1
+                        };
+
+                        var facturaVenta = Mapper.Map<FacturaVentaDto, FacturaVenta>(facturaVentaDto);
+                        _context.FacturaVentas.Add(facturaVenta);
+
+                        if(nuevaFacturaVentaDto.ClienteId > 0)
+                        {
+                            var facturaVentaCliente = new FacturaVentaCliente
+                            {
+                                ClienteId = nuevaFacturaVentaDto.ClienteId
+                            };
+                            _context.FacturaVentaClientes.Add(facturaVentaCliente);
+                        }                                                
+
+                        if (nuevaFacturaVentaDto.FacturaVentaDto.PresupuestoCodigo > 0)
+                        {
+                            var presupuesto = _context.Presupuestos.Find(nuevaFacturaVentaDto.FacturaVentaDto.PresupuestoCodigo);
+                            _context.Presupuestos.Attach(presupuesto);
+                            facturaVenta.Presupuesto = presupuesto;
+                        }
+
+                        foreach (var detalle in nuevaFacturaVentaDto.FacturaVentaDetalles)
+                        {
+
+                            var facturaVentaDetalleDto = new FacturaVentaDetalleDto
+                            {
+                                ProductoId = detalle.ProductoId,
+                                Precio = detalle.Precio,
+                                Cantidad = detalle.Cantidad,
+                                Total = detalle.Total,
+                                TotalLineaExenta = detalle.TotalLineaExenta,
+                                TotalLineaCincoXCiento = detalle.TotalLineaCincoXCiento,
+                                TotalLineaDiezXCiento = detalle.TotalLineaDiezXCiento
+                            };
+
+                            var facturaVentaDetalle = Mapper.Map<FacturaVentaDetalleDto, FacturaVentaDetalle>(facturaVentaDetalleDto);
+                            _context.FacturaVentaDetalles.Add(facturaVentaDetalle);
+                        }
+
+                        _context.SaveChanges();
+                    }
+                    else
+                        return Json(new JsonResponse { Success = false, Message = "El Talonario de la factura no se encuentra activo" });
                 }
-
-                foreach (var detalle in nuevaFacturaVentaDto.FacturaVentaDetalles)
-                {
-                   
-                    var facturaVentaDetalleDto = new FacturaVentaDetalleDto
-                    {                        
-                        ProductoId = detalle.ProductoId,
-                        Precio = detalle.Precio,
-                        Cantidad = detalle.Cantidad,
-                        Total = detalle.Total
-                    };
-
-                    var facturaVentaDetalle = Mapper.Map<FacturaVentaDetalleDto, FacturaVentaDetalle>(facturaVentaDetalleDto);
-                    _context.FacturaVentaDetalles.Add(facturaVentaDetalle);
-                }               
-
-                _context.SaveChanges();
+                else
+                    return Json(new JsonResponse { Success = false, Message = "Usuario no está habilitado para generar una factura" });
             }
             catch (Exception ex)
             {

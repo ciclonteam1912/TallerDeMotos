@@ -10,6 +10,9 @@ namespace TallerDeMotos.Dtos
         public int TalonarioId { get; set; }
         public int NumeroFactura { get; set; }
         public DateTime FechaFacturaVenta { get; set; }
+        public long TotalDiezPorCiento { get; set; }
+        public long TotalCincoPorCiento { get; set; }
+        public long TotalExenta { get; set; }
         public int SubTotal { get; set; }
         public string UsuarioId { get; set; }
         public byte EstadoId { get; set; }

@@ -14,11 +14,19 @@ namespace TallerDeMotos.Controllers.APIs
     {
         private ApplicationDbContext _context;
         private ConexionBD conexionBD;
+        private int SubTotal;
+        private int TotalExentas;
+        private int TotalIvaCincoXCiento;
+        private int TotalIvaDiezXCiento;
 
         public FacturaVentasController()
         {
             _context = new ApplicationDbContext();
             conexionBD = new ConexionBD();
+            SubTotal = 0;
+            TotalExentas = 0;
+            TotalIvaCincoXCiento = 0;
+            TotalIvaDiezXCiento = 0;
         }
 
         protected override void Dispose(bool disposing)
@@ -29,87 +37,99 @@ namespace TallerDeMotos.Controllers.APIs
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         public IHttpActionResult CrearFacturaVenta(NuevaFacturaVentaDto nuevaFacturaVentaDto)
-        {            
-            try
+        {
+            if (ModelState.IsValid)
             {
-                var usuarioId = User.Identity.GetUserId();
-                var caja = _context.Cajas.Where(c => c.UsuarioId == usuarioId).SingleOrDefault();
-
-                if (caja != null)
+                try
                 {
-                    var talonario = _context.Talonarios
-                    .Where(t => t.EstaActivo && t.CajaId == caja.Id)
-                    .Select(t => new { t.Id, t.NumeroFacturaActual })
-                    .SingleOrDefault();
+                    var usuarioId = User.Identity.GetUserId();
+                    var caja = _context.Cajas.Where(c => c.UsuarioId == usuarioId).SingleOrDefault();
 
-                    if (talonario != null)
+                    if (caja != null)
                     {
-                        var facturaVentaDto = new FacturaVentaDto
-                        {
-                            NumeroFactura = talonario.NumeroFacturaActual,
-                            TalonarioId = talonario.Id,
-                            FechaFacturaVenta = DateTime.Now,
-                            SubTotal = nuevaFacturaVentaDto.FacturaVentaDto.SubTotal,
-                            TotalExenta = nuevaFacturaVentaDto.FacturaVentaDto.TotalExenta,
-                            TotalCincoPorCiento = nuevaFacturaVentaDto.FacturaVentaDto.TotalCincoPorCiento,
-                            TotalDiezPorCiento = nuevaFacturaVentaDto.FacturaVentaDto.TotalDiezPorCiento,
-                            UsuarioId = User.Identity.GetUserId(),
-                            EstadoId = 1
-                        };
+                        var talonario = _context.Talonarios
+                        .Where(t => t.EstaActivo && t.CajaId == caja.Id)
+                        .Select(t => new { t.Id, t.NumeroFacturaActual })
+                        .SingleOrDefault();
 
-                        var facturaVenta = Mapper.Map<FacturaVentaDto, FacturaVenta>(facturaVentaDto);
-                        _context.FacturaVentas.Add(facturaVenta);
-
-                        if(nuevaFacturaVentaDto.ClienteId > 0)
+                        if (talonario != null)
                         {
-                            var facturaVentaCliente = new FacturaVentaCliente
+                            foreach (var facturaDetalle in nuevaFacturaVentaDto.FacturaVentaDetalles)
                             {
-                                ClienteId = nuevaFacturaVentaDto.ClienteId
-                            };
-                            _context.FacturaVentaClientes.Add(facturaVentaCliente);
-                        }                                                
+                                TotalExentas += facturaDetalle.TotalLineaExenta;
+                                TotalIvaCincoXCiento += facturaDetalle.TotalLineaCincoXCiento;
+                                TotalIvaDiezXCiento += facturaDetalle.TotalLineaDiezXCiento;
+                                SubTotal += (facturaDetalle.TotalLineaExenta + facturaDetalle.TotalLineaCincoXCiento + TotalIvaDiezXCiento);
+                            }
 
-                        if (nuevaFacturaVentaDto.FacturaVentaDto.PresupuestoCodigo > 0)
-                        {
-                            var presupuesto = _context.Presupuestos.Find(nuevaFacturaVentaDto.FacturaVentaDto.PresupuestoCodigo);
-                            _context.Presupuestos.Attach(presupuesto);
-                            facturaVenta.Presupuesto = presupuesto;
-                        }
-
-                        foreach (var detalle in nuevaFacturaVentaDto.FacturaVentaDetalles)
-                        {
-
-                            var facturaVentaDetalleDto = new FacturaVentaDetalleDto
+                            var facturaVentaDto = new FacturaVentaDto
                             {
-                                ProductoId = detalle.ProductoId,
-                                Precio = detalle.Precio,
-                                Cantidad = detalle.Cantidad,
-                                Total = detalle.Total,
-                                TotalLineaExenta = detalle.TotalLineaExenta,
-                                TotalLineaCincoXCiento = detalle.TotalLineaCincoXCiento,
-                                TotalLineaDiezXCiento = detalle.TotalLineaDiezXCiento
+                                NumeroFactura = talonario.NumeroFacturaActual,
+                                TalonarioId = talonario.Id,
+                                FechaFacturaVenta = DateTime.Now,
+                                SubTotal = SubTotal,//nuevaFacturaVentaDto.FacturaVentaDto.SubTotal,
+                                TotalExenta = TotalExentas,//nuevaFacturaVentaDto.FacturaVentaDto.TotalExenta,
+                                TotalCincoPorCiento = (TotalIvaCincoXCiento/21),//nuevaFacturaVentaDto.FacturaVentaDto.TotalCincoPorCiento,
+                                TotalDiezPorCiento = (TotalIvaDiezXCiento/11),//nuevaFacturaVentaDto.FacturaVentaDto.TotalDiezPorCiento,
+                                UsuarioId = User.Identity.GetUserId(),
+                                EstadoId = 1
                             };
 
-                            var facturaVentaDetalle = Mapper.Map<FacturaVentaDetalleDto, FacturaVentaDetalle>(facturaVentaDetalleDto);
-                            _context.FacturaVentaDetalles.Add(facturaVentaDetalle);
-                        }
+                            var facturaVenta = Mapper.Map<FacturaVentaDto, FacturaVenta>(facturaVentaDto);
+                            _context.FacturaVentas.Add(facturaVenta);
 
-                        _context.SaveChanges();
+                            if (nuevaFacturaVentaDto.ClienteId > 0)
+                            {
+                                var facturaVentaCliente = new FacturaVentaCliente
+                                {
+                                    ClienteId = nuevaFacturaVentaDto.ClienteId ?? default(int)
+                                };
+                                _context.FacturaVentaClientes.Add(facturaVentaCliente);
+                            }
+
+                            if (nuevaFacturaVentaDto.PresupuestoCodigo > 0)
+                            {
+                                var presupuesto = _context.Presupuestos.Find(nuevaFacturaVentaDto.PresupuestoCodigo);
+                                _context.Presupuestos.Attach(presupuesto);
+                                facturaVenta.Presupuesto = presupuesto;
+                            }
+
+                            foreach (var detalle in nuevaFacturaVentaDto.FacturaVentaDetalles)
+                            {
+
+                                var facturaVentaDetalleDto = new FacturaVentaDetalleDto
+                                {
+                                    ProductoId = detalle.ProductoId,
+                                    Precio = detalle.Precio,
+                                    Cantidad = detalle.Cantidad,
+                                    Total = detalle.Total,
+                                    TotalLineaExenta = detalle.TotalLineaExenta,
+                                    TotalLineaCincoXCiento = detalle.TotalLineaCincoXCiento,
+                                    TotalLineaDiezXCiento = detalle.TotalLineaDiezXCiento
+                                };
+
+                                var facturaVentaDetalle = Mapper.Map<FacturaVentaDetalleDto, FacturaVentaDetalle>(facturaVentaDetalleDto);
+                                _context.FacturaVentaDetalles.Add(facturaVentaDetalle);
+                            }
+
+                            _context.SaveChanges();
+                        }
+                        else
+                            return Json(new JsonResponse { Success = false, Message = "El Talonario de la factura no se encuentra activo" });
                     }
                     else
-                        return Json(new JsonResponse { Success = false, Message = "El Talonario de la factura no se encuentra activo" });
+                        return Json(new JsonResponse { Success = false, Message = "Usuario no está habilitado para generar una factura" });
                 }
-                else
-                    return Json(new JsonResponse { Success = false, Message = "Usuario no está habilitado para generar una factura" });
-            }
-            catch (Exception ex)
-            {
-                var exceptionMessage = "PK_dbo.FacturaVentas";
-                if (ex.InnerException.Message.Contains(exceptionMessage))
-                    return Json(new JsonResponse { Success = false, Message = exceptionMessage });
-            }
+                catch (Exception ex)
+                {
+                    var exceptionMessage = "PK_dbo.FacturaVentas";
+                    if (ex.InnerException.Message.Contains(exceptionMessage))
+                        return Json(new JsonResponse { Success = false, Message = exceptionMessage });
+                }
 
-            return Ok(new JsonResponse { Success = true, Message = "Factura de Venta registrada con éxito" });
+                return Ok(new JsonResponse { Success = true, Message = "Factura de Venta registrada con éxito" });
+            }
+            return BadRequest();
         }
     }
 }

@@ -110,7 +110,7 @@ namespace TallerDeMotos.Models
                 cmd = new SqlCommand("CrearFacturaVentas", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", facturaVenta.FacturaVentaDto.Id);
-                cmd.Parameters.AddWithValue("@PresupuestoId", facturaVenta.FacturaVentaDto.PresupuestoCodigo);
+                cmd.Parameters.AddWithValue("@PresupuestoId", facturaVenta.PresupuestoCodigo);
                 cmd.Parameters.AddWithValue("@NumeroFactura", facturaVenta.FacturaVentaDto.NumeroFactura);
                 cmd.Parameters.AddWithValue("@TalonarioId", facturaVenta.FacturaVentaDto.TalonarioId);
                 cmd.Parameters.AddWithValue("@FechaFactura", facturaVenta.FacturaVentaDto.FechaFacturaVenta);

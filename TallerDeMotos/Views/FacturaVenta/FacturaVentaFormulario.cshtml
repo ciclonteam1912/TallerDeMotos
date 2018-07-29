@@ -17,28 +17,40 @@
 
         <div class="row">
             <div class="checkbox">
-                <input type="checkbox" value="" id="chbPresupuesto" /> ¿Crear Factura de Venta sin Presupuesto?
+                <label>
+                    @Html.CheckBoxFor(m => m.SinPresupuesto) ¿Crear Factura de Venta sin Presupuesto?
+                </label>
             </div>
         </div>
-        <div class="row" id="facturaCabecera" style="display: none">            
+        <div class="row" id="facturaCabecera" style="display: none">
             <div class="row well" id="facturaConPresupuesto">
                 <div class="row">
                     <div class="col-lg-4">
-                        <label>Presupuesto Código:</label>
-                        <select id="presupuestoCodigo" class="form-control" name="presupuestoCodigo">
-                            <option value="">Seleccione un Presupuesto...</option>
-                        </select>
+                        @Html.LabelFor(m => m.PresupuestoCodigo)
+                        @(Html.Kendo().DropDownList()
+                            .Name("PresupuestoCodigo")
+                            .DataTextField("Id")
+                            .DataValueField("Id")
+                            .OptionLabel("Seleccione un presupuesto...")
+                            .DataSource(source =>
+                            {
+                                source.Read(read => read.Action("ObtenerPresupuestosPendientes", "Presupuesto"));
+                            })
+                            .Events(e => e.Change("PresupuestoChangeEvent"))
+                            .HtmlAttributes(new { style = "width:100%"})
+                        )
+                        @Html.ValidationMessageFor(m => m.PresupuestoCodigo)
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label>Cliente:</label>
-                            <input id="cliente" class="form-control" type="text" readonly />
+                            @Html.LabelFor(m => m.Cliente)
+                            @Html.TextBoxFor(m => m.Cliente, new { @class = "form-control", @disabled = "disabled"})
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label>Vehículo:</label>
-                            <input id="vehiculo" class="form-control" type="text" readonly />
+                            @Html.LabelFor(m => m.Vehiculo)
+                            @Html.TextBoxFor(m => m.Vehiculo, new { @class = "form-control", @disabled = "disabled" })
                         </div>
                     </div>
                 </div>
@@ -106,7 +118,7 @@
                     <input type="number" id="productoIva" class="form-control" name="productoIva" style="display: none" />
                 </div>
             </div>
-        </div>        
+        </div>
 
         <div class="row" id="facturaDetalle" style="display:none">
             <h4>Factura de Venta Detalles</h4>
@@ -130,30 +142,9 @@
                 </table>
             </div>
             <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Total Exentas:</label>
-                        <input type="text" readonly class="form-control" style="width: 150px" id="totalExentas" />
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Total IVA 5%:</label>
-                        <input type="text" readonly class="form-control" style="width: 150px" id="totalIvaCinco" />
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Total IVA 10%:</label>
-                        <input type="text" readonly class="form-control" style="width: 150px" id="totalIvaDiez" />
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Total a Pagar:</label>
-                        <input type="number" id="pagar" class="form-control" readonly style="width: 150px" />
-                    </div>
-                </div>                
+                <small class="text-info">@Html.LabelFor(m => m.FacturaVentaDto.SubTotal):</small>
+                <small class="text-muted" id="SubTotal">@Html.DisplayTextFor(m => m.FacturaVentaDto.SubTotal)</small>
+                @Html.ValidationMessageFor(m => m.FacturaVentaDto.SubTotal)
             </div>
             <div class="row">
                 <div id="footerFactura" style="padding:10px 0; text-align:right">
@@ -165,6 +156,8 @@
 </div>
 
 @section Scripts{
+@Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/custom-jquery-validation.js"></script>
     <script>
         function maxLengthCheck(object) {
             if (object.value.length > object.max.length)
@@ -187,7 +180,96 @@
             $("#pagar").val(subtotal);
         }
 
+        function PresupuestoChangeEvent() {
+            $("#submit").prop("disabled", false);
+            $("#facturaVentaDetalle tbody").empty();
+            var id = $("#PresupuestoCodigo").val();
+            var valor = 0;
+            if (id != "") {
+                $("#facturaDetalle").fadeIn(1000);
+                var subtotal = 0;
+
+                $.ajax({
+                    url: "/api/presupuestoDetalles/" + id,
+                    type: "get",
+                    contentType: "application/json",
+                    success: function (detalles) {
+                        $.each(detalles, function (i, item) {
+                            var iva = item.Producto.Iva == null ? 0 : item.Producto.Iva;
+                            var presupuesto = '<tr class="detalle">' +
+                            '<td>' + item.ProductoId + '</td>' +
+                            '<td>' + item.Producto.Descripcion + '</td>' +
+                            '<td>' + item.Producto.PrecioVenta + '</td>' +
+                            '<td>' + item.Cantidad + '</td>' +
+                            '<td>' + iva + '</td>' +
+                            '<td>' + item.Total + '</td>' +
+                            '<td class="totales">' + item.TotalLineaExenta + '</td>' +
+                            '<td class="totales">' + item.TotalLineaCincoXCiento + '</td>' +
+                            '<td class="totales">' + item.TotalLineaDiezXCiento + '</td>' +
+                            '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
+                            '</tr>';
+                            subtotal = subtotal + item.Total;
+                            $("#SubTotal").html(subtotal);
+
+                            if (i == 0) {
+                                $("#Cliente").val(item.Presupuesto.Vehiculo.Cliente.NombreCompleto);
+                                $("#Vehiculo").val(item.Presupuesto.Vehiculo.Matricula + "-" + item.Presupuesto.Vehiculo.Modelo.Marca.Nombre + " " + item.Presupuesto.Vehiculo.Modelo.Nombre);
+                            }
+
+                            $(presupuesto).hide().appendTo("#facturaVentaDetalle tbody").fadeIn(1000);
+                        });
+                    }
+                });
+            }
+            else {
+                $("#pagar").val("");
+                $("#Cliente").val("");
+                $("#Vehiculo").val("");
+                $("#facturaDetalle").hide();
+            }
+
+            $("tbody").on("click", ".eliminar", function () {
+                var subTotal = $("#SubTotal").html();
+                valor = $(this).closest("tr").find("td").eq(5).text();
+
+                $(this).parents("tr").fadeOut("normal", function () {
+                    $(this).remove();
+                    subTotal = subTotal - valor;
+                    $("#SubTotal").html(subTotal);
+
+                    if (document.getElementById('facturaVentaDetalle').rows.length <= 1) {
+                        $("#submit").prop("disabled", true);
+                    }
+                });
+            });
+        }
+
+        $.validator.setDefaults({
+            ignore: "",
+            // any other default options and/or rules,
+            //errorPlacement: function (error, element) {
+            //    console.log("error", error);
+            //    console.log("element", element);
+            //    if (element.is("[data-role=dropdownlist]")) {
+            //        element.closest(".k-widget").after(error);
+            //    }
+            //}
+        });
+
+        function updateCssOnPropertyChange(e) {
+            var element = $(e.target);
+
+            element.siblings("span.k-dropdown-wrap")
+                   .add(element.siblings("div.k-multiselect-wrap"))
+                   .add(element.parent("span.k-numeric-wrap"))
+                   .add(element.parent("span.k-picker-wrap"))
+                   .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
+
+
         $(document).ready(function () {
+            UseMutationObserver();
+
             var total = 0;
             var totalExentas = 0;
             var totalIVACinco = 0;
@@ -196,7 +278,9 @@
             var subTotlaIva5PorCiento = 0;
             var subTotalIva10PorCiento = 0;
 
+            var botonSubmit = $("#submit");
             var ddlCliente = $("#ClienteId").data("kendoDropDownList");
+            var ddlPresupuesto = $("#PresupuestoCodigo").data("kendoDropDownList");
 
             $("#facturaDetalle").hide();
             $("#facturaCabecera").fadeIn(2000);
@@ -207,100 +291,22 @@
                 FacturaVentaDetalles: []
             }
 
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("ObtenerPresupuestosPendientes", "Presupuesto")",
-                contentType: "application/json",
-                success: function (presupuesto) {
-                    $.each(presupuesto, function (i) {
-                        $("#presupuestoCodigo").append($('<option></option>').val(presupuesto[i].Id).html(presupuesto[i].Id));
-                    });
-                }
-            });
-
-            $("#chbPresupuesto").change(function () {
+            $("#SinPresupuesto").change(function () {
                 if ($(this).is(":checked")) {
                     $("#facturaSinPresupuesto").show();
                     $("#facturaConPresupuesto").hide();
-                    $("#presupuestoCodigo").val("");
-                    $("#cliente").val("");
-                    $("#vehiculo").val("");
+                    ddlPresupuesto.value(0);
+                    $("#Cliente").val("");
+                    $("#Vehiculo").val("");
                 }
                 else {
                     $("#facturaSinPresupuesto").hide();
                     $("#facturaConPresupuesto").show();
-                    ddlCliente.text("");
+                    ddlCliente.value(0);
                 }
-            });
-
-            $("#presupuestoCodigo").change(function () {
-                $("#submit").prop("disabled", false);
-                $("#facturaVentaDetalle tbody").empty();
-                var id = $("#presupuestoCodigo option:selected").val();
-
-                if (id != "")
-                {
-                    $("#facturaDetalle").fadeIn(1000);
-                    var subtotal = 0;
-
-                    $.ajax({
-                        url: "/api/presupuestoDetalles/" + id,
-                        type: "get",
-                        contentType: "application/json",
-                        success: function (detalles) {
-                            $.each(detalles, function (i, item) {
-                                var iva = item.Producto.Iva == null ? 0 : item.Producto.Iva;
-                                var presupuesto = '<tr class="detalle">' +
-                                '<td>' + item.ProductoId + '</td>' +
-                                '<td>' + item.Producto.Descripcion + '</td>' +
-                                '<td>' + item.Producto.PrecioVenta + '</td>' +
-                                '<td>' + item.Cantidad + '</td>' +
-                                '<td>' + iva + '</td>' +
-                                '<td>' + item.Total + '</td>' +
-                                '<td class="totales">' + item.TotalLineaExenta + '</td>' +
-                                '<td class="totales">' + item.TotalLineaCincoXCiento + '</td>' +
-                                '<td class="totales">' + item.TotalLineaDiezXCiento + '</td>' +
-                                '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
-                                '</tr>';
-                                subtotal = subtotal + item.Total;
-                                $("#pagar").val(subtotal);
-                                $("#totalExentas").val(item.Presupuesto.TotalExenta);
-                                $("#totalIvaCinco").val(item.Presupuesto.TotalIvaCincoPorCiento);
-                                $("#totalIvaDiez").val(item.Presupuesto.TotalIvaDiezPorCiento);
-
-                                if (i == 0) {
-                                    $("#cliente").val(item.Presupuesto.Vehiculo.Cliente.NombreCompleto);
-                                    $("#vehiculo").val(item.Presupuesto.Vehiculo.Matricula + "-" + item.Presupuesto.Vehiculo.Modelo.Marca.Nombre + " " + item.Presupuesto.Vehiculo.Modelo.Nombre);
-                                }
-
-                                $(presupuesto).hide().appendTo("#facturaVentaDetalle tbody").fadeIn(1000);
-                            });
-                        }
-                    });
-                }
-                else
-                {
-                    $("#pagar").val("");
-                    $("#cliente").val("");
-                    $("#facturaDetalle").hide();
-                }
-
-                $("tbody").on("click", ".eliminar", function () {
-                    var subTotal = $("#pagar").val();
-                    valor = $(this).closest("tr").find("td input").eq(5).val();
-
-                    $(this).parents("tr").fadeOut("normal", function () {
-                        $(this).remove();
-                        subTotal = subTotal - valor;
-                        $("#pagar").val(subTotal);
-
-                        if ($("#pagar").val() == 0) {
-                            $("#submit").prop("disabled", true);
-                        }
-                    });
-                });
-
-            });
+                $("#facturaVentaDetalle tbody tr").remove();
+                $("#facturaDetalle").hide();
+            });           
 
             //Obtener los productos o servicios y agregarlos al Drop-down List.
             var productsDataSource = new kendo.data.DataSource({
@@ -452,11 +458,7 @@
                     }
 
                     subTotal = totalExentas + subTotlaIva5PorCiento + subTotalIva10PorCiento;
-
-                    $("#pagar").val(subTotal);
-                    $("#totalExentas").val(totalExentas);
-                    $("#totalIvaCinco").val(totalIVACinco);
-                    $("#totalIvaDiez").val(totalIVADiez);
+                    $("#SubTotal").html(subTotal);
 
                     var totalLineaExentas = productoIva == 0 ? total : 0;
                     var totalLineaCincoXCiento = productoIva == 5 ? total : 0;
@@ -487,7 +489,7 @@
                         $(this).parents("tr").fadeOut("normal", function () {
                             $(this).remove();
                             subTotal = subTotal - valor;
-                            $("#pagar").val(subTotal);
+                            $("#SubTotal").html(subTotal);
 
                             if (iva == 10) {
                                 totalIVADiez = totalIVADiez - (Math.round(valor / 11));
@@ -500,7 +502,7 @@
                                 $("#totalExentas").val(totalExentas);
                             }
 
-                            if ($("#pagar").val() == 0) {
+                            if (document.getElementById('facturaVentaDetalle').rows.length <= 1) {
                                 $("#submit").prop("disabled", true);
                             }
                         });
@@ -520,66 +522,59 @@
 
             $("#facturaVentaFormulario").submit(function (e) {
                 e.preventDefault();
-
-                nuevaFacturaVentaDto.FacturaVentaDto = {                    
-                    PresupuestoCodigo: $("#presupuestoCodigo").val(),
-                    SubTotal: $("#pagar").val(),
-                    TotalExenta: $("#totalExentas").val(),
-                    TotalCincoPorCiento: $("#totalIvaCinco").val(),
-                    TotalDiezPorCiento: $("#totalIvaDiez").val()
-                }
-
-                nuevaFacturaVentaDto.ClienteId = $("#ClienteId").val();
+                
+                var $form = $("#facturaVentaFormulario");
+                if ($form.valid()) {
+                    nuevaFacturaVentaDto.PresupuestoCodigo = $("#PresupuestoCodigo").val();
+                    nuevaFacturaVentaDto.ClienteId = $("#ClienteId").val();
 
 
-                $('#facturaVentaDetalle tr.detalle').each(function (index, tr) {
+                    $('#facturaVentaDetalle tr.detalle').each(function (index, tr) {
 
-                    var lines = $('td', tr).map(function (index, td) {
+                        var lines = $('td', tr).map(function (index, td) {
 
-                        if (index != 1 && index != 9) {
-                            return $(td).text();
-                        }
+                            if (index != 1 && index != 9) {
+                                return $(td).text();
+                            }
+                        });
+
+                        nuevaFacturaVentaDto.FacturaVentaDetalles.push({
+                            ProductoId: lines[0],
+                            Precio: lines[1],
+                            Cantidad: lines[2],
+                            Total: lines[4],
+                            TotalLineaExenta: lines[5],
+                            TotalLineaCincoXCiento: lines[6],
+                            TotalLineaDiezXCiento: lines[7]
+                        });
+
                     });
+                    if (nuevaFacturaVentaDto.FacturaVentaDetalles.length > 0) {
+                        $.ajax({
+                            url: "/api/facturaVentas",
+                            method: "post",
+                            contentType: 'application/json; chartset=utf-8',
+                            data: JSON.stringify(nuevaFacturaVentaDto)
+                        })
+                        .done(function (facturaVenta) {
+                            if (facturaVenta.Success) {
+                                toastr.success(facturaVenta.Message);
 
-                    nuevaFacturaVentaDto.FacturaVentaDetalles.push({
-                        ProductoId: lines[0],
-                        Precio: lines[1],
-                        Cantidad: lines[2],
-                        Total: lines[4],
-                        TotalLineaExenta: lines[5],
-                        TotalLineaCincoXCiento: lines[6],
-                        TotalLineaDiezXCiento: lines[7]
-                    });
+                                botonSubmit.remove();
+                                $("#footerFactura").append("<a class='btn btn-primary' href='/MovimientoCaja/MovimientoCajaFormulario'>Ir a caja</a>");
+                                $("#footerFactura").append("<a class='btn btn-primary' href='/FacturaVenta' style='margin-left:4px'>Nueva Factura</a>");
 
-                });
-
-                $.ajax({
-                    url: "/api/facturaVentas",
-                    method: "post",
-                    contentType: 'application/json; chartset=utf-8',
-                    data: JSON.stringify(nuevaFacturaVentaDto)
-                })
-                .done(function (facturaVenta) {
-                    if (facturaVenta.Success) {
-                        toastr.success(facturaVenta.Message);
-                        //$("#presupuestoCodigo option:selected").remove();
-                        $("#cliente").val("");
-                        $("#facturaVentaDetalle tbody").empty();
-                        $("#pagar").val("");
-
-                        nuevaFacturaVentaDto = {
-                            FacturaVentaDto: {},
-                            FacturaVentaDetalles: []
-                        }
-                        $("#facturaDetalle").fadeOut(1000);
+                                nuevaFacturaVentaDto = {
+                                    FacturaVentaDto: {},
+                                    FacturaVentaDetalles: []
+                                }
+                            }
+                        });
                     }
                     else {
-                        if (facturaCompra.Message == "PK_dbo.FacturaCompras")
-                            toastr.error("<p class='eliminar'>No se pudo registrar la Factura de Compra. El número de Orden de Compra con el valor '" + $("#nroOrden").data("kendoDropDownList").text() + "' ya existe.</p>");
-                        else
-                            toastr.error("<p>Ocurrió algo inesperado</p>");
-                    }
-                });
+                        toastr.error("Debe haber al menos un artículo en el detalle para registrar la factura.");
+                    }                    
+                }                
             });
 
             toastr.options = {

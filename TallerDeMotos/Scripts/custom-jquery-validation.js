@@ -52,9 +52,9 @@
     jQuery.validator.addMethod("requiredif", function (value, element, params) {
         if ($(element).val() != '') return true
 
-        var $other = $('#' + params.otro);
+        var $other = $('#' + params.other);
 
-        var otherVal = ($other.attr('type').toUpperCase() == "CHECKBOX") ? ($other.attr("checked") ? "true" : "false") : $other.val();
+        var otherVal = ($other.attr('type').toUpperCase() == "CHECKBOX") ? ($other.is(":checked") ? "true" : "false") : $other.val();
 
         return params.comp == 'isequalto' ? (otherVal != params.value) : (otherVal == params.value);
     });

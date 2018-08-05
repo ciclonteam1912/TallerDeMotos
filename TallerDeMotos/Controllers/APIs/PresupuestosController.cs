@@ -27,8 +27,7 @@ namespace TallerDeMotos.Controllers.APIs
             var presupuestos = _context.Presupuestos
                 .Include(p => p.Vehiculo)
                 .Include(p => p.Vehiculo.Cliente)
-                .Include(p => p.Estado)
-                .Where(p => p.EstadoId == 1 || p.Estado.Descripcion.Equals("Pendiente")) //Pendiente
+                .Include(p => p.Estado)                
                 .ToList()
                 .Select(Mapper.Map<Presupuesto, PresupuestoDto>)
                 .OrderByDescending(p => p.Id);

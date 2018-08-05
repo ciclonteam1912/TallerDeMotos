@@ -236,9 +236,12 @@ namespace TallerDeMotos.Controllers
             DataSet dsDatos = conexionBD.ObtenerDatosClientePorFacturas(id);
             if(dsDatos.Tables.Count > 0)
             {
-                viewModel.Cliente = dsDatos.Tables[0].Rows[0]["NOMBRECLIENTE"].ToString();
-                viewModel.Vehiculo = dsDatos.Tables[0].Rows[0]["VEHICULO"].ToString();
-                viewModel.MontoFactura = long.Parse(dsDatos.Tables[0].Rows[0]["SUBTOTAL"].ToString());
+                if(dsDatos.Tables[0].Rows.Count > 0)
+                {
+                    viewModel.Cliente = dsDatos.Tables[0].Rows[0]["NOMBRECLIENTE"].ToString();
+                    viewModel.Vehiculo = dsDatos.Tables[0].Rows[0]["VEHICULO"].ToString();
+                    viewModel.MontoFactura = long.Parse(dsDatos.Tables[0].Rows[0]["SUBTOTAL"].ToString());
+                }                
             }
             return Json(viewModel);
         }

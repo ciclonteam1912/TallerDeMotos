@@ -759,6 +759,10 @@
     <Compile Include="Migrations\201807221312001_AgregarTablaFacturaVentaClientes.Designer.cs">
       <DependentUpon>201807221312001_AgregarTablaFacturaVentaClientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807312323036_AgregarColumnaFacturaVentaCodigoEnMovimientoCajas.cs" />
+    <Compile Include="Migrations\201807312323036_AgregarColumnaFacturaVentaCodigoEnMovimientoCajas.Designer.cs">
+      <DependentUpon>201807312323036_AgregarColumnaFacturaVentaCodigoEnMovimientoCajas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -3015,6 +3019,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807221312001_AgregarTablaFacturaVentaClientes.resx">
       <DependentUpon>201807221312001_AgregarTablaFacturaVentaClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807312323036_AgregarColumnaFacturaVentaCodigoEnMovimientoCajas.resx">
+      <DependentUpon>201807312323036_AgregarColumnaFacturaVentaCodigoEnMovimientoCajas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

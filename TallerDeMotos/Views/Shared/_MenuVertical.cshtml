@@ -50,7 +50,15 @@
                     @*<li id="menuAjustes"><a href="#"><i class="icono izquierda fa fa-cogs"></i>Ajustes</a></li>*@
                 </ul>
             </li>
-            <li id="menuCaja"><a href="~/Caja"><i class="fa fa-money icono izquierda"></i>Caja</a></li>
+            <li id="menuCaja">
+                <a href="#" id="caja" data-toggle="collapse" data-target="#submenuCaja" aria-expanded="false"><i class="fa fa-money icono izquierda"></i>Caja<i class="fa fa-chevron-down icono derecha"></i></a>
+                <ul class="nav collapse" id="submenuCaja" role="menu" aria-labelledby="caja">
+                    <li id="principalCaja"><a href="~/Inicio/Caja"><i class="fa fa-cart-arrow-down icono izquierda"></i>Principal</a></li>
+                    <li id="menuCajas"><a href="~/Caja"><i class="fa fa-money icono izquierda"></i>Caja</a></li>
+                    <li id="menuAperturaCajas"><a href="~/CajaAperturaCierre"><i class="fa fa-money icono izquierda"></i>Apertura de Caja</a></li>
+                    <li id="menuMovimientoCajas"><a href="~/MovimientoCaja"><i class="fa fa-archive icono izquierda"></i>Movimiento de Caja</a></li>
+                </ul>                
+            </li>
             <li id="menuSeguridad">
                 <a href="#" id="seguridad" data-toggle="collapse" data-target="#submenuSeguridad" aria-expanded="false"><i class="fa fa-user-secret icono izquierda"></i>Seguridad<i class="fa fa-chevron-down icono derecha"></i></a>
                 <ul class="nav collapse" id="submenuSeguridad" role="menu" aria-labelledby="seguridad">

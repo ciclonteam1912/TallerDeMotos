@@ -32,6 +32,11 @@ namespace TallerDeMotos.Controllers
             return View();
         }
 
+        public ActionResult Caja()
+        {
+            return View();
+        }
+
         [AutorizacionPersonalizada(RoleName.Administrador)]
         public ActionResult Seguridad()
         {

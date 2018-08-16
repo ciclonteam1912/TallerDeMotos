@@ -29,6 +29,7 @@ namespace TallerDeMotos.Controllers.APIs
             var empleados = _context.Empleados
                 .Include(e => e.Ciudad)
                 .Include(e => e.Cargo)
+                .Where(e => !e.Nombre.Equals("Administrador"))
                 .ToList();
                 //.Select(Mapper.Map<Empleado, EmpleadoDto>);
 

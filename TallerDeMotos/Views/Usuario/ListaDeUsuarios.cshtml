@@ -100,9 +100,9 @@
                                     grid.dataSource.remove(dataItem);
                                     toastr.success(usuario.Message);
                                 } else {
-                                    if (usuario.Message == "FK_dbo.Modelos_dbo.Marcas_MarcaCodigo")
-                                        toastr.error("<p class='eliminar'>No se pudo eliminar la marca. Elimine primero el o los modelos que correspondan a esta marca.</p>" +
-                                        "<a href='/Modelo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar modelo</a>");
+                                    if (usuario.Message == "FK_dbo.Cajas_dbo.AspNetUsers_UsuarioId")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el usuario. Elimine primero la caja al que fue asignado este usuario.</p>" +
+                                        "<a href='/Caja' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar caja</a>");
                                 }
                             });
                         }

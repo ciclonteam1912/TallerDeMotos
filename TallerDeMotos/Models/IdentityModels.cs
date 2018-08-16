@@ -6,6 +6,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using TallerDeMotos.ConfiguracionDeEntidades;
 using TallerDeMotos.Models.ModelosDeDominio;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure.Annotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models
 {
@@ -17,6 +20,16 @@ namespace TallerDeMotos.Models
         public ICollection<FacturaVenta> FacturaVentas { get; set; }
         public ICollection<OrdenCompra> OrdenCompras { get; set; }
         public ICollection<Caja> Cajas { get; set; }
+        public Empleado Empleado { get; set; }
+
+        [RestriccionUnicaEnUsuario]
+        public int EmpleadoId { get; set; }
+
+        [NotMapped]
+        public string Password { get; set; }
+
+        [NotMapped]
+        public string ConfirmPassword { get; set; }
 
         public ApplicationUser()
         {
@@ -125,6 +138,16 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new EmpresaConfiguracion());
             modelBuilder.Configurations.Add(new SucursalConfiguracion());
             modelBuilder.Configurations.Add(new FacturaVentaClienteConfiguracion());
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.EmpleadoId)
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_EmpleadoCodigo", 1) { IsUnique = true }))
+                .HasColumnName("EmpleadoCodigo");
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasRequired(u => u.Empleado)
+                .WithMany(e => e.Usuarios)
+                .WillCascadeOnDelete(false);
         }
 
         public static ApplicationDbContext Create()

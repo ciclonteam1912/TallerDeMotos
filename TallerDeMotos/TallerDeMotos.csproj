@@ -763,6 +763,26 @@
     <Compile Include="Migrations\201807312323036_AgregarColumnaFacturaVentaCodigoEnMovimientoCajas.Designer.cs">
       <DependentUpon>201807312323036_AgregarColumnaFacturaVentaCodigoEnMovimientoCajas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808160030131_AgregarDatosPorDefectoEnTablaCargos.cs" />
+    <Compile Include="Migrations\201808160030131_AgregarDatosPorDefectoEnTablaCargos.Designer.cs">
+      <DependentUpon>201808160030131_AgregarDatosPorDefectoEnTablaCargos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808160044509_AgregarDatosPorDefectoEnTablaCiudades.cs" />
+    <Compile Include="Migrations\201808160044509_AgregarDatosPorDefectoEnTablaCiudades.Designer.cs">
+      <DependentUpon>201808160044509_AgregarDatosPorDefectoEnTablaCiudades.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados.cs" />
+    <Compile Include="Migrations\201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados.Designer.cs">
+      <DependentUpon>201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.cs" />
+    <Compile Include="Migrations\201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.Designer.cs">
+      <DependentUpon>201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808160111474_CrearUsuarioYRolPorDefecto2.cs" />
+    <Compile Include="Migrations\201808160111474_CrearUsuarioYRolPorDefecto2.Designer.cs">
+      <DependentUpon>201808160111474_CrearUsuarioYRolPorDefecto2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -775,6 +795,7 @@
     <Compile Include="Models\AtributosDeValidacion\RequiredIf.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnCaja.cs" />
+    <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnUsuario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />
     <Compile Include="Models\AtributosDeValidacion\ValidateModelAttribute.cs" />
     <Compile Include="Models\BancoServicio.cs" />
@@ -3023,6 +3044,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807312323036_AgregarColumnaFacturaVentaCodigoEnMovimientoCajas.resx">
       <DependentUpon>201807312323036_AgregarColumnaFacturaVentaCodigoEnMovimientoCajas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808160030131_AgregarDatosPorDefectoEnTablaCargos.resx">
+      <DependentUpon>201808160030131_AgregarDatosPorDefectoEnTablaCargos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808160044509_AgregarDatosPorDefectoEnTablaCiudades.resx">
+      <DependentUpon>201808160044509_AgregarDatosPorDefectoEnTablaCiudades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados.resx">
+      <DependentUpon>201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.resx">
+      <DependentUpon>201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808160111474_CrearUsuarioYRolPorDefecto2.resx">
+      <DependentUpon>201808160111474_CrearUsuarioYRolPorDefecto2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

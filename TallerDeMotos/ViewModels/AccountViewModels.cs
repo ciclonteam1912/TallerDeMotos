@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeValidacion;
+using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ViewModels
 {
@@ -67,6 +70,8 @@ namespace TallerDeMotos.ViewModels
 
     public class RegisterViewModel
     {
+        public IEnumerable<Empleado> Empleados { get; set; }
+
         [Required]
         [Display(Name = "Nombre de Usuario")]
         public string UserName { get; set; }
@@ -86,6 +91,24 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Confirmar contraseña")]
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Empleado")]
+        [RestriccionUnicaEnUsuario]
+        public int EmpleadoId { get; set; }
+
+        public RegisterViewModel(ApplicationUser usuario)
+        {
+            UserName = usuario.UserName;
+            Email = usuario.Email;
+            Password = usuario.Password;
+            ConfirmPassword = usuario.ConfirmPassword;
+            EmpleadoId = usuario.EmpleadoId;
+        }
+
+        public RegisterViewModel()
+        {
+
+        }
     }
 
     public class ResetPasswordViewModel

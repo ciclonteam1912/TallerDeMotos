@@ -19,9 +19,11 @@ namespace TallerDeMotos.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -147,7 +149,12 @@ namespace TallerDeMotos.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var viewModel = new RegisterViewModel
+            {
+                Empleados = _context.Empleados.ToList()
+            };
+
+            return View(viewModel);
         }
 
         //
@@ -155,11 +162,11 @@ namespace TallerDeMotos.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(ApplicationUser model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, EmpleadoId = model.EmpleadoId };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -181,7 +188,13 @@ namespace TallerDeMotos.Controllers
             }
 
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
-            return View(model);
+            ModelState.AddModelError(string.Empty, "El empleado ya tiene asignado un usuario.");
+            var viewModel = new RegisterViewModel(model)
+            {
+                Empleados = _context.Empleados.ToList()
+            };
+
+            return View(viewModel);
         }
 
         //

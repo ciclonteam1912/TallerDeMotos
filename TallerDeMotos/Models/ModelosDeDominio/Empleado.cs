@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
@@ -55,5 +56,20 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Display(Name = "Ciudad")]
         public int CiudadId { get; set; }
+
+        public string NombreCompleto
+        {
+            get
+            {
+                return Nombre.ToUpper() + " " + Apellido?.ToUpper();
+            }
+        }
+
+        public ICollection<ApplicationUser> Usuarios { get; set; }
+
+        public Empleado()
+        {
+            Usuarios = new HashSet<ApplicationUser>();
+        }
     }
 }

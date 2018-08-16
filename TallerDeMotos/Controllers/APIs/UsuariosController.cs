@@ -41,7 +41,8 @@ namespace TallerDeMotos.Controllers.APIs
             }
             catch(Exception ex)
             {
-                return BadRequest();
+                if(ex.InnerException.InnerException.Message.Contains("FK_dbo.Cajas_dbo.AspNetUsers_UsuarioId"))
+                    return Json(new JsonResponse { Success = false, Message = "FK_dbo.Cajas_dbo.AspNetUsers_UsuarioId" });
             }
 
             return Ok(new JsonResponse { Success = true, Message = "Usuario eliminado con éxito" });

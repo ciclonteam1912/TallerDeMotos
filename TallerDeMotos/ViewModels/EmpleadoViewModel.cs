@@ -20,8 +20,8 @@ namespace TallerDeMotos.ViewModels
         public string Apellido { get; set; }
 
         [Required]
-        [Display(Name = "Cédula")]
-        public string Cedula { get; set; }
+        [Display(Name = "Número de Documento")]
+        public string NumeroDocumento { get; set; }
 
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
@@ -34,14 +34,6 @@ namespace TallerDeMotos.ViewModels
 
         [Display(Name = "Fecha de Nacimiento")]
         public DateTime? FechaDeNacimiento { get; set; }
-
-        [Display(Name = "Hora de Entrada")]
-        public TimeSpan? HoraDeEntrada { get; set; }
-
-        [Display(Name = "Hora de Salida")]
-        public TimeSpan? HoraDeSalida { get; set; }
-
-        public int? Salario { get; set; }
 
         [Display(Name = "Cargo")]
         public byte? CargoId { get; set; }
@@ -67,14 +59,11 @@ namespace TallerDeMotos.ViewModels
             Id = empleado.Id;
             Nombre = empleado.Nombre;
             Apellido = empleado.Apellido;
-            Cedula = empleado.Cedula;
+            NumeroDocumento = empleado.NumeroDocumento;
             Direccion = empleado.Direccion;
             Telefono = empleado.Telefono;
             CorreoElectronico = empleado.CorreoElectronico;
             FechaDeNacimiento = empleado.FechaDeNacimiento;
-            HoraDeEntrada = empleado.HoraDeEntrada;
-            HoraDeSalida = empleado.HoraDeSalida;
-            Salario = empleado.Salario;
             CargoId = empleado.CargoId;
             CiudadId = empleado.CiudadId;
         }

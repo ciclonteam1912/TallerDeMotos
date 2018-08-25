@@ -7,13 +7,13 @@ namespace TallerDeMotos.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AgregarEmpleadoPorDefectoEnTablaEmpleados : IMigrationMetadata
+    public sealed partial class AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AgregarEmpleadoPorDefectoEnTablaEmpleados));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados));
         
         string IMigrationMetadata.Id
         {
-            get { return "201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados"; }
+            get { return "201808251245087_AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados"; }
         }
         
         string IMigrationMetadata.Source

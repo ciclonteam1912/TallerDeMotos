@@ -771,17 +771,13 @@
     <Compile Include="Migrations\201808160044509_AgregarDatosPorDefectoEnTablaCiudades.Designer.cs">
       <DependentUpon>201808160044509_AgregarDatosPorDefectoEnTablaCiudades.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados.cs" />
-    <Compile Include="Migrations\201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados.Designer.cs">
-      <DependentUpon>201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados.cs</DependentUpon>
+    <Compile Include="Migrations\201808251233057_EliminarColumnasSalarioHoraEntradaYSalidaDeEmpleados.cs" />
+    <Compile Include="Migrations\201808251233057_EliminarColumnasSalarioHoraEntradaYSalidaDeEmpleados.Designer.cs">
+      <DependentUpon>201808251233057_EliminarColumnasSalarioHoraEntradaYSalidaDeEmpleados.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.cs" />
-    <Compile Include="Migrations\201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.Designer.cs">
-      <DependentUpon>201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808160111474_CrearUsuarioYRolPorDefecto2.cs" />
-    <Compile Include="Migrations\201808160111474_CrearUsuarioYRolPorDefecto2.Designer.cs">
-      <DependentUpon>201808160111474_CrearUsuarioYRolPorDefecto2.cs</DependentUpon>
+    <Compile Include="Migrations\201808251245087_AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados.cs" />
+    <Compile Include="Migrations\201808251245087_AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados.Designer.cs">
+      <DependentUpon>201808251245087_AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
@@ -795,6 +791,7 @@
     <Compile Include="Models\AtributosDeValidacion\RequiredIf.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnCaja.cs" />
+    <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnEmpleado.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnUsuario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />
     <Compile Include="Models\AtributosDeValidacion\ValidateModelAttribute.cs" />
@@ -3051,14 +3048,11 @@
     <EmbeddedResource Include="Migrations\201808160044509_AgregarDatosPorDefectoEnTablaCiudades.resx">
       <DependentUpon>201808160044509_AgregarDatosPorDefectoEnTablaCiudades.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados.resx">
-      <DependentUpon>201808160056451_AgregarEmpleadoPorDefectoEnTablaEmpleados.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808251233057_EliminarColumnasSalarioHoraEntradaYSalidaDeEmpleados.resx">
+      <DependentUpon>201808251233057_EliminarColumnasSalarioHoraEntradaYSalidaDeEmpleados.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.resx">
-      <DependentUpon>201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808160111474_CrearUsuarioYRolPorDefecto2.resx">
-      <DependentUpon>201808160111474_CrearUsuarioYRolPorDefecto2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808251245087_AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados.resx">
+      <DependentUpon>201808251245087_AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

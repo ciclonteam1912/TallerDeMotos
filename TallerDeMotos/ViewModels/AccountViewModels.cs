@@ -102,7 +102,7 @@ namespace TallerDeMotos.ViewModels
             Email = usuario.Email;
             Password = usuario.Password;
             ConfirmPassword = usuario.ConfirmPassword;
-            EmpleadoId = usuario.EmpleadoId;
+            //EmpleadoId = usuario.EmpleadoId;
         }
 
         public RegisterViewModel()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -18,8 +19,9 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Required]
         [StringLength(50)]
-        [Display(Name = "Cédula")]
-        public string Cedula { get; set; }
+        [RestriccionUnicaEnEmpleado]
+        [Display(Name = "Número de Documento")]
+        public string NumeroDocumento { get; set; }
 
         [StringLength(255)]
         [Display(Name = "Dirección")]
@@ -36,14 +38,6 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Display(Name = "Fecha de Nacimiento")]
         public DateTime? FechaDeNacimiento { get; set; }
-
-        [Display(Name = "Hora de Entrada")]
-        public TimeSpan? HoraDeEntrada { get; set; }
-
-        [Display(Name = "Hora de Salida")]
-        public TimeSpan? HoraDeSalida { get; set; }
-
-        public int Salario { get; set; }
 
         public DateTime FechaDeIngreso { get; set; }
 
@@ -65,11 +59,11 @@ namespace TallerDeMotos.Models.ModelosDeDominio
             }
         }
 
-        public ICollection<ApplicationUser> Usuarios { get; set; }
+        //public ICollection<ApplicationUser> Usuarios { get; set; }
 
-        public Empleado()
-        {
-            Usuarios = new HashSet<ApplicationUser>();
-        }
+        //public Empleado()
+        //{
+        //    Usuarios = new HashSet<ApplicationUser>();
+        //}
     }
 }

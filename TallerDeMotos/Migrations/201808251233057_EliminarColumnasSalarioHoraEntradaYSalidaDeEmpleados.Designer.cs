@@ -7,13 +7,13 @@ namespace TallerDeMotos.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers : IMigrationMetadata
+    public sealed partial class EliminarColumnasSalarioHoraEntradaYSalidaDeEmpleados : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(EliminarColumnasSalarioHoraEntradaYSalidaDeEmpleados));
         
         string IMigrationMetadata.Id
         {
-            get { return "201808160109325_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers"; }
+            get { return "201808251233057_EliminarColumnasSalarioHoraEntradaYSalidaDeEmpleados"; }
         }
         
         string IMigrationMetadata.Source

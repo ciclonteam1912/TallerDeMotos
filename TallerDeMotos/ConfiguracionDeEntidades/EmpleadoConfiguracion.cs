@@ -1,4 +1,6 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
+using System.Data.Entity.ModelConfiguration;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ConfiguracionDeEntidades
@@ -7,7 +9,7 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
     {
         public EmpleadoConfiguracion()
         {
-            ToTable("Empleados");
+            ToTable("Empleados");            
 
             Property(e => e.Id)
                 .HasColumnName("Codigo");
@@ -17,6 +19,9 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
 
             Property(e => e.CiudadId)
                 .HasColumnName("CiudadCodigo");
+
+            Property(e => e.NumeroDocumento)
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_NumeroDocumento", 1) { IsUnique = true }));
 
             HasRequired(e => e.Cargo)
                 .WithMany(c => c.Empleados)

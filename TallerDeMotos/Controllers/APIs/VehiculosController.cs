@@ -16,11 +16,17 @@ namespace TallerDeMotos.Controllers.APIs
         }
 
         [HttpGet]
-        public IHttpActionResult ObtenerVehiculosPorCliente(int id)
+        public IHttpActionResult ObtenerVehiculosPorCliente(int clienteId)
         {
-            _context.Configuration.ProxyCreationEnabled = false;
             var vehiculos = _context.Vehiculos
-                .Where(v => v.ClienteId == id)
+                .Include(v => v.Cliente)
+                .Include(v => v.Aseguradora)
+                .Include(v => v.Modelo)
+                .Include(v => v.Modelo.Marca)
+                .Include(v => v.Combustible)
+                .Include(v => v.Cilindrada)
+                .Include(v => v.TipoMotor)
+                .Where(v => v.ClienteId == clienteId)
                 .ToList();
 
             return Ok(vehiculos);

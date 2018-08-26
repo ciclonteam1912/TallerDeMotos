@@ -23,14 +23,26 @@ namespace TallerDeMotos.Models.AtributosDeValidacion
 
             if(value != null)
             {
-                var result = _context.Database.SqlQuery<int>(
-                string.Format("SELECT COUNT(*) FROM {0} WHERE {1}={2}", className, propertyName, parameterName),
-                new System.Data.SqlClient.SqlParameter(parameterName, value));
-                if (result.ToList()[0] > 0)
+                if(empleado.Id != 0)
                 {
-                    return new ValidationResult(string.Format("{0} '{1}' ya existe", validationContext.DisplayName, value),
+                    var numeroDocumento = _context.Database.SqlQuery<string>(
+                    string.Format("SELECT NUMERODOCUMENTO FROM {0} WHERE CODIGO<>{1}", className, empleado.Id));
+
+                    if(empleado.NumeroDocumento == numeroDocumento.ToList()[0])
+                        return new ValidationResult(string.Format("{0} '{1}' ya existe", validationContext.DisplayName, value),
                                 new List<string>() { propertyName });
                 }
+                else
+                {
+                    var result = _context.Database.SqlQuery<int>(
+                    string.Format("SELECT COUNT(*) FROM {0} WHERE {1}={2}", className, propertyName, parameterName),
+                    new System.Data.SqlClient.SqlParameter(parameterName, value));
+                    if (result.ToList()[0] > 0)
+                    {
+                        return new ValidationResult(string.Format("{0} '{1}' ya existe", validationContext.DisplayName, value),
+                                    new List<string>() { propertyName });
+                    }
+                }                
             }            
             return null;
         }

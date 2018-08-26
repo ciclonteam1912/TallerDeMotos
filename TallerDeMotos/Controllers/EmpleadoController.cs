@@ -6,6 +6,9 @@ using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
+using System.Web.Routing;
+using System.Globalization;
+using System.Threading;
 
 namespace TallerDeMotos.Controllers
 {
@@ -63,6 +66,7 @@ namespace TallerDeMotos.Controllers
                 return View("EmpleadoFormulario", viewModel);
             }
 
+            empleado.FechaDeNacimiento = DateTime.Parse(empleado.Fecha);
             if (empleado.Id == 0)
             {
                 empleado.FechaDeIngreso = DateTime.Now;
@@ -93,6 +97,7 @@ namespace TallerDeMotos.Controllers
                 Ciudades = _context.Ciudades.ToList()
             };
 
+            viewModel.Fecha = viewModel.FechaDeNacimiento.ToString();
             return View("EmpleadoFormulario", viewModel);
         }
     }

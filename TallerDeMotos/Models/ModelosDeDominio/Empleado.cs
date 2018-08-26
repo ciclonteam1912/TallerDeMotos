@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
@@ -51,6 +53,9 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Ciudad")]
         public int CiudadId { get; set; }
 
+        [Display(Name = "Fecha de Nacimiento")]
+        [NotMapped]
+        public string Fecha { get; set; }
         public string NombreCompleto
         {
             get

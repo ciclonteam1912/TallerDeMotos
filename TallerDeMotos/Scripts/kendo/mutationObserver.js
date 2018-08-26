@@ -29,6 +29,6 @@
     } else {
         elements.each(function () {
             this.attachEvent("onpropertychange", updateCssOnPropertyChange);
-        });
+        });        
     }
 }

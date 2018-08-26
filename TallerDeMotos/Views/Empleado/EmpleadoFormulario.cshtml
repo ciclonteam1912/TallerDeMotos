@@ -21,14 +21,14 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Nombre)
-                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre del Empleado...", maxlength = 50, autocomplete = "off" })
+                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre del Empleado...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Nombre)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Apellido)
-                            @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", placeholder = "Apellido del Empleado...", maxlength = 50, autocomplete = "off" })
+                            @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", placeholder = "Apellido del Empleado...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Apellido)
                         </div>                        
                     </div>
@@ -37,7 +37,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.NumeroDocumento)
-                            @Html.TextBoxFor(m => m.NumeroDocumento, new { @class = "form-control", placeholder = "Número de Documento...", maxlength = 50, autocomplete = "off" })
+                            @Html.TextBoxFor(m => m.NumeroDocumento, new { @class = "form-control", placeholder = "Número de Documento...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.NumeroDocumento)
                         </div>                        
                     </div>
@@ -53,14 +53,24 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Direccion)
-                            @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control", placeholder = "Dirección...", maxlength = 255, autocomplete = "off" })
+                            @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control", placeholder = "Dirección...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Direccion)
                         </div>                        
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.CiudadId, new { id = "labelCiudad" })
-                            @Html.DropDownListFor(m => m.CiudadId, new SelectList(Model.Ciudades, "Id", "Nombre"), "Seleccionar Ciudad...", new { @class = "form-control", id = "ciudadId" })
+                            @(Html.Kendo().DropDownList()
+                                .Name("CiudadId")
+                                .DataTextField("Nombre")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione una ciudad...")
+                                .HtmlAttributes(new { style = "width: 75%" })
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/ciudades"));
+                                })
+                            )                           
                             <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
                             <div>@Html.ValidationMessageFor(m => m.CiudadId)</div>
                         </div>
@@ -70,14 +80,14 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.CorreoElectronico)
-                            @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control", placeholder = "Correo Electrónico...", maxlength = 50, autocomplete = "off" })
+                            @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control", placeholder = "Correo Electrónico...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.CorreoElectronico)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Telefono)
-                            @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", placeholder = "Número de Teléfono...", maxlength = 50, autocomplete = "off" })
+                            @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", placeholder = "Número de Teléfono...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Telefono)
                         </div>                       
                     </div>                    
@@ -85,9 +95,8 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.FechaDeNacimiento, new { id = "labelFecha" })
-                            @Html.TextBoxFor(m => m.FechaDeNacimiento, new { @class = "form-control", placeholder = "Fecha de Nacimiento...", onkeydown = "return false;", style = "width:74%; " })
-                            @Html.ValidationMessageFor(m => m.FechaDeNacimiento)
+                            @Html.LabelFor(m => m.Fecha, new { id = "labelFecha" })
+                            @Html.TextBoxFor(m => m.Fecha, "{0: dd/MM/yyyy}", new { @class = "form-control", onkeydown = "return false;", style = "width:74%; " })
                         </div>                        
                     </div>                  
                 </div>
@@ -105,69 +114,66 @@
         </div>
     }
 </div>
-
 @section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
         function maxLengthCheck(object) {
             if (object.value.length > object.max.length)
                 object.value = object.value.slice(0, object.max.length);
         }
 
+        $.validator.setDefaults({
+            ignore: "",
+            // any other default options and/or rules,
+            //errorPlacement: function (error, element) {
+            //    console.log("error", error);
+            //    console.log("element", element);
+            //    if (element.is("[data-role=dropdownlist]")) {
+            //        element.closest(".k-widget").after(error);
+            //    }
+            //}
+        });
+
+        function updateCssOnPropertyChange(e) {
+            var element = $(e.target);
+
+            element.siblings("span.k-dropdown-wrap")
+                   .add(element.siblings("div.k-multiselect-wrap"))
+                   .add(element.parent("span.k-numeric-wrap"))
+                   .add(element.parent("span.k-picker-wrap"))
+                   .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
+
         $(document).ready(function () {
+            UseMutationObserver();
+
             $("#menuTaller").addClass('active');
             var id = $("#Id").val();
+            var ddl = $("#CiudadId").data("kendoDropDownList");
 
-            $("#FechaDeNacimiento").kendoDateTimePicker({
+            $("#Fecha").kendoDateTimePicker({
+                culture: "es-ES",
+                format: "dd/MM/yyyy HH:mm",
                 animation: {
-                    open: {
-                        effects: "zoom:in",
+                    close: {
+                        effects: "fadeOut zoom:out",
                         duration: 300
                     },
-                    close: {
-                        effects: "zoom:out",
+                    open: {
+                        effects: "fadeIn zoom:in",
                         duration: 300
                     }
                 },
-                value: id == 0 ? new Date() : $("#FechaDeNacimiento").val(),
-                culture: "es-ES",
-                dateInput: true
+                value: id == 0 ? new Date() : $("#Fecha").val(),
+                dateInput: true,
+                attributes: {
+                    "width": "68%"
+                }
             });
 
-            $("#HoraDeEntrada").kendoTimePicker({
-                animation: {
-                    open: {
-                        effects: "zoom:in",
-                        duration: 300
-                    },
-                    close: {
-                        effects: "zoom:out",
-                        duration: 300
-                    }
-                },
-                culture: "es-ES",
-                interval: 15,
-                min: new Date(2000, 0, 1, 7, 0, 0),
-                max: new Date(2000, 0, 1, 18, 0, 0), //date part is ignored
-                value: id == 0 ? new Date(2000, 0, 1, 7, 0, 0) : $("#HoraDeEntrada").val()
+            $('#myModal').on('hidden.bs.modal', function () {
+                ddl.dataSource.read();
             });
-
-            $("#HoraDeSalida").kendoTimePicker({
-                animation: {
-                    open: {
-                        effects: "zoom:in",
-                        duration: 300
-                    },
-                    close: {
-                        effects: "zoom:out",
-                        duration: 300
-                    }
-                },
-                culture: "es-ES",
-                interval: 15,
-                min: new Date(2000, 0, 1, 7, 0, 0),
-                max: new Date(2000, 0, 1, 18, 0, 0), //date part is ignored
-                value: id == 0 ? new Date(2000, 0, 1, 18, 0, 0) : $("#HoraDeSalida").val()
-            });           
         });
     </script>
 }

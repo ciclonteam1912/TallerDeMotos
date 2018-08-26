@@ -43,10 +43,13 @@
                     .DataValueField("Id")
                     .OptionLabel("Seleccione un vehículo...")
                     .HtmlAttributes(new { style = "width: 100%" })
-                    .Filter("contains")
+                    //.Filter("contains")
+                    .AutoBind(false)
                     .DataSource(source =>
                     {
-                        source.Read(read => read.Url("/api/vehiculos").Data("filtrarVehiculos"));
+                        source.Read(read => read.Url("/api/vehiculos").
+                                    Data("filtrarVehiculos"))
+                                    .ServerFiltering(true);
                     })
                     .Enable(false)
                     .CascadeFrom("ClienteId")
@@ -54,7 +57,7 @@
                     <script>
                         function filtrarVehiculos() {
                             return {
-                                ClienteId: $("ClienteId").val()
+                                ClienteId: $("#ClienteId").val()
                             };
                         }
                     </script>
@@ -95,7 +98,7 @@
                             <span class="error">Seleccionar Producto o Servicio</span>
                         </td>
                         <td>
-                            <input type="text" id="productoDesc" readonly class="form-control" />                           
+                            <input type="text" id="productoDesc" readonly class="form-control" />
                         </td>
                         <td><input type="text" id="productoPrecio" readonly class="form-control" /></td>
                         <td>
@@ -163,6 +166,7 @@
             </div>
         </div>
     </form>
+
 </div>
 
 @section scripts {

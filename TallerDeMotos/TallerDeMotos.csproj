@@ -267,6 +267,7 @@
     <Compile Include="Controllers\APIs\AseguradorasController.cs" />
     <Compile Include="Controllers\APIs\BancosController.cs" />
     <Compile Include="Controllers\APIs\CajasController.cs" />
+    <Compile Include="Controllers\APIs\CargosController.cs" />
     <Compile Include="Controllers\APIs\CiudadesController.cs" />
     <Compile Include="Controllers\APIs\ClientesController.cs" />
     <Compile Include="Controllers\APIs\CombustiblesController.cs" />
@@ -297,6 +298,7 @@
     <Compile Include="Controllers\BancoController.cs" />
     <Compile Include="Controllers\CajaAperturaCierreController.cs" />
     <Compile Include="Controllers\CajaController.cs" />
+    <Compile Include="Controllers\CargoController.cs" />
     <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CombustibleController.cs" />
@@ -326,6 +328,7 @@
     <Compile Include="Dtos\AseguradoraDto.cs" />
     <Compile Include="Dtos\BancoDto.cs" />
     <Compile Include="Dtos\CajaDto.cs" />
+    <Compile Include="Dtos\CargoDto.cs" />
     <Compile Include="Dtos\CiudadDto.cs" />
     <Compile Include="Dtos\ClienteDto.cs" />
     <Compile Include="Dtos\EmpresaDto.cs" />
@@ -797,6 +800,7 @@
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />
     <Compile Include="Models\AtributosDeValidacion\ValidateModelAttribute.cs" />
     <Compile Include="Models\BancoServicio.cs" />
+    <Compile Include="Models\CargoServicio.cs" />
     <Compile Include="Models\CiudadServicio.cs" />
     <Compile Include="Models\ConexionBD.cs" />
     <Compile Include="Models\IdentityManager.cs" />
@@ -2727,6 +2731,7 @@
     <Content Include="Views\MovimientoCaja\ListaDeMovimientos.cshtml" />
     <Content Include="Views\Shared\_Sucursal.cshtml" />
     <Content Include="Views\Inicio\Caja.cshtml" />
+    <Content Include="Views\Shared\_Cargo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

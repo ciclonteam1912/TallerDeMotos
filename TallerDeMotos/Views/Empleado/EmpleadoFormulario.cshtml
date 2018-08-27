@@ -10,6 +10,7 @@
     @using (Html.BeginForm("GuardarEmpleado", "Empleado"))
     {
         @Html.Partial("_Ciudad")
+        @Html.Partial("_Cargo")
 
         <div class="panel panel-default">
             <div class="panel-heading">@Model.Titulo</div>
@@ -43,9 +44,20 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.CargoId)
-                            @Html.DropDownListFor(m => m.CargoId, new SelectList(Model.Cargos, "Id", "Nombre"), "Seleccionar Cargo", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.CargoId)
+                            @Html.LabelFor(m => m.CargoId, new { id = "labelCargo" })
+                            @(Html.Kendo().DropDownList()
+                                .Name("CargoId")
+                                .DataTextField("Nombre")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione un cargo...")
+                                .HtmlAttributes(new { style = "width: 75%" })
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/cargos"));
+                                })
+                            )
+                            <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModalCargo"></button>
+                            <div>@Html.ValidationMessageFor(m => m.CargoId)</div>
                         </div>                        
                     </div>
                 </div>
@@ -150,6 +162,7 @@
             $("#menuTaller").addClass('active');
             var id = $("#Id").val();
             var ddl = $("#CiudadId").data("kendoDropDownList");
+            var ddlCargo = $("#CargoId").data("kendoDropDownList");
 
             $("#Fecha").kendoDateTimePicker({
                 culture: "es-ES",
@@ -173,6 +186,10 @@
 
             $('#myModal').on('hidden.bs.modal', function () {
                 ddl.dataSource.read();
+            });
+
+            $('#myModalCargo').on('hidden.bs.modal', function () {
+                ddlCargo.dataSource.read();
             });
         });
     </script>

@@ -262,7 +262,7 @@ a.k-grid-pdf, a.k-grid-save-changes, a.k-grid-cancel-changes {
 
 /*********************Estilos para los label************/
 
-#labelCiudad, #labelFecha, #labelSucursal{
+#labelCiudad, #labelFecha, #labelSucursal, #labelCargo{
     display: block;
 }
 

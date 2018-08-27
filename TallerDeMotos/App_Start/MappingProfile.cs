@@ -47,6 +47,7 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Caja, CajaDto>();
             Mapper.CreateMap<Empresa, EmpresaDto>();
             Mapper.CreateMap<Sucursal, SucursalDto>();
+            Mapper.CreateMap<Cargo, CargoDto>();
 
             //DTO a Dominio
             Mapper.CreateMap<OrdenCompraDto, OrdenCompra>();

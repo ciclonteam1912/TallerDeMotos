@@ -6,9 +6,39 @@
                 <h3 class="modal-title">Agregar Ciudad</h3>
             </div>
             <div class="modal-body">
-                <div id="example">
-                    <div id="grid"></div>
+                <div class="row">
+                    <div id="message" class="col-md-12" style="display:none"></div>
                 </div>
+                @(Html.Kendo().Grid<TallerDeMotos.Dtos.CiudadDto>()
+                    .Name("gridCiudad")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(p => p.Nombre).Width(150);                        
+                        columns.Command(command => command.Destroy()).Width(80);
+                    })
+                    .ToolBar(toolbar =>
+                    {
+                        toolbar.Create();
+                        toolbar.Save();
+                    })
+                    .Editable(editable => editable.Mode(GridEditMode.InCell))
+                    .Pageable(p => p.Refresh(true))
+                    .Navigatable()
+                    .Sortable()
+                    .Scrollable()
+                    .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .Batch(false)
+                        .PageSize(20)
+                        .ServerOperation(true)
+                        .Events(events => events.Error("error_handler_ciudad"))
+                        .Model(model => model.Id(p => p.Id))
+                        .Create("CrearCiudad", "Ciudad")
+                        .Read("ObtenerCiudades", "Ciudad")
+                        .Update("EditarCiudad", "Ciudad")
+                        .Destroy("EliminarCiudad", "Ciudad")
+                    )
+                )
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
@@ -17,53 +47,44 @@
     </div>
 </div>
 
-<script>
-    var dataSource = new kendo.data.DataSource({
-        autoSync: false,
-        transport: {
-            read: {
-                url: "/api/Ciudades",
-                dataType: "json"
-            },
-            update: {
-                url: "/Ciudad/EditarCiudad",
-                dataType: "json",
-                type: "post"
-            },
-            create: {
-                url: "/Ciudad/CrearCiudad",
-                dataType: "json",
-                type: "post"
-            }
-        },
-        pageSize: 10,
-        serverPaging: false,
-        serverSorting: false,
-        schema: {
-            model: {
-                id: "Id",
-                fields: {
-                    Id: { editable: false },
-                    Nombre: { validation: { required: true } }
+<script type="text/javascript">
+    function error_handler_ciudad(e) {
+        if (e.errors) {
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () { //
+                        if (value.errors[0].includes('FK_dbo.Aseguradoras_dbo.Ciudades_CiudadCodigo')) {
+                            $("#message").show();
+                            $("#message").append("<div class='alert alert-danger'>No se pudo eliminar la ciudad, ya que tiene asociado una aseguradora.<br>Cancele la operación o elimine dicha aseguradora.</div>");
+                        }
+
+                        if (value.errors[0].includes('FK_dbo.Clientes_dbo.Ciudades_CiudadCodigo')) {
+                            $("#message").show();
+                            $("#message").append("<div class='alert alert-danger'>No se pudo eliminar la ciudad, ya que tiene asociado un cliente.<br>Cancele la operación o elimine dicho cliente.</div>");
+                        }
+
+                        if (value.errors[0].includes('FK_dbo.Empleados_dbo.Ciudades_CiudadCodigo')) {
+                            $("#message").show();
+                            $("#message").append("<div class='alert alert-danger'>No se pudo eliminar la ciudad, ya que tiene asociado una aseguradora.<br>Cancele la operación o elimine dicha aseguradora.</div>");
+                        }
+
+                        if (value.errors[0].includes('IX_NombreCiudad')) {
+                            $("#message").show();
+                            $("#message").append("<div class='alert alert-danger'>Ciudad ya existente.<br>Cancele la operación o inserte otra ciudad.</div>");
+                        }
+                    });
                 }
-            }
-        }
+            });
+        }      
+    }
+
+    $(".k-grid-cancel-changes").click(function () {
+        $("#message").hide();
+        $("#message").empty();
     });
 
-    $("#grid").kendoGrid({
-        dataSource: dataSource,
-        pageable: {
-            refresh: true,
-            pageSizes: true,
-            buttonCount: 5
-        },
-        sortable: true,
-        filterable: true,
-        height: 500,
-        toolbar: ["create", "save", "cancel"],
-        columns: [
-            { field: "Nombre", title: "Nombre", width: 120 }
-        ],
-        editable: true
+    $(".k-grid-add").click(function () {
+        $("#message").hide();
+        $("#message").empty();
     });
 </script>

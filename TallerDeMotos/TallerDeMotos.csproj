@@ -783,6 +783,10 @@
     <Compile Include="Migrations\201808251245087_AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados.Designer.cs">
       <DependentUpon>201808251245087_AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808282311559_AgregarConstraintUniqueEnColumnaNombreDeLaTablaCiudades.cs" />
+    <Compile Include="Migrations\201808282311559_AgregarConstraintUniqueEnColumnaNombreDeLaTablaCiudades.Designer.cs">
+      <DependentUpon>201808282311559_AgregarConstraintUniqueEnColumnaNombreDeLaTablaCiudades.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -3066,6 +3070,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808251245087_AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados.resx">
       <DependentUpon>201808251245087_AgregarRestriccionUnicaYCambiarNombreColumnaCedulaEnEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808282311559_AgregarConstraintUniqueEnColumnaNombreDeLaTablaCiudades.resx">
+      <DependentUpon>201808282311559_AgregarConstraintUniqueEnColumnaNombreDeLaTablaCiudades.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

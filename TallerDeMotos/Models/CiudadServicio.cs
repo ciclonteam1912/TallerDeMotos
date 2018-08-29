@@ -81,6 +81,16 @@ namespace TallerDeMotos.Models
             return GetAll().FirstOrDefault(predicate);
         }
 
+        public void Destroy(CiudadDto ciudadDto)
+        {
+            var entity = new Ciudad();
+
+            entity.Id = ciudadDto.Id;
+            entities.Ciudades.Attach(entity);
+            entities.Ciudades.Remove(entity);
+            entities.SaveChanges();
+        }
+
         public void Dispose()
         {
             entities.Dispose();

@@ -17,14 +17,15 @@ namespace TallerDeMotos.Controllers
             _context = new ApplicationDbContext();
         }
 
+        #region Remote Validation en Empleados
         // GET: RemoteValidation
         [HttpPost]
-        public JsonResult NumeroDocumentoExiste(string NumeroDocumento, string Id)
+        public JsonResult NumeroDocumentoExisteEnEmpleados(string NumeroDocumento, string Id)
         {
-            return Json(NumeroDocumentoDisponible(NumeroDocumento, Id));
+            return Json(NumeroDocumentoDisponibleEnEmpleados(NumeroDocumento, Id));
         }
 
-        public bool NumeroDocumentoDisponible(string NumeroDocumento, string Id)
+        public bool NumeroDocumentoDisponibleEnEmpleados(string NumeroDocumento, string Id)
         {
             // Assume these details coming from database  
             int id = int.Parse(Id);
@@ -63,5 +64,53 @@ namespace TallerDeMotos.Controllers
 
             return status;
         }
+        #endregion
+
+        #region Remote Validation en Empleados
+        // GET: RemoteValidation
+        [HttpPost]
+        public JsonResult NumeroDocumentoExisteEnClientes(string ValorDocumento, string Id)
+        {
+            return Json(NumeroDocumentoDisponibleEnClientes(ValorDocumento, Id));
+        }
+
+        public bool NumeroDocumentoDisponibleEnClientes(string ValorDocumento, string Id)
+        {
+            // Assume these details coming from database  
+            int id = int.Parse(Id);
+            bool status;
+
+            var clientes = _context.Clientes.ToList();
+
+            if (id != 0)
+            {
+                var resultado = (from u in clientes
+                                 where u.ValorDocumento.ToUpper() == ValorDocumento.ToUpper() && u.Id != id
+                                 select new { ValorDocumento })
+                                 .FirstOrDefault();
+
+                if (resultado != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            else
+            {
+                var valor = (from u in clientes
+                             where u.ValorDocumento.ToUpper() == ValorDocumento.ToUpper()
+                             select new
+                             {
+                                 ValorDocumento
+                             })
+                                    .FirstOrDefault();
+
+                if (valor != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            return status;
+        }
+        #endregion
     }
 }

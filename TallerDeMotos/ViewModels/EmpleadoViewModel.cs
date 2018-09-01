@@ -26,7 +26,7 @@ namespace TallerDeMotos.ViewModels
 
         [Required]
         [StringLength(50)]
-        [Remote("NumeroDocumentoExiste", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Número de Documento ya existe.")]
+        [Remote("NumeroDocumentoExisteEnEmpleados", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Número de Documento ya existe.")]
         [Display(Name = "Número de Documento")]
         public string NumeroDocumento { get; set; }
 

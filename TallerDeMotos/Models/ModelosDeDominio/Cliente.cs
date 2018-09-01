@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -50,6 +51,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Required]
         [StringLength(50)]
+        [RegularExpression(@"[^\s]+", ErrorMessage = "El campo Valor del Documento no es válido. No se permiten espacios.")]
+        [RestriccionUnicaEnCliente]
         [Display(Name = "Valor del Documento")]
         public string ValorDocumento { get; set; }
 

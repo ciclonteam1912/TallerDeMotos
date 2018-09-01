@@ -797,6 +797,7 @@
     <Compile Include="Models\AtributosDeValidacion\PorLoMenosUnCheckBox.cs" />
     <Compile Include="Models\AtributosDeValidacion\PrecioVentaMayorPrecioCosto.cs" />
     <Compile Include="Models\AtributosDeValidacion\RequiredIf.cs" />
+    <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnCliente.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnCaja.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnEmpleado.cs" />

@@ -125,7 +125,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn btn-primary">Guardar</button>
+                <button class="btn btn-primary" id="btnGuardar">Guardar</button>
             </div>
         </div>
     }
@@ -143,6 +143,7 @@
         if (id == 0) {
             $.validator.setDefaults({
                 ignore: "",
+                onkeyup: false
                 // any other default options and/or rules,
                 //errorPlacement: function (error, element) {
                 //    console.log("error", error);
@@ -198,6 +199,10 @@
 
             $('#myModalCargo').on('hidden.bs.modal', function () {
                 ddlCargo.dataSource.read();
+            });
+
+            $("#btnGuardar").click(function () {
+                $(".k-widget").removeClass("input-validation-error");
             });
         });
     </script>

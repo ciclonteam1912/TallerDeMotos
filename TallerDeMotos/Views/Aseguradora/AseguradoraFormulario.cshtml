@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Nombre)
+                            @Html.LabelFor(m => m.Nombre) <span class="asterisco">*</span>
                             @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre de la Aseguradora...", maxlength = 20, autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Nombre)
                         </div>
@@ -68,8 +68,20 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.CiudadId, new { id = "labelCiudad" })
-                            @Html.DropDownListFor(m => m.CiudadId, new SelectList(Model.Ciudades, "Id", "Nombre"), "Seleccionar Ciudad...", new { @class = "form-control", id = "ciudadId" })
+                            @Html.LabelFor(m => m.CiudadId) <span class="asterisco">*</span>
+                            <br />
+                            @(Html.Kendo().DropDownList()
+                                    .Name("CiudadId")
+                                    .DataTextField("Nombre")
+                                    .DataValueField("Id")
+                                    .OptionLabel("Seleccione una ciudad...")
+                                    .HtmlAttributes(new { style = "width: 75%" })
+                                    .Filter("contains")
+                                    .DataSource(source =>
+                                    {
+                                        source.Read(read => read.Url("/api/ciudades"));
+                                    })
+                            )                          
                             <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
                             <div>@Html.ValidationMessageFor(m => m.CiudadId)</div>
                             
@@ -80,16 +92,49 @@
                 @Html.AntiForgeryToken()
             </div>
             <div class="panel-footer">
-                <button class="btn btn-primary">Guardar</button>
+                <button class="btn btn-primary" id="btnGuardar">Guardar</button>
             </div>
         </div>
     }
 </div>
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $(document).ready(function () {
-            $("#menuTaller").addClass('active');                            
+        var id = $("#Id").val();
+
+        if (id == 0) {
+            $.validator.setDefaults({
+                ignore: "",
+                onkeyup: false
+                // any other default options and/or rules,
+                //errorPlacement: function (error, element) {
+                //    console.log("error", error);
+                //    console.log("element", element);
+                //    if (element.is("[data-role=dropdownlist]")) {
+                //        element.closest(".k-widget").after(error);
+                //    }
+                //}
+            });
+        }
+
+        function updateCssOnPropertyChange(e) {
+            var element = $(e.target);
+
+            element.siblings("span.k-dropdown-wrap")
+                   .add(element.siblings("div.k-multiselect-wrap"))
+                   .add(element.parent("span.k-numeric-wrap"))
+                   .add(element.parent("span.k-picker-wrap"))
+                   .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
+        $(document).ready(function () {            
+            UseMutationObserver();
+
+            $("#menuTaller").addClass('active');
+
+            $("#btnGuardar").click(function () {
+                $(".k-widget").removeClass("input-validation-error");
+            });
         });
     </script>
 }

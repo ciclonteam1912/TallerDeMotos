@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ViewModels
@@ -18,6 +19,7 @@ namespace TallerDeMotos.ViewModels
         public string Contacto { get; set; }
 
         [StringLength(10)]
+        [Remote("RucExisteEnAseguradoras", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Ruc ya existe")]
         public string Ruc { get; set; }
 
         [StringLength(255)]

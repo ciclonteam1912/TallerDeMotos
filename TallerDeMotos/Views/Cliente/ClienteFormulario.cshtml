@@ -124,7 +124,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn btn-primary">Guardar</button>
+                <button class="btn btn-primary" id="btnGuardar">Guardar</button>
             </div>
         </div>
     }
@@ -232,6 +232,10 @@
 
             $('#myModal').on('hidden.bs.modal', function () {
                 ddl.dataSource.read();
+            });
+
+            $("#btnGuardar").click(function () {
+                $(".k-widget").removeClass("input-validation-error");
             });
         });
     </script>

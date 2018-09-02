@@ -203,5 +203,52 @@ namespace TallerDeMotos.Controllers
             return status;
         }
         #endregion
+
+        #region Remote Validation en Aseguradoras
+        // GET: RemoteValidation
+        [HttpPost]
+        public JsonResult RucExisteEnAseguradoras(string Ruc, string Id)
+        {
+            return Json(RucDisponibleEnAseguradoras(Ruc, Id));
+        }
+
+        public bool RucDisponibleEnAseguradoras(string Ruc, string Id)
+        {
+            // Assume these details coming from database  
+            int id = int.Parse(Id);
+            bool status;
+
+            var aseguradoras = _context.Aseguradoras.ToList();
+
+            if (id != 0)
+            {
+                var resultado = (from u in aseguradoras
+                                 where u.Ruc?.ToUpper() == Ruc.ToUpper() && u.Id != id
+                                 select new { Ruc })
+                                 .FirstOrDefault();
+
+                if (resultado != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            else
+            {
+                var valor = (from u in aseguradoras
+                             where u.Ruc.ToUpper() == Ruc.ToUpper()
+                             select new
+                             {
+                                 Ruc
+                             })
+                             .FirstOrDefault();
+
+                if (valor != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            return status;
+        }
+        #endregion
     }
 }

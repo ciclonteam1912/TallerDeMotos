@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -15,6 +16,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public string Contacto { get; set; }
 
         [StringLength(10)]
+        [RestriccionUnicaEnAseguradora]
         public string Ruc { get; set; }
 
         [StringLength(255)]

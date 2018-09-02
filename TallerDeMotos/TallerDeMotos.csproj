@@ -816,6 +816,7 @@
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnCaja.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnEmpleado.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnUsuario.cs" />
+    <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnAseguradora.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />
     <Compile Include="Models\AtributosDeValidacion\ValidateModelAttribute.cs" />
     <Compile Include="Models\BancoServicio.cs" />

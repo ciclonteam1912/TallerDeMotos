@@ -33,7 +33,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         {
             get
             {
-                return Marca.Nombre + "-" + Nombre;
+                return Marca.Nombre + " - " + Nombre;
             }
         }
 

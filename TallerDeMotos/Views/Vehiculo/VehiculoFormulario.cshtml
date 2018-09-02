@@ -104,7 +104,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(v => v.Kilometro)
-                            @Html.TextBoxFor(v => v.Kilometro, new { @class = "form-control", placeholder = "Kilómetraje del Vehículo", autocomplete = "off", type = "number", min = "0", max = "99999", oninput = "maxLengthCheck(this)" })
+                            @Html.TextBoxFor(v => v.Kilometro, new { @class = "form-control", placeholder = "Kilometraje del Vehículo", autocomplete = "off", type = "number", min = "0", max = "99999", oninput = "maxLengthCheck(this)" })
                             @Html.ValidationMessageFor(v => v.Kilometro)
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                 @Html.AntiForgeryToken()
             </div>
             <div class="panel-footer">
-                <button class="btn btn-primary">Guardar</button>
+                <button class="btn btn-primary" id="btnGuardar">Guardar</button>
             </div>
         </div>
     }
@@ -140,6 +140,7 @@
         if (id == 0) {
             $.validator.setDefaults({
                 ignore: "",
+                onkeyup: false
                 // any other default options and/or rules,
                 //errorPlacement: function (error, element) {
                 //    console.log("error", error);
@@ -165,6 +166,10 @@
             UseMutationObserver();
 
             $("#menuTaller").addClass('active');
+
+            $("#btnGuardar").click(function () {
+                $(".k-widget").removeClass("input-validation-error");
+            });
         });
     </script>
 }

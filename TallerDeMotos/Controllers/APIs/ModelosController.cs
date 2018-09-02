@@ -18,29 +18,14 @@ namespace TallerDeMotos.Controllers.APIs
         [HttpGet]
         public IHttpActionResult ObtenerModelos()
         {
-            var modelos = _context.Modelos.Include(m => m.Marca)
+            var modelos = _context.Modelos
+                .Include(m => m.Marca)
+                .Include(m => m.Cilindrada)
+                .Include(m => m.TipoMotor)
                 .ToList();
-                //.Select(Mapper.Map<Modelo, ModeloDto>);
 
             return Ok(modelos);
         }
-
-        //[HttpPost]
-        //public IHttpActionResult CrearModelo(ModeloDto modeloDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
-
-        //    var modelo = Mapper.Map<ModeloDto, Modelo>(modeloDto);
-
-        //    _context.Modelos.Add(modelo);
-        //    _context.SaveChanges();
-
-        //    modelo = _context.Modelos.Find(modelo.Id);
-
-        //    var resultado = Mapper.Map<Modelo, ModeloDto>(modelo);
-        //    return Ok(resultado);
-        //}
 
         [HttpDelete]
         public IHttpActionResult EliminarModelo(int id)

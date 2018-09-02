@@ -22,16 +22,6 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public float? Kilometro { get; set; }
 
-        public TipoMotor TipoMotor { get; set; }
-
-        [Display(Name = "Tipo de Motor")]
-        public byte TipoMotorId { get; set; }
-
-        public Cilindrada Cilindrada { get; set; }
-
-        [Display(Name = "Cilindrada")]
-        public byte CilindradaId { get; set; }
-
         public DateTime FechaDeIngreso { get; set; }
 
         [StringLength(20)]

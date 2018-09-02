@@ -48,8 +48,8 @@
                     title: "Apellido",
                     width: 100
                 }, {
-                    field: "Cedula",
-                    title: "Cédula",
+                    field: "NumeroDocumento",
+                    title: "Nro. de Documento",
                     width: 120
                 }, {
                     field: "Cargo.Nombre",
@@ -92,10 +92,9 @@
 
             <p><b>Dirección:</b> #= (Direccion == null) ? ' ' : Direccion #</p>
             <p><b>Teléfono:</b> #= (Telefono == null) ? ' ' : Telefono #</p>
+            <p><b>Ciudad:</b> #= Ciudad.Nombre #</p>
             <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
             <p><b>Fecha de Nacimiento:</b> #= kendo.toString(kendo.parseDate(FechaDeNacimiento), "g") #</p>
-            <p><b>Hora de Entrada:</b> #= (HoraDeEntrada == null) ? ' ' : HoraDeEntrada #</p>
-            <p><b>Hora de Salida:</b> #= (HoraDeSalida == null) ? ' ' : HoraDeSalida #</p>
         </div>
     </script>
 }

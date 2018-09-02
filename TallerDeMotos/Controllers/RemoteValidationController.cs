@@ -66,7 +66,7 @@ namespace TallerDeMotos.Controllers
         }
         #endregion
 
-        #region Remote Validation en Empleados
+        #region Remote Validation en Clientes
         // GET: RemoteValidation
         [HttpPost]
         public JsonResult NumeroDocumentoExisteEnClientes(string ValorDocumento, string Id)
@@ -103,6 +103,97 @@ namespace TallerDeMotos.Controllers
                                  ValorDocumento
                              })
                                     .FirstOrDefault();
+
+                if (valor != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            return status;
+        }
+        #endregion
+
+        #region Remote Validation en Vehículos
+        // GET: RemoteValidation
+        [HttpPost]
+        public JsonResult MatriculaExisteEnVehiculos(string Matricula, string Id)
+        {
+            return Json(MatriculaDisponibleEnVehiculos(Matricula, Id));
+        }
+
+        public bool MatriculaDisponibleEnVehiculos(string Matricula, string Id)
+        {
+            // Assume these details coming from database  
+            int id = int.Parse(Id);
+            bool status;
+
+            var vehiculos = _context.Vehiculos.ToList();
+
+            if (id != 0)
+            {
+                var resultado = (from u in vehiculos
+                                 where u.Matricula.ToUpper() == Matricula.ToUpper() && u.Id != id
+                                 select new { Matricula })
+                                 .FirstOrDefault();
+
+                if (resultado != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            else
+            {
+                var valor = (from u in vehiculos
+                             where u.Matricula.ToUpper() == Matricula.ToUpper()
+                             select new
+                             {
+                                 Matricula
+                             })
+                             .FirstOrDefault();
+
+                if (valor != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            return status;
+        }
+
+        [HttpPost]
+        public JsonResult ChasisExisteEnVehiculos(string Chasis, string Id)
+        {
+            return Json(ChasisDisponibleEnVehiculos(Chasis, Id));
+        }
+
+        public bool ChasisDisponibleEnVehiculos(string Chasis, string Id)
+        {
+            // Assume these details coming from database  
+            int id = int.Parse(Id);
+            bool status;
+
+            var vehiculos = _context.Vehiculos.ToList();
+
+            if (id != 0)
+            {
+                var resultado = (from u in vehiculos
+                                 where u.Chasis.ToUpper() == Chasis.ToUpper() && u.Id != id
+                                 select new { Chasis })
+                                 .FirstOrDefault();
+
+                if (resultado != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            else
+            {
+                var valor = (from u in vehiculos
+                             where u.Chasis.ToUpper() == Chasis.ToUpper()
+                             select new
+                             {
+                                 Chasis
+                             })
+                             .FirstOrDefault();
 
                 if (valor != null)
                     status = false;

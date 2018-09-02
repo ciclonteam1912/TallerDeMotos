@@ -21,14 +21,14 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Nombre) <span class="asterico">*</span>
+                            @Html.LabelFor(m => m.Nombre) <span class="asterisco">*</span>
                             @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre del Empleado...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Nombre)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Apellido) <span class="asterico">*</span>
+                            @Html.LabelFor(m => m.Apellido) <span class="asterisco">*</span>
                             @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", placeholder = "Apellido del Empleado...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Apellido)
                         </div>                        
@@ -37,14 +37,14 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.NumeroDocumento) <span class="asterico">*</span>
+                            @Html.LabelFor(m => m.NumeroDocumento) <span class="asterisco">*</span>
                             @Html.TextBoxFor(m => m.NumeroDocumento, new { @class = "form-control", placeholder = "Número de Documento...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.NumeroDocumento)
                         </div>                        
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.CargoId) <span class="asterico">*</span>
+                            @Html.LabelFor(m => m.CargoId) <span class="asterisco">*</span>
                             <br />
                             @(Html.Kendo().DropDownList()
                                 .Name("CargoId")
@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.CiudadId) <span class="asterico">*</span>
+                            @Html.LabelFor(m => m.CiudadId) <span class="asterisco">*</span>
                             <br />
                             @(Html.Kendo().DropDownList()
                                 .Name("CiudadId")
@@ -138,17 +138,21 @@
                 object.value = object.value.slice(0, object.max.length);
         }
 
-        $.validator.setDefaults({
-            ignore: "",
-            // any other default options and/or rules,
-            //errorPlacement: function (error, element) {
-            //    console.log("error", error);
-            //    console.log("element", element);
-            //    if (element.is("[data-role=dropdownlist]")) {
-            //        element.closest(".k-widget").after(error);
-            //    }
-            //}
-        });
+        var id = $("#Id").val();
+
+        if (id == 0) {
+            $.validator.setDefaults({
+                ignore: "",
+                // any other default options and/or rules,
+                //errorPlacement: function (error, element) {
+                //    console.log("error", error);
+                //    console.log("element", element);
+                //    if (element.is("[data-role=dropdownlist]")) {
+                //        element.closest(".k-widget").after(error);
+                //    }
+                //}
+            });
+        }
 
         function updateCssOnPropertyChange(e) {
             var element = $(e.target);

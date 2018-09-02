@@ -14,8 +14,22 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
                 .HasColumnName("Codigo")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
+            Property(v => v.CilindradaId)
+                .HasColumnName("CilindradaCodigo");
+
             Property(m => m.MarcaId)
-                .HasColumnName("MarcaCodigo");            
+                .HasColumnName("MarcaCodigo");
+
+            Property(v => v.TipoMotorId)
+                .HasColumnName("TipoMotorCodigo");
+
+            HasRequired(v => v.Cilindrada)
+                .WithMany(c => c.Modelos)
+                .WillCascadeOnDelete(false);
+
+            HasRequired(v => v.TipoMotor)
+                .WithMany(c => c.Modelos)
+                .WillCascadeOnDelete(false);
         }
     }
 }

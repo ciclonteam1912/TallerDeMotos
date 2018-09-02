@@ -24,8 +24,6 @@ namespace TallerDeMotos.Controllers.APIs
                 .Include(v => v.Modelo)
                 .Include(v => v.Modelo.Marca)
                 .Include(v => v.Combustible)
-                .Include(v => v.Cilindrada)
-                .Include(v => v.TipoMotor)
                 .Where(v => v.ClienteId == clienteId)
                 .ToList();
 
@@ -42,8 +40,6 @@ namespace TallerDeMotos.Controllers.APIs
                 .Include(v => v.Modelo)
                 .Include(v => v.Modelo.Marca)
                 .Include(v => v.Combustible)
-                .Include(v => v.Cilindrada)
-                .Include(v => v.TipoMotor)
                 .ToList();
 
             return Ok(vehiculos);

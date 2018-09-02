@@ -23,9 +23,6 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(v => v.AseguradoraId)
                 .HasColumnName("AseguradoraCodigo");
 
-            Property(v => v.CilindradaId)
-                .HasColumnName("CilindradaCodigo");
-
             Property(v => v.ClienteId)
                 .HasColumnName("ClienteCodigo");
 
@@ -33,18 +30,11 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
                 .HasColumnName("CombustibleCodigo");
 
             Property(v => v.ModeloId)
-                .HasColumnName("ModeloCodigo");
-
-            Property(v => v.TipoMotorId)
-                .HasColumnName("TipoMotorCodigo");
+                .HasColumnName("ModeloCodigo");            
 
             HasRequired(v => v.Aseguradora)
                 .WithMany(a => a.Vehiculos)
-                .WillCascadeOnDelete(false);
-
-            HasRequired(v => v.Cilindrada)
-                .WithMany(c => c.Vehiculos)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(false);        
 
             HasRequired(v => v.Combustible)
                 .WithMany(c => c.Vehiculos)
@@ -56,10 +46,6 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             
             HasRequired(v => v.Modelo)
                 .WithMany(m => m.Vehiculos)
-                .WillCascadeOnDelete(false);
-
-            HasRequired(v => v.TipoMotor)
-                .WithMany(tm => tm.Vehiculos)
                 .WillCascadeOnDelete(false);
         }
     }

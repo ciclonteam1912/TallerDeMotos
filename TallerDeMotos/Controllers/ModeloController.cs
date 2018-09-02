@@ -35,10 +35,14 @@ namespace TallerDeMotos.Controllers
         public ActionResult NuevoModelo()
         {
             var marcas = _context.Marcas.ToList();
+            var cilindradas = _context.Cilindradas.ToList();
+            var tipoMotores = _context.TiposMotores.ToList();
 
             var viewModel = new ModeloViewModel
             {
-                Marcas = marcas
+                Marcas = marcas,
+                Cilindradas = cilindradas,
+                TiposMotores = tipoMotores
             };
 
             return View("ModeloFormulario", viewModel);
@@ -53,7 +57,9 @@ namespace TallerDeMotos.Controllers
             {
                 var viewModel = new ModeloViewModel(modelo)
                 {
-                    Marcas = _context.Marcas.ToList()
+                    Marcas = _context.Marcas.ToList(),
+                    Cilindradas = _context.Cilindradas.ToList(),
+                    TiposMotores = _context.TiposMotores.ToList()
                 };
 
                 return View("ModeloFormulario", viewModel);
@@ -82,7 +88,9 @@ namespace TallerDeMotos.Controllers
 
             var modelo = new ModeloViewModel(modeloBD)
             {
-                Marcas = _context.Marcas.ToList()
+                Marcas = _context.Marcas.ToList(),
+                Cilindradas = _context.Cilindradas.ToList(),
+                TiposMotores = _context.TiposMotores.ToList()
             };
 
             return View("ModeloFormulario", modelo);

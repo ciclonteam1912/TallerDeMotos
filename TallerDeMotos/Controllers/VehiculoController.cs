@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
+
 
 namespace TallerDeMotos.Controllers
 {
@@ -37,7 +39,7 @@ namespace TallerDeMotos.Controllers
         {
             var clientes = _context.Clientes.ToList();
             var aseguradoras = _context.Aseguradoras.ToList();
-            var modelos = _context.Modelos.ToList();
+            var modelos = _context.Modelos.Include(m => m.Marca).ToList();
             var combustibles = _context.Combustibles.ToList();
             var tiposMotores = _context.TiposMotores.ToList();
             var cilindradas = _context.Cilindradas.ToList();
@@ -47,9 +49,7 @@ namespace TallerDeMotos.Controllers
                 Clientes = clientes,
                 Aseguradoras = aseguradoras,
                 Modelos = modelos,
-                Combustibles = combustibles,
-                TiposMotores = tiposMotores,
-                Cilindradas = cilindradas
+                Combustibles = combustibles
             };
 
             return View("VehiculoFormulario", viewModel);
@@ -66,10 +66,8 @@ namespace TallerDeMotos.Controllers
                 {
                     Clientes = _context.Clientes.ToList(),
                     Aseguradoras = _context.Aseguradoras.ToList(),
-                    Modelos = _context.Modelos.ToList(),
-                    Combustibles = _context.Combustibles.ToList(),
-                    TiposMotores = _context.TiposMotores.ToList(),
-                    Cilindradas = _context.Cilindradas.ToList()
+                    Modelos = _context.Modelos.Include(m => m.Marca).ToList(),
+                    Combustibles = _context.Combustibles.ToList()
                 };
 
                 return View("VehiculoFormulario", viewModel);
@@ -103,9 +101,7 @@ namespace TallerDeMotos.Controllers
                 Clientes = _context.Clientes.ToList(),
                 Aseguradoras = _context.Aseguradoras.ToList(),
                 Modelos = _context.Modelos.ToList(),
-                Combustibles = _context.Combustibles.ToList(),
-                TiposMotores = _context.TiposMotores.ToList(),
-                Cilindradas = _context.Cilindradas.ToList()
+                Combustibles = _context.Combustibles.ToList()
             };
 
             return View("VehiculoFormulario", viewModel);

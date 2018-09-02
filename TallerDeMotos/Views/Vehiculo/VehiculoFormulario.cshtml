@@ -18,30 +18,66 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.ClienteId)
-                            @Html.DropDownListFor(v => v.ClienteId, new SelectList(Model.Clientes, "Id", "NombreCompleto"), "Seleccione un Cliente", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(v => v.ClienteId)
+                            @Html.LabelFor(v => v.ClienteId) <span class="asterisco">*</span>
+                            <br />
+                            @(Html.Kendo().DropDownList()
+                                .Name("ClienteId")
+                                .DataTextField("NombreCompleto")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione un cliente...")
+                                .HtmlAttributes(new { style = "width: 75%" })
+                                .Filter("contains")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/clientes"));
+                                })
+                            )                           
+                            <div>@Html.ValidationMessageFor(v => v.ClienteId)</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.ModeloId)
-                            @Html.DropDownListFor(v => v.ModeloId, new SelectList(Model.Modelos, "Id", "Nombre"), "Seleccione un Modelo del Vehículo", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(v => v.ModeloId)
+                            @Html.LabelFor(v => v.ModeloId) <span class="asterisco">*</span>
+                            <br />
+                            @(Html.Kendo().DropDownList()
+                                .Name("ModeloId")
+                                .DataTextField("ModeloCompleto")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione un modelo...")
+                                .HtmlAttributes(new { style = "width: 75%" })
+                                .Filter("contains")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/modelos"));
+                                })
+                            )                                                      
+                            <div>@Html.ValidationMessageFor(v => v.ModeloId)</div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.AseguradoraId)
-                            @Html.DropDownListFor(v => v.AseguradoraId, new SelectList(Model.Aseguradoras, "Id", "Nombre"), "Seleccione una Aseguradora", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(v => v.AseguradoraId)
+                            @Html.LabelFor(v => v.AseguradoraId) <span class="asterisco">*</span>
+                            <br />
+                            @(Html.Kendo().DropDownList()
+                                .Name("AseguradoraId")
+                                .DataTextField("Nombre")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione una aseguradora...")
+                                .HtmlAttributes(new { style = "width: 75%" })
+                                .Filter("contains")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/aseguradoras"));
+                                })
+                            )                          
+                            <div>@Html.ValidationMessageFor(v => v.AseguradoraId)</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.CombustibleId)
+                            @Html.LabelFor(v => v.CombustibleId) <span class="asterisco">*</span>
                             @Html.DropDownListFor(v => v.CombustibleId, new SelectList(Model.Combustibles, "Id", "Nombre"), "Seleccione un Tipo de Combustible", new { @class = "form-control" })
                             @Html.ValidationMessageFor(v => v.CombustibleId)
                         </div>
@@ -50,36 +86,20 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.Matricula)
-                            @Html.TextBoxFor(v => v.Matricula, new { @class = "form-control", placeholder = "Matrícula del Vehículo...", maxlength = 20, autocomplete = "off" })
+                            @Html.LabelFor(v => v.Matricula) <span class="asterisco">*</span>
+                            @Html.TextBoxFor(v => v.Matricula, new { @class = "form-control", placeholder = "Matrícula del Vehículo...", autocomplete = "off" })
                             @Html.ValidationMessageFor(v => v.Matricula)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.Chasis)
-                            @Html.TextBoxFor(v => v.Chasis, new { @class = "form-control", placeholder = "Chasis del Vehículo...", maxlength = 20, autocomplete = "off", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
+                            @Html.LabelFor(v => v.Chasis) <span class="asterisco">*</span>
+                            @Html.TextBoxFor(v => v.Chasis, new { @class = "form-control", placeholder = "Chasis del Vehículo...", autocomplete = "off", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
                             @Html.ValidationMessageFor(v => v.Chasis)
                         </div>
                     </div>
 
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(v => v.TipoMotorId)
-                            @Html.DropDownListFor(v => v.TipoMotorId, new SelectList(Model.TiposMotores, "Id", "Descripcion"), "Seleccione un Tipo de Motor", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(v => v.TipoMotorId)
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(v => v.CilindradaId)
-                            @Html.DropDownListFor(v => v.CilindradaId, new SelectList(Model.Cilindradas, "Id", "NumeroCilindrada"), "Seleccione una Cilindrada", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(v => v.CilindradaId)
-                        </div>
-                    </div>
-                </div>
+                </div>                
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
@@ -91,7 +111,8 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(v => v.Color)
-                            @Html.TextBoxFor(v => v.Color, new { @class = "form-control", placeholder = "Color del Vehículo", autocomplete = "off", maxlength = 20 })
+                            @Html.TextBoxFor(v => v.Color, new { @class = "form-control", placeholder = "Color del Vehículo", autocomplete = "off"})
+                            @Html.ValidationMessageFor(v => v.Color)
                         </div>
                     </div>
                 </div>
@@ -107,13 +128,42 @@
 
 
 @section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
         function maxLengthCheck(object) {
             if (object.value.length > object.max.length)
                 object.value = object.value.slice(0, object.max.length);
         }
 
+        var id = $("#Id").val();
+
+        if (id == 0) {
+            $.validator.setDefaults({
+                ignore: "",
+                // any other default options and/or rules,
+                //errorPlacement: function (error, element) {
+                //    console.log("error", error);
+                //    console.log("element", element);
+                //    if (element.is("[data-role=dropdownlist]")) {
+                //        element.closest(".k-widget").after(error);
+                //    }
+                //}
+            });
+        }
+
+        function updateCssOnPropertyChange(e) {
+            var element = $(e.target);
+
+            element.siblings("span.k-dropdown-wrap")
+                   .add(element.siblings("div.k-multiselect-wrap"))
+                   .add(element.parent("span.k-numeric-wrap"))
+                   .add(element.parent("span.k-picker-wrap"))
+                   .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
+
         $(document).ready(function () {
+            UseMutationObserver();
+
             $("#menuTaller").addClass('active');
         });
     </script>

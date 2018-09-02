@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                @Html.LabelFor(m => m.Nombre)
+                                @Html.LabelFor(m => m.Nombre) <span class="asterisco">*</span>
                                 @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre del Modelo...", maxlength = 20, autocomplete = "off" })
                                 @Html.ValidationMessageFor(m => m.Nombre)
                             </div>
@@ -23,11 +23,56 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                @Html.LabelFor(m => m.MarcaId)
-                                @Html.DropDownListFor(m => m.MarcaId, new SelectList(Model.Marcas, "Id", "Nombre"), "Seleccione una Marca", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.MarcaId)
+                                @Html.LabelFor(m => m.MarcaId) <span class="asterisco">*</span>
+                                <br />
+                                @(Html.Kendo().DropDownList()
+                                    .Name("MarcaId")
+                                    .DataTextField("Nombre")
+                                    .DataValueField("Id")
+                                    .OptionLabel("Seleccione una Marca...")
+                                    .HtmlAttributes(new { style = "width: 75%" })
+                                    .DataSource(source =>
+                                    {
+                                        source.Read(read => read.Url("/api/marcas"));
+                                    })
+                                )                                                             
+                                <div>@Html.ValidationMessageFor(m => m.MarcaId)</div>
                             </div>
 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            @Html.LabelFor(m => m.CilindradaId) <span class="asterisco">*</span>
+                            <br />
+                            @(Html.Kendo().DropDownList()
+                                    .Name("CilindradaId")
+                                    .DataTextField("NumeroCilindrada")
+                                    .DataValueField("Id")
+                                    .OptionLabel("Seleccione una cilindrada...")
+                                    .HtmlAttributes(new { style = "width: 75%" })
+                                    .DataSource(source =>
+                                    {
+                                        source.Read(read => read.Url("/api/cilindradas"));
+                                    })
+                            )                         
+                            <div>@Html.ValidationMessageFor(m => m.CilindradaId)</div>
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.LabelFor(m => m.TipoMotorId) <span class="asterisco">*</span>
+                            <br />
+                            @(Html.Kendo().DropDownList()
+                                    .Name("TipoMotorId")
+                                    .DataTextField("Descripcion")
+                                    .DataValueField("Id")
+                                    .OptionLabel("Seleccione un tipo de motor...")
+                                    .HtmlAttributes(new { style = "width: 75%" })
+                                    .DataSource(source =>
+                                    {
+                                        source.Read(read => read.Url("/api/tipoMotores"));
+                                    })
+                            )
+                            <div>@Html.ValidationMessageFor(m => m.TipoMotorId)</div>                         
                         </div>
                     </div>
                     @Html.HiddenFor(m => m.Id)
@@ -42,10 +87,39 @@
 
     </div>
 
-    @section Scripts {
-        <script>
-            $(document).ready(function () {
-                $("#menuTaller").addClass('active');
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var id = $("#Id").val();
+
+        if (id == 0) {
+            $.validator.setDefaults({
+                ignore: "",
+                // any other default options and/or rules,
+                //errorPlacement: function (error, element) {
+                //    console.log("error", error);
+                //    console.log("element", element);
+                //    if (element.is("[data-role=dropdownlist]")) {
+                //        element.closest(".k-widget").after(error);
+                //    }
+                //}
             });
-        </script>
-    }
+        }
+        
+        function updateCssOnPropertyChange(e) {
+            var element = $(e.target);
+
+            element.siblings("span.k-dropdown-wrap")
+                   .add(element.siblings("div.k-multiselect-wrap"))
+                   .add(element.parent("span.k-numeric-wrap"))
+                   .add(element.parent("span.k-picker-wrap"))
+                   .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
+
+        $(document).ready(function () {
+            UseMutationObserver();
+
+            $("#menuTaller").addClass('active');
+        });
+    </script>
+}

@@ -11,11 +11,11 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [StringLength(20)]
         public string Descripcion { get; set; }
 
-        public ICollection<Vehiculo> Vehiculos { get; set; }
+        public ICollection<Modelo> Modelos { get; set; }
 
         public TipoMotor()
         {
-            Vehiculos = new HashSet<Vehiculo>();
+            Modelos = new HashSet<Modelo>();
         }
     }
 }

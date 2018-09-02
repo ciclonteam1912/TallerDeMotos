@@ -17,7 +17,25 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Marca")]
         public byte MarcaId { get; set; }
 
+        public Cilindrada Cilindrada { get; set; }
+
+        [Display(Name = "Cilindrada")]
+        public byte CilindradaId { get; set; }
+
+        public TipoMotor TipoMotor { get; set; }
+
+        [Display(Name = "Tipo de Motor")]
+        public byte TipoMotorId { get; set; }
+
         public ICollection<Vehiculo> Vehiculos { get; set; }
+
+        public string ModeloCompleto
+        {
+            get
+            {
+                return Marca.Nombre + "-" + Nombre;
+            }
+        }
 
         public Modelo()
         {

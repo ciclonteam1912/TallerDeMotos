@@ -1,40 +1,37 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ViewModels
 {
     public class VehiculoViewModel
     {
+        #region Listas
         public IEnumerable<Cliente> Clientes { get; set; }
-
         public IEnumerable<Aseguradora> Aseguradoras { get; set; }
-
         public IEnumerable<Modelo> Modelos { get; set; }
+        public IEnumerable<Combustible> Combustibles { get; set; }        
+        #endregion
 
-        public IEnumerable<Combustible> Combustibles { get; set; }
-
-        public IEnumerable<TipoMotor> TiposMotores { get; set; }
-
-        public IEnumerable<Cilindrada> Cilindradas { get; set; }
-
+        #region Propiedades
         public int Id { get; set; }
 
         [Display(Name = "Matrícula")]
         [Required]
+        [StringLength(20)]
+        [Remote("MatriculaExisteEnVehiculos", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Matrícula ya existe.")]
         public string Matricula { get; set; }
 
+        [Required]
+        [StringLength(20)]
+        [Remote("ChasisExisteEnVehiculos", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Chasis ya existe.")]
         public string Chasis { get; set; }
 
-        [Display(Name = "Kilómetros")]
+        [Display(Name = "Odómetro (Km.)")]
         public float? Kilometro { get; set; }
 
-        [Display(Name = "Tipo de Motor")]
-        public byte TipoMotorId { get; set; }
-
-        [Display(Name = "Cilindrada")]
-        public byte CilindradaId { get; set; }
-
+        [StringLength(20)]
         public string Color { get; set; }
 
         [Display(Name = "Modelo")]
@@ -56,7 +53,9 @@ namespace TallerDeMotos.ViewModels
                 return Id != 0 ? "Editar Vehículo" : "Nuevo Vehículo";
             }
         }
+        #endregion
 
+        #region Constructores
         public VehiculoViewModel()
         {
             Id = 0;
@@ -68,13 +67,12 @@ namespace TallerDeMotos.ViewModels
             Matricula = vehiculo.Matricula;
             Chasis = vehiculo.Chasis;
             Kilometro = vehiculo.Kilometro;
-            TipoMotorId = vehiculo.TipoMotorId;
-            CilindradaId = vehiculo.CilindradaId;
             Color = vehiculo.Color;
             ModeloId = vehiculo.ModeloId;
             ClienteId = vehiculo.ClienteId;
             CombustibleId = vehiculo.CombustibleId;
             AseguradoraId = vehiculo.AseguradoraId;
         }
+        #endregion
     }
 }

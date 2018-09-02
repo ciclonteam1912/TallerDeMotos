@@ -787,6 +787,10 @@
     <Compile Include="Migrations\201808282311559_AgregarConstraintUniqueEnColumnaNombreDeLaTablaCiudades.Designer.cs">
       <DependentUpon>201808282311559_AgregarConstraintUniqueEnColumnaNombreDeLaTablaCiudades.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809021359326_AgregarColumnasRepresentanteFechaDeFundacionEnMarcas.cs" />
+    <Compile Include="Migrations\201809021359326_AgregarColumnasRepresentanteFechaDeFundacionEnMarcas.Designer.cs">
+      <DependentUpon>201809021359326_AgregarColumnasRepresentanteFechaDeFundacionEnMarcas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -3074,6 +3078,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808282311559_AgregarConstraintUniqueEnColumnaNombreDeLaTablaCiudades.resx">
       <DependentUpon>201808282311559_AgregarConstraintUniqueEnColumnaNombreDeLaTablaCiudades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809021359326_AgregarColumnasRepresentanteFechaDeFundacionEnMarcas.resx">
+      <DependentUpon>201809021359326_AgregarColumnasRepresentanteFechaDeFundacionEnMarcas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

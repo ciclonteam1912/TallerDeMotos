@@ -20,14 +20,14 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.PersoneriaId)
+                            @Html.LabelFor(m => m.PersoneriaId) <span class="asterico">*</span>
                             @Html.DropDownListFor(m => m.PersoneriaId, new SelectList(Model.Personerias, "Id", "Descripcion"), "Seleccionar Personería", new { @class = "form-control", id = "personeriaId" })
                             @Html.ValidationMessageFor(m => m.PersoneriaId)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Nombre, new { id = "labelNombre" })
+                            @Html.LabelFor(m => m.Nombre, new { id = "labelNombre" }) <span class="asterico">*</span>
                             @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre del Cliente...", id = "inputNombre", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Nombre)
                         </div>
@@ -57,14 +57,14 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.TipoDocumentoId)
+                            @Html.LabelFor(m => m.TipoDocumentoId) <span class="asterico">*</span>
                             @Html.DropDownListFor(m => m.TipoDocumentoId, new SelectList(Model.TiposDocumentos, "Id", "Descripcion"), "Seleccionar Tipo de Documento", new { @class = "form-control", id = "tipoDocumentoId" })
                             @Html.ValidationMessageFor(m => m.TipoDocumentoId)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ValorDocumento)
+                            @Html.LabelFor(m => m.ValorDocumento) <span class="asterico">*</span>
                             @Html.TextBoxFor(m => m.ValorDocumento, new { @class = "form-control", placeholder = "Ingrese el Valor del Documento...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.ValorDocumento)
                         </div>
@@ -98,13 +98,15 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.CiudadId, new { id = "labelCiudad" })
+                            @Html.LabelFor(m => m.CiudadId) <span class="asterico">*</span>
+                            <br />
                             @(Html.Kendo().DropDownList()
                                     .Name("CiudadId")
                                     .DataTextField("Nombre")
                                     .DataValueField("Id")
                                     .OptionLabel("Seleccione una ciudad...")
                                     .HtmlAttributes(new { style = "width: 75%" })
+                                    .Filter("contains")
                                     .DataSource(source =>
                                     {
                                         source.Read(read => read.Url("/api/ciudades"));

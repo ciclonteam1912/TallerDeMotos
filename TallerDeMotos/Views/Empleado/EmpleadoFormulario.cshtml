@@ -21,14 +21,14 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Nombre)
+                            @Html.LabelFor(m => m.Nombre) <span class="asterico">*</span>
                             @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre del Empleado...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Nombre)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Apellido)
+                            @Html.LabelFor(m => m.Apellido) <span class="asterico">*</span>
                             @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", placeholder = "Apellido del Empleado...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Apellido)
                         </div>                        
@@ -37,20 +37,22 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.NumeroDocumento)
+                            @Html.LabelFor(m => m.NumeroDocumento) <span class="asterico">*</span>
                             @Html.TextBoxFor(m => m.NumeroDocumento, new { @class = "form-control", placeholder = "Número de Documento...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.NumeroDocumento)
                         </div>                        
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.CargoId, new { id = "labelCargo" })
+                            @Html.LabelFor(m => m.CargoId) <span class="asterico">*</span>
+                            <br />
                             @(Html.Kendo().DropDownList()
                                 .Name("CargoId")
                                 .DataTextField("Nombre")
                                 .DataValueField("Id")
                                 .OptionLabel("Seleccione un cargo...")
                                 .HtmlAttributes(new { style = "width: 75%" })
+                                .Filter("contains")
                                 .DataSource(source =>
                                 {
                                     source.Read(read => read.Url("/api/cargos"));
@@ -71,13 +73,15 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.CiudadId, new { id = "labelCiudad" })
+                            @Html.LabelFor(m => m.CiudadId) <span class="asterico">*</span>
+                            <br />
                             @(Html.Kendo().DropDownList()
                                 .Name("CiudadId")
                                 .DataTextField("Nombre")
                                 .DataValueField("Id")
                                 .OptionLabel("Seleccione una ciudad...")
                                 .HtmlAttributes(new { style = "width: 75%" })
+                                .Filter("contains")
                                 .DataSource(source =>
                                 {
                                     source.Read(read => read.Url("/api/ciudades"));

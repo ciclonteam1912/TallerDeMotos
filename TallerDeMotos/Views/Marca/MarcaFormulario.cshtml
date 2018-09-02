@@ -12,10 +12,33 @@
         <div class="panel panel-default">
             <div class="panel-heading">@Model.Titulo</div>
             <div class="panel-body">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Nombre)
-                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre de la Marca...", maxlength = 20, autocomplete = "off" })
-                    @Html.ValidationMessageFor(m => m.Nombre)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Nombre) <span class="asterico">*</span>
+                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre de la Marca...", autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Nombre)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Representante)
+                            @Html.TextBoxFor(m => m.Representante, new { @class = "form-control", placeholder = "Ingrese el Representante de la Marca...", autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.Representante)
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FechaDeFundacion, new { id = "labelFecha" })
+                            @Html.TextBoxFor(m => m.FechaDeFundacion, new { @class = "form-control", style = "width:74%; " })
+                            <div class="row">
+                                @Html.ValidationMessageFor(m => m.FechaDeFundacion)
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 @Html.HiddenFor(m => m.Id)
                 @Html.AntiForgeryToken()
@@ -28,9 +51,18 @@
 </div>
 
 @section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
             $("#menuTaller").addClass('active');
+
+            var id = $("#Id").val();
+
+            $("#FechaDeFundacion").kendoDateTimePicker({
+                value: id == 0 ? new Date() : $("#FechaDeFundacion").val(),
+                culture: "es-ES",
+                dateInput: true
+            });
         });
     </script>
 }

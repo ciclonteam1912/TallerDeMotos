@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -11,6 +13,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Required]
         [StringLength(20)]
         public string Nombre { get; set; }
+
+        [StringLength(50)]
+        public string Representante { get; set; }
+
+        [Display(Name = "Fecha de Fundación")]
+        public DateTime? FechaDeFundacion { get; set; }
+        //public string ImagenMarca { get; set; }
 
         public ICollection<Modelo> Modelos { get; set; }
 
@@ -31,6 +40,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         {
             Id = marca.Id;
             Nombre = marca.Nombre;
+            Representante = marca.Representante;
+            FechaDeFundacion = marca.FechaDeFundacion;
             Modelos = new Collection<Modelo>();
         }
     }

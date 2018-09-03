@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -10,6 +11,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Required]
         [StringLength(20)]
+        [RestriccionUnicaEnModelo]
         public string Nombre { get; set; }
 
         public Marca Marca { get; set; }

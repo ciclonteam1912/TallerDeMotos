@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using System.Web.Mvc;
+using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -12,6 +14,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Required]
         [StringLength(20)]
+        [RestriccionUnicaEnMarca]
+        [Remote("NombreExisteEnMarcas", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Nombre de Marca ya existe.")]
         public string Nombre { get; set; }
 
         [StringLength(50)]

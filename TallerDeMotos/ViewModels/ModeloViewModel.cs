@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ViewModels
@@ -17,6 +18,7 @@ namespace TallerDeMotos.ViewModels
 
         [Required]
         [StringLength(20)]
+        [Remote("NombreExisteEnModelos", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Nombre del Modelo ya existe.")]
         public string Nombre { get; set; }
 
         [Display(Name = "Marca")]

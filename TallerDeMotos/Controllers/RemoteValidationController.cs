@@ -235,10 +235,104 @@ namespace TallerDeMotos.Controllers
             else
             {
                 var valor = (from u in aseguradoras
-                             where u.Ruc.ToUpper() == Ruc.ToUpper()
+                             where u.Ruc?.ToUpper() == Ruc.ToUpper()
                              select new
                              {
                                  Ruc
+                             })
+                             .FirstOrDefault();
+
+                if (valor != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            return status;
+        }
+        #endregion
+
+        #region Remote Validation en Marcas
+        // GET: RemoteValidation
+        [HttpPost]
+        public JsonResult NombreExisteEnMarcas(string Nombre, string Id)
+        {
+            return Json(NombreDisponibleEnMarcas(Nombre, Id));
+        }
+
+        public bool NombreDisponibleEnMarcas(string Nombre, string Id)
+        {
+            // Assume these details coming from database  
+            int id = int.Parse(Id);
+            bool status;
+
+            var marcas = _context.Marcas.ToList();
+
+            if (id != 0)
+            {
+                var resultado = (from u in marcas
+                                 where u.Nombre.ToUpper() == Nombre.Trim().ToUpper() && u.Id != id
+                                 select new { Nombre })
+                                 .FirstOrDefault();
+
+                if (resultado != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            else
+            {
+                var valor = (from u in marcas
+                             where u.Nombre.ToUpper() == Nombre.Trim().ToUpper()
+                             select new
+                             {
+                                 Nombre
+                             })
+                             .FirstOrDefault();
+
+                if (valor != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            return status;
+        }
+        #endregion
+
+        #region Remote Validation en Modelos
+        // GET: RemoteValidation
+        [HttpPost]
+        public JsonResult NombreExisteEnModelos(string Nombre, string Id)
+        {
+            return Json(NombreDisponibleEnModelos(Nombre, Id));
+        }
+
+        public bool NombreDisponibleEnModelos(string Nombre, string Id)
+        {
+            // Assume these details coming from database  
+            int id = int.Parse(Id);
+            bool status;
+
+            var modelos = _context.Modelos.ToList();
+
+            if (id != 0)
+            {
+                var resultado = (from u in modelos
+                                 where u.Nombre.ToUpper() == Nombre.Trim().ToUpper() && u.Id != id
+                                 select new { Nombre })
+                                 .FirstOrDefault();
+
+                if (resultado != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            else
+            {
+                var valor = (from u in modelos
+                             where u.Nombre.ToUpper() == Nombre.Trim().ToUpper()
+                             select new
+                             {
+                                 Nombre
                              })
                              .FirstOrDefault();
 

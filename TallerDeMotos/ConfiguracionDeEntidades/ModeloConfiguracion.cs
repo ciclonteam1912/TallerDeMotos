@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 using TallerDeMotos.Models.ModelosDeDominio;
 
@@ -22,6 +23,10 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
 
             Property(v => v.TipoMotorId)
                 .HasColumnName("TipoMotorCodigo");
+
+            Property(m => m.Nombre)
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_NombreModelo", 1) { IsUnique = true }));
+
 
             HasRequired(v => v.Cilindrada)
                 .WithMany(c => c.Modelos)

@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Nombre) <span class="asterico">*</span>
+                            @Html.LabelFor(m => m.Nombre) <span class="asterisco">*</span>
                             @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre de la Marca...", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Nombre)
                         </div>
@@ -53,6 +53,17 @@
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
     <script>
+        $.validator.setDefaults({
+            onkeyup: false
+            // any other default options and/or rules,
+            //errorPlacement: function (error, element) {
+            //    console.log("error", error);
+            //    console.log("element", element);
+            //    if (element.is("[data-role=dropdownlist]")) {
+            //        element.closest(".k-widget").after(error);
+            //    }
+            //}
+        });
         $(document).ready(function () {
             $("#menuTaller").addClass('active');
 

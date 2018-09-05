@@ -131,6 +131,11 @@
             UseMutationObserver();
 
             $("#menuTaller").addClass('active');
+            var ddl = $("#CiudadId").data("kendoDropDownList");
+
+            $('#myModal').on('hidden.bs.modal', function () {
+                ddl.dataSource.read();
+            });
 
             $("#btnGuardar").click(function () {
                 $(".k-widget").removeClass("input-validation-error");

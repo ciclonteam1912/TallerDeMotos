@@ -19,7 +19,7 @@ namespace TallerDeMotos.ViewModels
 
         [Display(Name = "Matrícula")]
         [Required]
-        [StringLength(20)]
+        [StringLength(6)]
         [Remote("MatriculaExisteEnVehiculos", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Matrícula ya existe.")]
         public string Matricula { get; set; }
 

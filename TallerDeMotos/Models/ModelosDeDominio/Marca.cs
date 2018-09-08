@@ -21,8 +21,9 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [StringLength(50)]
         public string Representante { get; set; }
 
-        [Display(Name = "Fecha de Fabricación")]
-        public DateTime? FechaDeFundacion { get; set; }
+        [StringLength(20)]
+        [Display(Name = "País de Origen")]
+        public string PaisDeOrigen { get; set; }
         //public string ImagenMarca { get; set; }
 
         public ICollection<Modelo> Modelos { get; set; }
@@ -45,7 +46,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
             Id = marca.Id;
             Nombre = marca.Nombre;
             Representante = marca.Representante;
-            FechaDeFundacion = marca.FechaDeFundacion;
+            PaisDeOrigen = marca.PaisDeOrigen;
             Modelos = new Collection<Modelo>();
         }
     }

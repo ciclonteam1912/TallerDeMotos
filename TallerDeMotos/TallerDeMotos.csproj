@@ -809,6 +809,22 @@
     <Compile Include="Migrations\201809030033477_AgregarIndiceUnicoEnLaColumnaNombreEnLaTablaModelos.Designer.cs">
       <DependentUpon>201809030033477_AgregarIndiceUnicoEnLaColumnaNombreEnLaTablaModelos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809081346163_AgregarColumnaFechaDeFabricacionEnVehiculos.cs" />
+    <Compile Include="Migrations\201809081346163_AgregarColumnaFechaDeFabricacionEnVehiculos.Designer.cs">
+      <DependentUpon>201809081346163_AgregarColumnaFechaDeFabricacionEnVehiculos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809081523267_EliminarRelacionUnoAMuchosEntreVehiculosYAseguradoras.cs" />
+    <Compile Include="Migrations\201809081523267_EliminarRelacionUnoAMuchosEntreVehiculosYAseguradoras.Designer.cs">
+      <DependentUpon>201809081523267_EliminarRelacionUnoAMuchosEntreVehiculosYAseguradoras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809081527174_AgregarRelacionUnoOCeroAUnoEntreAseguradorasYVehiculos.cs" />
+    <Compile Include="Migrations\201809081527174_AgregarRelacionUnoOCeroAUnoEntreAseguradorasYVehiculos.Designer.cs">
+      <DependentUpon>201809081527174_AgregarRelacionUnoOCeroAUnoEntreAseguradorasYVehiculos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809081903024_AgregarColumnaPaisDeOrigenYEliminarColumnaFechaDeFundacionEnMarcas.cs" />
+    <Compile Include="Migrations\201809081903024_AgregarColumnaPaisDeOrigenYEliminarColumnaFechaDeFundacionEnMarcas.Designer.cs">
+      <DependentUpon>201809081903024_AgregarColumnaPaisDeOrigenYEliminarColumnaFechaDeFundacionEnMarcas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -3114,6 +3130,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809030033477_AgregarIndiceUnicoEnLaColumnaNombreEnLaTablaModelos.resx">
       <DependentUpon>201809030033477_AgregarIndiceUnicoEnLaColumnaNombreEnLaTablaModelos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809081346163_AgregarColumnaFechaDeFabricacionEnVehiculos.resx">
+      <DependentUpon>201809081346163_AgregarColumnaFechaDeFabricacionEnVehiculos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809081523267_EliminarRelacionUnoAMuchosEntreVehiculosYAseguradoras.resx">
+      <DependentUpon>201809081523267_EliminarRelacionUnoAMuchosEntreVehiculosYAseguradoras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809081527174_AgregarRelacionUnoOCeroAUnoEntreAseguradorasYVehiculos.resx">
+      <DependentUpon>201809081527174_AgregarRelacionUnoOCeroAUnoEntreAseguradorasYVehiculos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809081903024_AgregarColumnaPaisDeOrigenYEliminarColumnaFechaDeFundacionEnMarcas.resx">
+      <DependentUpon>201809081903024_AgregarColumnaPaisDeOrigenYEliminarColumnaFechaDeFundacionEnMarcas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

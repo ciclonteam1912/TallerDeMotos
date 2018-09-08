@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
@@ -9,7 +10,6 @@ namespace TallerDeMotos.Models.ModelosDeDominio
     {
         public int Id { get; set; }
 
-        [Required]
         [StringLength(20)]
         [RestriccionUnicaEnVehiculo]
         [Display(Name = "Matrícula")]
@@ -24,6 +24,10 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public DateTime FechaDeIngreso { get; set; }
 
+        [Display(Name = "Fecha de Fabricación")]
+        public DateTime FechaDeFabricacion { get; set; }
+
+        [Required]
         [StringLength(20)]
         public string Color { get; set; }
 
@@ -44,14 +48,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public Aseguradora Aseguradora { get; set; }
 
-        [Display(Name = "Aseguradora")]
-        public byte AseguradoraId { get; set; }
-
+        [NotMapped]
+        public byte? AseguradoraCodigo { get; set; }
         public string NombreCompleto
         {
             get
             {
-                return Modelo.Marca.Nombre + " " + Modelo.Nombre?.ToUpper() + "-" + Matricula.ToUpper();
+                return Modelo.Marca.Nombre + " " + Modelo.Nombre?.ToUpper() + "-" + Matricula?.ToUpper();
             }
         }
 

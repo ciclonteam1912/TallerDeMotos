@@ -58,10 +58,10 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.AseguradoraId) <span class="asterisco">*</span>
+                            @Html.LabelFor(v => v.AseguradoraCodigo)
                             <br />
                             @(Html.Kendo().DropDownList()
-                                .Name("AseguradoraId")
+                                .Name("AseguradoraCodigo")
                                 .DataTextField("Nombre")
                                 .DataValueField("Id")
                                 .OptionLabel("Seleccione una aseguradora...")
@@ -72,7 +72,7 @@
                                     source.Read(read => read.Url("/api/aseguradoras"));
                                 })
                             )                          
-                            <div>@Html.ValidationMessageFor(v => v.AseguradoraId)</div>
+                            <div>@Html.ValidationMessageFor(v => v.AseguradoraCodigo)</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -86,7 +86,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.Matricula) <span class="asterisco">*</span>
+                            @Html.LabelFor(v => v.Matricula)
                             @Html.TextBoxFor(v => v.Matricula, new { @class = "form-control", placeholder = "Matrícula del Vehículo...", autocomplete = "off" })
                             @Html.ValidationMessageFor(v => v.Matricula)
                         </div>
@@ -100,19 +100,28 @@
                     </div>
 
                 </div>                
-                <div class="row">
+                <div class="row">                    
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.Color) <span class="asterisco">*</span>
+                            @Html.TextBoxFor(v => v.Color, new { @class = "form-control", placeholder = "Color del Vehículo", autocomplete = "off"})
+                            @Html.ValidationMessageFor(v => v.Color)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(v => v.FechaDeFabricacion) <span class="asterisco">*</span> <br />
+                            @Html.TextBoxFor(v => v.FechaDeFabricacion, new { @class = "form-control", style = "width:74%; ", onkeydown = "return false;" })
+                            <div>@Html.ValidationMessageFor(v => v.FechaDeFabricacion)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">                    
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(v => v.Kilometro)
                             @Html.TextBoxFor(v => v.Kilometro, new { @class = "form-control", placeholder = "Kilometraje del Vehículo", autocomplete = "off", type = "number", min = "0", max = "99999", oninput = "maxLengthCheck(this)" })
                             @Html.ValidationMessageFor(v => v.Kilometro)
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(v => v.Color)
-                            @Html.TextBoxFor(v => v.Color, new { @class = "form-control", placeholder = "Color del Vehículo", autocomplete = "off"})
-                            @Html.ValidationMessageFor(v => v.Color)
                         </div>
                     </div>
                 </div>
@@ -166,6 +175,23 @@
             UseMutationObserver();
 
             $("#menuTaller").addClass('active');
+
+            $("#FechaDeFabricacion").kendoDateTimePicker({
+                culture: "es-ES",
+                format: "dd/MM/yyyy HH:mm",
+                animation: {
+                    close: {
+                        effects: "fadeOut zoom:out",
+                        duration: 300
+                    },
+                    open: {
+                        effects: "fadeIn zoom:in",
+                        duration: 300
+                    }
+                },
+                value: id == 0 ? new Date() : $("#FechaDeFabricacion").val(),
+                dateInput: true
+            });
 
             $("#btnGuardar").click(function () {
                 $(".k-widget").removeClass("input-validation-error");

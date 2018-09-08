@@ -94,14 +94,14 @@
     </script>
 
     <script type="text/x-kendo-template" id="template">
-        <div id="details-container">
-            <h2>#= Matricula #</h2>
-            @*<em>#= Title #</em>*@
+    <div id="details-container">
+        <h2>#= (Matricula == null) ? ' ' : Matricula #</h2>
+        @*<em>#= Title #</em>*@
 
-            <p><b>Fecha de Ingreso:</b> #= kendo.toString(kendo.parseDate(FechaDeIngreso), "g") #</p>
-            <p><b>Kilometraje:</b> #= (Kilometro == null) ? ' ' : Kilometro # km.</p>
-            <p><b>Color:</b> #= (Color == null) ? ' ' : Color #</p>
-            <p><b>Aseguradora:</b> #= (Aseguradora.Nombre == null) ? ' ' : Aseguradora.Nombre #</p>
-        </div>
-    </script>
+        <p><b>Fecha de Ingreso:</b> #= kendo.toString(kendo.parseDate(FechaDeIngreso), "g") #</p>
+        <p><b>Kilometraje:</b> #= (Kilometro == null) ? '0' : Kilometro # km.</p>
+        <p><b>Color:</b> #= (Color == null) ? ' ' : Color #</p>
+        <p><b>Aseguradora:</b> #= (Aseguradora == null || Aseguradora.Nombre == null) ? ' ' : Aseguradora.Nombre #</p>
+    </div>
+</script>
 }

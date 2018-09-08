@@ -132,7 +132,7 @@ namespace TallerDeMotos.Controllers
             if (id != 0)
             {
                 var resultado = (from u in vehiculos
-                                 where u.Matricula.ToUpper() == Matricula.ToUpper() && u.Id != id
+                                 where u.Matricula?.ToUpper() == Matricula?.ToUpper() && u.Id != id
                                  select new { Matricula })
                                  .FirstOrDefault();
 
@@ -144,7 +144,7 @@ namespace TallerDeMotos.Controllers
             else
             {
                 var valor = (from u in vehiculos
-                             where u.Matricula.ToUpper() == Matricula.ToUpper()
+                             where u.Matricula?.ToUpper() == Matricula?.ToUpper()
                              select new
                              {
                                  Matricula

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using TallerDeMotos.Models.ModelosDeDominio;
@@ -18,7 +19,6 @@ namespace TallerDeMotos.ViewModels
         public int Id { get; set; }
 
         [Display(Name = "Matrícula")]
-        [Required]
         [StringLength(6)]
         [Remote("MatriculaExisteEnVehiculos", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Matrícula ya existe.")]
         public string Matricula { get; set; }
@@ -31,6 +31,10 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Odómetro (Km.)")]
         public float? Kilometro { get; set; }
 
+        [Display(Name = "Fecha de Fabricación")]
+        public DateTime FechaDeFabricacion { get; set; }
+
+        [Required]
         [StringLength(20)]
         public string Color { get; set; }
 
@@ -44,7 +48,7 @@ namespace TallerDeMotos.ViewModels
         public byte CombustibleId { get; set; }
 
         [Display(Name = "Aseguradora")]
-        public byte AseguradoraId { get; set; }
+        public byte? AseguradoraCodigo { get; set; }
 
         public string Titulo
         {
@@ -71,7 +75,8 @@ namespace TallerDeMotos.ViewModels
             ModeloId = vehiculo.ModeloId;
             ClienteId = vehiculo.ClienteId;
             CombustibleId = vehiculo.CombustibleId;
-            AseguradoraId = vehiculo.AseguradoraId;
+            FechaDeFabricacion = vehiculo.FechaDeFabricacion;
+            AseguradoraCodigo = vehiculo.Aseguradora == null ? (byte)0 : vehiculo.Aseguradora.Id;
         }
         #endregion
     }

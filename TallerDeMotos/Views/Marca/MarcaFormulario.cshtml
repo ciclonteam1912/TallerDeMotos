@@ -32,11 +32,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.FechaDeFundacion, new { id = "labelFecha" })
-                            @Html.TextBoxFor(m => m.FechaDeFundacion, new { @class = "form-control", style = "width:74%; " })
-                            <div class="row">
-                                @Html.ValidationMessageFor(m => m.FechaDeFundacion)
-                            </div>
+                            @Html.LabelFor(m => m.PaisDeOrigen, new { id = "labelFecha" })
+                            @Html.TextBoxFor(m => m.PaisDeOrigen, new { @class = "form-control", placeholder = "Ingrese el país de origen de la Marca...", autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.PaisDeOrigen)
+
                         </div>
                     </div>
                 </div>
@@ -53,27 +52,8 @@
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $.validator.setDefaults({
-            onkeyup: false
-            // any other default options and/or rules,
-            //errorPlacement: function (error, element) {
-            //    console.log("error", error);
-            //    console.log("element", element);
-            //    if (element.is("[data-role=dropdownlist]")) {
-            //        element.closest(".k-widget").after(error);
-            //    }
-            //}
-        });
         $(document).ready(function () {
             $("#menuTaller").addClass('active');
-
-            var id = $("#Id").val();
-
-            $("#FechaDeFundacion").kendoDateTimePicker({
-                value: id == 0 ? new Date() : $("#FechaDeFundacion").val(),
-                culture: "es-ES",
-                dateInput: true
-            });
         });
     </script>
 }

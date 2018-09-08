@@ -72,15 +72,27 @@ namespace TallerDeMotos.Controllers
 
                 return View("VehiculoFormulario", viewModel);
             }
-            if (vehiculo.Id == 0)
+
+            if (vehiculo.AseguradoraCodigo > 0)
             {
+                var aseguradora = _context.Aseguradoras.Find(vehiculo.AseguradoraCodigo);
+                _context.Aseguradoras.Attach(aseguradora);
+                vehiculo.Aseguradora = aseguradora;
+            }
+
+            if (vehiculo.Id == 0)
+            {                
                 vehiculo.FechaDeIngreso = DateTime.Now;
                 _context.Vehiculos.Add(vehiculo);
             }
             else
             {
-                var vehiculosBD = _context.Vehiculos.Single(c => c.Id == vehiculo.Id);
+                var vehiculosBD = _context.Vehiculos
+                    .Include(v => v.Aseguradora)
+                    .Single(c => c.Id == vehiculo.Id);
+
                 Mapper.Map<Vehiculo, Vehiculo>(vehiculo, vehiculosBD);
+                vehiculosBD.Aseguradora = vehiculo.Aseguradora;
             }
 
             _context.SaveChanges();
@@ -91,7 +103,9 @@ namespace TallerDeMotos.Controllers
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult EditarVehiculo(int id)
         {
-            var vehiculo = _context.Vehiculos.SingleOrDefault(c => c.Id == id);
+            var vehiculo = _context.Vehiculos
+                .Include(v => v.Aseguradora)
+                .SingleOrDefault(c => c.Id == id);
 
             if (vehiculo == null)
                 return HttpNotFound();

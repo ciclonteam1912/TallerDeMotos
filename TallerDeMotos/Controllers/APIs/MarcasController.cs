@@ -20,31 +20,10 @@ namespace TallerDeMotos.Controllers.APIs
         [HttpGet]
         public IHttpActionResult ObtenerMarcas()
         {
-            //_context.Configuration.ProxyCreationEnabled = false;
             var marcas = _context.Marcas.ToList();
-               // .Select(Mapper.Map<Marca, MarcaDto>);
 
             return Ok(marcas);
         }
-
-        //[HttpPost]
-        //public IHttpActionResult CrearMarca(MarcaDto marcaDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
-
-        //    var marca = Mapper.Map<MarcaDto, Marca>(marcaDto);
-
-        //    _context.Marcas.Add(marca);
-        //    _context.SaveChanges();
-
-
-        //    marca = _context.Marcas.Find(marca.Id);
-
-        //    var resultado = Mapper.Map<Marca, MarcaDto>(marca);
-
-        //    return Ok(resultado);
-        //}
 
         [HttpDelete]
         public IHttpActionResult EliminarMarca(int id)

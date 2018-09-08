@@ -20,9 +20,6 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(v => v.Chasis)
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_Chasis", 2) { IsUnique = true }));            
 
-            Property(v => v.AseguradoraId)
-                .HasColumnName("AseguradoraCodigo");
-
             Property(v => v.ClienteId)
                 .HasColumnName("ClienteCodigo");
 
@@ -30,11 +27,11 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
                 .HasColumnName("CombustibleCodigo");
 
             Property(v => v.ModeloId)
-                .HasColumnName("ModeloCodigo");            
+                .HasColumnName("ModeloCodigo");
 
-            HasRequired(v => v.Aseguradora)
-                .WithMany(a => a.Vehiculos)
-                .WillCascadeOnDelete(false);        
+            HasOptional(fv => fv.Aseguradora)
+               .WithOptionalDependent(p => p.Vehiculo)
+               .Map(m => m.MapKey("AseguradoraCodigo"));
 
             HasRequired(v => v.Combustible)
                 .WithMany(c => c.Vehiculos)

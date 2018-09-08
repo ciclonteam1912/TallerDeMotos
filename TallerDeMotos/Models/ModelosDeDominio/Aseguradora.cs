@@ -37,11 +37,6 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Ciudad")]
         public int CiudadId { get; set; }
 
-        public ICollection<Vehiculo> Vehiculos { get; set; }        
-
-        public Aseguradora()
-        {
-            Vehiculos = new HashSet<Vehiculo>();            
-        }
+        public Vehiculo Vehiculo { get; set; }
     }
 }

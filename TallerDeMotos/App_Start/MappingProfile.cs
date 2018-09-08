@@ -19,7 +19,8 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Empleado, Empleado>()
                 .ForMember(e => e.FechaDeIngreso, opt => opt.Ignore());
             Mapper.CreateMap<Vehiculo, Vehiculo>()
-                .ForMember(v => v.FechaDeIngreso, opt => opt.Ignore());
+                .ForMember(v => v.FechaDeIngreso, opt => opt.Ignore())
+                .ForMember(e => e.Aseguradora, opt => opt.Ignore());
             Mapper.CreateMap<FormaPago, FormaPago>();
             Mapper.CreateMap<Talonario, Talonario>();
             Mapper.CreateMap<ServicioBasico, ServicioBasico>();

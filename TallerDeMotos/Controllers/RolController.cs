@@ -107,8 +107,11 @@ namespace TallerDeMotos.Controllers
             ApplicationUser user = _context.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
             var usrMgr = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var account = new AccountController(usrMgr);
-            account.UserManager.AddToRole(user.Id, RoleName);
-
+            try
+            {
+                account.UserManager.AddToRole(user.Id, RoleName);
+            }
+            catch(Exception ex) { }
             return View("ManageUserRoles");
         }
 

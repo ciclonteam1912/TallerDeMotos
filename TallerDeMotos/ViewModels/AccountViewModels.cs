@@ -72,6 +72,8 @@ namespace TallerDeMotos.ViewModels
     {
         public IEnumerable<Empleado> Empleados { get; set; }
 
+        public string Id { get; set; }
+
         [Required]
         [Display(Name = "Nombre de Usuario")]
         public string UserName { get; set; }
@@ -98,16 +100,17 @@ namespace TallerDeMotos.ViewModels
 
         public RegisterViewModel(ApplicationUser usuario)
         {
+            Id = usuario.Id;
             UserName = usuario.UserName;
             Email = usuario.Email;
             Password = usuario.Password;
             ConfirmPassword = usuario.ConfirmPassword;
-            //EmpleadoId = usuario.EmpleadoId;
+            EmpleadoId = usuario.EmpleadoId;
         }
 
         public RegisterViewModel()
         {
-
+            Id = "";
         }
     }
 

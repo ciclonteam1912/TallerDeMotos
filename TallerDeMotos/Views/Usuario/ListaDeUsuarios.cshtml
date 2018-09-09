@@ -54,6 +54,16 @@
                     template: "<p>No existe registro de usuarios.</p>"
                 },
                 columns: [{
+                    template: "<a href='/Account/EditarUsuario/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 50,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, {
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
                     title: "&nbsp;",

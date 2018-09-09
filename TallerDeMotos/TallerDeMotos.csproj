@@ -825,6 +825,22 @@
     <Compile Include="Migrations\201809081903024_AgregarColumnaPaisDeOrigenYEliminarColumnaFechaDeFundacionEnMarcas.Designer.cs">
       <DependentUpon>201809081903024_AgregarColumnaPaisDeOrigenYEliminarColumnaFechaDeFundacionEnMarcas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809082234279_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.cs" />
+    <Compile Include="Migrations\201809082234279_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.Designer.cs">
+      <DependentUpon>201809082234279_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809090116522_AgregarCargoPorDefectoParaAsignarAlAdministrador.cs" />
+    <Compile Include="Migrations\201809090116522_AgregarCargoPorDefectoParaAsignarAlAdministrador.Designer.cs">
+      <DependentUpon>201809090116522_AgregarCargoPorDefectoParaAsignarAlAdministrador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809090118523_AgregarEmpleadoPorDefectoEnTablaEmpleados.cs" />
+    <Compile Include="Migrations\201809090118523_AgregarEmpleadoPorDefectoEnTablaEmpleados.Designer.cs">
+      <DependentUpon>201809090118523_AgregarEmpleadoPorDefectoEnTablaEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809090121037_CrearUsuarioYRolPorDefecto2.cs" />
+    <Compile Include="Migrations\201809090121037_CrearUsuarioYRolPorDefecto2.Designer.cs">
+      <DependentUpon>201809090121037_CrearUsuarioYRolPorDefecto2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -2778,6 +2794,7 @@
     <Content Include="Views\Shared\_Sucursal.cshtml" />
     <Content Include="Views\Inicio\Caja.cshtml" />
     <Content Include="Views\Shared\_Cargo.cshtml" />
+    <Content Include="Views\Account\EditarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3142,6 +3159,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809081903024_AgregarColumnaPaisDeOrigenYEliminarColumnaFechaDeFundacionEnMarcas.resx">
       <DependentUpon>201809081903024_AgregarColumnaPaisDeOrigenYEliminarColumnaFechaDeFundacionEnMarcas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809082234279_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.resx">
+      <DependentUpon>201809082234279_AgregarColumnaEmpleadoCodigoEnTablaAspNetUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809090116522_AgregarCargoPorDefectoParaAsignarAlAdministrador.resx">
+      <DependentUpon>201809090116522_AgregarCargoPorDefectoParaAsignarAlAdministrador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809090118523_AgregarEmpleadoPorDefectoEnTablaEmpleados.resx">
+      <DependentUpon>201809090118523_AgregarEmpleadoPorDefectoEnTablaEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809090121037_CrearUsuarioYRolPorDefecto2.resx">
+      <DependentUpon>201809090121037_CrearUsuarioYRolPorDefecto2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

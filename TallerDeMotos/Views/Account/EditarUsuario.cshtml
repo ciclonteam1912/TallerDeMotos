@@ -1,0 +1,98 @@
+﻿@model TallerDeMotos.ViewModels.RegisterViewModel
+
+@{
+    ViewBag.Title = "Editar Usuario";
+}
+@Html.Partial("_MenuVertical")
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Editar Usuario</h2>
+
+    @using (Html.BeginForm())
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">Editar Usuario</div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmpleadoId, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @(Html.Kendo().DropDownList()
+                                .Name("EmpleadoId")
+                                .DataTextField("NombreCompleto")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione un empleado...")
+                                .HtmlAttributes(new { style = "width: 89%" })
+                                .Filter("contains")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/empleados"));
+                                })
+                            )
+                            <div>
+                                @Html.ValidationMessageFor(m => m.EmpleadoId)
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary" id="btnGuardar">Guardar</button>
+            </div>
+        </div>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+
+        
+    }
+</div>
+    
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $.validator.setDefaults({
+                ignore: "",
+                // any other default options and/or rules,
+                //errorPlacement: function (error, element) {
+                //    console.log("error", error);
+                //    console.log("element", element);
+                //    if (element.is("[data-role=dropdownlist]")) {
+                //        element.closest(".k-widget").after(error);
+                //    }
+                //}
+            });
+
+            function updateCssOnPropertyChange(e) {
+                var element = $(e.target);
+
+                element.siblings("span.k-dropdown-wrap")
+                       .add(element.siblings("div.k-multiselect-wrap"))
+                       .add(element.parent("span.k-numeric-wrap"))
+                       .add(element.parent("span.k-picker-wrap"))
+                       .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+            }
+
+            $(document).ready(function () {
+                $("#menuSeguridad").addClass('active');
+
+                UseMutationObserver();
+            });
+        </script>
+    }

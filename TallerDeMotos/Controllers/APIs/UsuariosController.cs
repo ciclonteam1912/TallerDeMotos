@@ -25,7 +25,7 @@ namespace TallerDeMotos.Controllers.APIs
         [HttpGet]
         public IHttpActionResult ObtenerUsuarios()
         {
-            var usuarios = _context.Users.ToList();
+            var usuarios = _context.Users.Where(u => u.UserName != "admin").ToList();
 
             return Ok(usuarios);
         }

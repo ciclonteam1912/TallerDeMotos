@@ -170,7 +170,7 @@ namespace TallerDeMotos.Controllers
                 {
                     UserName = model.UserName,
                     Email = model.Email,
-                    //EmpleadoId = model.EmpleadoId
+                    EmpleadoId = model.EmpleadoId
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -200,6 +200,49 @@ namespace TallerDeMotos.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public ActionResult EditarUsuario(string id)
+        {
+            var usuario = _context.Users.SingleOrDefault(c => c.Id == id.Trim());
+            
+            if (usuario == null)
+                return HttpNotFound();
+
+            var viewModel = new RegisterViewModel(usuario)
+            {
+                Empleados = _context.Empleados.ToList()
+            };
+
+            return View("EditarUsuario", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarUsuario(ApplicationUser model)
+        {
+            if (ModelState.IsValid)
+            {
+                var usuario = _context.Users.SingleOrDefault(c => c.Id == model.Id.Trim());
+
+                if (usuario == null)
+                    return HttpNotFound();
+
+                usuario.UserName = model.UserName;
+                usuario.Email = model.Email;
+                usuario.EmpleadoId = model.EmpleadoId;
+
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "Usuario");
+            }
+
+            var viewModel = new RegisterViewModel(model)
+            {
+                Empleados = _context.Empleados.ToList()
+            };
+
+            return View("EditarUsuario", viewModel);
         }
 
         //

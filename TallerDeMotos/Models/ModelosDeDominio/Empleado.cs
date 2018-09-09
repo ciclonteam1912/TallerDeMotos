@@ -64,11 +64,11 @@ namespace TallerDeMotos.Models.ModelosDeDominio
             }
         }
 
-        //public ICollection<ApplicationUser> Usuarios { get; set; }
+        public ICollection<ApplicationUser> Usuarios { get; set; }
 
-        //public Empleado()
-        //{
-        //    Usuarios = new HashSet<ApplicationUser>();
-        //}
+        public Empleado()
+        {
+            Usuarios = new HashSet<ApplicationUser>();
+        }
     }
 }

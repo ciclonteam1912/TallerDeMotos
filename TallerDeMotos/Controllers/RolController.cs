@@ -45,11 +45,10 @@ namespace TallerDeMotos.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CrearRol(RolViewModel rol)
         {
-            ViewBag.Message = "Nombre de rol ya existe!";
             if (!ModelState.IsValid)
                 return View(rol);
 
-            var role = new IdentityRole { Name = rol.Name };
+            var role = new ApplicationRole { Name = rol.Name, Descripcion = rol.Descripcion };
             var idManager = new IdentityManager();
 
             if (idManager.RoleExists(rol.Name))
@@ -73,7 +72,7 @@ namespace TallerDeMotos.Controllers
             if (thisRole == null)
                 return RedirectToAction("Index");
 
-            var viewModel = new RolViewModel(thisRole);
+            var viewModel = new RolViewModel((ApplicationRole)thisRole);
 
             return View(viewModel);
         }
@@ -86,11 +85,15 @@ namespace TallerDeMotos.Controllers
                 return View(rol);
 
             var rolBD = _context.Roles.SingleOrDefault(r => r.Name == rol.OriginalRoleName);
+            ApplicationRole role = (ApplicationRole)rolBD;
 
             if (rolBD == null)
                 return HttpNotFound();
 
             rolBD.Name = rol.Name;
+            role.Descripcion = rol.Descripcion;
+
+            rolBD = role;
             _context.SaveChanges();
 
             return RedirectToAction("Index");
@@ -107,11 +110,8 @@ namespace TallerDeMotos.Controllers
             ApplicationUser user = _context.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
             var usrMgr = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var account = new AccountController(usrMgr);
-            try
-            {
-                account.UserManager.AddToRole(user.Id, RoleName);
-            }
-            catch(Exception ex) { }
+            account.UserManager.AddToRole(user.Id, RoleName);
+
             return View("ManageUserRoles");
         }
 

@@ -249,6 +249,7 @@
     <Compile Include="ConfiguracionDeEntidades\OrdenCompraAnuladaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\OrdenCompraConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\OrdenCompraDetalleConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\PermisoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\PersoneriaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\PresupuestoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\PresupuestoDetalleConfiguracion.cs" />
@@ -841,6 +842,22 @@
     <Compile Include="Migrations\201809090121037_CrearUsuarioYRolPorDefecto2.Designer.cs">
       <DependentUpon>201809090121037_CrearUsuarioYRolPorDefecto2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809092116497_CreacionDeTablaAspNetPermissions.cs" />
+    <Compile Include="Migrations\201809092116497_CreacionDeTablaAspNetPermissions.Designer.cs">
+      <DependentUpon>201809092116497_CreacionDeTablaAspNetPermissions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809092151002_AgregarColumnaDescripcionEnAspNetRoles.cs" />
+    <Compile Include="Migrations\201809092151002_AgregarColumnaDescripcionEnAspNetRoles.Designer.cs">
+      <DependentUpon>201809092151002_AgregarColumnaDescripcionEnAspNetRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809092153077_AgregarRelacionMuchosAMuchosEntreAspNetRolesYAspNetPermissions.cs" />
+    <Compile Include="Migrations\201809092153077_AgregarRelacionMuchosAMuchosEntreAspNetRolesYAspNetPermissions.Designer.cs">
+      <DependentUpon>201809092153077_AgregarRelacionMuchosAMuchosEntreAspNetRolesYAspNetPermissions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809092243111_AgregarRolYUsuarioAdministradorPorDefecto.cs" />
+    <Compile Include="Migrations\201809092243111_AgregarRolYUsuarioAdministradorPorDefecto.Designer.cs">
+      <DependentUpon>201809092243111_AgregarRolYUsuarioAdministradorPorDefecto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -894,6 +911,7 @@
     <Compile Include="Models\ModelosDeDominio\OrdenCompra.cs" />
     <Compile Include="Models\ModelosDeDominio\OrdenCompraAnulada.cs" />
     <Compile Include="Models\ModelosDeDominio\OrdenCompraDetalle.cs" />
+    <Compile Include="Models\ModelosDeDominio\Permisos.cs" />
     <Compile Include="Models\ModelosDeDominio\Personeria.cs" />
     <Compile Include="Models\ModelosDeDominio\Presupuesto.cs" />
     <Compile Include="Models\ModelosDeDominio\PresupuestoDetalle.cs" />
@@ -3171,6 +3189,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809090121037_CrearUsuarioYRolPorDefecto2.resx">
       <DependentUpon>201809090121037_CrearUsuarioYRolPorDefecto2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809092116497_CreacionDeTablaAspNetPermissions.resx">
+      <DependentUpon>201809092116497_CreacionDeTablaAspNetPermissions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809092151002_AgregarColumnaDescripcionEnAspNetRoles.resx">
+      <DependentUpon>201809092151002_AgregarColumnaDescripcionEnAspNetRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809092153077_AgregarRelacionMuchosAMuchosEntreAspNetRolesYAspNetPermissions.resx">
+      <DependentUpon>201809092153077_AgregarRelacionMuchosAMuchosEntreAspNetRolesYAspNetPermissions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809092243111_AgregarRolYUsuarioAdministradorPorDefecto.resx">
+      <DependentUpon>201809092243111_AgregarRolYUsuarioAdministradorPorDefecto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

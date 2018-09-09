@@ -14,20 +14,24 @@
             <div class="panel-body">
                 <div class="row">
                     <h4>@Html.ValidationSummary(true, "¡Por favor solucione los siguientes errores!")</h4>
-                    @if (ViewBag.Message != "")
-                    {
-                        <p style="color: red">@ViewBag.Message</p>
-                    }
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         @Html.LabelFor(r => r.Name)
-                        @Html.TextBoxFor(r => r.Name, new { @class = "form-control", maxlength = 20, autocomplete = "off" })
+                        @Html.TextBoxFor(r => r.Name, new { @class = "form-control", placeholder = "Nombre del rol", autocomplete = "off" })
                         @Html.ValidationMessageFor(r => r.Name)
                     </div>
-                    @Html.AntiForgeryToken()
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(r => r.Descripcion)
+                        @Html.TextAreaFor(r => r.Descripcion, new { @class = "form-control", placeholder = "Descripción del rol", autocomplete = "off" })
+                        @Html.ValidationMessageFor(r => r.Descripcion)
+                    </div>
                 </div>
             </div>
+            @Html.AntiForgeryToken()
+
             <div class="panel-footer">
                 <button class="btn btn-primary">Guardar</button>
             </div>
@@ -36,6 +40,7 @@
 </div>
 
 @section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
             $("#menuSeguridad").addClass('active');

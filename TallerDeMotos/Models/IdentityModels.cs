@@ -1,14 +1,14 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using TallerDeMotos.ConfiguracionDeEntidades;
-using TallerDeMotos.Models.ModelosDeDominio;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure.Annotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using TallerDeMotos.Models.AtributosDeValidacion;
+using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Models
 {
@@ -46,6 +46,18 @@ namespace TallerDeMotos.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Agregar aquí notificaciones personalizadas de usuario
             return userIdentity;
+        }
+    }
+
+    public class ApplicationRole: IdentityRole
+    {
+        [StringLength(50)]
+        public string Descripcion { get; set; }
+        public ICollection<Permisos> Permisos { get; set; }
+
+        public ApplicationRole()
+        {
+            Permisos = new HashSet<Permisos>();
         }
     }
 
@@ -95,6 +107,7 @@ namespace TallerDeMotos.Models
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Sucursal> Sucursales { get; set; }
         public DbSet<FacturaVentaCliente> FacturaVentaClientes { get; set; }
+        public DbSet<Permisos> Permisos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -138,6 +151,7 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new EmpresaConfiguracion());
             modelBuilder.Configurations.Add(new SucursalConfiguracion());
             modelBuilder.Configurations.Add(new FacturaVentaClienteConfiguracion());
+            modelBuilder.Configurations.Add(new PermisoConfiguracion());
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(u => u.EmpleadoId)

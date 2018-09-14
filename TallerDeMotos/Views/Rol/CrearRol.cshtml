@@ -15,19 +15,37 @@
                 <div class="row">
                     <h4>@Html.ValidationSummary(true, "¡Por favor solucione los siguientes errores!")</h4>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(r => r.Name)
-                        @Html.TextBoxFor(r => r.Name, new { @class = "form-control", placeholder = "Nombre del rol", autocomplete = "off" })
-                        @Html.ValidationMessageFor(r => r.Name)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(r => r.Name)
+                            @Html.TextBoxFor(r => r.Name, new { @class = "form-control", placeholder = "Nombre del rol", autocomplete = "off" })
+                            @Html.ValidationMessageFor(r => r.Name)
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(r => r.Descripcion)
+                            @Html.TextAreaFor(r => r.Descripcion, new { @class = "form-control", placeholder = "Descripción del rol", autocomplete = "off" })
+                            @Html.ValidationMessageFor(r => r.Descripcion)
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(r => r.Descripcion)
-                        @Html.TextAreaFor(r => r.Descripcion, new { @class = "form-control", placeholder = "Descripción del rol", autocomplete = "off" })
-                        @Html.ValidationMessageFor(r => r.Descripcion)
-                    </div>
+                <hr />
+                <h4>Permisos</h4>
+                <div class="row">
+                    @for (int i = 0; i < Model.Permisos.Count(); i++)
+                    {
+                        <div class="col-md-4">
+                            <label>
+                                @Html.CheckBoxFor(r => r.Permisos[i].Selected)
+                                @Html.DisplayFor(r => r.Permisos[i].Text)
+                                @Html.HiddenFor(r => r.Permisos[i].Value)
+                                @Html.HiddenFor(r => r.Permisos[i].Text)
+                            </label>
+                        </div>
+                    }
+
                 </div>
             </div>
             @Html.AntiForgeryToken()
@@ -36,7 +54,7 @@
                 <button class="btn btn-primary">Guardar</button>
             </div>
         </div>
-    }
+                        }
 </div>
 
 @section Scripts{

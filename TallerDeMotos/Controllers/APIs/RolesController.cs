@@ -22,7 +22,7 @@ namespace TallerDeMotos.Controllers.APIs
         [HttpGet]
         public IHttpActionResult ObtenerRoles()
         {
-            var roles = _context.Roles.ToList();
+            var roles = _context.Roles.Where(r => r.Name != "Administrador").ToList();
 
             return Ok(roles);
         }

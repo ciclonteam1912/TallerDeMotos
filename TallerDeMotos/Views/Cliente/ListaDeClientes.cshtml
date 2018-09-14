@@ -9,6 +9,31 @@
     <div id="example">
         <div id="grid" style="width:100%"></div>
         <div id="details"></div>
+        @if (ViewBag.CrearCliente)
+        {
+            <input type="hidden" value="1" id="crearCliente" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="crearCliente" />
+        }
+        @if (ViewBag.EditarCliente)
+        {
+            <input type="hidden" value="1" id="editarCliente" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="editarCliente" />
+        }
+
+        @if (ViewBag.EliminarCliente)
+        {
+            <input type="hidden" value="1" id="eliminarCliente" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="eliminarCliente" />
+        }
     </div>
 </div>
 
@@ -49,6 +74,10 @@
         var wnd, detailsTemplate;
         $(document).ready(function () {
             $("#menuTaller").addClass('active');
+
+            var puedeCrear = $("#crearCliente").val() == "1" ? true : false;
+            var puedeEditar = $("#editarCliente").val() == "1" ? true : false;
+            var puedeEliminar = $("#eliminarCliente").val() == "1" ? true : false;
 
             var table = $("#grid").kendoGrid({
                 toolbar: ["pdf"],
@@ -98,6 +127,7 @@
                 columns: [{
                     template: "<a href='/Cliente/EditarCliente/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
                     field: "Id",
+                    hidden: !puedeEditar,
                     title: "&nbsp;",
                     filterable: false,
                     sortable: false,
@@ -108,6 +138,7 @@
                 }, {
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
+                    hidden: !puedeEliminar,
                     title: "&nbsp;",
                     filterable: false,
                     sortable: false,
@@ -148,7 +179,9 @@
                 }]
             });
 
-            $(".k-grid-toolbar").append('<a href="Cliente/NuevoCliente" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Cliente</span></a>');
+            if (puedeCrear) {
+                $(".k-grid-toolbar").append('<a href="Cliente/NuevoCliente" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Cliente</span></a>');
+            }
 
             wnd = $("#details")
                         .kendoWindow({

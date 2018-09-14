@@ -9,16 +9,19 @@ using TallerDeMotos.ViewModels;
 using System.Web.Routing;
 using System.Globalization;
 using System.Threading;
+using TallerDeMotos.Filters;
 
 namespace TallerDeMotos.Controllers
 {
     public class EmpleadoController : Controller
     {
         private ApplicationDbContext _context;
+        private ConexionBD _conexionBd;
 
         public EmpleadoController()
         {
             _context = new ApplicationDbContext();
+            _conexionBd = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)
@@ -29,13 +32,26 @@ namespace TallerDeMotos.Controllers
         // GET: Empleado
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller))
-                return View("ListaDeEmpleados");
+            string usuario = User.Identity.Name;
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Empleado") || usuario.Equals("admin"))
+                ViewBag.CrearEmpleado = true;
+            else
+                ViewBag.CrearEmpleado = false;
 
-            return View("ListaDeEmpleadosSoloLectura");
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Editar Empleado") || usuario.Equals("admin"))
+                ViewBag.EditarEmpleado = true;
+            else
+                ViewBag.EditarEmpleado = false;
+
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Eliminar Empleado") || usuario.Equals("admin"))
+                ViewBag.EliminarEmpleado = true;
+            else
+                ViewBag.EliminarEmpleado = false;
+
+            return View("ListaDeEmpleados");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HasPermission("Crear Empleado")]
         public ActionResult NuevoEmpleado()
         {
             var cargos = _context.Cargos.ToList();
@@ -49,8 +65,7 @@ namespace TallerDeMotos.Controllers
 
             return View("EmpleadoFormulario", viewModel);
         }
-
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarEmpleado(Empleado empleado)
@@ -83,7 +98,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HasPermission("Editar Empleado")]
         public ActionResult EditarEmpleado(int id)
         {
             var empleado = _context.Empleados.SingleOrDefault(c => c.Id == id);

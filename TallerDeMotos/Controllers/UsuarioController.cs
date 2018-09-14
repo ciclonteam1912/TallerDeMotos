@@ -9,10 +9,12 @@ namespace TallerDeMotos.Controllers
     public class UsuarioController : Controller
     {
         private ApplicationDbContext _context;
+        private ConexionBD _conexionBd;
 
         public UsuarioController()
         {
             _context = new ApplicationDbContext();
+            _conexionBd = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)

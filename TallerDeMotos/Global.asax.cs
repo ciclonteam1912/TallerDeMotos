@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -11,6 +12,7 @@ namespace TallerDeMotos
     {
         protected void Application_Start()
         {
+            AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
             GlobalConfiguration.Configure(WebApiConfig.Register);
             Telerik.Reporting.Services.WebApi.ReportsControllerConfiguration.RegisterRoutes(System.Web.Http.GlobalConfiguration.Configuration);
             Mapper.Initialize(c => c.AddProfile<MappingProfile>());

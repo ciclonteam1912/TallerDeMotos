@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System.Linq;
 using System.Web.Mvc;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
@@ -11,10 +12,11 @@ namespace TallerDeMotos.Controllers
     public class AseguradoraController : Controller
     {
         private ApplicationDbContext _context;
-
+        private ConexionBD _conexionBd;
         public AseguradoraController()
         {
             _context = new ApplicationDbContext();
+            _conexionBd = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)
@@ -25,13 +27,26 @@ namespace TallerDeMotos.Controllers
         // GET: Aseguradora
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
-                return View("ListaDeAseguradoras");
+            string usuario = User.Identity.Name;
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Aseguradora") || usuario.Equals("admin"))
+                ViewBag.CrearAseguradora = true;
+            else
+                ViewBag.CrearAseguradora = false;
 
-            return View("ListaDeAseguradorasSoloLectura");
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Editar Aseguradora") || usuario.Equals("admin"))
+                ViewBag.EditarAseguradora = true;
+            else
+                ViewBag.EditarAseguradora = false;
+
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Eliminar Aseguradora") || usuario.Equals("admin"))
+                ViewBag.EliminarAseguradora = true;
+            else
+                ViewBag.EliminarAseguradora = false;
+
+            return View("ListaDeAseguradoras");
         }
-
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        
+        [HasPermission("Crear Aseguradora")]
         public ActionResult NuevaAseguradora()
         {
             var ciudades = _context.Ciudades.ToList();
@@ -44,7 +59,6 @@ namespace TallerDeMotos.Controllers
             return View("AseguradoraFormulario", viewModel);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarAseguradora(Aseguradora aseguradora)
@@ -72,8 +86,8 @@ namespace TallerDeMotos.Controllers
 
             return RedirectToAction("Index");
         }
-
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        
+        [HasPermission("Editar Aseguradora")]
         public ActionResult EditarAseguradora(int id)
         {
             var aseguradoraBD = _context.Aseguradoras.SingleOrDefault(c => c.Id == id);

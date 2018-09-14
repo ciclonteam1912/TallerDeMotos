@@ -55,7 +55,7 @@ namespace TallerDeMotos.Models
         public string Descripcion { get; set; }
         public ICollection<Permisos> Permisos { get; set; }
 
-        public ApplicationRole()
+        public ApplicationRole() : base()
         {
             Permisos = new HashSet<Permisos>();
         }

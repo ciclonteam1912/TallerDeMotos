@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
+using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
 namespace TallerDeMotos.Controllers
@@ -33,12 +37,22 @@ namespace TallerDeMotos.Controllers
         }
 
 
-        public ActionResult CrearRol(string message = "")
+        public ActionResult CrearRol()
         {
-            ViewBag.Message = message;
-            //var rol = new IdentityRole();
+            var permisos = _context.Permisos.ToList();
+            var viewModel = new RolViewModel();
+            viewModel.Permisos = new List<SelectListItem>();
+            foreach (var permiso in permisos)
+            {
+                viewModel.Permisos.Add(new SelectListItem
+                {
+                    Text = permiso.Descripcion,
+                    Value = permiso.Id.ToString()
+                });
+            }
 
-            return View();
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -54,9 +68,27 @@ namespace TallerDeMotos.Controllers
             if (idManager.RoleExists(rol.Name))
                 return View(rol);
 
-            _context.Roles.Add(role);
-            _context.SaveChanges();
+            List<Permisos> permisos = new List<Permisos>();
+            int id = 0;
+            foreach (var permiso in rol.Permisos)
+            {
+                if (permiso.Selected)
+                {
+                    id = int.Parse(permiso.Value);
+                    var context = _context.Permisos.Where(p => p.Id == id).SingleOrDefault();
+                    permisos.Add(context);
+                }
+            }
 
+            try
+            {
+                role.Permisos = permisos;
+                _context.Roles.Add(role);
+                _context.SaveChanges();
+
+            }
+            catch (Exception ex) { }
+            
             return RedirectToAction("Index");
         }
 
@@ -69,10 +101,41 @@ namespace TallerDeMotos.Controllers
                 .Where(r => r.Id.Equals(id, StringComparison.CurrentCultureIgnoreCase))
                 .FirstOrDefault();
 
+            List<SelectListItem> listPermisos = new List<SelectListItem>();
+            var permisos = _context.Permisos.ToList();
+            var permisosRoles = _context.Permisos.Where(p => p.Roles.Any(r => r.Id == id)).ToList();
+            bool bandera = false;
             if (thisRole == null)
                 return RedirectToAction("Index");
 
-            var viewModel = new RolViewModel((ApplicationRole)thisRole);
+            foreach (var item in permisos)
+            {
+                foreach (var permiso in permisosRoles)
+                {
+                    if(item.Id == permiso.Id)
+                    {
+                        bandera = true;
+                        listPermisos.Add(new SelectListItem
+                        {
+                            Value = permiso.Id.ToString(),
+                            Text = permiso.Descripcion,
+                            Selected = true
+                        });
+                    }
+                }
+                if (!bandera)
+                {
+                    listPermisos.Add(new SelectListItem
+                    {
+                        Value = item.Id.ToString(),
+                        Text = item.Descripcion,
+                        Selected = false
+                    });                    
+                }
+                bandera = false;
+            }
+
+            var viewModel = new RolViewModel((ApplicationRole)thisRole, listPermisos);
 
             return View(viewModel);
         }
@@ -84,16 +147,36 @@ namespace TallerDeMotos.Controllers
             if (!ModelState.IsValid)
                 return View(rol);
 
-            var rolBD = _context.Roles.SingleOrDefault(r => r.Name == rol.OriginalRoleName);
-            ApplicationRole role = (ApplicationRole)rolBD;
+            var rolExistente = _context.Roles.SingleOrDefault(r => r.Name == rol.OriginalRoleName);
+            
+            ApplicationRole role = (ApplicationRole)rolExistente;
 
-            if (rolBD == null)
+            if (rolExistente == null)
                 return HttpNotFound();
 
-            rolBD.Name = rol.Name;
-            role.Descripcion = rol.Descripcion;
+            var permisosRolesBD = _context.Permisos.Where(p => p.Roles.Any(r => r.Id == rolExistente.Id)).ToList();
+            role.Permisos = permisosRolesBD;
+            var x = role.Permisos.ToList();
+            List<Permisos> permisos = new List<Permisos>();
+            foreach (var permiso in rol.Permisos)
+            {
+                if (permiso.Selected)
+                {
+                    permisos.Add(new Permisos
+                    {
+                        Id = int.Parse(permiso.Value),
+                        Descripcion = permiso.Text
+                    });
+                }                
+            }
+            var permisosEliminados = role.Permisos.Where(p => !permisos.Any(p2 => p2.Id == p.Id)).ToList();
+            var permisosAgregados = role.Permisos.Where(p => permisos.Any(p2 => p2.Id == p.Id)).ToList();
 
-            rolBD = role;
+            x.ForEach(c => role.Permisos.Remove(c));
+
+            role.Name = rol.Name;
+            role.Descripcion = rol.Descripcion;
+            rolExistente = role;
             _context.SaveChanges();
 
             return RedirectToAction("Index");
@@ -145,5 +228,6 @@ namespace TallerDeMotos.Controllers
 
             return View("ManageUserRoles");
         }
+
     }
 }

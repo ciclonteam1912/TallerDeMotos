@@ -6,11 +6,30 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>Lista de Empleados</h2>
 
-    <p><a href="Empleado/NuevoEmpleado" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Empleado</span></a></p>
-
+    @if (ViewBag.CrearEmpleado)
+    {
+        <p><a href="Empleado/NuevoEmpleado" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Empleado</span></a></p>
+    }
     <div id="example">
         <div id="grid" style="width:100%"></div>
         <div id="details"></div>
+        @if (ViewBag.EditarEmpleado)
+        {
+            <input type="hidden" value="1" id="editarEmpleado" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="editarEmpleado" />
+        }
+
+        @if (ViewBag.EliminarEmpleado)
+        {
+            <input type="hidden" value="1" id="eliminarEmpleado" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="eliminarEmpleado" />
+        }
     </div>
 </div>
 
@@ -20,6 +39,9 @@
         kendo.culture().numberFormat.currency.symbol = "₲";
         $(document).ready(function () {
             $("#menuTaller").addClass('active');
+
+            var puedeEditar = $("#editarEmpleado").val() == "1" ? true : false;
+            var puedeEliminar = $("#eliminarEmpleado").val() == "1"  ? true : false;
 
             var table = $("#grid").kendoGrid({
                 dataSource: {
@@ -45,6 +67,7 @@
                 columns: [{
                     template: "<a href='/Empleado/EditarEmpleado/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
                     field: "Id",
+                    hidden: !puedeEditar,
                     title: "&nbsp;",
                     filterable: false,
                     sortable: false,
@@ -55,6 +78,7 @@
                 }, {
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
+                    hidden: !puedeEliminar,
                     title: "&nbsp;",
                     filterable: false,
                     sortable: false,
@@ -123,7 +147,7 @@
                             })
                             .done(function () {
                                 grid.dataSource.remove(dataItem);
-                                toastr.success("Empleado eliminado con éxito");                                       
+                                toastr.success("Empleado eliminado con éxito");
                             })
                             .fail(function () {
                                 toastr.error("<p class='eliminar'>No se pudo eliminar el empleado.</p>");

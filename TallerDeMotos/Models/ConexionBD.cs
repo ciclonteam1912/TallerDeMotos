@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web;
 using TallerDeMotos.Dtos;
 
 namespace TallerDeMotos.Models
@@ -152,7 +153,7 @@ namespace TallerDeMotos.Models
                 cmd.Parameters.AddWithValue("@Precio", precio);
                 cmd.Parameters.AddWithValue("@Cantidad", cantidad);
                 cmd.Parameters.AddWithValue("@Total", total);
-                cmd.Parameters.Add("@resultado", SqlDbType.VarChar, 1).Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("@resultado", SqlDbType.Int, 1).Direction = ParameterDirection.Output;
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -168,6 +169,53 @@ namespace TallerDeMotos.Models
                 con.Close();
                 con.Dispose();
             }
+        }
+
+        public bool ExisteUsuarioPermiso(string permiso, string usuario)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["TallerDeMotos"].ConnectionString;
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            int respuesta = 0;
+            bool existe = false;
+            try
+            {
+                cmd = new SqlCommand("VerificarUsuarioPermiso", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Permiso", permiso);
+                cmd.Parameters.AddWithValue("@Usuario", usuario);
+                cmd.Parameters.Add("@resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+
+                respuesta = int.Parse(cmd.Parameters["@resultado"].Value.ToString());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+                con.Dispose();
+            }
+
+            if (respuesta == 1)
+                existe = true;
+            else
+                existe = false;
+
+            return existe;
+        }
+
+        public bool CHECK_IF_USER_OR_ROLE_HAS_PERMISSION(string _permission)
+        {
+            string usuario = HttpContext.Current.User.Identity.Name;
+            bool existe = ExisteUsuarioPermiso(_permission, usuario);
+
+            return existe;
         }
     }
 }

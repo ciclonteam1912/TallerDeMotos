@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
@@ -12,10 +13,12 @@ namespace TallerDeMotos.Controllers
     public class ClienteController : Controller
     {
         private ApplicationDbContext _context;
+        private ConexionBD _conexionBd;
 
         public ClienteController()
         {
             _context = new ApplicationDbContext();
+            _conexionBd = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)
@@ -26,13 +29,26 @@ namespace TallerDeMotos.Controllers
         // GET: Cliente
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
-                return View("ListaDeClientes");
+            string usuario = User.Identity.Name;
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Cliente") || usuario.Equals("admin"))
+                ViewBag.CrearCliente = true;
+            else
+                ViewBag.CrearCliente = false;
 
-            return View("ListaDeClientesSoloLectura");
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Editar Cliente") || usuario.Equals("admin"))
+                ViewBag.EditarCliente = true;
+            else
+                ViewBag.EditarCliente = false;
+
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Eliminar Cliente") || usuario.Equals("admin"))
+                ViewBag.EliminarCliente = true;
+            else
+                ViewBag.EliminarCliente = false;
+
+            return View("ListaDeClientes");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Crear Cliente")]
         public ActionResult NuevoCliente()
         {
             var tiposDocumentos = _context.TipoDocumentos.ToList();
@@ -49,7 +65,6 @@ namespace TallerDeMotos.Controllers
             return View("ClienteFormulario", viewModel);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarCliente(Cliente cliente)
@@ -82,7 +97,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Editar Cliente")]
         public ActionResult EditarCliente(int id)
         {
             var cliente = _context.Clientes.SingleOrDefault(c => c.Id == id);

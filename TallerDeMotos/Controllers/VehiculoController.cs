@@ -3,6 +3,7 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
@@ -14,10 +15,12 @@ namespace TallerDeMotos.Controllers
     public class VehiculoController : Controller
     {
         private ApplicationDbContext _context;
+        private ConexionBD _conexionBd;
 
         public VehiculoController()
         {
             _context = new ApplicationDbContext();
+            _conexionBd = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)
@@ -28,13 +31,26 @@ namespace TallerDeMotos.Controllers
         // GET: Vehiculo
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
-                return View("ListaDeVehiculos");
+            string usuario = User.Identity.Name;
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Vehículo") || usuario.Equals("admin"))
+                ViewBag.CrearVehiculo = true;
+            else
+                ViewBag.CrearVehiculo = false;
 
-            return View("ListaDeVehiculosSoloLectura");
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Editar Vehículo") || usuario.Equals("admin"))
+                ViewBag.EditarVehiculo = true;
+            else
+                ViewBag.EditarVehiculo = false;
+
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Eliminar Vehículo") || usuario.Equals("admin"))
+                ViewBag.EliminarVehiculo = true;
+            else
+                ViewBag.EliminarVehiculo = false;
+
+            return View("ListaDeVehiculos");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Crear Vehículo")]
         public ActionResult NuevoVehiculo()
         {
             var clientes = _context.Clientes.ToList();
@@ -55,7 +71,6 @@ namespace TallerDeMotos.Controllers
             return View("VehiculoFormulario", viewModel);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarVehiculo(Vehiculo vehiculo)
@@ -100,7 +115,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Editar Vehículo")]
         public ActionResult EditarVehiculo(int id)
         {
             var vehiculo = _context.Vehiculos

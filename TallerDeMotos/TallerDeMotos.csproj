@@ -355,6 +355,7 @@
     <Compile Include="Dtos\SucursalDto.cs" />
     <Compile Include="Dtos\TipoMovimientoDto.cs" />
     <Compile Include="Dtos\VehiculoDto.cs" />
+    <Compile Include="Filters\HasPermissionAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -857,6 +858,10 @@
     <Compile Include="Migrations\201809092243111_AgregarRolYUsuarioAdministradorPorDefecto.cs" />
     <Compile Include="Migrations\201809092243111_AgregarRolYUsuarioAdministradorPorDefecto.Designer.cs">
       <DependentUpon>201809092243111_AgregarRolYUsuarioAdministradorPorDefecto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809140127043_AgregarPermisosPorDefecto.cs" />
+    <Compile Include="Migrations\201809140127043_AgregarPermisosPorDefecto.Designer.cs">
+      <DependentUpon>201809140127043_AgregarPermisosPorDefecto.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
@@ -3201,6 +3206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809092243111_AgregarRolYUsuarioAdministradorPorDefecto.resx">
       <DependentUpon>201809092243111_AgregarRolYUsuarioAdministradorPorDefecto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809140127043_AgregarPermisosPorDefecto.resx">
+      <DependentUpon>201809140127043_AgregarPermisosPorDefecto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -6,11 +6,31 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>Lista de Aseguradoras</h2>
 
-    <p><a href="Aseguradora/NuevaAseguradora" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Aseguradora</span></a></p>
+    @if (ViewBag.CrearAseguradora)
+    {
+        <p><a href="Aseguradora/NuevaAseguradora" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Aseguradora</span></a></p>
+    }
 
     <div id="example">
         <div id="grid" style="width:100%"></div>
         <div id="details"></div>
+        @if (ViewBag.EditarAseguradora)
+        {
+            <input type="hidden" value="1" id="editarAseguradora" />            
+        }
+        else
+        {
+            <input type="hidden" value="0" id="editarAseguradora" />            
+        }
+
+        @if (ViewBag.EliminarAseguradora)
+        {            
+            <input type="hidden" value="1" id="eliminarAseguradora" />
+        }
+        else
+        {            
+            <input type="hidden" value="0" id="eliminarAseguradora" />
+        }
     </div>
 </div>
 
@@ -19,6 +39,9 @@
         var wnd, detailsTemplate;
         $(document).ready(function () {
             $("#menuTaller").addClass('active');
+            
+            var puedeEditar = $("#editarAseguradora").val() == "1" ? true : false;
+            var puedeEliminar = $("#eliminarAseguradora").val() == "1"  ? true : false;
 
             var table = $("#grid").kendoGrid({
                 dataSource: {
@@ -44,6 +67,7 @@
                 columns: [{
                     template: "<a href='/Aseguradora/EditarAseguradora/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
                     field: "Id",
+                    hidden: !puedeEditar,
                     title: "&nbsp;",
                     filterable: false,
                     sortable: false,
@@ -54,6 +78,7 @@
                 }, {
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
+                    hidden: !puedeEliminar,
                     title: "&nbsp;",
                     filterable: false,
                     sortable: false,
@@ -165,9 +190,9 @@
             @*<em>#= Title #</em>*@
 
             <p><b>Ciudad:</b> #= Ciudad.Nombre #</p>
-                <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
-                <p><b>Contacto:</b> #= (Contacto == null) ? ' ' : Contacto #</p>
+            <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
+            <p><b>Contacto:</b> #= (Contacto == null) ? ' ' : Contacto #</p>
 
         </div>
-    </script>       
+    </script>
 }

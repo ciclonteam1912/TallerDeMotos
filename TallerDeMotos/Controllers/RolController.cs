@@ -39,7 +39,7 @@ namespace TallerDeMotos.Controllers
 
         public ActionResult CrearRol()
         {
-            var permisos = _context.Permisos.ToList();
+            var permisos = _context.Permisos.ToList().OrderBy(p => p.Id);
             var viewModel = new RolViewModel();
             viewModel.Permisos = new List<SelectListItem>();
             foreach (var permiso in permisos)
@@ -150,13 +150,11 @@ namespace TallerDeMotos.Controllers
             var rolExistente = _context.Roles.SingleOrDefault(r => r.Name == rol.OriginalRoleName);
             
             ApplicationRole role = (ApplicationRole)rolExistente;
+            _context.Entry(role).Collection(r => r.Permisos).Load();
 
             if (rolExistente == null)
                 return HttpNotFound();
 
-            var permisosRolesBD = _context.Permisos.Where(p => p.Roles.Any(r => r.Id == rolExistente.Id)).ToList();
-            role.Permisos = permisosRolesBD;
-            var x = role.Permisos.ToList();
             List<Permisos> permisos = new List<Permisos>();
             foreach (var permiso in rol.Permisos)
             {
@@ -169,14 +167,24 @@ namespace TallerDeMotos.Controllers
                     });
                 }                
             }
-            var permisosEliminados = role.Permisos.Where(p => !permisos.Any(p2 => p2.Id == p.Id)).ToList();
-            var permisosAgregados = role.Permisos.Where(p => permisos.Any(p2 => p2.Id == p.Id)).ToList();
 
-            x.ForEach(c => role.Permisos.Remove(c));
+            var permisosAgregados = permisos.Where(p => !role.Permisos.Any(p2 => p2.Id == p.Id)).ToList();
+            var permisosEliminados = role.Permisos.Where(p => !permisos.Any(p2 => p2.Id == p.Id)).ToList();
+
+            foreach (var item in permisosAgregados)
+            {
+                if (_context.Entry(item).State == EntityState.Detached)
+                    _context.Permisos.Attach(item);
+
+                role.Permisos.Add(item);
+            }
+
+            if (permisosEliminados.Count > 0)
+                permisosEliminados.ForEach(c => role.Permisos.Remove(c));
 
             role.Name = rol.Name;
             role.Descripcion = rol.Descripcion;
-            rolExistente = role;
+            
             _context.SaveChanges();
 
             return RedirectToAction("Index");

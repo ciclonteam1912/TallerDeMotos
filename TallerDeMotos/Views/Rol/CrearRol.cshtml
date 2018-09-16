@@ -10,7 +10,7 @@
     @using (Html.BeginForm())
     {
         <div class="panel panel-default">
-            <div class="panel-heading">Agregar Rol</div>
+            <div class="panel-heading"><span class="fa fa-cog"></span> Agregar Rol</div>
             <div class="panel-body">
                 <div class="row">
                     <h4>@Html.ValidationSummary(true, "¡Por favor solucione los siguientes errores!")</h4>
@@ -30,9 +30,13 @@
                             @Html.ValidationMessageFor(r => r.Descripcion)
                         </div>
                     </div>
-                </div>
-                <hr />
-                <h4>Permisos</h4>
+                </div>                
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="fa fa-check"></span> Permisos</div>
+            <div class="panel-body">
                 <div class="row">
                     @for (int i = 0; i < Model.Permisos.Count(); i++)
                     {
@@ -47,14 +51,13 @@
                     }
 
                 </div>
+                @Html.AntiForgeryToken()
             </div>
-            @Html.AntiForgeryToken()
-
             <div class="panel-footer">
                 <button class="btn btn-primary">Guardar</button>
             </div>
         </div>
-                        }
+    }
 </div>
 
 @section Scripts{

@@ -164,6 +164,7 @@ namespace TallerDeMotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(ApplicationUser model)
         {
+            int count = 0;
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -190,10 +191,13 @@ namespace TallerDeMotos.Controllers
                     return RedirectToAction("Index", "Usuario");
                 }
                 AddErrors(result);
+                count++;
             }
 
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
-            ModelState.AddModelError(string.Empty, "El empleado ya tiene asignado un usuario.");
+            if(count == 0)
+                ModelState.AddModelError(string.Empty, "El empleado ya tiene asignado un usuario.");
+
             var viewModel = new RegisterViewModel(model)
             {
                 Empleados = _context.Empleados.ToList()

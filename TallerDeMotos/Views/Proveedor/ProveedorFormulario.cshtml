@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.RazonSocial)
+                            @Html.LabelFor(m => m.RazonSocial) <span class="asterisco">*</span>
                             @Html.TextBoxFor(m => m.RazonSocial, new { @class = "form-control", placeholder = "Ingrese Razón Social del Proveedor...", maxlength = 50, autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.RazonSocial)
                         </div>
@@ -36,14 +36,14 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Ruc)
+                            @Html.LabelFor(m => m.Ruc) <span class="asterisco">*</span>
                             @Html.TextBoxFor(m => m.Ruc, new { @class = "form-control", placeholder = "Ingrese Ruc de la Aseguradora...", maxlength = 10, autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Ruc)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Contacto)
+                            @Html.LabelFor(m => m.Contacto) <span class="asterisco">*</span>
                             @Html.TextBoxFor(m => m.Contacto, new { @class = "form-control", placeholder = "Ingrese Nombre de Contacto...", maxlength = 50, autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Contacto)
                         </div>                        
@@ -52,7 +52,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Telefono)
+                            @Html.LabelFor(m => m.Telefono) <span class="asterisco">*</span>
                             @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", placeholder = "Ingrese Teléfono de la Aseguradora...", maxlength = 50, autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Telefono)
                         </div>
@@ -75,8 +75,20 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.CiudadId, new { id = "labelCiudad" })
-                            @Html.DropDownListFor(m => m.CiudadId, new SelectList(Model.Ciudades, "Id", "Nombre"), "Seleccionar Ciudad...", new { @class = "form-control", id = "ciudadId" })
+                            @Html.LabelFor(m => m.CiudadId) <span class="asterisco">*</span>
+                            <br />
+                            @(Html.Kendo().DropDownList()
+                                .Name("CiudadId")
+                                .DataTextField("Nombre")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione una ciudad...")
+                                .HtmlAttributes(new { style = "width: 75%" })
+                                .Filter("contains")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/ciudades"));
+                                })
+                            )                            
                             <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
                             <div>@Html.ValidationMessageFor(m => m.CiudadId)</div>
                         </div>
@@ -86,16 +98,55 @@
                 @Html.AntiForgeryToken()
             </div>
             <div class="panel-footer">
-                <button class="btn btn-primary">Guardar</button>
+                <button class="btn btn-primary" id="btnGuardar">Guardar</button>
             </div>
         </div>
     }
 </div>
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
+        var id = $("#Id").val();
+
+        if (id == 0) {
+            $.validator.setDefaults({
+                ignore: "",
+                onkeyup: false
+                // any other default options and/or rules,
+                //errorPlacement: function (error, element) {
+                //    console.log("error", error);
+                //    console.log("element", element);
+                //    if (element.is("[data-role=dropdownlist]")) {
+                //        element.closest(".k-widget").after(error);
+                //    }
+                //}
+            });
+        }
+        function updateCssOnPropertyChange(e) {
+            var element = $(e.target);
+
+            element.siblings("span.k-dropdown-wrap")
+                   .add(element.siblings("div.k-multiselect-wrap"))
+                   .add(element.parent("span.k-numeric-wrap"))
+                   .add(element.parent("span.k-picker-wrap"))
+                   .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
+
         $(document).ready(function () {
-            $("#menuCompras").addClass('active');           
+            UseMutationObserver();
+
+            $("#menuCompras").addClass('active');
+
+            var ddl = $("#CiudadId").data("kendoDropDownList");
+
+            $('#myModal').on('hidden.bs.modal', function () {
+                ddl.dataSource.read();
+            });
+
+            $("#btnGuardar").click(function () {
+                $(".k-widget").removeClass("input-validation-error");
+            });
         });
     </script>
 }

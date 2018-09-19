@@ -15,6 +15,7 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Razón Social")]
         public string RazonSocial { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string Contacto { get; set; }
 
@@ -30,6 +31,7 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
+        [Required]
         [StringLength(50)]
         [Display(Name = "Teléfono")]
         public string Telefono { get; set; }

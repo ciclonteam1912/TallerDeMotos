@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ViewModels
@@ -23,10 +24,13 @@ namespace TallerDeMotos.ViewModels
         public string Propietario { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(9)]
+        [RegularExpression(@"\d{7}[-]\d{1}", ErrorMessage = "El Ruc debe tener el siguiente formato. Ej.: 3202258-1")]
+        [Remote("RucExisteEnProveedores", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Ruc ya existe.")]
         [Display(Name = "RUC")]
         public string Ruc { get; set; }
 
+        [Required]
         [StringLength(255)]
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }

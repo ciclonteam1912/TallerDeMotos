@@ -344,5 +344,51 @@ namespace TallerDeMotos.Controllers
             return status;
         }
         #endregion
+
+        #region Remote Validation en Proveedores
+        // GET: RemoteValidation
+        [HttpPost]
+        public JsonResult RucExisteEnProveedores(string Ruc, string Id)
+        {
+            return Json(RucDisponibleEnProveedores(Ruc, Id));
+        }
+
+        public bool RucDisponibleEnProveedores(string Ruc, string Id)
+        {
+            int id = int.Parse(Id);
+            bool status;
+
+            var proveedores = _context.Proveedores.ToList();
+
+            if (id != 0)
+            {
+                var resultado = (from u in proveedores
+                                 where u.Ruc?.ToUpper() == Ruc?.ToUpper() && u.Id != id
+                                 select new { Ruc })
+                                 .FirstOrDefault();
+
+                if (resultado != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            else
+            {
+                var valor = (from u in proveedores
+                             where u.Ruc?.ToUpper() == Ruc?.ToUpper()
+                             select new
+                             {
+                                 Ruc
+                             })
+                             .FirstOrDefault();
+
+                if (valor != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            return status;
+        }
+        #endregion
     }
 }

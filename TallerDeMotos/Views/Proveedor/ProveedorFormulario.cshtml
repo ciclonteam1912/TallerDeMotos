@@ -37,7 +37,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Ruc) <span class="asterisco">*</span>
-                            @Html.TextBoxFor(m => m.Ruc, new { @class = "form-control", placeholder = "Ingrese Ruc de la Aseguradora...", maxlength = 10, autocomplete = "off" })
+                            @Html.TextBoxFor(m => m.Ruc, new { @class = "form-control", placeholder = "Ingrese Ruc de la Aseguradora...", onkeyup="format(event)", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Ruc)
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Direccion)
+                            @Html.LabelFor(m => m.Direccion) <span class="asterisco">*</span>
                             @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control", placeholder = "Ingrese Dirección de la Aseguradora...", maxlength = 255, autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Direccion)
                         </div>
@@ -131,6 +131,14 @@
                    .add(element.parent("span.k-numeric-wrap"))
                    .add(element.parent("span.k-picker-wrap"))
                    .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
+
+        function format(input){            
+            if (input.target.value.trim().length > 7 && input.target.value.trim().indexOf('-') === -1) {
+                let substring1 = input.target.value.trim().slice(0, 7),
+                  substring2 = input.target.value.trim().slice(7, input.target.value.length);
+                input.target.value = substring1 + '-' + substring2;
+            }
         }
 
         $(document).ready(function () {

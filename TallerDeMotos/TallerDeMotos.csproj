@@ -863,6 +863,10 @@
     <Compile Include="Migrations\201809140127043_AgregarPermisosPorDefecto.Designer.cs">
       <DependentUpon>201809140127043_AgregarPermisosPorDefecto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809222010082_AgregarClaveUnicaEnColumnaRucDeProveedores.cs" />
+    <Compile Include="Migrations\201809222010082_AgregarClaveUnicaEnColumnaRucDeProveedores.Designer.cs">
+      <DependentUpon>201809222010082_AgregarClaveUnicaEnColumnaRucDeProveedores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -881,6 +885,7 @@
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnEmpleado.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnUsuario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnAseguradora.cs" />
+    <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnProveedor.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnVehiculo.cs" />
     <Compile Include="Models\AtributosDeValidacion\ValidateModelAttribute.cs" />
     <Compile Include="Models\BancoServicio.cs" />
@@ -3209,6 +3214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809140127043_AgregarPermisosPorDefecto.resx">
       <DependentUpon>201809140127043_AgregarPermisosPorDefecto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809222010082_AgregarClaveUnicaEnColumnaRucDeProveedores.resx">
+      <DependentUpon>201809222010082_AgregarClaveUnicaEnColumnaRucDeProveedores.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

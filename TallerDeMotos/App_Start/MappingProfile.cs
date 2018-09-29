@@ -25,7 +25,8 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Talonario, Talonario>();
             Mapper.CreateMap<ServicioBasico, ServicioBasico>();
             Mapper.CreateMap<Proveedor, Proveedor>();
-            Mapper.CreateMap<Producto, Producto>();
+            Mapper.CreateMap<Producto, Producto>()
+                .ForMember(e => e.Marca, opt => opt.Ignore()); ;
             Mapper.CreateMap<Caja, Caja>();
             Mapper.CreateMap<AperturaCierreCaja, AperturaCierreCaja>();
 

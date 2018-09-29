@@ -867,10 +867,34 @@
     <Compile Include="Migrations\201809222010082_AgregarClaveUnicaEnColumnaRucDeProveedores.Designer.cs">
       <DependentUpon>201809222010082_AgregarClaveUnicaEnColumnaRucDeProveedores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809231956014_AgregarColumnaMarcaCodigoEnProductos.cs" />
+    <Compile Include="Migrations\201809231956014_AgregarColumnaMarcaCodigoEnProductos.Designer.cs">
+      <DependentUpon>201809231956014_AgregarColumnaMarcaCodigoEnProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809232018012_CambiarNombreDeColumnaIvaATipoImpuesto.cs" />
+    <Compile Include="Migrations\201809232018012_CambiarNombreDeColumnaIvaATipoImpuesto.Designer.cs">
+      <DependentUpon>201809232018012_CambiarNombreDeColumnaIvaATipoImpuesto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809232046550_SacarColumnaExistenciaInicialDeProductos.cs" />
+    <Compile Include="Migrations\201809232046550_SacarColumnaExistenciaInicialDeProductos.Designer.cs">
+      <DependentUpon>201809232046550_SacarColumnaExistenciaInicialDeProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809232059008_SacarColumnaMarcaCodigoDeRelacionUnoAMuchosEnProductos.cs" />
+    <Compile Include="Migrations\201809232059008_SacarColumnaMarcaCodigoDeRelacionUnoAMuchosEnProductos.Designer.cs">
+      <DependentUpon>201809232059008_SacarColumnaMarcaCodigoDeRelacionUnoAMuchosEnProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809232101236_AgregarColumnaMarcaCodigoEnProductosConRelacionUnoOCeroAUno.cs" />
+    <Compile Include="Migrations\201809232101236_AgregarColumnaMarcaCodigoEnProductosConRelacionUnoOCeroAUno.Designer.cs">
+      <DependentUpon>201809232101236_AgregarColumnaMarcaCodigoEnProductosConRelacionUnoOCeroAUno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809232223580_AgregarColumnaCaracteristicasEnProductos.cs" />
+    <Compile Include="Migrations\201809232223580_AgregarColumnaCaracteristicasEnProductos.Designer.cs">
+      <DependentUpon>201809232223580_AgregarColumnaCaracteristicasEnProductos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
-    <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaInicial.cs" />
+    <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaActual.cs" />
     <Compile Include="Models\AtributosDeValidacion\FacturaActual.cs" />
     <Compile Include="Models\AtributosDeValidacion\FacturaFinalMayorAFacturaInicial.cs" />
     <Compile Include="Models\AtributosDeValidacion\FechaFin.cs" />
@@ -3217,6 +3241,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809222010082_AgregarClaveUnicaEnColumnaRucDeProveedores.resx">
       <DependentUpon>201809222010082_AgregarClaveUnicaEnColumnaRucDeProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809231956014_AgregarColumnaMarcaCodigoEnProductos.resx">
+      <DependentUpon>201809231956014_AgregarColumnaMarcaCodigoEnProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809232018012_CambiarNombreDeColumnaIvaATipoImpuesto.resx">
+      <DependentUpon>201809232018012_CambiarNombreDeColumnaIvaATipoImpuesto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809232046550_SacarColumnaExistenciaInicialDeProductos.resx">
+      <DependentUpon>201809232046550_SacarColumnaExistenciaInicialDeProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809232059008_SacarColumnaMarcaCodigoDeRelacionUnoAMuchosEnProductos.resx">
+      <DependentUpon>201809232059008_SacarColumnaMarcaCodigoDeRelacionUnoAMuchosEnProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809232101236_AgregarColumnaMarcaCodigoEnProductosConRelacionUnoOCeroAUno.resx">
+      <DependentUpon>201809232101236_AgregarColumnaMarcaCodigoEnProductosConRelacionUnoOCeroAUno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809232223580_AgregarColumnaCaracteristicasEnProductos.resx">
+      <DependentUpon>201809232223580_AgregarColumnaCaracteristicasEnProductos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

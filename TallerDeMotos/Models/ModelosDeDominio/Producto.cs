@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
@@ -13,30 +14,32 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
-        [StringLength(50)]
-        public string Marca { get; set; }
+        [Required]
+        [StringLength(255)]
+        [Display(Name = "Características")]
+        public string Caracteristicas { get; set; }
+
+        public Marca Marca { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Marca")]
+        public byte? MarcaId { get; set; }
 
         [Display(Name = "Precio Costo")]
-        [Range(0, int.MaxValue, ErrorMessage = "El precio de costo debe ser mayor o igual a {1}")]
         public int? PrecioCosto { get; set; }
 
-        [Display(Name = "Precio Venta")]
-        [Range(0, int.MaxValue, ErrorMessage = "El precio de venta debe ser mayor o igual a {1}")]
+        [Display(Name = "Precio Venta")]        
         [PrecioVentaMayorPrecioCosto]
         public int? PrecioVenta { get; set; }
-
-        [Display(Name = "Existencia Inicial")]
-        [Range(0, int.MaxValue, ErrorMessage = "La existencia inicial debe ser mayor o igual a {1}")]
-        public int? ExistenciaInicial { get; set; }
 
         public int? ExistenciaActual { get; set; }
 
         [Display(Name = "Existencia Mínima")]
-        [Range(0, int.MaxValue, ErrorMessage = "La existencia mínima debe ser mayor o igual a {1}")]
-        [ExistenciaMinMenorExistenciaInicial]
+        [ExistenciaMinMenorExistenciaActual]
         public int? ExistenciaMinima { get; set; }
 
-        public byte? Iva { get; set; }
+        [RegularExpression(@"[a-zA-Z]?\d?\d", ErrorMessage = "Longitud válida para Tipo de Impuesto hasta 2 dígitos.")]
+        public byte? TipoImpuesto { get; set; }
 
         public ProductoTipo ProductoTipo { get; set; }
 
@@ -44,13 +47,9 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public byte ProductoTipoId { get; set; }
 
         public ICollection<Proveedor> Proveedores { get; set; }
-
         public ICollection<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
-
         public ICollection<FacturaCompraDetalle> FacturaCompraDetalles { get; set; }
-
         public ICollection<PresupuestoDetalle> PresupuestoDetalles { get; set; }
-
         public ICollection<FacturaVentaDetalle> FacturaVentaDetalles { get; set; }
 
         public Producto()

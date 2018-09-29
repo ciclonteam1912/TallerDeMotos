@@ -22,6 +22,10 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
                     m.MapRightKey("ProveedorCodigo");
                     m.ToTable("ProductoProveedores");
                 });
+
+            HasOptional(p => p.Marca)
+                           .WithOptionalDependent(p => p.Producto)
+                           .Map(m => m.MapKey("MarcaCodigo"));
         }
     }
 }

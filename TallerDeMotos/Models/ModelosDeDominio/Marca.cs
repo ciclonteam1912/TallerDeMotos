@@ -26,6 +26,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public string PaisDeOrigen { get; set; }
         //public string ImagenMarca { get; set; }
 
+        public Producto Producto { get; set; }
+
         public ICollection<Modelo> Modelos { get; set; }
 
         public string Titulo
@@ -38,7 +40,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         public Marca()
         {
-            Modelos = new Collection<Modelo>();
+            Modelos = new HashSet<Modelo>();
         }
 
         public Marca(Marca marca)
@@ -47,7 +49,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
             Nombre = marca.Nombre;
             Representante = marca.Representante;
             PaisDeOrigen = marca.PaisDeOrigen;
-            Modelos = new Collection<Modelo>();
+            Modelos = new HashSet<Modelo>();
         }
     }
 }

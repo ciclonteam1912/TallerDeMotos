@@ -23,6 +23,7 @@ namespace TallerDeMotos.Controllers.APIs
             {
                 var productos = _context.Productos
                 .Include(p => p.ProductoTipo)
+                .Include(p => p.Marca)
                 .ToList();
 
                 return Ok(productos);

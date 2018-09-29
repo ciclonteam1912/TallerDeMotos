@@ -27,7 +27,7 @@
             Producto.Descripcion = prod;
             Cantidad = cant;
             Producto.PrecioCosto = precio;
-            Producto.Iva = iva;
+            Producto.TipoImpuesto = iva;
             Total = total;
         }
     }

@@ -7,6 +7,10 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>@Model.Titulo</h2>
 
+    @{
+        var styleDisplay = Model.Id == 0 ? "display:block" : "display:none";
+    }
+
     @using (Html.BeginForm("GuardarProducto", "Producto"))
     {
         <div class="panel panel-default">
@@ -18,40 +22,58 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(p => p.ProductoTipoId)
-                            @Html.DropDownListFor(p => p.ProductoTipoId, new SelectList(Model.ProductoTipos, "Id", "Descripcion"), "Seleccione un Tipo de Producto", new { @class = "form-control"})
+                            @Html.LabelFor(p => p.ProductoTipoId) <span class="asterisco">*</span>
+                            @Html.DropDownListFor(p => p.ProductoTipoId, new SelectList(Model.ProductoTipos, "Id", "Descripcion"), "Seleccione un Tipo de Producto", new { @class = "form-control" })
                             @Html.ValidationMessageFor(p => p.ProductoTipoId)
+                        </div>
+                    </div>
+                    <div class="col-lg-6 servicio">
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Descripcion) <span class="asterisco">*</span>
+                            @Html.TextBoxFor(p => p.Descripcion, new { @class = "form-control", placeholder = "Ingrese Descripción del Producto...", autocomplete = "off" })
+                            @Html.ValidationMessageFor(p => p.Descripcion)
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-6 servicio">
                         <div class="form-group">
-                            @Html.LabelFor(p => p.Descripcion) <span class="asterisco">*</span>
-                            @Html.TextBoxFor(p => p.Descripcion, new { @class = "form-control", placeholder = "Ingrese Descripción del Producto...", autocomplete = "off", maxlength = 50 })
-                            @Html.ValidationMessageFor(p => p.Descripcion)
+                            @Html.LabelFor(p => p.Caracteristicas) <span class="asterisco">*</span>
+                            @Html.TextAreaFor(p => p.Caracteristicas, new { @class = "form-control", placeholder = "Ingrese las características del Producto...", autocomplete = "off" })
+                            @Html.ValidationMessageFor(p => p.Caracteristicas)
                         </div>
                     </div>
                     <div class="col-lg-6 producto" id="marcaProdutoCol">
                         <div class="form-group">
-                            @Html.LabelFor(p => p.Marca)
-                            @Html.TextBoxFor(p => p.Marca, new { @class = "form-control", placeholder = "Ingrese Marca del Producto...", autocomplete = "off", maxlength = 50 })
-                            @Html.ValidationMessageFor(p => p.Marca)
+                            @Html.LabelFor(m => m.MarcaId)
+                            <br />
+                            @(Html.Kendo().DropDownList()
+                                    .Name("MarcaId")
+                                    .DataTextField("Nombre")
+                                    .DataValueField("Id")
+                                    .OptionLabel("Seleccione una Marca...")
+                                    .HtmlAttributes(new { style = "width: 75%" })
+                                    .DataSource(source =>
+                                    {
+                                        source.Read(read => read.Url("/api/marcas"));
+                                    })
+                            )
+                            <div>@Html.ValidationMessageFor(m => m.MarcaId)</div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="@styleDisplay">
                     <div class="col-lg-6 producto" id="precioCostoCol">
                         <div class="form-group">
                             @Html.LabelFor(p => p.PrecioCosto)
-                            @Html.TextBoxFor(p => p.PrecioCosto, new { @class = "form-control", placeholder = "Ingrese Precio Costo del Producto...", autocomplete = "off", type = "number", min = "1", max = "99999999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
+                            @Html.TextBoxFor(p => p.PrecioCosto, new { @class = "form-control", placeholder = "Ingrese Precio Costo del Producto...", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
                             @Html.ValidationMessageFor(p => p.PrecioCosto)
                         </div>
                     </div>
                     <div class="col-lg-6 servicio" id="precioVentaCol">
                         <div class="form-group">
                             @Html.LabelFor(p => p.PrecioVenta, new { id = "precioLabel" })
-                            @Html.TextBoxFor(p => p.PrecioVenta, new { @class = "form-control", placeholder = "Ingrese Precio Venta del Producto...", autocomplete = "off", type = "number", min = "1", max = "99999999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
+                            @Html.TextBoxFor(p => p.PrecioVenta, new { @class = "form-control", placeholder = "Ingrese Precio Venta del Producto...", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
                             @Html.ValidationMessageFor(p => p.PrecioVenta)
                         </div>
                     </div>
@@ -59,9 +81,9 @@
                 <div class="row producto">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(p => p.ExistenciaInicial)
-                            @Html.TextBoxFor(p => p.ExistenciaInicial, new { @class = "form-control", placeholder = "Ingrese Existencia Inicial del Producto...", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
-                            @Html.ValidationMessageFor(p => p.ExistenciaInicial)
+                            @Html.LabelFor(p => p.ExistenciaActual)
+                            @Html.TextBoxFor(p => p.ExistenciaActual, new { @class = "form-control", placeholder = "Ingrese Existencia Actual del Producto...", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
+                            @Html.ValidationMessageFor(p => p.ExistenciaActual)
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -75,9 +97,9 @@
                 <div class="row producto">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(p => p.Iva)
-                            @Html.TextBoxFor(p => p.Iva, new { @class = "form-control", placeholder = "Ingrese Iva del Producto o Servicio...", autocomplete = "off", type = "number", min = "0", max = "99", oninput = "maxLengthCheck(this)", onkeydown = "javascript: return event.keyCode == 69 ? false : true" })
-                            @Html.ValidationMessageFor(p => p.Iva)
+                            @Html.LabelFor(p => p.TipoImpuesto)
+                            @Html.TextBoxFor(p => p.TipoImpuesto, new { @class = "form-control", placeholder = "Ingrese el tipo de impuesto...", autocomplete = "off" })
+                            @Html.ValidationMessageFor(p => p.TipoImpuesto)
                         </div>
                     </div>
                 </div>
@@ -85,7 +107,7 @@
                 @Html.AntiForgeryToken()
             </div>
             <div class="panel-footer">
-                <button class="btn btn-primary">Guardar</button>
+                <button class="btn btn-primary" id="btnGuardar">Guardar</button>
             </div>
         </div>
     }
@@ -105,21 +127,70 @@
             }
         }
 
+        // Adds the thousands separator
+        function numberFormat(valor) {
+            
+            var num = valor.value.replace(/\./g, '');
+            //console.log(num.toString().split(''));
+            if (!isNaN(num)) {
+                console.log(num.toString().split('').reverse().join(''));
+                num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g, '$1.');
+                num = num.split('').reverse().join('').replace(/^[\.]/, '');
+                valor.value = num;
+            }
+        }
+
+        function numberFormat2(valor) {
+            var num = valor.val();
+            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g, '$1.');
+            num = num.split('').reverse().join('').replace(/^[\.]/, '');
+            valor.val(num);
+        }
+
+        var id = $("#Id").val();
+
+        if (id == 0) {
+            $.validator.setDefaults({
+                ignore: "",
+                onkeyup: false
+                // any other default options and/or rules,
+                //errorPlacement: function (error, element) {
+                //    console.log("error", error);
+                //    console.log("element", element);
+                //    if (element.is("[data-role=dropdownlist]")) {
+                //        element.closest(".k-widget").after(error);
+                //    }
+                //}
+            });
+        }
+
+        function updateCssOnPropertyChange(e) {
+            var element = $(e.target);
+
+            element.siblings("span.k-dropdown-wrap")
+                   .add(element.siblings("div.k-multiselect-wrap"))
+                   .add(element.parent("span.k-numeric-wrap"))
+                   .add(element.parent("span.k-picker-wrap"))
+                   .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
+
         $(document).ready(function () {
+            UseMutationObserver();
+            //numberFormat2($("#PrecioVenta"));
             $("#menuStock").addClass('active');
             var marcaProductoCol = $("#marcaProdutoCol");
             var precioVentaCol = $("#precioVentaCol");
             var precioCostoCol = $("#precioCostoCol");
             let tipoProducto = $("#ProductoTipoId").val();
-            var existenciaInicial = $("#ExistenciaInicial").val();
+            var existenciaActual = $("#ExistenciaActual").val();
             var existenciaMinima = $("#ExistenciaMinima").val();
 
-            if ($("#Id").val() != 0) {
+            if ($("#Id").val() != 0 && tipoProducto != 2) {
                 $("#PrecioVenta").prop("readonly", true);
                 $("#PrecioCosto").prop("readonly", true);
-                $("#ExistenciaInicial").prop("readonly", true);
-                $("#ProductoTipoId option:not(:selected)").prop("disabled", true);
+                $("#ExistenciaActual").prop("readonly", true);
             }
+            $("#ProductoTipoId option:not(:selected)").prop("disabled", true);
 
             var bandera = false;
             if (tipoProducto == 2) {
@@ -141,25 +212,41 @@
                 $("#precioLabel").text("Precio Venta");
                 $("#PrecioVenta").attr("placeholder", "Ingrese Precio Venta del Producto...");
                 $("#Descripcion").attr("placeholder", "Ingrese Descripción del Producto...");
-                //if (tipoProducto != "") {                                        
-                    if (tipoProducto == 2) {
-                        bandera = true;
-                        marcaProductoCol = marcaProductoCol.replaceWith(precioVentaCol);
-                        $("#precioLabel").text("Precio de Servicio");
-                        $("#PrecioVenta").attr("placeholder", "Ingrese Precio del Servicio...");
-                        $("#Descripcion").attr("placeholder", "Ingrese Descripción del Servicio...")
-                        $(".producto").fadeOut(1000);
+                if (tipoProducto == 2) {
+                    bandera = true;
+                    marcaProductoCol = marcaProductoCol.replaceWith(precioVentaCol);
+                    $("#precioLabel").text("Precio de Servicio");
+                    $("#PrecioVenta").attr("placeholder", "Ingrese Precio del Servicio...");
+                    $("#Descripcion").attr("placeholder", "Ingrese Descripción del Servicio...");
+                    $("#Descripcion").val("");
+                    $("#Caracteristicas").val("");
+                    $("#PrecioCosto").val("");
+                    $("#PrecioVenta").val("");
+                    $("#PrecioVenta").removeClass("input-validation-error");
+                    if (!$("#PrecioVenta").hasClass("input-validation-error"))
+                        $("#PrecioVenta").next().hide();
+                    $("#ExistenciaActual").val("");
+                    $("#ExistenciaMinima").val("");
+                    $("#TipoImpuesto").val("");
+                    $(".producto").fadeOut(1000);
 
-                    } else {
-                        if (bandera) {
-                            bandera = false;
-                            precioVentaCol = precioVentaCol.replaceWith(marcaProductoCol);
-                            precioCostoCol.after(precioVentaCol);
-                            $(".producto").fadeIn(1000);
-                        }
+                } else {
+                    if (bandera) {
+                        bandera = false;
+                        precioVentaCol = precioVentaCol.replaceWith(marcaProductoCol);
+                        precioCostoCol.after(precioVentaCol);
+                        $(".producto").fadeIn(1000);
                     }
-                //}                
+                }
+            });
+
+            $("#btnGuardar").click(function () {
+                if ($("#PrecioVenta").hasClass("input-validation-error")) {
+                    $("#PrecioVenta").next().show();
+
+                }
             });
         });
     </script>
 }
+

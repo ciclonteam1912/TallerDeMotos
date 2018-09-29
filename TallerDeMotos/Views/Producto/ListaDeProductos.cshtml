@@ -47,7 +47,10 @@
     </script>
     <script>
         var wnd, detailsTemplate;
+        kendo.culture().numberFormat.currency.symbol = "₲";
+
         $(document).ready(function () {
+
             $("#menuStock").addClass('active');
 
             var table = $("#grid").kendoGrid({
@@ -122,51 +125,40 @@
                     title: "Tipo de Prod.",
                     width: 90
                 }, {
-                    field: "ExistenciaInicial",
-                    title: "Existencia Inicial",
-                    width: 110,
-                    attributes: {
-                        style: "text-align: right"
-                    }
-                }, {
-                    field: "ExistenciaMinima",
-                    title: "Existencia Mínima",
-                    width: 110,
-                    attributes: {
-                        style: "text-align: right"
-                    }
-                }, {
-                    field: "ExistenciaActual",
-                    title: "Existencia Actual",
-                    width: 110,
-                    attributes: {
-                        style: "text-align: right"
-                    }
-                }, {
-                    field: "PrecioCosto",
-                    title: "Precio Costo",
-                    width: 90,
-                    attributes: {
-                        style: "text-align: right"
-                    }
+                    template: "#= (Marca == null) ? ' ' : Marca.Nombre #",
+                    field: "Marca.Nombre",
+                    title: "Marca",
+                    width: 100
                 }, {
                     field: "PrecioVenta",
-                    title: "Precio Venta",
+                    title: "Precio Venta/Servicio",
                     width: 90,
+                    culture: "es-PY",
+                    format: "{0:c0}",
                     attributes: {
                         style: "text-align: right"
                     }
                 }, {
-                    field: "Iva",
-                    title: "Iva",
-                    width: 90,
-                    attributes: {
-                        style: "text-align: right"
-                    }
+                    command: {
+                        text: "Ver Detalles",
+                        click: showDetails
+                    },
+                    title: " ",
+                    width: "95px"
                 }]
             });
 
             $(".k-grid-toolbar").append('<a href="Producto/NuevoProducto" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Producto</span></a>');
+
+            wnd = $("#details")
+                        .kendoWindow({
+                            title: "Detalles del Producto",
+                            modal: true,
+                            visible: false,
+                            resizable: false,
+                            width: 350
+                        }).data("kendoWindow");
+            detailsTemplate = kendo.template($("#template").html());
 
             $("#grid").on("click", "a.js-eliminar", function () {
                 var $tr = $(this).closest("tr"),
@@ -220,5 +212,26 @@
                 "extendedTimeOut": 1000
             }
         });
+
+        function showDetails(e) {
+            e.preventDefault();
+
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            wnd.content(detailsTemplate(dataItem));
+            wnd.center().open();
+        }
     </script>    
+
+    <script type="text/x-kendo-template" id="template">
+
+        <div id="details-container">
+            <h2>#= Descripcion # #= (Marca == null) ? ' ' : Marca.Nombre #</h2>
+            @*<em>#= Title #</em>*@
+
+            <p><b>Existencia Mínima:</b> #= (ExistenciaMinima == null) ? '0' : ExistenciaMinima #</p>
+            <p><b>Existencia Actual:</b> #= (ExistenciaActual == null) ? '0' : ExistenciaActual #</p>
+            <p><b>Tipo de Impuesto:</b> #= (TipoImpuesto == null) ? '0' : TipoImpuesto #</p>
+            <p><b>Precio de Costo:</b> #= (PrecioCosto == null) ? '0' : kendo.toString(PrecioCosto, 'c0') #</p>           
+        </div>
+    </script>
 }

@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
+
 
 namespace TallerDeMotos.Controllers
 {
@@ -34,7 +37,8 @@ namespace TallerDeMotos.Controllers
         {
             var viewModel = new ProductoViewModel
             {
-                ProductoTipos = _context.ProductoTipos.ToList()
+                ProductoTipos = _context.ProductoTipos.ToList(),
+                Marcas = _context.Marcas.ToList()
             };
 
             return View("ProductoFormulario", viewModel);
@@ -49,19 +53,30 @@ namespace TallerDeMotos.Controllers
             {
                 var viewModel = new ProductoViewModel(producto)
                 {
-                    ProductoTipos = _context.ProductoTipos.ToList()
+                    ProductoTipos = _context.ProductoTipos.ToList(),
+                    Marcas = _context.Marcas.ToList()
                 };
 
                 return View("ProductoFormulario", viewModel);
             }
 
-            producto.ExistenciaActual = producto.ExistenciaInicial;
+            if (producto.MarcaId > 0)
+            {
+                var marca = _context.Marcas.Find(producto.MarcaId);
+                _context.Marcas.Attach(marca);
+                producto.Marca = marca;
+            }
+
             if (producto.Id == 0)           
                 _context.Productos.Add(producto);
             else
             {
-                var productoBD = _context.Productos.Single(a => a.Id == producto.Id);
+                var productoBD = _context.Productos
+                    .Include(p => p.Marca)
+                    .Single(a => a.Id == producto.Id);
+
                 Mapper.Map<Producto, Producto>(producto, productoBD);
+                productoBD.Marca = producto.Marca;
             }
 
             _context.SaveChanges();
@@ -72,14 +87,17 @@ namespace TallerDeMotos.Controllers
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult EditarProducto(int id)
         {
-            var productoBD = _context.Productos.SingleOrDefault(c => c.Id == id);
+            var productoBD = _context.Productos
+                .Include(p => p.Marca)
+                .SingleOrDefault(c => c.Id == id);
 
             if (productoBD == null)
                 return HttpNotFound();
 
             var producto = new ProductoViewModel(productoBD)
             {
-                ProductoTipos = _context.ProductoTipos.ToList()
+                ProductoTipos = _context.ProductoTipos.ToList(),
+                Marcas = _context.Marcas.ToList()
             };
 
             return View("ProductoFormulario", producto);

@@ -213,7 +213,7 @@
                    .toggleClass("k-invalid", element.hasClass("input-validation-error"));
         }
 
-        $(document).ready(function () {            
+        $(document).ready(function () {
             UseMutationObserver();
 
             $("#contenido").fadeIn(2000);
@@ -299,7 +299,7 @@
                                 $(data).each(function (index, item) {
                                     $("#productoDesc").val(item.Descripcion);
                                     $("#productoPrecio").val(item.PrecioVenta);
-                                    $("#productoIva").val(item.Iva);
+                                    $("#productoIva").val(item.TipoImpuesto);
                                 });
                             }
 

@@ -891,6 +891,14 @@
     <Compile Include="Migrations\201809232223580_AgregarColumnaCaracteristicasEnProductos.Designer.cs">
       <DependentUpon>201809232223580_AgregarColumnaCaracteristicasEnProductos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809292331127_AgregarColumnaPorcentajeGananciaEnProductoTipos.cs" />
+    <Compile Include="Migrations\201809292331127_AgregarColumnaPorcentajeGananciaEnProductoTipos.Designer.cs">
+      <DependentUpon>201809292331127_AgregarColumnaPorcentajeGananciaEnProductoTipos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809292337051_CargarDatosEnTablaProductoTipos2.cs" />
+    <Compile Include="Migrations\201809292337051_CargarDatosEnTablaProductoTipos2.Designer.cs">
+      <DependentUpon>201809292337051_CargarDatosEnTablaProductoTipos2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -3259,6 +3267,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809232223580_AgregarColumnaCaracteristicasEnProductos.resx">
       <DependentUpon>201809232223580_AgregarColumnaCaracteristicasEnProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809292331127_AgregarColumnaPorcentajeGananciaEnProductoTipos.resx">
+      <DependentUpon>201809292331127_AgregarColumnaPorcentajeGananciaEnProductoTipos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809292337051_CargarDatosEnTablaProductoTipos2.resx">
+      <DependentUpon>201809292337051_CargarDatosEnTablaProductoTipos2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

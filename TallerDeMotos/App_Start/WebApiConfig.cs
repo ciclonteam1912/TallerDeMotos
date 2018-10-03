@@ -16,6 +16,9 @@ namespace TallerDeMotos
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //config.Routes.MapHttpRoute("API Default", "api/{controller}/{action}/{id}",
+            //new { id = RouteParameter.Optional });
         }
     }
 }

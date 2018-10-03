@@ -11,6 +11,8 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [StringLength(15)]
         public string Descripcion { get; set; }
 
+        public int? PorcentajeGanancia { get; set; }
+
         public ICollection<Producto> Productos { get; set; }
 
         public ProductoTipo()

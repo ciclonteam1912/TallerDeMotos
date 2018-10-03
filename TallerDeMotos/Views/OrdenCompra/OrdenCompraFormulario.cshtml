@@ -73,22 +73,26 @@
                         <table class="table" id="ordenDetalle">
                             <thead>
                                 <tr>
-                                    <th>&nbsp;</th>
+                                    <th>Tipo</th>
                                     <th>Producto Cod.</th>
                                     <th>Descripción</th>
                                     <th>Precio</th>
                                     <th>Cantidad</th>
-                                    <th>IVA</th>
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>
-                                        <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>                                        
+                                        <input id="tipoProductos" />
+                                        <span class="error">Seleccionar Tipo de Producto</span>
                                     </td>
+                                    @*<td>
+                                        <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>                                        
+                                    </td>*@
                                     <td>
-                                        <input id="productosId" style="width: 150px; display:inline-block" />
+                                        <input id="productosId" disabled="disabled" style="width: 150px; display:inline-block" />
+                                        <span class="error-repetido">Producto o Servicio ya seleccionado</span>
                                         <span class="error">Selecciona un producto</span>
                                     </td>
                                     <td>
@@ -102,14 +106,12 @@
                                         <span class="error">Cantidad no válida</span>
                                     </td>
                                     <td>
-                                        <input type="number" id="iva" class="iva form-control" />
-                                    </td>
-                                    <td>
                                         <input type="button" id="add" value="Agregar" style="width:80px" class="btn btn-success" />
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <input type="number" id="iva" class="form-control" name="iva" style="display: none" />
                     </div>
                     <div id="orderItems" style="display:none">
                         <div class="table-responsive">
@@ -166,23 +168,65 @@
             var subTotal = 0;
             var count = 0;
 
-            //Detalle orden de compra
-            $("#productosId").kendoDropDownList({
-                filter: "eq",
-                dataTextField: "Id",
+            //Obtener los productos o servicios y agregarlos al Drop-down List.
+            var productsDataSource = new kendo.data.DataSource({
+                serverFiltering: false,
+                transport: {
+                    read: {
+                        url: "/api/productos"
+                    }
+                }
+            });
+
+            var tipoProductos = $("#tipoProductos").kendoDropDownList({
+                optionLabel: "Selecciona Tipo de Producto...",
+                dataTextField: "Descripcion",
                 dataValueField: "Id",
-                optionLabel: "Selecciona un Código...",
                 dataSource: {
-                    serverFiltering: false,
+                    serverFiltering: true,
                     transport: {
                         read: {
-                            url: "/api/productos",
+                            url: "/api/tipoProductos"
                         }
                     }
                 },
-                change: function(){
+                change: function () {
+                    var value = this.value();
+
+                    if (value) {
+                        if (value == 2)
+                            $("#cantidad").prop("readonly", true);
+                        else
+                            $("#cantidad").prop("readonly", false);
+
+                        productsDataSource.filter({
+                            field: "ProductoTipoId",
+                            operator: "eq",
+                            value: parseInt(value)
+                        });
+                        productos.enable();
+                    } else {
+                        productos.enable(false);
+                    }
+                    productos.select(0);
+                    $("#productoDesc").val("");
+                    $("#precio").val("");
+                    $("#cantidad").val("");
+                    $("#iva").val("");
+                }
+            });
+
+            var productos = $("#productosId").kendoDropDownList({
+                filter: "eq",
+                autoBind: false,
+                optionLabel: "Selecciona Código Producto...",
+                dataTextField: "Id",
+                dataValueField: "Id",
+                dataSource: productsDataSource,
+                change: function () {
+                    $("#add").prop("disabled", false);
+
                     var productoId = $("#productosId").val();
-                    console.log(productoId);
                     $.ajax({
                         url: "/api/productos/" + productoId,
                         contentType: "application/json",
@@ -192,14 +236,14 @@
                                 $("#productos").val(item.Id);
                                 $("#productoDesc").val(item.Descripcion);
                                 $("#precio").val(item.PrecioCosto);
-                                $("#iva").val(item.Iva);
+                                $("#iva").val(item.TipoImpuesto);
                             });
 
                             $("#cantidad").focus();
                         }
                     });
                 }
-            });
+            }).data("kendoDropDownList");
 
             var ddl = $("#productosId").data("kendoDropDownList");
             var wrapper = ddl.wrapper;

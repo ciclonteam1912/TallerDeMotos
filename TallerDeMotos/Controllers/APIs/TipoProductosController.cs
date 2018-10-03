@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Web;
 using System.Web.Http;
 using TallerDeMotos.Models;
 
@@ -25,5 +26,13 @@ namespace TallerDeMotos.Controllers.APIs
 
             return Ok(tipoProductos);
         }
+
+        //[HttpGet]
+        //public IHttpActionResult ObtenerTiposDeProductosSinServicio()
+        //{
+        //    var tipoProductos = _context.ProductoTipos.Where(tp => tp.Id != 2).ToList();
+
+        //    return Ok(tipoProductos);
+        //}
     }
 }

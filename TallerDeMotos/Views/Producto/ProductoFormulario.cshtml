@@ -175,6 +175,7 @@
         }
 
         $(document).ready(function () {
+
             UseMutationObserver();
             //numberFormat2($("#PrecioVenta"));
             $("#menuStock").addClass('active');
@@ -185,12 +186,16 @@
             var existenciaActual = $("#ExistenciaActual").val();
             var existenciaMinima = $("#ExistenciaMinima").val();
 
-            if ($("#Id").val() != 0 && tipoProducto != 2) {
-                $("#PrecioVenta").prop("readonly", true);
+            if ($("#Id").val() != 0) {
+                if ($("#ProductoTipoId option:selected").val() != 2)
+                    $("#PrecioVenta").prop("readonly", true);
+                else
+                    $("#PrecioVenta").prop("readonly", false);
+
                 $("#PrecioCosto").prop("readonly", true);
                 $("#ExistenciaActual").prop("readonly", true);
+                $("#ProductoTipoId option:not(:selected)").prop("disabled", true);
             }
-            $("#ProductoTipoId option:not(:selected)").prop("disabled", true);
 
             var bandera = false;
             if (tipoProducto == 2) {

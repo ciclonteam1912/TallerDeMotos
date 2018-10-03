@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
+        public string Caracteristicas { get; set; }
         public byte? MarcaId { get; set; }
         public int? PrecioCosto { get; set; }
         public int? PrecioVenta { get; set; }

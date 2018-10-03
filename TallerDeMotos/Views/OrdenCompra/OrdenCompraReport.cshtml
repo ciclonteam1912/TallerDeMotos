@@ -1,4 +1,4 @@
-@using TallerDeMotos
+﻿@using TallerDeMotos
 @using Telerik.Reporting
 @using Telerik.ReportViewer.Mvc
 @{
@@ -28,9 +28,7 @@
             right: 5px;
             top: 0;
             bottom: 5px;
-
             font-family: 'segoe ui', 'ms sans serif';
-
             overflow: hidden;
         }
     </style>
@@ -47,24 +45,24 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#reportViewer1").telerik_ReportViewer({
-                    serviceUrl: "../api/reports/",
-                    reportSource: {
-                        report: "OrdenCompra.trdp",
-                        parameters: { OrdenNro: @ViewBag.OrdenNro }
-                    },
+                serviceUrl: "../api/reports/",
+                reportSource: {
+                    report: "OrdenCompra.trdp",
+                    parameters: { OrdenNro: @ViewBag.OrdenNro }
+                },
             });
-          });
+        });
 
-            $('#invoiceId').change(function () {
-                var viewer = $("#reportViewer1").data("telerik_ReportViewer");
-                viewer.reportSource({
-                    report: viewer.reportSource().report,
-                    parameters: { OrdenNro: $(this).val() }
-                });
-                //setting the HTML5 Viewer's reportSource, causes a refresh automatically
-                //if you need to force a refresh for other case, use:
-                //viewer.refreshReport();
+        $('#invoiceId').change(function () {
+            var viewer = $("#reportViewer1").data("telerik_ReportViewer");
+            viewer.reportSource({
+                report: viewer.reportSource().report,
+                parameters: { OrdenNro: $(this).val() }
             });
+            //setting the HTML5 Viewer's reportSource, causes a refresh automatically
+            //if you need to force a refresh for other case, use:
+            //viewer.refreshReport();
+        });
     </script>
 </body>
 </html>

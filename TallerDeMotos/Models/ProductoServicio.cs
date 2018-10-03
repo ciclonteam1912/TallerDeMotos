@@ -24,8 +24,9 @@ namespace TallerDeMotos.Models
             {
                 Id = producto.Id,
                 Descripcion = producto.Descripcion,
+                Caracteristicas = producto.Caracteristicas,
                 PrecioCosto = producto.PrecioCosto,
-                MarcaId = producto.MarcaId,
+                //MarcaId = producto.MarcaId,
                 TipoImpuesto = producto.TipoImpuesto
             }).ToList();
 
@@ -49,7 +50,8 @@ namespace TallerDeMotos.Models
                     entity.Descripcion = producto.Descripcion;
                     entity.PrecioCosto = producto.PrecioCosto;
                     entity.PrecioVenta = producto.PrecioCosto;
-                    entity.MarcaId = producto.MarcaId;
+                    //entity.MarcaId = producto.MarcaId;
+                    entity.Caracteristicas = producto.Caracteristicas;
                     entity.TipoImpuesto = producto.TipoImpuesto;
                     entity.ProductoTipoId = 1; //1 producto, 2 servicio
 
@@ -75,7 +77,8 @@ namespace TallerDeMotos.Models
 
                     entity.Id = productoDto.Id;
                     entity.Descripcion = productoDto.Descripcion;
-                    entity.MarcaId = productoDto.MarcaId;
+                    entity.Caracteristicas = productoDto.Caracteristicas;
+                    //entity.MarcaId = productoDto.MarcaId;
                     entity.PrecioCosto = productoDto.PrecioCosto;
                     entity.PrecioVenta = entity.PrecioCosto;
                     entity.TipoImpuesto = productoDto.TipoImpuesto;

@@ -49,7 +49,6 @@ namespace TallerDeMotos.Controllers
         {
             var formaPagos = _context.FormasPago.ToList();
             var proveedores = _context.Proveedores.ToList();
-
             var viewModel = new OrdenCompraViewModel()
             {
                 FormaPagos = formaPagos,

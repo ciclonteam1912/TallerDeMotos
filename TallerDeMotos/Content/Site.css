@@ -289,7 +289,7 @@ button#eliminar{
     padding: 0px 5px;
 }
 
-span.error, span.error-repetido {
+span.error, span.error-repetido, span.errortipoProductos {
     display: none;
     color: red;
     font-size: 90%;

@@ -55,7 +55,7 @@
                                     .HtmlAttributes(new { style = "width: 75%" })
                                     .DataSource(source =>
                                     {
-                                        source.Read(read => read.Url("/api/marcas"));
+                                        source.Read(read => read.Url("/api/marcas/ObtenerMarcas"));
                                     })
                             )
                             <div>@Html.ValidationMessageFor(m => m.MarcaId)</div>

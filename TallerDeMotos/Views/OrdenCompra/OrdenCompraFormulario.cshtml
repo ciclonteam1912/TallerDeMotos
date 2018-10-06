@@ -37,7 +37,7 @@
                                 .Filter("contains")
                                 .DataSource(source =>
                                 {
-                                    source.Read(read => read.Url("/api/formasPago"));
+                                    source.Read(read => read.Url("/api/formasPago/ObtenerFormasDePago"));
                                 })
                             )
                             @Html.ValidationMessageFor(oc => oc.FormaPagoId)
@@ -53,7 +53,7 @@
                                 .Filter("contains")
                                 .DataSource(source =>
                                 {
-                                    source.Read(read => read.Url("/api/proveedores"));
+                                    source.Read(read => read.Url("/api/proveedores/ObtenerProveedores"));
                                 })
                             )
                             @Html.ValidationMessageFor(oc => oc.ProveedorId)
@@ -85,7 +85,7 @@
                                 <tr>
                                     <td>
                                         <input id="tipoProductos" />
-                                        <span class="error">Seleccionar Tipo de Producto</span>
+                                        <span class="errortipoProductos">Seleccionar Tipo de Producto</span>
                                     </td>
                                     @*<td>
                                         <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>                                        
@@ -173,7 +173,7 @@
                 serverFiltering: false,
                 transport: {
                     read: {
-                        url: "/api/productos"
+                        url: "/api/productos/ObtenerProductos"
                     }
                 }
             });
@@ -186,7 +186,7 @@
                     serverFiltering: true,
                     transport: {
                         read: {
-                            url: "/api/tipoProductos"
+                            url: "/api/tipoProductos/ObtenerTiposDeProductosSinServicio"
                         }
                     }
                 },
@@ -228,7 +228,7 @@
 
                     var productoId = $("#productosId").val();
                     $.ajax({
-                        url: "/api/productos/" + productoId,
+                        url: "/api/productos/GetProducto/" + productoId,
                         contentType: "application/json",
                         method: "GET",
                         success: function (data) {
@@ -263,6 +263,15 @@
                 var todoEsValido = true;
                 var productoCodigo = $("#productosId").val();
                 $("#footerOrden").remove("#imprimirOrden");
+
+                if ($("#tipoProductos").val() == "") {
+                    todoEsValido = false;
+
+                    $('.k-dropdown').siblings('span.errortipoProductos').css('display', 'block');
+                }
+                else {
+                    $('.k-dropdown').siblings('span.errortipoProductos').css('display', 'none');
+                }
 
                 if ($("#productosId").val() == "") {
                     todoEsValido = false;

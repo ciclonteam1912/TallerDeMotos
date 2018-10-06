@@ -70,7 +70,7 @@
                                 .Filter("contains")
                                 .DataSource(source =>
                                 {
-                                    source.Read(read => read.Url("/api/clientes"));
+                                    source.Read(read => read.Url("/api/clientes/ObtenerClientes"));
                                 })
                             )
                             @Html.ValidationMessageFor(m => m.ClienteId)
@@ -106,7 +106,7 @@
                                 </td>
                                 <td><input type="text" id="productoPrecio" readonly class="form-control" /></td>
                                 <td>
-                                    @Html.TextBox("productoCantidad", "", new { @class = "form-control", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
+                                    @Html.TextBox("productoCantidad", "", new { @class = "form-control", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)"})
                                 </td>
                                 <td>
                                     <input type="button" class="btn btn-primary" id="agregar" value="Agregar" />
@@ -190,7 +190,7 @@
                 var subtotal = 0;
 
                 $.ajax({
-                    url: "/api/presupuestoDetalles/" + id,
+                    url: "/api/presupuestoDetalles/ObtenerPresupuestoDetalle/" + id,
                     type: "get",
                     contentType: "application/json",
                     success: function (detalles) {
@@ -313,7 +313,7 @@
                 serverFiltering: false,
                 transport: {
                     read: {
-                        url: "/api/productos"
+                        url: "/api/productos/ObtenerProductos"
                     }
                 }
             });
@@ -326,7 +326,7 @@
                     serverFiltering: true,
                     transport: {
                         read: {
-                            url: "/api/tipoProductos"
+                            url: "/api/tipoProductos/ObtenerTiposDeProductos"
                         }
                     }
                 },
@@ -366,7 +366,7 @@
 
                     var productoId = $("#productosId").val();
                     $.ajax({
-                        url: "/api/productos/" + productoId,
+                        url: "/api/productos/GetProducto/" + productoId,
                         contentType: "application/json",
                         method: "GET",
                         success: function (data) {
@@ -551,7 +551,7 @@
                     });
                     if (nuevaFacturaVentaDto.FacturaVentaDetalles.length > 0) {
                         $.ajax({
-                            url: "/api/facturaVentas",
+                            url: "/api/facturaVentas/CrearFacturaVenta",
                             method: "post",
                             contentType: 'application/json; chartset=utf-8',
                             data: JSON.stringify(nuevaFacturaVentaDto)

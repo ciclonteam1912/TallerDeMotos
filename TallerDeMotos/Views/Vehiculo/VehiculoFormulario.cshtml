@@ -29,7 +29,7 @@
                                 .Filter("contains")
                                 .DataSource(source =>
                                 {
-                                    source.Read(read => read.Url("/api/clientes"));
+                                    source.Read(read => read.Url("/api/clientes/ObtenerClientes"));
                                 })
                             )                           
                             <div>@Html.ValidationMessageFor(v => v.ClienteId)</div>
@@ -48,7 +48,7 @@
                                 .Filter("contains")
                                 .DataSource(source =>
                                 {
-                                    source.Read(read => read.Url("/api/modelos"));
+                                    source.Read(read => read.Url("/api/modelos/ObtenerModelos"));
                                 })
                             )                                                      
                             <div>@Html.ValidationMessageFor(v => v.ModeloId)</div>
@@ -69,7 +69,7 @@
                                 .Filter("contains")
                                 .DataSource(source =>
                                 {
-                                    source.Read(read => read.Url("/api/aseguradoras"));
+                                    source.Read(read => read.Url("/api/aseguradoras/ObtenerAseguradoras"));
                                 })
                             )                          
                             <div>@Html.ValidationMessageFor(v => v.AseguradoraCodigo)</div>

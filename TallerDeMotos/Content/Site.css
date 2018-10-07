@@ -285,7 +285,7 @@ tr input[type=number]{
     color: #999999;
 }
 
-button#eliminar{
+button.eliminar{
     padding: 0px 5px;
 }
 

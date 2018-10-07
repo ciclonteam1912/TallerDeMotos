@@ -55,7 +55,7 @@
                 dataSource: {
                     transport: {
                         read: {
-                            url: "/api/proveedores",
+                            url: "/api/proveedores/ObtenerProveedores",
                             dataType: "json"
                         }
                     },
@@ -127,10 +127,6 @@
                         style: "text-align: right"
                     }
                 }, {
-                    field: "Contacto",
-                    title: "Contacto",
-                    width: 100,
-                }, {
                     field: "Telefono",
                     title: "Teléfono",
                     width: 120
@@ -180,7 +176,7 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/proveedores/" + id,
+                                url: "/api/proveedores/EliminarProveedor/" + id,
                                 method: "DELETE"
                             })
                             .done(function (proveedor) {
@@ -188,9 +184,9 @@
                                     grid.dataSource.remove(dataItem);
                                     toastr.success(proveedor.Message);
                                 } else {
-                                    if (proveedor.Message == "FK_dbo.Vehiculos_dbo.Clientes_ClienteCodigo")
-                                        toastr.error("<p class='eliminar'>No se pudo eliminar el cliente. Elimine primero el vehículo de este cliente.</p>" +
-                                        "<a href='/Vehiculo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar vehículo</a>");
+                                    if (proveedor.Message == "FK_dbo.OrdenCompras_dbo.Proveedores_ProveedorCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el proveedor. Elimine primero la orden de compra realizada a este proveedor.</p>" +
+                                        "<a href='/OrdenCompra' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar Orden de Compra</a>");
                                 }
                             });
                         }

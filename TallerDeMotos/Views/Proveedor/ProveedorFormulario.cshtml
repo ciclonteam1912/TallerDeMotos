@@ -7,10 +7,8 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>@Model.Titulo</h2>
 
-    @using (Html.BeginForm("GuardarProveedor", "Proveedor"))
-    {
+    <form id="formularioProveedor">
         @Html.Partial("_Ciudad")
-
         <div class="panel panel-default">
             <div class="panel-heading">@Model.Titulo</div>
             <div class="panel-body">
@@ -37,31 +35,15 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Ruc) <span class="asterisco">*</span>
-                            @Html.TextBoxFor(m => m.Ruc, new { @class = "form-control", placeholder = "Ingrese Ruc de la Aseguradora...", onkeyup="format(event)", autocomplete = "off" })
+                            @Html.TextBoxFor(m => m.Ruc, new { @class = "form-control", placeholder = "Ingrese Ruc de la Aseguradora...", onkeyup = "format(event)", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Ruc)
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Contacto) <span class="asterisco">*</span>
-                            @Html.TextBoxFor(m => m.Contacto, new { @class = "form-control", placeholder = "Ingrese Nombre de Contacto...", maxlength = 50, autocomplete = "off" })
-                            @Html.ValidationMessageFor(m => m.Contacto)
-                        </div>                        
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
                             @Html.LabelFor(m => m.Telefono) <span class="asterisco">*</span>
                             @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", placeholder = "Ingrese Teléfono de la Aseguradora...", maxlength = 50, autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Telefono)
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.CorreoElectronico)
-                            @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control", placeholder = "Ingrese Correo Electrónico de la Aseguradora...", maxlength = 50, autocomplete = "off" })
-                            @Html.ValidationMessageFor(m => m.CorreoElectronico)
                         </div>
                     </div>
                 </div>
@@ -75,6 +57,15 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
+                            @Html.LabelFor(m => m.CorreoElectronico)
+                            @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control", placeholder = "Ingrese Correo Electrónico de la Aseguradora...", maxlength = 50, autocomplete = "off" })
+                            @Html.ValidationMessageFor(m => m.CorreoElectronico)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">                    
+                    <div class="col-lg-6">
+                        <div class="form-group">
                             @Html.LabelFor(m => m.CiudadId) <span class="asterisco">*</span>
                             <br />
                             @(Html.Kendo().DropDownList()
@@ -86,11 +77,16 @@
                                 .Filter("contains")
                                 .DataSource(source =>
                                 {
-                                    source.Read(read => read.Url("/api/ciudades"));
+                                    source.Read(read => read.Url("/api/ciudades/ObtenerCiudades"));
                                 })
-                            )                            
+                            )
                             <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
                             <div>@Html.ValidationMessageFor(m => m.CiudadId)</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn btn-link" data-toggle="modal" data-target="#myModalContact">Contactos</button>
                         </div>
                     </div>
                 </div>
@@ -101,7 +97,134 @@
                 <button class="btn btn-primary" id="btnGuardar">Guardar</button>
             </div>
         </div>
-    }
+        @if (Model.Id != 0)
+        {
+            <div class="modal fade" role="dialog" id="myModalContact">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title">Agregar Contacto</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row table-responsive">
+                                <table class="table" id="contactDetalle">
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo Contacto</th>
+                                            <th>Descripción</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input id="tipoContactos" style="width:100%" />
+                                                <span class="error">Seleccionar Tipo de Contacto</span>
+                                            </td>
+                                            <td>
+                                                <input type="text" id="contactoDesc" readonly class="form-control" />
+                                                <span class="error">El campo Descripción es requerido</span>
+                                            </td>
+                                            <td>
+                                                <input type="button" class="btn btn-primary" id="agregar" value="Agregar" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="contactItems">
+                                <div class="row table-responsive">
+                                    <table id="contactoDetalle" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th style="display:none"></th>
+                                                <th>Código</th>
+                                                <th>Tipo Contacto</th>
+                                                <th>Descripción</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var contacto in Model.ProveedorContactos)
+                                            {
+                                                <tr class="detalle">
+                                                    <td style="display:none">@contacto.Id</td>
+                                                    <td>@contacto.ContactoId</td>
+                                                    <td>@contacto.Contacto.Descripcion</td>
+                                                    <td>@contacto.Descripcion</td>
+                                                    <td class="eliminar-fila"><button class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="modal fade" role="dialog" id="myModalContact">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title">Agregar Contacto</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row table-responsive">
+                                <table class="table" id="contactDetalle">
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo Contacto</th>
+                                            <th>Descripción</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input id="tipoContactos" style="width:100%" />
+                                                <span class="error">Seleccionar Tipo de Contacto</span>
+                                            </td>
+                                            <td>
+                                                <input type="text" id="contactoDesc" readonly class="form-control" />
+                                                <span class="error">El campo Descripción es requerido</span>
+                                            </td>
+                                            <td>
+                                                <input type="button" class="btn btn-primary" id="agregar" value="Agregar" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="contactItems" style="display:none">
+                                <div class="row table-responsive">
+                                    <table id="contactoDetalle" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th style="display:none"></th>
+                                                <th>Código</th>
+                                                <th>Tipo Contacto</th>
+                                                <th>Descripción</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }               
+    </form>
 </div>
 
 @section Scripts {
@@ -113,14 +236,6 @@
             $.validator.setDefaults({
                 ignore: "",
                 onkeyup: false
-                // any other default options and/or rules,
-                //errorPlacement: function (error, element) {
-                //    console.log("error", error);
-                //    console.log("element", element);
-                //    if (element.is("[data-role=dropdownlist]")) {
-                //        element.closest(".k-widget").after(error);
-                //    }
-                //}
             });
         }
         function updateCssOnPropertyChange(e) {
@@ -143,6 +258,171 @@
 
         $(document).ready(function () {
             UseMutationObserver();
+            
+            var vm = {
+                ProveedorDto: {},
+                ProveedorContactos: []
+            }
+
+            //Obtener los contactos y agregarlos al Drop-down List.
+            var contactsDataSource = new kendo.data.DataSource({
+                serverFiltering: false,
+                transport: {
+                    read: {
+                        url: "/api/contactos/ObtenerContactos"
+                    }
+                }
+            });
+
+            var contactos = $("#tipoContactos").kendoDropDownList({
+                filter: "eq",
+                autoBind: false,
+                optionLabel: "Selecciona un tipo de Contacto...",
+                dataTextField: "Descripcion",
+                dataValueField: "Id",
+                dataSource: contactsDataSource,
+                change: function () {
+                    var value = this.value();
+                    $("#contactoDesc").val("");
+
+                    if (value != "") {
+                        $("#contactoDesc").prop("readonly", false);
+                        $("#contactoDesc").focus();
+                    }
+                    else {
+                        $("#contactoDesc").prop("readonly", true);
+                    }
+                }
+            }).data("kendoDropDownList");
+
+            $("#agregar").click(function () {
+                var todoEsValido = true;
+                var bandera = false;
+                var arreglo = [];
+
+                if ($("#tipoContactos").val() == "") {
+                    todoEsValido = false;
+                    $('.k-dropdown').siblings('span.error').css('display', 'block');
+                } else {
+                    $('.k-dropdown').siblings('span.error').css('display', 'none');
+                }
+
+                if ($("#contactoDesc").val() == "") {
+                    todoEsValido = false;
+                    $('#contactoDesc').siblings('span.error').css('display', 'block');
+                }
+                else {
+                    $('#contactoDesc').siblings('span.error').css('display', 'none');
+                }
+
+                $('#contactoDetalle tr.detalle').each(function (index, tr) {
+                    var lines = $('td', tr).map(function (index, td) {
+                        if (index == 0)
+                            return $(td).text();
+                    });
+
+                    arreglo = lines;
+                });
+
+                if (todoEsValido) {
+                    $("#contactItems").fadeIn(1000);
+
+                    var contactoId = $("#tipoContactos").val();
+                    var contactoTipo = $("#tipoContactos").data("kendoDropDownList").text();
+                    var contactoDescripcion = $("#contactoDesc").val();
+
+                    var lineaContacto = '<tr class="detalle">' +
+                        '<td style="display:none">0</td>' +
+                        '<td>' + contactoId + '</td>' +
+                        '<td>' + contactoTipo + '</td>' +
+                        '<td>' + contactoDescripcion + '</td>' +
+                        '<td class="eliminar-fila"><button class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
+                        '</tr>';
+
+                    $(lineaContacto).hide().appendTo("#contactoDetalle tbody").fadeIn(1000);
+
+                    $("tbody").on("click", ".eliminar", function () {
+                        $(this).parents("tr").fadeOut("normal", function () {
+                            $(this).remove();
+                        });
+                    });
+
+                    $("#tipoContactos").data("kendoDropDownList").value("");
+                    $("#contactoDesc").val("");
+                }
+            });
+
+            $("tbody").on("click", ".eliminar", function () {
+                $(this).parents("tr").fadeOut("normal", function () {
+                    $(this).remove();
+                });
+            });
+
+            //Agregar validación al formulario al hacer submit.
+            $("#formularioProveedor").submit(function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+                
+                if (form.valid()) {
+                    vm.ProveedorDto = {
+                        Id: $("#Id").val(),
+                        RazonSocial: $("#RazonSocial").val(),
+                        Propietario: $("#Propietario").val(),
+                        Ruc: $("#Ruc").val(),
+                        Direccion: $("#Direccion").val(),
+                        Telefono: $("#Telefono").val(),
+                        CorreoElectronico: $("#CorreoElectronico").val(),
+                        CiudadId: $("#CiudadId").val()
+                    };
+
+                    $('#contactoDetalle tr.detalle').each(function (index, tr) {
+
+                        var lines = $('td', tr).map(function (index, td) {
+                            if (index != 2 && index != 4) {
+                                return $(td).text();
+                            }
+
+                        });
+
+                        vm.ProveedorContactos.push({
+                            Id: lines[0] == null ? 0 : lines[0],
+                            ContactoId: lines[1],
+                            Descripcion: lines[2],
+                            ProveedorId: $("#Id").val()
+                        });
+
+                    });
+
+                    if (vm.ProveedorContactos.length == 0) {
+                        toastr.error('Debe agregar al menos un contacto para el proveedor.');
+                    }
+                    else {
+                        $.ajax({
+                            url: "/api/proveedores/CrearProveedor",
+                            method: "post",
+                            data: vm
+                        })
+                        .done(function (proveedor) {
+                            if (proveedor.Success) {
+                                toastr.success("<p>Coorrecto</p>");
+                               
+                                //redireccionar a la lista de proveedores
+                                window.location.href = '/Proveedor';                               
+                            }
+                            else {
+                                vm = {
+                                    ProveedorDto: {},
+                                    ProveedorContactos: []
+                                }
+                                toastr.error("<p>Ocurrió algo inesperado</p>");
+                            }
+                        });
+                    }
+                    $('#formularioProveedor').unbind('submit');
+                    $('#formularioProveedor').submit();
+                }                
+            });
 
             $("#menuCompras").addClass('active');
 

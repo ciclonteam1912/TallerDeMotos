@@ -13,10 +13,6 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Razón Social")]
         public string RazonSocial { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string Contacto { get; set; }
-
         [StringLength(50)]
         public string Propietario { get; set; }
 

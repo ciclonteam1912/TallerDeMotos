@@ -8,17 +8,14 @@ namespace TallerDeMotos.ViewModels
     public class ProveedorViewModel
     {
         public IEnumerable<Ciudad> Ciudades { get; set; }
-
+        public IEnumerable<Contacto> Contactos { get; set; }
+        public IEnumerable<ProveedorContacto> ProveedorContactos { get; set; }
         public int Id { get; set; }
 
         [Required]
         [StringLength(50)]
         [Display(Name = "Razón Social")]
         public string RazonSocial { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string Contacto { get; set; }
 
         [StringLength(50)]
         public string Propietario { get; set; }
@@ -65,7 +62,6 @@ namespace TallerDeMotos.ViewModels
         {
             Id = proveedor.Id;
             RazonSocial = proveedor.RazonSocial;
-            Contacto = proveedor.Contacto;
             Propietario = proveedor.Propietario;
             Ruc = proveedor.Ruc;
             Direccion = proveedor.Direccion;

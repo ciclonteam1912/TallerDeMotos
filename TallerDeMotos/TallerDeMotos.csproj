@@ -232,6 +232,7 @@
     <Compile Include="ConfiguracionDeEntidades\CiudadConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ClienteConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\CombustibleConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\ContactoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\EmpleadoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\EmpresaConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\EstadoConfiguracion.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="ConfiguracionDeEntidades\ProductoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ProductoTipoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ProveedorConfiguracion.cs" />
+    <Compile Include="ConfiguracionDeEntidades\ProveedorContactoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\ServicioBasicoConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\SucursalConfiguracion.cs" />
     <Compile Include="ConfiguracionDeEntidades\TalonarioConfiguracion.cs" />
@@ -269,6 +271,7 @@
     <Compile Include="Controllers\APIs\BancosController.cs" />
     <Compile Include="Controllers\APIs\CajasController.cs" />
     <Compile Include="Controllers\APIs\CargosController.cs" />
+    <Compile Include="Controllers\APIs\ContactosController.cs" />
     <Compile Include="Controllers\APIs\TipoMotoresController.cs" />
     <Compile Include="Controllers\APIs\CilindradasController.cs" />
     <Compile Include="Controllers\APIs\CiudadesController.cs" />
@@ -346,11 +349,13 @@
     <Compile Include="Dtos\NuevaFacturaVentaDto.cs" />
     <Compile Include="Dtos\NuevaOrdenCompraDto.cs" />
     <Compile Include="Dtos\NuevoPresupuestoDto.cs" />
+    <Compile Include="Dtos\NuevoProveedorDto.cs" />
     <Compile Include="Dtos\OrdenCompraDetalleDto.cs" />
     <Compile Include="Dtos\OrdenCompraDto.cs" />
     <Compile Include="Dtos\PresupuestoDetalleDto.cs" />
     <Compile Include="Dtos\PresupuestoDto.cs" />
     <Compile Include="Dtos\ProductoDto.cs" />
+    <Compile Include="Dtos\ProveedorContactoDto.cs" />
     <Compile Include="Dtos\ProveedorDto.cs" />
     <Compile Include="Dtos\SucursalDto.cs" />
     <Compile Include="Dtos\TipoMovimientoDto.cs" />
@@ -899,6 +904,22 @@
     <Compile Include="Migrations\201809292337051_CargarDatosEnTablaProductoTipos2.Designer.cs">
       <DependentUpon>201809292337051_CargarDatosEnTablaProductoTipos2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810062322322_CreacionDeTablaContactos.cs" />
+    <Compile Include="Migrations\201810062322322_CreacionDeTablaContactos.Designer.cs">
+      <DependentUpon>201810062322322_CreacionDeTablaContactos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810062358529_CargarContactosPorDefectoEnContactos.cs" />
+    <Compile Include="Migrations\201810062358529_CargarContactosPorDefectoEnContactos.Designer.cs">
+      <DependentUpon>201810062358529_CargarContactosPorDefectoEnContactos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810070225256_CreacionDeTablaProveedorContactos.cs" />
+    <Compile Include="Migrations\201810070225256_CreacionDeTablaProveedorContactos.Designer.cs">
+      <DependentUpon>201810070225256_CreacionDeTablaProveedorContactos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810072328213_SacarColumnaContactoDeProveedores.cs" />
+    <Compile Include="Migrations\201810072328213_SacarColumnaContactoDeProveedores.Designer.cs">
+      <DependentUpon>201810072328213_SacarColumnaContactoDeProveedores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -936,6 +957,8 @@
     <Compile Include="Models\ModelosDeDominio\Ciudad.cs" />
     <Compile Include="Models\ModelosDeDominio\Cliente.cs" />
     <Compile Include="Models\ModelosDeDominio\Combustible.cs" />
+    <Compile Include="Models\ModelosDeDominio\Contacto.cs" />
+    <Compile Include="Models\ModelosDeDominio\ContactoProveedor.cs" />
     <Compile Include="Models\ModelosDeDominio\Empleado.cs" />
     <Compile Include="Models\ModelosDeDominio\Empresa.cs" />
     <Compile Include="Models\ModelosDeDominio\Estado.cs" />
@@ -3273,6 +3296,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809292337051_CargarDatosEnTablaProductoTipos2.resx">
       <DependentUpon>201809292337051_CargarDatosEnTablaProductoTipos2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810062322322_CreacionDeTablaContactos.resx">
+      <DependentUpon>201810062322322_CreacionDeTablaContactos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810062358529_CargarContactosPorDefectoEnContactos.resx">
+      <DependentUpon>201810062358529_CargarContactosPorDefectoEnContactos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810070225256_CreacionDeTablaProveedorContactos.resx">
+      <DependentUpon>201810070225256_CreacionDeTablaProveedorContactos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810072328213_SacarColumnaContactoDeProveedores.resx">
+      <DependentUpon>201810072328213_SacarColumnaContactoDeProveedores.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

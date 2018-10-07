@@ -108,6 +108,8 @@ namespace TallerDeMotos.Models
         public DbSet<Sucursal> Sucursales { get; set; }
         public DbSet<FacturaVentaCliente> FacturaVentaClientes { get; set; }
         public DbSet<Permisos> Permisos { get; set; }
+        public DbSet<Contacto> Contactos { get; set; }
+        public DbSet<ProveedorContacto> ProveedorContactos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -152,10 +154,11 @@ namespace TallerDeMotos.Models
             modelBuilder.Configurations.Add(new SucursalConfiguracion());
             modelBuilder.Configurations.Add(new FacturaVentaClienteConfiguracion());
             modelBuilder.Configurations.Add(new PermisoConfiguracion());
+            modelBuilder.Configurations.Add(new ContactoConfiguracion());
+            modelBuilder.Configurations.Add(new ProveedorContactoConfiguracion());
 
             modelBuilder.Entity<ApplicationUser>()
-                .Property(u => u.EmpleadoId)
-                //.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_EmpleadoCodigo", 1) { IsUnique = true }))
+                .Property(u => u.EmpleadoId)                
                 .HasColumnName("EmpleadoCodigo");
 
             modelBuilder.Entity<ApplicationUser>()

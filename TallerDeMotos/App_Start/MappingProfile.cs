@@ -29,6 +29,7 @@ namespace TallerDeMotos.App_Start
                 .ForMember(e => e.Marca, opt => opt.Ignore()); ;
             Mapper.CreateMap<Caja, Caja>();
             Mapper.CreateMap<AperturaCierreCaja, AperturaCierreCaja>();
+            Mapper.CreateMap<ProveedorContactoDto, ProveedorContacto>();
 
             //Dominio a DTO
             Mapper.CreateMap<OrdenCompra, OrdenCompraDto>();
@@ -50,6 +51,7 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Empresa, EmpresaDto>();
             Mapper.CreateMap<Sucursal, SucursalDto>();
             Mapper.CreateMap<Cargo, CargoDto>();
+            Mapper.CreateMap<ProveedorContacto, ProveedorContactoDto>();
 
             //DTO a Dominio
             Mapper.CreateMap<OrdenCompraDto, OrdenCompra>();
@@ -70,6 +72,9 @@ namespace TallerDeMotos.App_Start
                 .ForMember(s => s.CiudadId, opt => opt.MapFrom(src => src.Ciudad.Id))
                 .ForMember(s => s.EmpresaId, opt => opt.MapFrom(src => src.Empresa.Id));
             Mapper.CreateMap<EmpresaDto, Empresa>();
+            Mapper.CreateMap<ProveedorDto, Proveedor>();
+            Mapper.CreateMap<ProveedorContactoDto, ProveedorContacto>();
+            Mapper.CreateMap<ProveedorViewModel, Proveedor>();
         }
     }
 }

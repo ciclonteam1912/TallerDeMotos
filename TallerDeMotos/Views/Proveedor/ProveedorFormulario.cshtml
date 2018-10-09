@@ -361,7 +361,7 @@
             //Agregar validación al formulario al hacer submit.
             $("#formularioProveedor").submit(function (e) {
                 e.preventDefault();
-
+                var id = $("#Id").val();
                 var form = $(this);
                 
                 if (form.valid()) {
@@ -405,10 +405,8 @@
                         })
                         .done(function (proveedor) {
                             if (proveedor.Success) {
-                                toastr.success("<p>Coorrecto</p>");
-                               
-                                //redireccionar a la lista de proveedores
-                                window.location.href = '/Proveedor';                               
+                                //redireccionar a la lista de proveedores                               
+                                window.location.href = '/Proveedor';                                
                             }
                             else {
                                 vm = {
@@ -419,8 +417,11 @@
                             }
                         });
                     }
-                    $('#formularioProveedor').unbind('submit');
-                    $('#formularioProveedor').submit();
+                    if (id != 0) {
+                        console.log(id);
+                        $('#formularioProveedor').unbind('submit');
+                        $('#formularioProveedor').submit();
+                    }
                 }                
             });
 

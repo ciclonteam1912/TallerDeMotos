@@ -150,7 +150,7 @@
                     var subtotal = 0;
 
                     $.ajax({
-                        url: "/api/ordenCompraDetalles/" + id,
+                        url: "/api/ordenCompraDetalles/ObtenerOrdenCompraDetalle/" + id,
                         type: "get",
                         contentType: "application/json",
                         success: function (detalles) {
@@ -246,7 +246,7 @@
                 });
 
                 $.ajax({
-                    url: "/api/facturaCompras",
+                    url: "/api/facturaCompras/CrearFacturaCompra",
                     method: "post",
                     contentType: 'application/json; chartset=utf-8',
                     data: JSON.stringify(nuevaFacturaCompraDto)

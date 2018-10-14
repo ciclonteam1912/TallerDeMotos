@@ -40,7 +40,7 @@
                         id: "Id",                        
                         fields: {
                             Id: { editable: false },
-                            OrdenCompraNumero: {
+                            Id: {
                                 editable: false
                             },
                             FechaDeEmision: {
@@ -93,8 +93,8 @@
                         }
                     },
                     {
-                        field: "OrdenCompraNumero",
-                        title: "Nro. Orden de Compra",
+                        field: "Id",
+                        title: "Nro. Orden",
                         width: "90px",
                         attributes: {
                             style: "text-align: right"
@@ -133,6 +133,17 @@
                         title: "Estado",
                         width: "110px",
                         template: "#=Estado.Descripcion#"
+                    },
+                    {
+                        template: "<a href='/OrdenCompra/OrdenCompraReport?ordenNro=  #: Id #' target='_blank' class=' btn btn-primary'><i class='fa fa-print'></i></a>",
+                        field: "Id",
+                        title: "&nbsp;",
+                        filterable: false,
+                        sortable: false,
+                        width: 100,
+                        attributes: {
+                            style: "text-align: center"
+                        }
                     }
                 ],
                 dataBound: dataBound

@@ -51,7 +51,6 @@ namespace TallerDeMotos.Controllers.APIs
 
                 var ordenCompraDto = new OrdenCompraDto
                 {
-                    OrdenCompraNumero = nuevaOrdenCompraDto.OrdenCompra.OrdenCompraNumero,
                     FechaDeEmision = DateTime.Now,
                     FormaPagoId = nuevaOrdenCompraDto.OrdenCompra.FormaPagoId,
                     SubTotal = nuevaOrdenCompraDto.OrdenCompra.SubTotal,
@@ -67,10 +66,10 @@ namespace TallerDeMotos.Controllers.APIs
                 {
                     var ordenCompraDetalleDto = new OrdenCompraDetalleDto
                     {
-
                         ProductoId = detalle.ProductoId,
                         Cantidad = detalle.Cantidad,
-                        Total = detalle.Total
+                        Total = detalle.Total,
+                        PrecioOrden = detalle.PrecioOrden
                     };
 
                     var ordenCompraDetalle = Mapper.Map<OrdenCompraDetalleDto, OrdenCompraDetalle>(ordenCompraDetalleDto);

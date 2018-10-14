@@ -54,7 +54,7 @@
                         field: "OrdenCompra",
                         title: "Orden Nro.",
                         width: "70px",
-                        template: "#=OrdenCompra.OrdenCompraNumero#",
+                        template: "#=OrdenCompra.Id#",
                         attributes: {
                             style: "text-align: right"
                         }
@@ -105,7 +105,6 @@
         });
 
         function detailInit(e) {
-            console.log(e);
             $("<div/>").appendTo(e.detailCell).kendoGrid({
                 dataSource: {
                     transport: {

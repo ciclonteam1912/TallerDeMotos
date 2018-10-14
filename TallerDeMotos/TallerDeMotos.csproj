@@ -920,6 +920,14 @@
     <Compile Include="Migrations\201810072328213_SacarColumnaContactoDeProveedores.Designer.cs">
       <DependentUpon>201810072328213_SacarColumnaContactoDeProveedores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810132041537_SacarColumnaOrdenCompraNumeroEnOrdenCompras.cs" />
+    <Compile Include="Migrations\201810132041537_SacarColumnaOrdenCompraNumeroEnOrdenCompras.Designer.cs">
+      <DependentUpon>201810132041537_SacarColumnaOrdenCompraNumeroEnOrdenCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810142105533_AgregarColumnaPrecioOrdenEnOrdenCompraDetalles.cs" />
+    <Compile Include="Migrations\201810142105533_AgregarColumnaPrecioOrdenEnOrdenCompraDetalles.Designer.cs">
+      <DependentUpon>201810142105533_AgregarColumnaPrecioOrdenEnOrdenCompraDetalles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
@@ -3308,6 +3316,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810072328213_SacarColumnaContactoDeProveedores.resx">
       <DependentUpon>201810072328213_SacarColumnaContactoDeProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810132041537_SacarColumnaOrdenCompraNumeroEnOrdenCompras.resx">
+      <DependentUpon>201810132041537_SacarColumnaOrdenCompraNumeroEnOrdenCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810142105533_AgregarColumnaPrecioOrdenEnOrdenCompraDetalles.resx">
+      <DependentUpon>201810142105533_AgregarColumnaPrecioOrdenEnOrdenCompraDetalles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

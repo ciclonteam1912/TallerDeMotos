@@ -27,8 +27,7 @@ namespace TallerDeMotos.Models
 
             result = entities.OrdenCompras.Select(oc => new OrdenCompraDto
             {
-                Id = oc.Id,
-                OrdenCompraNumero = oc.OrdenCompraNumero,
+                Id = oc.Id,                
                 FechaDeEmision = oc.FechaDeEmision,
                 FormaPagoId = oc.FormaPagoId,
                 ProveedorId = oc.ProveedorId,
@@ -52,8 +51,7 @@ namespace TallerDeMotos.Models
                 var target = One(e => e.Id == ordenCompraDto.Id);
 
                 if (target != null)
-                {
-                    target.OrdenCompraNumero = ordenCompraDto.OrdenCompraNumero;
+                {                    
                     target.FechaDeEmision = DateTime.Now;
                     target.ProveedorId = ordenCompraDto.ProveedorId;
                     target.FormaPagoId = ordenCompraDto.FormaPagoId;
@@ -63,8 +61,7 @@ namespace TallerDeMotos.Models
 
                     var entity = new OrdenCompra();
 
-                    entity.Id = target.Id;
-                    entity.OrdenCompraNumero = target.OrdenCompraNumero;
+                    entity.Id = target.Id;                    
                     entity.FechaDeEmision = target.FechaDeEmision;
                     entity.ProveedorId = target.ProveedorId;
                     entity.FormaPagoId = target.FormaPagoId;

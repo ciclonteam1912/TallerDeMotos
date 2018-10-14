@@ -1,12 +1,11 @@
-﻿using System.Linq;
+﻿using AutoMapper;
+using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Dtos;
 using TallerDeMotos.Models;
-using System.Data.Entity;
-using TallerDeMotos.Models.ModelosDeDominio;
-using AutoMapper;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
-using System;
+using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
 namespace TallerDeMotos.Controllers
@@ -96,8 +95,7 @@ namespace TallerDeMotos.Controllers
 
             if (ordenCompraAAnular == null)
                 return HttpNotFound();
-            
-            ViewBag.NroOrdenCompra = ordenCompraAAnular.OrdenCompraNumero;
+                        
             ViewBag.OrdenCompraId = id;
 
             return View("OrdenCompraAnularFormulario");
@@ -143,21 +141,6 @@ namespace TallerDeMotos.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
-        }
-
-        public JsonResult BuscarMaxCodOrdenNro()
-        {
-            int maxOrdenNro = 0;
-            try
-            {
-                maxOrdenNro = _context.OrdenCompras.Max(oc => oc.OrdenCompraNumero + 1);
-            }
-            catch (InvalidOperationException)
-            {
-                maxOrdenNro = 1;
-            }
-
-            return Json(maxOrdenNro);
-        }
+        }        
     }
 }

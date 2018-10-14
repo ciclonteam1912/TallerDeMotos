@@ -9,24 +9,16 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido" style="display:none">
     <form id="ordenCompraFormulario">
         @Html.Partial("_Producto")
-        <div class="row" id="ordenCabecera">
+        <div class="row" id="ordenCabecera" style="margin-top: 20px">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <p>Orden de Compra</p>
+                        <h3>Orden de Compra</h3>
                     </div>
                 </div>
                 <div class="panel-body">
                     <div class="row" style="display:flex; justify-content:space-between">
-                        <div class="col-lg-2 col-md-2 col-sm-2">
-                            <div class="form-group">
-                                @Html.LabelFor(oc => oc.OrdenCompraNumero)
-                                @Html.TextBoxFor(oc => oc.OrdenCompraNumero, new { @class = "form-control input-sm", @disabled = "disabled" })
-                                @Html.ValidationMessageFor(oc => oc.OrdenCompraNumero)
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
                             @Html.LabelFor(oc => oc.FormaPagoId)                         
                             @(Html.Kendo().DropDownList()
                                 .Name("FormaPagoId")
@@ -42,7 +34,7 @@
                             )
                             @Html.ValidationMessageFor(oc => oc.FormaPagoId)
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
                             @Html.LabelFor(oc => oc.ProveedorId)
                                 @(Html.Kendo().DropDownList()
                                 .Name("ProveedorId")
@@ -65,7 +57,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <p>Detalles</p>
+                        <h4>Detalles</h4>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -102,7 +94,7 @@
                                         <input type="number" id="precio" class="form-control" />
                                     </td>
                                     <td>
-                                        <input type="number" id="cantidad" class="quantity form-control" min="1" max="9999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" />
+                                        <input type="number" id="cantidad" class="quantity form-control" min="1" max="999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" />
                                         <span class="error">Cantidad no válida</span>
                                     </td>
                                     <td>
@@ -142,7 +134,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </form>      
@@ -157,7 +148,6 @@
             $("#contenido").fadeIn(2000);
             $("#menuCompras").addClass('active');
             $('#imprimirOrden').hide();
-            CargarMaxCodOrdenCompra();
 
             var vm = {
                 OrdenCompra: {},
@@ -194,11 +184,6 @@
                     var value = this.value();
 
                     if (value) {
-                        if (value == 2)
-                            $("#cantidad").prop("readonly", true);
-                        else
-                            $("#cantidad").prop("readonly", false);
-
                         productsDataSource.filter({
                             field: "ProductoTipoId",
                             operator: "eq",
@@ -249,14 +234,11 @@
             var wrapper = ddl.wrapper;
 
             wrapper.keypress(function (e) {
-
-                console.log(e.keyCode);
                 ddl.open();
             });
 
             $("#iva").prop("disabled", true);
             $("#productoDesc").prop("disabled", true);
-            $("#precio").prop("disabled", true);
             $("#submit").prop("disabled", true);
 
             $("#add").click(function(event){
@@ -315,18 +297,15 @@
 
                     var oldData = ddl.dataSource.data();
                     var length = oldData.length;
-                    console.log(length);
 
                     // iterate and remove "done" items
                     var item, i;
                     for (i = length - 1; i >= 0; i--) {
 
                         item = oldData[i];
-                        console.log(item);
                         if (item.Id == productoCodigo) {
                             ddl.dataSource.remove(item);
                         }
-
                     }
 
                     $("tbody").on("click", ".eliminar", function () {
@@ -354,12 +333,10 @@
                         
                     });
 
-
                     $("#productosId").data("kendoDropDownList").value("");
                     $("#productoDesc").val("");
                     $("#precio").val("");
                     $("#iva").val("");
-
                     $("#cantidad").val("");
                 }
             });
@@ -373,7 +350,6 @@
                 }
 
                 vm.OrdenCompra = {
-                    OrdenCompraNumero: $("#OrdenCompraNumero").val(),
                     FormaPagoId: $("#FormaPagoId").val(),
                     SubTotal: $("#totalAPagar").val(),
                     ProveedorId: $("#ProveedorId").val()
@@ -389,6 +365,7 @@
 
                     vm.OrdenCompraDetalles.push({
                         ProductoId: lines[0],
+                        PrecioOrden: lines[1],
                         Cantidad: lines[2],
                         Total: lines[4]
                     });
@@ -404,28 +381,27 @@
                     if (ordenCompra.Success){
                         toastr.success(ordenCompra.Message);
                         $("#submit").prop("disabled", true);
-                        $("#imprimirOrden").remove();
-                        $("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompraReport?ordenNro=' + $("#OrdenCompraNumero").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>');
+                        //$("#imprimirOrden").remove();
+                        //$("#footerOrden").append('<a id="imprimirOrden" href="OrdenCompraReport?ordenNro=' + $("#OrdenCompraNumero").val() + '" target="_blank" class="btn btn-primary">Imprimir Orden</a>');
 
-                        $("#imprimirOrden").click(function () {
-                            CargarMaxCodOrdenCompra();
-                            $("#FormaPagoId").data("kendoDropDownList").value("");
-                            $("#ProveedorId").data("kendoDropDownList").value("");
-                            $("#ordenCompraDetalle tbody").empty();
+                        //$("#imprimirOrden").click(function () {
+                        //    $("#FormaPagoId").data("kendoDropDownList").value("");
+                        //    $("#ProveedorId").data("kendoDropDownList").value("");
+                        //    $("#ordenCompraDetalle tbody").empty();
 
-                            $("#totalAPagar").val("");
-                            subTotal = 0;
+                        //    $("#totalAPagar").val("");
+                        //    subTotal = 0;
 
-                            vm = {
-                                OrdenCompra: {},
-                                OrdenCompraDetalles: []
-                            }
+                        //    vm = {
+                        //        OrdenCompra: {},
+                        //        OrdenCompraDetalles: []
+                        //    }
 
-                            //Para recargar el dropdownlist
-                            ddl.dataSource.read();
-                            $("#imprimirOrden").remove();
-                            $("#orderItems").fadeOut(2000);
-                        });                        
+                        //    //Para recargar el dropdownlist
+                        //    ddl.dataSource.read();
+                        //    $("#imprimirOrden").remove();
+                        //    $("#orderItems").fadeOut(2000);
+                        //});                        
                     }
                     else {
                         vm = {
@@ -457,26 +433,6 @@
         function maxLengthCheck(object) {
             if (object.value.length > object.max.length)
                 object.value = object.value.slice(0, object.max.length);
-        }
-
-        function CargarMaxCodOrdenCompra()
-        {
-            var ordenNro = document.getElementById('OrdenCompraNumero');
-            $.ajax({
-                url: "@Url.Action("BuscarMaxCodOrdenNro", "OrdenCompra")",
-                dataType: "json",
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                ordenNro.value = data;
-            },
-            error: function (request, status, error) {
-
-            },
-            failure: function (response) {
-                alert("arriva al failure");
-            }
-        });
         }
 
         $.validator.setDefaults({

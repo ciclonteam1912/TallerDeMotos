@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Infrastructure.Annotations;
-using System.Data.Entity.ModelConfiguration;
+﻿using System.Data.Entity.ModelConfiguration;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ConfiguracionDeEntidades
@@ -13,9 +11,6 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
 
             Property(oc => oc.Id)
                 .HasColumnName("Codigo");
-
-            Property(oc => oc.OrdenCompraNumero)
-                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_OrdenCompraNumero", 1) { IsUnique = true }));
 
             Property(oc => oc.FormaPagoId)
                 .HasColumnName("FormaPagoCodigo");

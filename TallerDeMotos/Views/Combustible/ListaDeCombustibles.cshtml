@@ -22,7 +22,7 @@
                 dataSource: {
                     transport: {
                         read: {
-                            url: "/api/combustibles",
+                            url: "/api/combustibles/ObtenerCombustibles/",
                             dataType: "json"
                         }
                     },
@@ -85,7 +85,7 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/combustibles/" + id,
+                                url: "/api/combustibles/EliminarCombustibles/" + id,
                                 method: "DELETE"
                             })
                             .done(function (combustible) {

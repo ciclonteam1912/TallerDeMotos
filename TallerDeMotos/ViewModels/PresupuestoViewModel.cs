@@ -7,6 +7,9 @@ namespace TallerDeMotos.ViewModels
     {
         public DateTime FechaDeEmision { get; set; }
 
+        [Display(Name = "Validez hasta")]
+        public string Fecha { get; set; }
+
         [Display(Name = "Clientes")]
         public int ClienteId { get; set; }
 

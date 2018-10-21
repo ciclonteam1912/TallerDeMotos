@@ -44,7 +44,8 @@ namespace TallerDeMotos.Controllers.APIs
 
             var presupuestoDto = new PresupuestoDto
             {
-                FechaDeEmision = nuevoPresupuestoDto.Presupuesto.FechaDeEmision,
+                FechaDeValidez = Convert.ToDateTime(nuevoPresupuestoDto.Presupuesto.Fecha),
+                FechaDeEmision = DateTime.Now,
                 VehiculoId = nuevoPresupuestoDto.Presupuesto.VehiculoId,
                 TotalExenta = nuevoPresupuestoDto.Presupuesto.TotalExenta,
                 TotalIvaCincoPorCiento = nuevoPresupuestoDto.Presupuesto.TotalIvaCincoPorCiento,

@@ -6,6 +6,8 @@ namespace TallerDeMotos.Dtos
     {
         public int Id { get; set; }
         public DateTime FechaDeEmision { get; set; }
+        public DateTime FechaDeValidez { get; set; }        
+        public string Fecha { get; set; }
         public VehiculoDto Vehiculo { get; set; }
         public int VehiculoId { get; set; }
         public long TotalExenta { get; set; }

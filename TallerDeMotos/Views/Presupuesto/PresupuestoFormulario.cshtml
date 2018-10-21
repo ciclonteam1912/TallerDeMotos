@@ -66,8 +66,8 @@
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
-                    <label style="display:block">Fecha de Emisión:</label>
-                    <input id="fechaDeEmision" class="form-control" onkeydown="return false;" />
+                    @Html.LabelFor(p => p.Fecha)
+                    @Html.TextBoxFor(p => p.Fecha, new { @class = "form-control", onkeydown = "return false;", style = "width:84%;" })
                 </div>
             </div>
         </div>
@@ -312,9 +312,9 @@
 
             var ddl = $("#productosId").data("kendoDropDownList");
 
-            $("#fechaDeEmision").kendoDateTimePicker({
+            $("#Fecha").kendoDateTimePicker({
                 culture: "es-ES",
-                format: "MM/dd/yyyy HH:mm",
+                format: "dd/MM/yyyy HH:mm",
                 animation: {
                     close: {
                         effects: "fadeOut zoom:out",
@@ -487,7 +487,7 @@
                 vm.Presupuesto = {
                     VehiculoId: $("#VehiculoId").val(),
                     SubTotal: $("#totalAPagar").val(),
-                    FechaDeEmision: $("#fechaDeEmision").val(),
+                    Fecha: $("#Fecha").val(),
                     TotalExenta: $("#totalExentas").val(),
                     TotalIvaCincoPorCiento: $("#totalIvaCinco").val(),
                     TotalIvaDiezPorCiento: $("#totalIvaDiez").val()

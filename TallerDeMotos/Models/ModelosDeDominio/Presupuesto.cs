@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
 {
@@ -15,6 +16,10 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public long TotalIvaDiezPorCiento { get; set; }
         public long SubTotal { get; set; }
         public DateTime FechaDeEmision { get; set; }
+        public DateTime FechaDeValidez { get; set; }
+
+        [NotMapped]
+        public string Fecha { get; set; }
         public ApplicationUser Usuario { get; set; }
         public string UsuarioId { get; set; }
         public FacturaVenta FacturaVenta { get; set; }

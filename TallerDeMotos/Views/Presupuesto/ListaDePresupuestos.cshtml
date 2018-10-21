@@ -34,33 +34,7 @@
                 },
                 pageSize: 6,
                 serverPaging: false,
-                serverSorting: false,
-                schema: {
-                    model: {
-                        id: "Id",
-                        fields: {
-                            Id: { editable: false },
-                            Cliente: {
-                                editable: false
-                            },
-                            Vehiculo: {
-                                nullable: false,
-                                editable: false
-                            },
-                            FechaDeEmision: {
-                                template: "#= kendo.toString(kendo.parseDate(FechaDeEmision), 'MM/dd/yyyy HH:mm tt')#",
-                                editable: false
-                            },                            
-                            SubTotal: {
-                                editable: false
-                            },
-                            Estado: {
-                                nullable: false,
-                                editable: false
-                            }
-                        }
-                    }
-                }
+                serverSorting: false               
             });
 
             $("#grid").kendoGrid({
@@ -101,21 +75,27 @@
                      {
                          field: "Vehiculo",
                          title: "Vehículo",
-                         width: "170px",
+                         width: "150px",
                          template: "#= NombreVehiculo #"
                      },
                     {
                         field: "FechaDeEmision",
                         title: "Fecha de Emisión",
-                        template: "#= kendo.toString(kendo.parseDate(FechaDeEmision), 'MM/dd/yyyy HH:mm tt')#",
+                        template: "#= kendo.toString(kendo.parseDate(FechaDeEmision), 'dd/MM/yyyy HH:mm tt')#",
                         width: "110px"
-                    },                   
+                    },
+                    {
+                        field: "FechaDeValidez",
+                        title: "Validez hasta",
+                        template: "#= kendo.toString(kendo.parseDate(FechaDeValidez), 'dd/MM/yyyy')#",
+                        width: "100px"
+                    },
                     {
                         field: "SubTotal",
                         title: "Sub Total",
                         culture: "es-PY",
                         format: "{0:c0}",
-                        width: "110px",
+                        width: "90px",
                         attributes: {
                             style: "text-align: right"
                         }
@@ -123,11 +103,11 @@
                     {
                         field: "Estado",
                         title: "Estado",
-                        width: "110px",
+                        width: "90px",
                         template: "#=Estado.Descripcion#"
                     },
                     {
-                        template: "<a href='/Presupuesto/PresupuestoReport?id=  #: Id #' target='_blank' class=' btn btn-primary'><i class='fa fa-print'></i></a>",
+                        template: "<a href='/Presupuesto/PresupuestoReport?id=  #: Id #' target='_blank' class=' btn btn-primary' title='Imprimir Presupuesto'><i class='fa fa-print'></i></a>",
                         field: "Id",
                         title: "&nbsp;",
                         filterable: false,

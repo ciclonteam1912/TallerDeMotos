@@ -60,8 +60,8 @@
                     }, {
                         field: "FechaFacturaVenta",
                         title: "Fecha de Factura",
-                        template: "#= kendo.toString(kendo.parseDate(FechaFacturaVenta), 'MM/dd/yyyy HH:mm tt')#",
-                        width: "70px",
+                        template: "#= kendo.toString(kendo.parseDate(FechaFacturaVenta), 'dd/MM/yyyy HH:mm tt')#",
+                        width: "100px",
                         attributes: {
                             style: "text-align: right"
                         }
@@ -70,7 +70,7 @@
                         field: "Presupuesto",
                         title: "Presupuesto Nro.",
                         width: "70px",
-                        template: "#=Presupuesto.Id#",
+                        template: "#= Presupuesto == null ? '' : Presupuesto.Id#",
                         attributes: {
                             style: "text-align: right"
                         }
@@ -85,7 +85,7 @@
                         }
                     },
                     {
-                        template: "<a href='/FacturaVenta/FacturaVentaReport?nroFactura=  #: NumeroFactura #' target='_blank' class=' btn btn-primary'><i class='fa fa-print'></i></a>",
+                        template: "<a href='/FacturaVenta/FacturaVentaReport?nroFactura=  #: NumeroFactura #' target='_blank' class='btn btn-primary' title='Imprimir Factura de Venta'><i class='fa fa-print'></i></a>",
                         field: "NumeroFactura",
                         title: "&nbsp;",
                         filterable: false,
@@ -124,7 +124,7 @@
                     { field: "ProductoId", title: "Producto Cod.", width: "110px", attributes: { style: "text-align: right" } },
                     { field: "Producto.Descripcion", title: "Descripción", width: "150px" },
                     { field: "Cantidad", title: "Cantidad", width: "90px", attributes: { style: "text-align: right" } },
-                    { field: "Producto.PrecioCosto", title: "Precio Unitario", width: "110px", format: "{0:c0}", attributes: { style: "text-align: right" } },
+                    { field: "Precio", title: "Precio Unitario", width: "110px", format: "{0:c0}", attributes: { style: "text-align: right" } },
                     { field: "Producto.Iva", title: "Iva", width: "60px", attributes: { style: "text-align: right" } },
                     { field: "Total", title: "Total", width: "100px", format: "{0:c0}", attributes: { style: "text-align: right" } }
                 ]

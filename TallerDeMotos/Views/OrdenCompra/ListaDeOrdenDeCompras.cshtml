@@ -103,7 +103,7 @@
                     {
                         field: "FechaDeEmision",
                         title: "Fecha de Emisión",
-                        template: "#= kendo.toString(kendo.parseDate(FechaDeEmision), 'MM/dd/yyyy HH:mm tt')#",
+                        template: "#= kendo.toString(kendo.parseDate(FechaDeEmision), 'dd/MM/yyyy HH:mm tt')#",
                         width: "110px"
                     },
                     {
@@ -135,7 +135,7 @@
                         template: "#=Estado.Descripcion#"
                     },
                     {
-                        template: "<a href='/OrdenCompra/OrdenCompraReport?ordenNro=  #: Id #' target='_blank' class=' btn btn-primary'><i class='fa fa-print'></i></a>",
+                        template: "<a href='/OrdenCompra/OrdenCompraReport?ordenNro=  #: Id #' target='_blank' class='btn btn-primary' title='Imprimir Orden de Compra'><i class='fa fa-print'></i></a>",
                         field: "Id",
                         title: "&nbsp;",
                         filterable: false,

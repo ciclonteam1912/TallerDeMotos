@@ -18,6 +18,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public ApplicationUser Usuario { get; set; }
         public string UsuarioId { get; set; }
         public FacturaVenta FacturaVenta { get; set; }
+        public string NombreVehiculo
+        {
+            get
+            {
+                return Vehiculo == null ? "" : Vehiculo.Modelo.Marca.Nombre + "-" + Vehiculo.Modelo.Nombre + "-" + (Vehiculo.Matricula == null ? "N/A" : Vehiculo.Matricula);
+            }
+        }
         public ICollection<PresupuestoDetalle> PresupuestoDetalles { get; set; }
 
         public Presupuesto()

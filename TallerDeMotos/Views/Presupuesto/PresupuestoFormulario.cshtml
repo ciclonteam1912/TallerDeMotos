@@ -262,6 +262,8 @@
                     if (value) {
                         if (value == 2)
                             $("#productoCantidad").prop("readonly", true);
+                        else
+                            $("#productoCantidad").prop("readonly", false);
 
                         productsDataSource.filter({
                             field: "ProductoTipoId",

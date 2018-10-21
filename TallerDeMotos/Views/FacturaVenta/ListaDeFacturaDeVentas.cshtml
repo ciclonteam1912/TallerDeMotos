@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "Lista de Factura de Ventas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_MenuVertical")
+
+<div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
+    <h2>Lista de Factura de Ventas</h2>
+
+    <p><a href="FacturaVenta/FacturaVentaFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Factura de Venta</span></a></p>
+
+    <div id="example">
+        <div id="grid"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        kendo.culture().numberFormat.currency.symbol = "₲";
+        $(document).ready(function () {
+            $("#menuVentas").addClass('active');
+
+            var dataSource = new kendo.data.DataSource({
+                autoSync: false,
+                transport: {
+                    read: {
+                        url: "/api/facturaVentas/ObtenerFacturaVentas",
+                        dataType: "json"
+                    }
+                },
+                pageSize: 6,
+                serverPaging: false,
+                serverSorting: false,
+                schema: {
+                    model: {
+                        id: "Id"
+                    }
+                }
+            });
+
+            $("#grid").kendoGrid({
+                dataSource: dataSource,
+                height: 550,
+                sortable: true,
+                filterable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                detailInit: detailInit,
+                columns: [
+                    {
+                        field: "NumeroFactura",
+                        title: "Nro. de Factura",
+                        width: "70px",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    }, {
+                        field: "FechaFacturaVenta",
+                        title: "Fecha de Factura",
+                        template: "#= kendo.toString(kendo.parseDate(FechaFacturaVenta), 'MM/dd/yyyy HH:mm tt')#",
+                        width: "70px",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    },
+                    {
+                        field: "Presupuesto",
+                        title: "Presupuesto Nro.",
+                        width: "70px",
+                        template: "#=Presupuesto.Id#",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    }, {
+                        field: "SubTotal",
+                        title: "Sub Total",
+                        culture: "es-PY",
+                        format: "{0:c0}",
+                        width: "70px",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    },
+                    {
+                        template: "<a href='/FacturaVenta/FacturaVentaReport?nroFactura=  #: NumeroFactura #' target='_blank' class=' btn btn-primary'><i class='fa fa-print'></i></a>",
+                        field: "NumeroFactura",
+                        title: "&nbsp;",
+                        filterable: false,
+                        sortable: false,
+                        width: 100,
+                        attributes: {
+                            style: "text-align: center"
+                        }
+                    }
+                ]
+            });
+        });
+
+        function detailInit(e) {
+            $("<div/>").appendTo(e.detailCell).kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/api/facturaVentaDetalles/ObtenerFacturaDeVentaDetalles",
+                            dataType: "json"
+                        }
+                    },
+                    serverPaging: false,
+                    serverSorting: false,
+                    serverFiltering: false,
+                    pageSize: 10,
+                    filter: { field: "FacturaVentaId", operator: "eq", value: e.data.Id }
+                },
+                scrollable: true,
+                sortable: true,
+                pageable: true,
+                noRecords: {
+                    template: "<p>No existe registro de factura de ventas.</p>"
+                },
+                columns: [
+                    { field: "ProductoId", title: "Producto Cod.", width: "110px", attributes: { style: "text-align: right" } },
+                    { field: "Producto.Descripcion", title: "Descripción", width: "150px" },
+                    { field: "Cantidad", title: "Cantidad", width: "90px", attributes: { style: "text-align: right" } },
+                    { field: "Producto.PrecioCosto", title: "Precio Unitario", width: "110px", format: "{0:c0}", attributes: { style: "text-align: right" } },
+                    { field: "Producto.Iva", title: "Iva", width: "60px", attributes: { style: "text-align: right" } },
+                    { field: "Total", title: "Total", width: "100px", format: "{0:c0}", attributes: { style: "text-align: right" } }
+                ]
+            });
+        }
+    </script>
+}

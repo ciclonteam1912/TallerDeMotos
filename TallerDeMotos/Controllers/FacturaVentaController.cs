@@ -25,7 +25,7 @@ namespace TallerDeMotos.Controllers
         // GET: FacturaCompra
         public ActionResult Index()
         {
-            return View("FacturaVentaFormulario");
+            return View("ListaDeFacturaDeVentas");
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using TallerDeMotos.Dtos;
@@ -32,6 +33,19 @@ namespace TallerDeMotos.Controllers.APIs
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
+        }
+
+        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HttpGet]
+        public IHttpActionResult ObtenerFacturaVentas()
+        {
+            var facturaVentas = _context.FacturaVentas
+                .Include(fc => fc.Presupuesto)
+                .Include(fc => fc.Usuario)
+                .ToList()
+                .OrderByDescending(fc => fc.FechaFacturaVenta);
+
+            return Ok(facturaVentas);
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]

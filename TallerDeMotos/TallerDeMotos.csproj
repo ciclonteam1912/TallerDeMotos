@@ -272,6 +272,7 @@
     <Compile Include="Controllers\APIs\CajasController.cs" />
     <Compile Include="Controllers\APIs\CargosController.cs" />
     <Compile Include="Controllers\APIs\ContactosController.cs" />
+    <Compile Include="Controllers\APIs\FacturaVentaDetallesController.cs" />
     <Compile Include="Controllers\APIs\TipoMotoresController.cs" />
     <Compile Include="Controllers\APIs\CilindradasController.cs" />
     <Compile Include="Controllers\APIs\CiudadesController.cs" />
@@ -2887,6 +2888,7 @@
     <Content Include="Views\Inicio\Caja.cshtml" />
     <Content Include="Views\Shared\_Cargo.cshtml" />
     <Content Include="Views\Account\EditarUsuario.cshtml" />
+    <Content Include="Views\FacturaVenta\ListaDeFacturaDeVentas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

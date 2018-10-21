@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Http;
 using TallerDeMotos.Models;
+using TallerDeMotos.Models.AtributosDeAutorizacion;
 
 namespace TallerDeMotos.Controllers.APIs
 {

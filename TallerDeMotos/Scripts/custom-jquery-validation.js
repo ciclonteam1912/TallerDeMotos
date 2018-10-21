@@ -69,4 +69,12 @@
           options.messages['requiredif'] = options.message;
       }
     );
+
+    $.validator.unobtrusive.adapters.addSingleVal("mayoracero", "valor");
+    jQuery.validator.addMethod("mayoracero", function (value, element, params) {
+        if (value > 0)
+            return true;
+        else
+            return false;
+    });
 }(jQuery));

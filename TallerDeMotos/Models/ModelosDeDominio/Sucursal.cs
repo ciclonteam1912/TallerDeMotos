@@ -20,6 +20,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public Ciudad Ciudad { get; set; }
         public int CiudadId { get; set; }
 
+        public string NombreCompleto {
+            get
+            {
+                return Ciudad.Nombre + " - " + Direccion;
+            }
+        }
+
         public ICollection<Talonario> Talonarios { get; set; }
 
         public Sucursal()

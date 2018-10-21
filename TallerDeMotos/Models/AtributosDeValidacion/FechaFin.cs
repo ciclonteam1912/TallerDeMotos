@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.Models.AtributosDeValidacion
@@ -9,7 +10,7 @@ namespace TallerDeMotos.Models.AtributosDeValidacion
         {
             var talonario = (Talonario)validationContext.ObjectInstance;
 
-            if (talonario.FechaFinVigencia > talonario.FechaInicioVigencia)
+            if (Convert.ToDateTime(talonario.FechaFin) > Convert.ToDateTime(talonario.FechaIni))
                 return ValidationResult.Success;
             else
             {

@@ -390,5 +390,51 @@ namespace TallerDeMotos.Controllers
             return status;
         }
         #endregion
+
+        #region Remote Validation en Proveedores
+        // GET: RemoteValidation
+        [HttpPost]
+        public JsonResult TimbradoExistente(int Timbrado, string Id)
+        {
+            return Json(TimbradoDisponible(Timbrado, Id));
+        }
+
+        public bool TimbradoDisponible(int Timbrado, string Id)
+        {
+            int id = int.Parse(Id);
+            bool status;
+
+            var talonarios = _context.Talonarios.ToList();
+
+            if (id != 0)
+            {
+                var resultado = (from u in talonarios
+                                 where u.Timbrado == Timbrado && u.Id != id
+                                 select new { Timbrado })
+                                 .FirstOrDefault();
+
+                if (resultado != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            else
+            {
+                var valor = (from u in talonarios
+                             where u.Timbrado == Timbrado
+                             select new
+                             {
+                                 Timbrado
+                             })
+                             .FirstOrDefault();
+
+                if (valor != null)
+                    status = false;
+                else
+                    status = true;
+            }
+            return status;
+        }
+        #endregion
     }
 }

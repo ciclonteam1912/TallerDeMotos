@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
@@ -15,18 +16,27 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Fecha de Inicio de Vigencia")]
         public DateTime FechaInicioVigencia { get; set; }
 
-        [FechaFinMayorFechaInicio]
+        [Display(Name = "Fecha de Inicio de Vigencia")]
+        [NotMapped]
+        public string FechaIni { get; set; }
+        
         [Display(Name = "Fecha Fin de Vigencia")]
         public DateTime FechaFinVigencia { get; set; }
 
+        [FechaFinMayorFechaInicio]
+        [Display(Name = "Fecha Fin de Vigencia")]
+        [NotMapped]
+        public string FechaFin { get; set; }
+
         [Display(Name = "Número de Factura Inicial")]
+        [MayorACero]
         public int NumeroFacturaInicial { get; set; }
 
         [FacturaFinalMayorAFacturaInicial]
+        [MayorACero]
         [Display(Name = "Número de Factura Final")]
         public int NumeroFacturaFinal { get; set; }
 
-        [FacturaActual]
         [Display(Name = "Número de Factura Actual")]
         public int NumeroFacturaActual { get; set; }
 

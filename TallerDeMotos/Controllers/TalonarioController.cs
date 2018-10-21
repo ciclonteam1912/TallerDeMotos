@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Models;
@@ -52,19 +53,26 @@ namespace TallerDeMotos.Controllers
             {
                 var viewModel = new TalonarioViewModel(talonario)
                 {
-                    Cajas = _context.Cajas.ToList(),
-                    Sucursales = _context.Sucursales.ToList()
+                    Cajas = _context.Cajas.ToList()
                 };
 
                 return View("TalonarioFormulario", viewModel);
             }
 
             if (talonario.Id == 0)
+            {
+                talonario.FechaInicioVigencia = Convert.ToDateTime(talonario.FechaIni);
+                talonario.FechaFinVigencia = Convert.ToDateTime(talonario.FechaFin);
+                talonario.NumeroFacturaActual = talonario.NumeroFacturaInicial;
                 _context.Talonarios.Add(talonario);
+            }
             else
             {
                 var talonarioBD = _context.Talonarios.Single(t => t.Id == talonario.Id);
                 Mapper.Map<Talonario, Talonario>(talonario, talonarioBD);
+                talonarioBD.NumeroFacturaActual = talonario.NumeroFacturaInicial;
+                talonarioBD.FechaInicioVigencia = Convert.ToDateTime(talonario.FechaIni);
+                talonarioBD.FechaFinVigencia = Convert.ToDateTime(talonario.FechaFin);
             }
 
             _context.SaveChanges();
@@ -86,6 +94,8 @@ namespace TallerDeMotos.Controllers
                 Sucursales = _context.Sucursales.ToList()
             };
 
+            viewModel.FechaIni = viewModel.FechaInicioVigencia.ToString();
+            viewModel.FechaFin = viewModel.FechaFinVigencia.ToString();
             return View("TalonarioFormulario", viewModel);
         }
     }

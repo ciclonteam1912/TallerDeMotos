@@ -930,6 +930,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
+    <Compile Include="Models\AtributosDeValidacion\MayorACero.cs" />
     <Compile Include="Models\AtributosDeValidacion\MontoTotalIgualAMontoFactura.cs" />
     <Compile Include="Models\AtributosDeValidacion\ExistenciaMinMenorExistenciaActual.cs" />
     <Compile Include="Models\AtributosDeValidacion\FacturaActual.cs" />

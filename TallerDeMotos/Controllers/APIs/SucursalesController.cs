@@ -32,7 +32,7 @@ namespace TallerDeMotos.Controllers.APIs
             var sucursales = _context.Sucursales
                 .Include(s => s.Empresa)
                 .Include(s => s.Ciudad)
-                .ToList().Select(Mapper.Map<Sucursal, SucursalDto>);
+                .ToList();
 
             return Ok(sucursales);
         }

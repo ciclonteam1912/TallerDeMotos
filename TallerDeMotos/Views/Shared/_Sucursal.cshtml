@@ -22,7 +22,7 @@
         autoSync: false,
         transport: {
             read: {
-                url: "/api/Sucursales",
+                url: "/api/Sucursales/ObtenerSucursales",
                 dataType: "json"
             },
             update: {
@@ -84,7 +84,7 @@
                 dataValueField: "Id",
                 dataSource: {
                     transport: {
-                        read: "/api/empresas"
+                        read: "/api/empresas/ObtenerEmpresas"
                     }
                 }
             });
@@ -99,7 +99,7 @@
                 dataValueField: "Id",
                 dataSource: {
                     transport: {
-                        read: "/api/ciudades"
+                        read: "/api/ciudades/ObtenerCiudades"
                     }
                 }
             });

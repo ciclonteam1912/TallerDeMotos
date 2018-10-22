@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public FacturaVenta FacturaVenta { get; set; }
         public int FacturaVentaId { get; set; }
-        public Cliente Cliente { get; set; }
-        public int ClienteId { get; set; }
+        public Vehiculo Vehiculo { get; set; }
+        public int VehiculoId { get; set; }
     }
 }

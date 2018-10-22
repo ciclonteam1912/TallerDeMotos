@@ -70,7 +70,6 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         }
 
         public ICollection<Vehiculo> Vehiculos { get; set; }
-        public ICollection<FacturaVentaCliente> FacturaVentaClientes { get; set; }
 
         public Cliente()
         {

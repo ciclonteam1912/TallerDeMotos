@@ -15,16 +15,15 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(fvc => fvc.FacturaVentaId)
                 .HasColumnName("FacturaVentaCodigo");
 
-
-            Property(fvc => fvc.ClienteId)
-                .HasColumnName("ClienteCodigo");
+            Property(fvc => fvc.VehiculoId)
+                .HasColumnName("VehiculoCodigo");
 
             HasRequired(fvc => fvc.FacturaVenta)
                 .WithMany(fv => fv.FacturaVentaClientes)
                 .WillCascadeOnDelete(false);
 
-            HasRequired(fvc => fvc.Cliente)
-                .WithMany(c => c.FacturaVentaClientes)
+            HasRequired(fvc => fvc.Vehiculo)
+                .WithMany(v => v.FacturaVentaClientes)
                 .WillCascadeOnDelete(false);
         }
     }

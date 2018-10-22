@@ -96,7 +96,7 @@ namespace TallerDeMotos.Controllers.APIs
                             {
                                 var facturaVentaCliente = new FacturaVentaCliente
                                 {
-                                    ClienteId = nuevaFacturaVentaDto.ClienteId ?? default(int)
+                                    VehiculoId = nuevaFacturaVentaDto.VehiculoId ?? default(int)
                                 };
                                 _context.FacturaVentaClientes.Add(facturaVentaCliente);
                             }

@@ -18,6 +18,11 @@ namespace TallerDeMotos.Dtos
         [RequiredIf("SinPresupuesto", Comparison.IsEqualTo, true)]
         [Display(Name = "Clientes")]
         public int? ClienteId { get; set; }
+
+        [RequiredIf("SinPresupuesto", Comparison.IsEqualTo, true)]
+        [Display(Name = "Vehículos")]
+        public int? VehiculoId { get; set; }
+
         public string Cliente { get; set; }
         [Display(Name = "Vehículo")]
         public string Vehiculo { get; set; }

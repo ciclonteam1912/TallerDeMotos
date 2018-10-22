@@ -59,10 +59,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         }
 
         public ICollection<Presupuesto> Presupuestos { get; set; }
+        public ICollection<FacturaVentaCliente> FacturaVentaClientes { get; set; }
 
         public Vehiculo()
         {
             Presupuestos = new HashSet<Presupuesto>();
+            FacturaVentaClientes = new HashSet<FacturaVentaCliente>();
         }
     }
 }

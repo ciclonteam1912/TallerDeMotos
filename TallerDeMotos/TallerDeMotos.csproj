@@ -933,6 +933,14 @@
     <Compile Include="Migrations\201810212226257_AgregarColumnaFechaDeValidezEnPresupuestos.Designer.cs">
       <DependentUpon>201810212226257_AgregarColumnaFechaDeValidezEnPresupuestos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810220004227_EliminarColumnaClienteCodigoDeFacturaVentaClientes.cs" />
+    <Compile Include="Migrations\201810220004227_EliminarColumnaClienteCodigoDeFacturaVentaClientes.Designer.cs">
+      <DependentUpon>201810220004227_EliminarColumnaClienteCodigoDeFacturaVentaClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810220010334_AgregarColumnaVehiculoCodigoEnFacturaVentaClientes.cs" />
+    <Compile Include="Migrations\201810220010334_AgregarColumnaVehiculoCodigoEnFacturaVentaClientes.Designer.cs">
+      <DependentUpon>201810220010334_AgregarColumnaVehiculoCodigoEnFacturaVentaClientes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MayorACero.cs" />
@@ -3332,6 +3340,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810212226257_AgregarColumnaFechaDeValidezEnPresupuestos.resx">
       <DependentUpon>201810212226257_AgregarColumnaFechaDeValidezEnPresupuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810220004227_EliminarColumnaClienteCodigoDeFacturaVentaClientes.resx">
+      <DependentUpon>201810220004227_EliminarColumnaClienteCodigoDeFacturaVentaClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810220010334_AgregarColumnaVehiculoCodigoEnFacturaVentaClientes.resx">
+      <DependentUpon>201810220010334_AgregarColumnaVehiculoCodigoEnFacturaVentaClientes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

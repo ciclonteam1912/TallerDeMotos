@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace TallerDeMotos.ViewModels
 {
@@ -7,6 +8,7 @@ namespace TallerDeMotos.ViewModels
     {
         public DateTime FechaDeEmision { get; set; }
 
+        [Remote("ValidarFechaDeValidez", "RemoteValidation", HttpMethod = "POST", ErrorMessage = "La fecha de validez debe ser mayor a la fecha actual.")]
         [Display(Name = "Validez hasta")]
         public string Fecha { get; set; }
 

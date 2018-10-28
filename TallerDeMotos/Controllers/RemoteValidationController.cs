@@ -436,5 +436,26 @@ namespace TallerDeMotos.Controllers
             return status;
         }
         #endregion
+
+        #region Remote Validation en Presupuestos
+        // GET: RemoteValidation
+        [HttpPost]
+        public JsonResult ValidarFechaDeValidez(string Fecha)
+        {
+            return Json(FechaValida(Fecha));
+        }
+
+        public bool FechaValida(string FechaDeValidez)
+        {
+            bool status;
+
+            if (Convert.ToDateTime(FechaDeValidez) <= DateTime.Now)
+                status = false;
+            else
+                status = true;
+
+            return status;
+        }
+        #endregion
     }
 }

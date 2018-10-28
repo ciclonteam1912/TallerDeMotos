@@ -68,6 +68,7 @@
                 <div class="form-group">
                     @Html.LabelFor(p => p.Fecha)
                     @Html.TextBoxFor(p => p.Fecha, new { @class = "form-control", onkeydown = "return false;", style = "width:84%;" })
+                    <div>@Html.ValidationMessageFor(m => m.Fecha)</div>
                 </div>
             </div>
         </div>
@@ -512,6 +513,9 @@
                     });
 
                 });
+
+
+
 
                 $.ajax({
                     url: "/api/presupuestos/CrearPresupuesto",

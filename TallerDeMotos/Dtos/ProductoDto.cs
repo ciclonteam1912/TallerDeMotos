@@ -12,6 +12,7 @@
         public int? ExistenciaActual { get; set; }
         public int? ExistenciaMinima { get; set; }
         public byte? TipoImpuesto { get; set; }
+        public ProductoTipoDto ProductoTipo { get; set; }
         public byte ProductoTipoId { get; set; }
     }
 }

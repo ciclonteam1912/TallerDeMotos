@@ -356,6 +356,7 @@
     <Compile Include="Dtos\PresupuestoDetalleDto.cs" />
     <Compile Include="Dtos\PresupuestoDto.cs" />
     <Compile Include="Dtos\ProductoDto.cs" />
+    <Compile Include="Dtos\ProductoTipoDto.cs" />
     <Compile Include="Dtos\ProveedorContactoDto.cs" />
     <Compile Include="Dtos\ProveedorDto.cs" />
     <Compile Include="Dtos\SucursalDto.cs" />
@@ -1031,6 +1032,7 @@
     <Compile Include="ViewModels\ModeloViewModel.cs" />
     <Compile Include="ViewModels\MovimientoCajaViewModel.cs" />
     <Compile Include="ViewModels\OrdenCompraViewModel.cs" />
+    <Compile Include="ViewModels\PresupuestoDetalleViewModel.cs" />
     <Compile Include="ViewModels\PresupuestoViewModel.cs" />
     <Compile Include="ViewModels\ProductoViewModel.cs" />
     <Compile Include="ViewModels\ProveedorViewModel.cs" />
@@ -2901,6 +2903,8 @@
     <Content Include="Views\Shared\_Cargo.cshtml" />
     <Content Include="Views\Account\EditarUsuario.cshtml" />
     <Content Include="Views\FacturaVenta\ListaDeFacturaDeVentas.cshtml" />
+    <Content Include="Views\Presupuesto\EditarPresupuesto.cshtml" />
+    <Content Include="Views\Presupuesto\EditorTemplates\_PresupuestoDetallesEditarPopup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

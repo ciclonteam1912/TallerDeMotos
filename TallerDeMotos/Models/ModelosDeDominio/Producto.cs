@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Script.Serialization;
 using TallerDeMotos.Models.AtributosDeValidacion;
 
 namespace TallerDeMotos.Models.ModelosDeDominio
@@ -49,6 +50,9 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public ICollection<Proveedor> Proveedores { get; set; }
         public ICollection<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
         public ICollection<FacturaCompraDetalle> FacturaCompraDetalles { get; set; }
+
+        //Para evistar una referencia circular al serializar un objeto de tipo
+        [ScriptIgnore]
         public ICollection<PresupuestoDetalle> PresupuestoDetalles { get; set; }
         public ICollection<FacturaVentaDetalle> FacturaVentaDetalles { get; set; }
 

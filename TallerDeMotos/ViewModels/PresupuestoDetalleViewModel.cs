@@ -1,27 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace TallerDeMotos.Dtos
+namespace TallerDeMotos.ViewModels
 {
-    public class PresupuestoDetalleDto
+    public class PresupuestoDetalleViewModel
     {
-        [Display(Name = "Código")]
         public int Id { get; set; }
-
-        [Display(Name = "Presupuesto")]
         public int PresupuestoId { get; set; }
-        public ProductoDto Producto { get; set; }
-
-        [Display(Name = "Producto Cod.")]
+        public ProductoViewModel Producto { get; set; }
         public int ProductoId { get; set; }
-
         public byte Cantidad { get; set; }
-
         public int Total { get; set; }
-
         public int TotalLineaExenta { get; set; }
-
         public int TotalLineaCincoXCiento { get; set; }
-
         public int TotalLineaDiezXCiento { get; set; }
     }
 }

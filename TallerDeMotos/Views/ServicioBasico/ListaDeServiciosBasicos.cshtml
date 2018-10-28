@@ -22,11 +22,14 @@
                 dataSource: {
                     transport: {
                         read: {
-                            url: "/api/serviciosBasicos",
+                            url: "/api/serviciosBasicos/ObtenerServiciosBasicos",
                             dataType: "json"
                         }
                     },
                     pageSize: 10
+                },
+                dataBound: function (e) {
+                    console.log(e);
                 },
                 height: 300,
                 filterable: true,

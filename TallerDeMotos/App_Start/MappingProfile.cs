@@ -26,7 +26,7 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<ServicioBasico, ServicioBasico>();
             Mapper.CreateMap<Proveedor, Proveedor>();
             Mapper.CreateMap<Producto, Producto>()
-                .ForMember(e => e.Marca, opt => opt.Ignore()); ;
+                .ForMember(e => e.Marca, opt => opt.Ignore());
             Mapper.CreateMap<Caja, Caja>();
             Mapper.CreateMap<AperturaCierreCaja, AperturaCierreCaja>();
             Mapper.CreateMap<ProveedorContactoDto, ProveedorContacto>();
@@ -37,9 +37,12 @@ namespace TallerDeMotos.App_Start
             Mapper.CreateMap<Aseguradora, AseguradoraDto>();
             Mapper.CreateMap<FormaPago, FormaPagoDto>();
             Mapper.CreateMap<Proveedor, ProveedorDto>();
+            Mapper.CreateMap<Producto, ProductoDto>();
+            Mapper.CreateMap<ProductoTipo, ProductoTipoDto>();
             Mapper.CreateMap<FacturaCompra, FacturaCompraDto>();
             Mapper.CreateMap<Ciudad, CiudadDto>();
             Mapper.CreateMap<Presupuesto, PresupuestoDto>();
+            Mapper.CreateMap<PresupuestoDetalle, PresupuestoDetalleDto>();
             Mapper.CreateMap<Vehiculo, VehiculoDto>();
             Mapper.CreateMap<Cliente, ClienteDto>();
             Mapper.CreateMap<Banco, BancoDto>();

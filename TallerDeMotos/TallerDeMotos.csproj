@@ -942,6 +942,10 @@
     <Compile Include="Migrations\201810220010334_AgregarColumnaVehiculoCodigoEnFacturaVentaClientes.Designer.cs">
       <DependentUpon>201810220010334_AgregarColumnaVehiculoCodigoEnFacturaVentaClientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810300106550_AgregarColumnasSucursalCodigoYEstadoCajaEnCajas.cs" />
+    <Compile Include="Migrations\201810300106550_AgregarColumnasSucursalCodigoYEstadoCajaEnCajas.Designer.cs">
+      <DependentUpon>201810300106550_AgregarColumnasSucursalCodigoYEstadoCajaEnCajas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MayorACero.cs" />
@@ -3350,6 +3354,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810220010334_AgregarColumnaVehiculoCodigoEnFacturaVentaClientes.resx">
       <DependentUpon>201810220010334_AgregarColumnaVehiculoCodigoEnFacturaVentaClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810300106550_AgregarColumnasSucursalCodigoYEstadoCajaEnCajas.resx">
+      <DependentUpon>201810300106550_AgregarColumnasSucursalCodigoYEstadoCajaEnCajas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

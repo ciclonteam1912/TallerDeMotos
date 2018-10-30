@@ -28,10 +28,12 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         }
 
         public ICollection<Talonario> Talonarios { get; set; }
+        public ICollection<Caja> Cajas { get; set; }
 
         public Sucursal()
         {
             Talonarios = new HashSet<Talonario>();
+            Cajas = new HashSet<Caja>();
         }
     }
 }

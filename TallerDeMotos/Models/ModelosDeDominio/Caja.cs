@@ -18,6 +18,13 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Required]
         public string UsuarioId { get; set; }
 
+        public Sucursal Sucursal { get; set; }
+
+        [Display(Name = "Sucursal")]
+        public int SucursalId { get; set; }
+
+        public bool EstadoCaja { get; set; }
+
         public ICollection<AperturaCierreCaja> AperturaCierres { get; set; }
         public ICollection<Talonario> Talonarios { get; set; }
 

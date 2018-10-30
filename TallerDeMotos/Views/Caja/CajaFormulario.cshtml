@@ -9,6 +9,8 @@
 
     @using (Html.BeginForm("GuardarCaja", "Caja"))
     {
+        @Html.Partial("_Sucursal")
+
         <div class="panel panel-default">
             <div class="panel-heading">@Model.Titulo</div>
             <div class="panel-body">
@@ -18,13 +20,40 @@
                             @Html.LabelFor(c => c.Nombre)
                             @Html.TextBoxFor(c => c.Nombre, new { @class = "form-control", placeholder = "Ingrese Nombre de la Caja...", autocomplete = "off" })
                             @Html.ValidationMessageFor(c => c.Nombre)
-                        </div>                        
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             @Html.LabelFor(c => c.UsuarioId)
                             @Html.DropDownListFor(c => c.UsuarioId, new SelectList(Model.Usuarios, "Id", "UserName"), "Asignar empleado a la caja...", new { @class = "form-control" })
                             @Html.ValidationMessageFor(c => c.UsuarioId)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.SucursalId, new { id = "labelSucursal" })
+                            @(Html.Kendo().DropDownList()
+                                .Name("SucursalId")
+                                .DataTextField("NombreCompleto")
+                                .DataValueField("Id")
+                                .OptionLabel("Seleccione una Sucursal...")
+                                .HtmlAttributes(new { style = "width: 75%" })
+                                .DataSource(source =>
+                                {
+                                    source.Read(read => read.Url("/api/sucursales/ObtenerSucursales"));
+                                })
+                            )
+                            <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
+                            <div>@Html.ValidationMessageFor(t => t.SucursalId)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(c => c.EstadoCaja) Está Abierta?
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -39,10 +68,38 @@
 </div>
 
 @section Scripts {
-@Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
+        var id = $("#Id").val();
+
+        if (id == 0) {
+            $.validator.setDefaults({
+                ignore: "",
+                // any other default options and/or rules,
+                //errorPlacement: function (error, element) {
+                //    console.log("error", error);
+                //    console.log("element", element);
+                //    if (element.is("[data-role=dropdownlist]")) {
+                //        element.closest(".k-widget").after(error);
+                //    }
+                //}
+            });
+        }
+
+        function updateCssOnPropertyChange(e) {
+            var element = $(e.target);
+
+            element.siblings("span.k-dropdown-wrap")
+                   .add(element.siblings("div.k-multiselect-wrap"))
+                   .add(element.parent("span.k-numeric-wrap"))
+                   .add(element.parent("span.k-picker-wrap"))
+                   .toggleClass("k-invalid", element.hasClass("input-validation-error"));
+        }
+
         $(document).ready(function () {
-            $("#menuCaja").addClass('active');          
+            UseMutationObserver();
+
+            $("#menuCaja").addClass('active');
         });
     </script>
 }

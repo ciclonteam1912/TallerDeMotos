@@ -14,11 +14,18 @@ namespace TallerDeMotos.ConfiguracionDeEntidades
             Property(c => c.Id)
                 .HasColumnName("Codigo");
 
+            Property(c => c.SucursalId)
+                .HasColumnName("SucursalCodigo");
+
             Property(c => c.UsuarioId)
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_Usuario", 1) { IsUnique = true }));
 
             HasRequired(t => t.Usuario)
                 .WithMany(u => u.Cajas)
+                .WillCascadeOnDelete(false);
+
+            HasRequired(c => c.Sucursal)
+                .WithMany(s => s.Cajas)
                 .WillCascadeOnDelete(false);
         }
     }

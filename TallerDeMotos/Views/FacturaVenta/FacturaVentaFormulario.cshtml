@@ -236,7 +236,6 @@
                             '<td class="totales">' + item.TotalLineaExenta + '</td>' +
                             '<td class="totales">' + item.TotalLineaCincoXCiento + '</td>' +
                             '<td class="totales">' + item.TotalLineaDiezXCiento + '</td>' +
-                            '<td class="eliminar-fila"><button id="eliminar" class="btn btn-danger eliminar" type="button"><span class="fa fa-remove"></span></button></td>' +
                             '</tr>';
                             subtotal = subtotal + item.Total;
                             $("#SubTotal").html(subtotal);
@@ -366,6 +365,8 @@
                     if (value) {
                         if (value == 2)
                             $("#productoCantidad").prop("readonly", true);
+                        else
+                            $("#productoCantidad").prop("readonly", false);
 
                         productsDataSource.filter({
                             field: "ProductoTipoId",

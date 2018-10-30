@@ -65,42 +65,32 @@
                     }
                 }, {
                     field: "Caja.Nombre",
-                    title: "Caja"
+                    title: "Caja",
+                    width: 100
+                }, {
+                    field: "Caja.Sucursal.NombreCompleto",
+                    title: "Sucursal",
+                    width: 130
                 }, {
                     template: "#= kendo.toString(kendo.parseDate(Fecha), 'MM/dd/yyyy HH:mm tt')#",
                     field: "Fecha",
                     title: "Fecha",
-                    filterable: false,
-                    sortable: false,
-                    width: 170,
-                    attributes: {
-                        style: "text-align: center"
-                    }
-
+                    width: 170
                 }, {
                     field: "SaldoInicial",
                     title: "Saldo Inicial",
-                    filterable: false,
-                    sortable: false,
                     culture: "es-PY",
                     format: "{0:c0}",
-                    width: 150,
+                    width: 130,
                     attributes: {
                         style: "text-align: right"
                     }
 
                 }, {
-                    field: "SaldoFinal",
-                    title: "Saldo Final",
-                    filterable: false,
-                    sortable: false,
-                    culture: "es-PY",
-                    format: "{0:c0}",
-                    width: 150,
-                    attributes: {
-                        style: "text-align: center"
-                    }
-
+                    template: "#= EstaAbierta ? 'Abierta' : 'Cerrada' #",
+                    field: "EstaAbierta",
+                    title: "Estado Caja",
+                    width: 120
                 }]
             });
 

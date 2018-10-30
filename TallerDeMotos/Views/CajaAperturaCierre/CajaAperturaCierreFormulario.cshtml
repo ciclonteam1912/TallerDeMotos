@@ -74,6 +74,10 @@
                 value: id == 0 ? kendo.parseDate(new Date(), "dd/MM/yyyy HH:mm") : $("#Fecha").val(),
                 dateInput: true
             });
+
+            var datepicker = $("#Fecha").data("kendoDateTimePicker");
+
+            datepicker.readonly();
         });
 
     </script>

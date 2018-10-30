@@ -21,7 +21,8 @@ namespace TallerDeMotos.Controllers.APIs
         [HttpGet]
         public IHttpActionResult ObtenerAperturaCierres()
         {
-            var aperturaCierres = _context.CajaAperturaCierres.Include(m => m.Caja)
+            var aperturaCierres = _context.CajaAperturaCierres
+                .Include(m => m.Caja.Sucursal.Ciudad)
                 .ToList();
 
             return Ok(aperturaCierres);

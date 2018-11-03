@@ -62,6 +62,18 @@
                         attributes: {
                             style: "text-align: center"
                         }
+                    }, {
+                        field: "Id",
+                        title: "Código",
+                        width: "100px",
+                        attributes: {
+                            style: "text-align: right"
+                        }
+                    }, {
+                        field: "FechaDeEmision",
+                        title: "Fecha de Emisión",
+                        template: "#= kendo.toString(kendo.parseDate(FechaDeEmision), 'dd/MM/yyyy HH:mm tt')#",
+                        width: "110px"
                     },
                     {
                         field: "Cliente",
@@ -77,20 +89,7 @@
                          title: "Vehículo",
                          width: "150px",
                          template: "#= NombreVehiculo #"
-                     },
-                    {
-                        field: "FechaDeEmision",
-                        title: "Fecha de Emisión",
-                        template: "#= kendo.toString(kendo.parseDate(FechaDeEmision), 'dd/MM/yyyy HH:mm tt')#",
-                        width: "110px"
-                    },
-                    {
-                        field: "FechaDeValidez",
-                        title: "Validez hasta",
-                        template: "#= kendo.toString(kendo.parseDate(FechaDeValidez), 'dd/MM/yyyy')#",
-                        width: "100px"
-                    },
-                    {
+                     }, {
                         field: "SubTotal",
                         title: "Sub Total",
                         culture: "es-PY",

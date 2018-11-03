@@ -2908,7 +2908,6 @@
     <Content Include="Views\Account\EditarUsuario.cshtml" />
     <Content Include="Views\FacturaVenta\ListaDeFacturaDeVentas.cshtml" />
     <Content Include="Views\Presupuesto\EditarPresupuesto.cshtml" />
-    <Content Include="Views\Presupuesto\EditorTemplates\_PresupuestoDetallesEditarPopup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

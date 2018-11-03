@@ -9,6 +9,7 @@ using TallerDeMotos.Dtos;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using System.Collections.Generic;
+using System;
 
 namespace TallerDeMotos.Controllers
 {
@@ -45,28 +46,55 @@ namespace TallerDeMotos.Controllers
 
         public ActionResult EditarPresupuesto(int id)
         {
-
+            ViewBag.PresupuestoId = id;
             TempData["PresupuestoCodigo"] = id;
             TempData.Keep("PresupuestoCodigo");
 
             return View();
         }
 
-
-        public ActionResult ObtenerPresupuestoDetalle([DataSourceRequest] DataSourceRequest request)
+        public ActionResult ObtenerPresupuestoDetalle()
         {
             int presupuestoCodigo = int.Parse(TempData["PresupuestoCodigo"].ToString());
 
             var presupuestoDetalle = _context.PresupuestoDetalles
+                .Include(pd => pd.Producto)
                 .Include(pd => pd.Producto.ProductoTipo)
                 .Where(pd => pd.PresupuestoId == presupuestoCodigo)
-                .Select(Mapper.Map<PresupuestoDetalle, PresupuestoDetalleDto>)
                 .ToList();
 
-            return Json(presupuestoDetalle.ToDataSourceResult(request));
+            return Json(presupuestoDetalle, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult EditarPresupuestoDetalle([DataSourceRequest] DataSourceRequest request, PresupuestoDetalleDto presupuestoDetalleDto)
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CrearPresupuestoDetalle(PresupuestoDetalleDto presupuestoDetalleDto)
+        {
+            if (presupuestoDetalleDto != null && presupuestoDetalleDto.Id == 0)
+            {
+                var presupuestoDetalle = new PresupuestoDetalle();
+                presupuestoDetalle.PresupuestoId = presupuestoDetalleDto.PresupuestoId;
+                presupuestoDetalle.ProductoId = presupuestoDetalleDto.Producto.Id;
+                presupuestoDetalle.Cantidad = presupuestoDetalle.Cantidad = (presupuestoDetalleDto.Producto.ProductoTipo.Id == 2) ? (byte)1 : presupuestoDetalleDto.Cantidad;
+                presupuestoDetalle.Total = (presupuestoDetalleDto.Producto.PrecioVenta ?? default(int)) * presupuestoDetalle.Cantidad;
+
+                presupuestoDetalle.TotalLineaExenta = (presupuestoDetalleDto.Producto.TipoImpuesto == 0 || presupuestoDetalleDto.Producto.TipoImpuesto == null)
+                    ? presupuestoDetalle.Total : 0;
+                presupuestoDetalle.TotalLineaCincoXCiento = (presupuestoDetalleDto.Producto.TipoImpuesto == 5)
+                    ? presupuestoDetalle.Total : 0;
+                presupuestoDetalle.TotalLineaDiezXCiento = (presupuestoDetalleDto.Producto.TipoImpuesto == 10)
+                    ? presupuestoDetalle.Total : 0;
+
+                _context.PresupuestoDetalles.Add(presupuestoDetalle);
+                _context.SaveChanges();
+
+                presupuestoDetalleDto.Total = presupuestoDetalle.Total; 
+                presupuestoDetalleDto.Cantidad = presupuestoDetalle.Cantidad;
+            }
+
+            return Json(presupuestoDetalleDto, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult EditarPresupuestoDetalle(PresupuestoDetalleDto presupuestoDetalleDto)
         {
             PresupuestoDetalle presupuestoDetalle = new PresupuestoDetalle();
             if (presupuestoDetalleDto != null && ModelState.IsValid)
@@ -78,8 +106,9 @@ namespace TallerDeMotos.Controllers
 
                 if (presupuestoDetalle != null)
                 {
-                    presupuestoDetalle.Cantidad = presupuestoDetalleDto.Cantidad;
-                    presupuestoDetalle.Total = presupuestoDetalleDto.Cantidad * presupuestoDetalleDto.Producto.PrecioVenta ?? default(int);
+                    presupuestoDetalle.ProductoId = presupuestoDetalleDto.Producto.Id;
+                    presupuestoDetalle.Cantidad = (presupuestoDetalleDto.Producto.ProductoTipo.Id == 2) ? (byte)1 : presupuestoDetalleDto.Cantidad;
+                    presupuestoDetalle.Total = presupuestoDetalle.Cantidad * presupuestoDetalleDto.Producto.PrecioVenta ?? default(int);
                     if (presupuestoDetalle.Producto?.TipoImpuesto == 10)
                         presupuestoDetalle.TotalLineaDiezXCiento = presupuestoDetalle.Total;
                     else if (presupuestoDetalle.Producto?.TipoImpuesto == 5)
@@ -93,7 +122,7 @@ namespace TallerDeMotos.Controllers
             presupuestoDetalleDto.Cantidad = presupuestoDetalle.Cantidad;
             presupuestoDetalleDto.Total = presupuestoDetalle.Total;
 
-            return Json(new[] { presupuestoDetalleDto }.ToDataSourceResult(request, ModelState));
+            return Json(presupuestoDetalleDto, JsonRequestBehavior.AllowGet);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]

@@ -10,45 +10,132 @@
 
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>Editar Detalles del Presupuesto</h2>
-    @(Html.Kendo().Grid<TallerDeMotos.Dtos.PresupuestoDetalleDto>()
-    .Name("grid")
-        .DataSource(dataSource => dataSource
-        .Ajax()
-        .PageSize(20)
-        .Events(events => events.Error("error_handler"))
-        .Model(model =>
-        {
-            model.Id(p => p.Id);
-            //model.Field(p => p.Producto).DefaultValue(ViewData["DefaultProduct"] as TallerDeMotos.Dtos.ProductoDto);
-        })
-        .Create(update => update.Action("CrearPresupuestoDetalle", "Presupuesto"))
-        .Read(read => read.Action("ObtenerPresupuestoDetalle", "Presupuesto"))
-        .Update(update => update.Action("EditarPresupuestoDetalle", "Presupuesto"))
-        .Destroy(update => update.Action("EliminarPresupuestoDetalle", "Presupuesto"))
-    )
-    .Columns(columns =>
-    {
-        columns.Bound(p => p.ProductoId).Title("Código").Width(70);
-        columns.Bound(p => p.Producto.Descripcion).Title("Descripción").Width(120);
-        columns.Bound(p => p.Producto.ProductoTipo.Descripcion).Title("Tipo").Width(120);
-        columns.Bound(p => p.Producto.PrecioVenta).Format("{0:c0}").Width(100);
-        columns.Bound(p => p.Cantidad).Width(80);
-        columns.Bound(p => p.Total).Format("{0:c0}").Width(100);
-        columns.Command(command => { command.Edit().Text("Editar"); command.Destroy().Text("Eliminar"); }).Width(210);
-    })
-    .Events(e => e.Edit("CambiarTitulo"))
-    .Events(e => e.DataBound("onDataBound"))
-    //.ToolBar(toolbar => toolbar.Create().Text("Agregar Nuevo Detalle"))
-    .Editable(editable =>
-    {
-        editable.Mode(GridEditMode.PopUp).TemplateName("_PresupuestoDetallesEditarPopup");
-        editable.DisplayDeleteConfirmation("¿Estás seguro de eliminar este detalle?");
-    })
-    .Pageable()
-    .Sortable(srt => srt.Enabled(false))
-    .Scrollable()
-    .HtmlAttributes(new { style = "height:450px;" })
-    )
+    <input type="hidden" value="@(ViewBag.PresupuestoId)" id="presupuestoId"/>
+    <div id="example">
+        <div id="grid"></div>
+        <script>
+
+            var dataSource = new kendo.data.DataSource({
+                autoSync: false,
+                transport: {
+                    read: {
+                        url: "/Presupuesto/ObtenerPresupuestoDetalle",
+                        dataType: "json"
+                    },
+                    update: {
+                        url: "/Presupuesto/EditarPresupuestoDetalle",
+                        dataType: "json",
+                        type: "post"
+                    },
+                    create: {
+                        url: "/Presupuesto/CrearPresupuestoDetalle",
+                        dataType: "json",
+                        type: "post"
+                    },
+                    destroy: {
+                        url: "/Presupuesto/EliminarPresupuestoDetalle",
+                        dataType: "json",
+                        type: "post"
+                    }
+                },
+                pageSize: 10,
+                serverPaging: false,
+                serverSorting: false,
+                schema: {
+                    model: {
+                        id: "Id",
+                        fields: {
+                            Id: { editable: false },
+                            Producto: { defaultValue: { Id: 6, Id: 6 } },
+                            ProductoId: { editable: true },
+                            PresupuestoId: {
+                                defaultValue: $("#presupuestoId").val(),
+                                editable: false
+                            },
+                            Cantidad: { validation: { required: true } },
+                            Total: {
+                                validation: { required: true },
+                                editable: false
+                            }
+                        }
+                    }
+                }
+            });
+
+        $("#grid").kendoGrid({
+          dataSource: dataSource,
+          pageable: true,
+            sortable: true,
+          height: 430,
+          toolbar: ["create"],
+          columns: [
+              {
+                  field: "PresupuestoId",
+                  title: "Presupuesto Cod.",
+                  width: "90px"
+              }, {
+                  field: "Producto.Descripcion",
+                  title: "Descripción",
+                  width: "120px",
+                  editable: function (dataItem) { return false; }
+              }, {
+                  field: "Producto",
+                  title: "Producto",
+                  width: "100px",
+                  editor: productDropDownEditor,
+                  template: "#=Producto.Id#",
+                  filterable: false,
+                  sortable: false
+              }, {
+                  field: "Cantidad",
+                  title: "Cantidad",
+                  width: "90px"
+              }, {
+                  field: "Total",
+                  title: "Total",
+                  format: "{0:c0}",
+                  width: "100px"
+              }, {
+                  command: ["edit", "destroy"],
+                  title: "&nbsp;",
+                  width: "230px"
+              }],
+          editable: "inline",
+          dataBound: function (e) {
+                $("#grid tbody tr .k-grid-delete").each(function () {
+                    var currentDataItem = $("#grid").data("kendoGrid").dataItem($(this).closest("tr"));
+                    //Check in the current dataItem if the row is editable
+                    if (e.sender._data.length == 1) {
+                        $(this).remove();
+                    }
+                })
+          }
+        });
+
+        function productDropDownEditor(container, options) {
+            console.log(options.field);
+            $('<input required name="' + options.field + '"/>')
+            .appendTo(container)
+            .kendoDropDownList({
+                autoBind: false,
+                dataTextField: "Id",
+                dataValueField: "Id",
+                dataSource: {
+                  transport: {
+                    read: "/api/Productos/ObtenerProductos"
+                  }
+                },
+                select: function () {
+                    var grid = $("#grid").data("kendoGrid"),
+                        dataItem = grid.dataItem(this.element.closest("tr"));
+                    console.log(grid.dataItem(this.element.closest("tr")));
+                    var model = grid.dataSource.get(dataItem.Producto.Id);
+                    dataItem.set('Producto.Descripcion', dataItem.Producto.Descripcion);
+                }
+          });
+        }
+        </script>
+    </div>
 </div>
 
 @section scripts
@@ -56,42 +143,42 @@
     <script type="text/javascript">
         kendo.culture().numberFormat.currency.symbol = "₲";
 
-        function CambiarTitulo(e) {
-            e.container.kendoWindow("title", "Editar Detalle");
-        }
+        //function CambiarTitulo(e) {
+        //    e.container.kendoWindow("title", "Editar Detalle");
+        //}
 
-        function error_handler(e) {
-            if (e.errors) {
-                var message = "Errors:\n";
-                $.each(e.errors, function (key, value) {
-                    if ('errors' in value) {
-                        $.each(value.errors, function () {
-                            message += this + "\n";
-                        });
-                    }
-                });
-                alert(message);
-            }
-        }
+        //function error_handler(e) {
+        //    if (e.errors) {
+        //        var message = "Errors:\n";
+        //        $.each(e.errors, function (key, value) {
+        //            if ('errors' in value) {
+        //                $.each(value.errors, function () {
+        //                    message += this + "\n";
+        //                });
+        //            }
+        //        });
+        //        alert(message);
+        //    }
+        //}
 
-        function onDataBound(e) {
-            //Selects all edit buttons
-            $("#grid tbody tr .k-grid-edit").each(function () {
-                var currentDataItem = $("#grid").data("kendoGrid").dataItem($(this).closest("tr"));
-                //Check in the current dataItem if the row is editable
-                if (currentDataItem.Producto.ProductoTipo.Descripcion == 'Servicio') {
-                    $(this).remove();
-                }
-            })
+        //function onDataBound(e) {
+        //    //Selects all edit buttons
+        //    $("#grid tbody tr .k-grid-edit").each(function () {
+        //        var currentDataItem = $("#grid").data("kendoGrid").dataItem($(this).closest("tr"));
+        //        //Check in the current dataItem if the row is editable
+        //        if (currentDataItem.Producto.ProductoTipo.Descripcion == 'Servicio') {
+        //            $(this).remove();
+        //        }
+        //    })
 
-            $("#grid tbody tr .k-grid-delete").each(function () {
-                var currentDataItem = $("#grid").data("kendoGrid").dataItem($(this).closest("tr"));
-                //Check in the current dataItem if the row is editable
-                if (e.sender._data.length == 1) {
-                    $(this).remove();
-                }
-            })
-        }
+        //    $("#grid tbody tr .k-grid-delete").each(function () {
+        //        var currentDataItem = $("#grid").data("kendoGrid").dataItem($(this).closest("tr"));
+        //        //Check in the current dataItem if the row is editable
+        //        if (e.sender._data.length == 1) {
+        //            $(this).remove();
+        //        }
+        //    })
+        //}
 
         $(document).ready(function () {
             $("#menuVentas").addClass('active');

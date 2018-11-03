@@ -61,10 +61,12 @@
                         field: "FechaFacturaVenta",
                         title: "Fecha de Factura",
                         template: "#= kendo.toString(kendo.parseDate(FechaFacturaVenta), 'dd/MM/yyyy HH:mm tt')#",
+                        width: "120px"
+                    }, {
+                        field: "Presupuesto",
+                        title: "Cliente",
                         width: "100px",
-                        attributes: {
-                            style: "text-align: right"
-                        }
+                        template: "#= Presupuesto == null ? '' : Presupuesto.Vehiculo.Cliente.NombreCompleto#",
                     },
                     {
                         field: "Presupuesto",
@@ -76,7 +78,7 @@
                         }
                     }, {
                         field: "SubTotal",
-                        title: "Sub Total",
+                        title: "Total",
                         culture: "es-PY",
                         format: "{0:c0}",
                         width: "70px",
@@ -90,7 +92,17 @@
                         title: "&nbsp;",
                         filterable: false,
                         sortable: false,
-                        width: 100,
+                        width: 70,
+                        attributes: {
+                            style: "text-align: center"
+                        }
+                    }, {
+                        template: "<a href='/MovimientoCaja/MovimientoCajaFormulario' class='btn btn-primary' title='Ir a caja'><i class='fa fa-money'></i></a>",
+                        field: "NumeroFactura",
+                        title: "&nbsp;",
+                        filterable: false,
+                        sortable: false,
+                        width: 70,
                         attributes: {
                             style: "text-align: center"
                         }

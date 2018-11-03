@@ -15,7 +15,7 @@
         <div id="grid"></div>
         <script>
 
-            var dataSource = new kendo.data.DataSource({
+        var dataSource = new kendo.data.DataSource({
                 autoSync: false,
                 transport: {
                     read: {
@@ -46,13 +46,18 @@
                         id: "Id",
                         fields: {
                             Id: { editable: false },
-                            Producto: { defaultValue: { Id: 6, Id: 6 } },
-                            ProductoId: { editable: true },
+                            Producto: {
+                                defaultValue: { Id: 6, Id: 6 }
+                            },
+                            ProductoId: { editable: false },
                             PresupuestoId: {
                                 defaultValue: $("#presupuestoId").val(),
                                 editable: false
                             },
-                            Cantidad: { validation: { required: true } },
+                            Cantidad: {
+                                type: "number",
+                                validation: { required: true, min: 1 }
+                            },
                             Total: {
                                 validation: { required: true },
                                 editable: false
@@ -109,11 +114,17 @@
                         $(this).remove();
                     }
                 })
+          },
+          edit: function edit(e) {
+              if (e.model.isNew() == false) {
+                  var dropDown = e.container.find("[data-role='dropdownlist']").data("kendoDropDownList");
+                  dropDown.enable(false);
+                  console.log(dropDown);
+              }
           }
         });
 
         function productDropDownEditor(container, options) {
-            console.log(options.field);
             $('<input required name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({

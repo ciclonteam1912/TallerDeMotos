@@ -27,5 +27,8 @@ namespace TallerDeMotos.Dtos
         [Display(Name = "Vehículo")]
         public string Vehiculo { get; set; }
         public bool SinPresupuesto { get; set; }
+
+        public string MensajeError { get; set; }
+        public bool Resultado { get; set; }
     }
 }

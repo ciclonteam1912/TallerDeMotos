@@ -10,7 +10,6 @@ namespace TallerDeMotos.ViewModels
     public class TalonarioViewModel
     {
         public IEnumerable<Caja> Cajas { get; set; }
-        public IEnumerable<Sucursal> Sucursales { get; set; }
 
         public int Id { get; set; }
 
@@ -55,9 +54,6 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Asignar Talonario a una Caja")]
         public int CajaId { get; set; }
 
-        [Display(Name = "Asignar Talonario a una Sucursal")]
-        public int SucursalId { get; set; }
-
         public string Titulo
         {
             get
@@ -85,7 +81,6 @@ namespace TallerDeMotos.ViewModels
             NumeroFacturaActual = talonario.NumeroFacturaActual;
             EstaActivo = talonario.EstaActivo;
             CajaId = talonario.CajaId;
-            SucursalId = talonario.SucursalId;
         }
     }
 }

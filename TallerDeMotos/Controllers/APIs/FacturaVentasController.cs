@@ -40,7 +40,8 @@ namespace TallerDeMotos.Controllers.APIs
         public IHttpActionResult ObtenerFacturaVentas()
         {
             var facturaVentas = _context.FacturaVentas
-                .Include(fc => fc.Presupuesto)
+                .Include(fc => fc.Presupuesto.Vehiculo.Cliente)
+                .Include(fc => fc.Presupuesto.Vehiculo.Modelo.Marca)
                 .Include(fc => fc.Usuario)
                 .ToList()
                 .OrderByDescending(fc => fc.FechaFacturaVenta);

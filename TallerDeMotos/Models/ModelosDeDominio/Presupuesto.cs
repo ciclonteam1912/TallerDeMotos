@@ -30,6 +30,14 @@ namespace TallerDeMotos.Models.ModelosDeDominio
                 return Vehiculo == null ? "" : Vehiculo.Modelo.Marca.Nombre + "-" + Vehiculo.Modelo.Nombre + "-" + (Vehiculo.Matricula == null ? "N/A" : Vehiculo.Matricula);
             }
         }
+
+        public string NombrePresupuesto
+        {
+            get
+            {
+                return Id + " - Fecha de emisión: " + FechaDeEmision.ToShortDateString();
+            }
+        }
         public ICollection<PresupuestoDetalle> PresupuestoDetalles { get; set; }
 
         public Presupuesto()

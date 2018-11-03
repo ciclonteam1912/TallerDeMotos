@@ -37,8 +37,7 @@ namespace TallerDeMotos.Controllers
         {
             var talonario = new TalonarioViewModel
             {
-                Cajas = _context.Cajas.ToList(),
-                Sucursales = _context.Sucursales.ToList()
+                Cajas = _context.Cajas.ToList()
             };
 
             return View("TalonarioFormulario", talonario);
@@ -90,8 +89,7 @@ namespace TallerDeMotos.Controllers
 
             var viewModel = new TalonarioViewModel(talonario)
             {
-                Cajas = _context.Cajas.ToList(),
-                Sucursales = _context.Sucursales.ToList()
+                Cajas = _context.Cajas.ToList()
             };
 
             viewModel.FechaIni = viewModel.FechaInicioVigencia.ToString();

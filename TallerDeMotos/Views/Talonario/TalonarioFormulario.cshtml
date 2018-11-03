@@ -28,31 +28,13 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(t => t.SucursalId, new { id = "labelSucursal" })
-                            @(Html.Kendo().DropDownList()
-                                .Name("SucursalId")
-                                .DataTextField("NombreCompleto")
-                                .DataValueField("Id")
-                                .OptionLabel("Seleccione una Sucursal...")
-                                .HtmlAttributes(new { style = "width: 75%" })
-                                .DataSource(source =>
-                                {
-                                    source.Read(read => read.Url("/api/sucursales/ObtenerSucursales"));
-                                })
-                            )
-                            <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
-                            <div>@Html.ValidationMessageFor(t => t.SucursalId)</div>
-                        </div>
-                    </div>                    
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
                             @Html.LabelFor(t => t.CajaId)
                             @Html.DropDownListFor(t => t.CajaId, new SelectList(Model.Cajas, "Id", "Nombre"), "Seleccionar Caja", new { @class = "form-control", id = "cajaId" })
                             @Html.ValidationMessageFor(t => t.CajaId)
                         </div>
-                    </div>
+                    </div>                
+                </div>
+                <div class="row">                    
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(t => t.FechaIni)
@@ -62,8 +44,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(t => t.FechaFin)
@@ -73,6 +53,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">                    
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(t => t.NumeroFacturaInicial)
@@ -80,22 +62,15 @@
                             @Html.ValidationMessageFor(t => t.NumeroFacturaInicial)
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(t => t.NumeroFacturaFinal)
-                            @Html.TextBoxFor(t => t.NumeroFacturaFinal, new { @class = "form-control", placeholder = "N° Factura Final..." , autocomplete = "off" })
+                            @Html.TextBoxFor(t => t.NumeroFacturaFinal, new { @class = "form-control", placeholder = "N° Factura Final...", autocomplete = "off" })
                             @Html.ValidationMessageFor(t => t.NumeroFacturaFinal)
                         </div>
                     </div>
-                    @*<div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(t => t.NumeroFacturaActual)
-                            @Html.TextBoxFor(t => t.NumeroFacturaActual, new { @class = "form-control", placeholder = "N° Factura Actual...", autocomplete = "off" })
-                            @Html.ValidationMessageFor(t => t.NumeroFacturaActual)
-                        </div>
-                    </div>*@
+                </div>
+                <div class="row">                   
                     <div class="col-lg-6">
                         <div class="checkbox">
                             <label>

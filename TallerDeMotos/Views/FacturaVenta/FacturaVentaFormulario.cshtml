@@ -12,56 +12,61 @@
 </style>
 
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
-    <form id="facturaVentaFormulario">
-        <h2>Factura de Venta</h2>
+    <br />
+    @if (Model.Resultado)
+    {
+        <form id="facturaVentaFormulario">
+            <h2>Factura de Venta</h2>
 
-        <div class="row">
-            <div class="checkbox">
-                <label>
-                    @Html.CheckBoxFor(m => m.SinPresupuesto) ¿Crear Factura de Venta sin Presupuesto?
-                </label>
+            <div class="row">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.SinPresupuesto) ¿Crear Factura de Venta sin Presupuesto?
+                    </label>
+                </div>
             </div>
-        </div>
-        <div class="row" id="facturaCabecera" style="display: none">
-            <div class="row well" id="facturaConPresupuesto">
-                <div class="row">
-                    <div class="col-lg-4">
-                        @Html.LabelFor(m => m.PresupuestoCodigo)
-                        @(Html.Kendo().DropDownList()
+            <div class="row" id="facturaCabecera" style="display: none">
+                <div class="row well" id="facturaConPresupuesto">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            @Html.LabelFor(m => m.PresupuestoCodigo)
+                            @(Html.Kendo().DropDownList()
                             .Name("PresupuestoCodigo")
-                            .DataTextField("Id")
+                            .DataTextField("NombrePresupuesto")
                             .DataValueField("Id")
                             .OptionLabel("Seleccione un presupuesto...")
                             .DataSource(source =>
                             {
                                 source.Read(read => read.Action("ObtenerPresupuestosPendientes", "Presupuesto"));
                             })
+                            .Filter("contains")
                             .Events(e => e.Change("PresupuestoChangeEvent"))
-                            .HtmlAttributes(new { style = "width:100%"})
-                        )
-                        @Html.ValidationMessageFor(m => m.PresupuestoCodigo)
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Cliente)
-                            @Html.TextBoxFor(m => m.Cliente, new { @class = "form-control", @disabled = "disabled"})
+                            .HtmlAttributes(new { style = "width:100%" })
+                            )
+                            @Html.ValidationMessageFor(m => m.PresupuestoCodigo)
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Vehiculo)
-                            @Html.TextBoxFor(m => m.Vehiculo, new { @class = "form-control", @disabled = "disabled" })
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Cliente)
+                                @Html.TextBoxFor(m => m.Cliente, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
                         </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Vehiculo)
+                                @Html.TextBoxFor(m => m.Vehiculo, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4" id="divIrPresupuesto"></div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row" id="facturaSinPresupuesto" style="display:none">
-                <div class="row well">
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.ClienteId)
-                            @(Html.Kendo().DropDownList()
+                <div class="row" id="facturaSinPresupuesto" style="display:none">
+                    <div class="row well">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ClienteId)
+                                @(Html.Kendo().DropDownList()
                                 .Name("ClienteId")
                                 .DataTextField("NombreCompleto")
                                 .DataValueField("Id")
@@ -72,14 +77,14 @@
                                 {
                                     source.Read(read => read.Url("/api/clientes/ObtenerClientes"));
                                 })
-                            )
-                            @Html.ValidationMessageFor(m => m.ClienteId)
+                                )
+                                @Html.ValidationMessageFor(m => m.ClienteId)
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.VehiculoId)
-                            @(Html.Kendo().DropDownList()
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.VehiculoId)
+                                @(Html.Kendo().DropDownList()
                                 .Name("VehiculoId")
                                 .DataTextField("NombreCompleto")
                                 .DataValueField("Id")
@@ -95,99 +100,117 @@
                                 })
                                 .Enable(false)
                                 .CascadeFrom("ClienteId")
-                            )
-                            <script>
+                                )
+                                <script>
                                 function filtrarVehiculos() {
                                     return {
                                         ClienteId: $("#ClienteId").val()
                                     };
                                 }
-                            </script>
-                            @Html.ValidationMessageFor(m => m.VehiculoId)
+                                </script>
+                                @Html.ValidationMessageFor(m => m.VehiculoId)
+                            </div>
                         </div>
                     </div>
+                    <br />
+                    <div class="row table-responsive">
+                        <table class="table" id="facturaVentaDetallePre">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Código</th>
+                                    <th>Descripción</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input id="tipoProductos" />
+                                        <span class="error">Seleccionar Tipo de Producto</span>
+                                    </td>
+                                    <td>
+                                        <input id="productosId" disabled="disabled" style="width: 150px; display:inline-block" />
+                                        <span class="error-repetido">Producto o Servicio ya seleccionado</span>
+                                        <span class="error">Seleccionar Producto o Servicio</span>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="productoDesc" readonly class="form-control" />
+                                    </td>
+                                    <td><input type="text" id="productoPrecio" readonly class="form-control" /></td>
+                                    <td>
+                                        @Html.TextBox("productoCantidad", "", new { @class = "form-control", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)" })
+                                    </td>
+                                    <td>
+                                        <input type="button" class="btn btn-primary" id="agregar" value="Agregar" />
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <input type="number" id="productoIva" class="form-control" name="productoIva" style="display: none" />
+                    </div>
                 </div>
-                <br />
-                <div class="row table-responsive">
-                    <table class="table" id="facturaVentaDetallePre">
+            </div>
+
+            <div class="row" id="facturaDetalle" style="display:none">
+                <h4>Factura de Venta Detalles</h4>
+                <div class="table-responsive">
+                    <table class="table" id="facturaVentaDetalle">
                         <thead>
                             <tr>
-                                <th>Tipo</th>
-                                <th>Código</th>
-                                <th>Descripción</th>
+                                <th>Producto Cod.</th>
+                                <th>Producto</th>
                                 <th>Precio</th>
                                 <th>Cantidad</th>
-                                <th>&nbsp;</th>
+                                <th>IVA</th>
+                                <th>Total</th>
+                                <th class="totales"></th>
+                                <th class="totales"></th>
+                                <th class="totales"></th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <input id="tipoProductos" />
-                                    <span class="error">Seleccionar Tipo de Producto</span>
-                                </td>
-                                <td>
-                                    <input id="productosId" disabled="disabled" style="width: 150px; display:inline-block" />
-                                    <span class="error-repetido">Producto o Servicio ya seleccionado</span>
-                                    <span class="error">Seleccionar Producto o Servicio</span>
-                                </td>
-                                <td>
-                                    <input type="text" id="productoDesc" readonly class="form-control" />
-                                </td>
-                                <td><input type="text" id="productoPrecio" readonly class="form-control" /></td>
-                                <td>
-                                    @Html.TextBox("productoCantidad", "", new { @class = "form-control", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)"})
-                                </td>
-                                <td>
-                                    <input type="button" class="btn btn-primary" id="agregar" value="Agregar" />
-                                </td>
-
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
-                    <input type="number" id="productoIva" class="form-control" name="productoIva" style="display: none" />
+                </div>
+                <div class="row">
+                    <small class="text-info">@Html.LabelFor(m => m.FacturaVentaDto.SubTotal):</small>
+                    <small class="text-muted" id="SubTotal">@Html.DisplayTextFor(m => m.FacturaVentaDto.SubTotal)</small>
+                    @Html.ValidationMessageFor(m => m.FacturaVentaDto.SubTotal)
+                </div>
+                <div class="row">
+                    <div id="footerFactura" style="padding:10px 0; text-align:right">
+                        <button id="submit" class="btn btn-primary" style="padding:10px 20px">Registrar Factura de Venta</button>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row" id="facturaDetalle" style="display:none">
-            <h4>Factura de Venta Detalles</h4>
-            <div class="table-responsive">
-                <table class="table" id="facturaVentaDetalle">
-                    <thead>
-                        <tr>
-                            <th>Producto Cod.</th>
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>IVA</th>
-                            <th>Total</th>
-                            <th class="totales"></th>
-                            <th class="totales"></th>
-                            <th class="totales"></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+        </form>
+    }
+    else
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">Factura de Venta</div>
             </div>
-            <div class="row">
-                <small class="text-info">@Html.LabelFor(m => m.FacturaVentaDto.SubTotal):</small>
-                <small class="text-muted" id="SubTotal">@Html.DisplayTextFor(m => m.FacturaVentaDto.SubTotal)</small>
-                @Html.ValidationMessageFor(m => m.FacturaVentaDto.SubTotal)
-            </div>
-            <div class="row">
-                <div id="footerFactura" style="padding:10px 0; text-align:right">
-                    <button id="submit" class="btn btn-primary" style="padding:10px 20px">Registrar Factura de Venta</button>
+            <div class="panel-body">
+                <div class="alert alert-danger">
+                    <p>@Model.MensajeError</p>
                 </div>
             </div>
+            <div class="panel-footer">
+                <a href="/CajaAperturaCierre/NuevaAperturaCierre" class="btn btn-primary">Realizar Apertura</a>
+            </div>
         </div>
-    </form>
+    }
+    
 </div>
 
 @section Scripts{
-@Scripts.Render("~/bundles/jqueryval")
-<script src="~/Scripts/custom-jquery-validation.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/custom-jquery-validation.js"></script>
     <script>
         function maxLengthCheck(object) {
             if (object.value.length > object.max.length)
@@ -242,11 +265,12 @@
 
                             if (i == 0) {
                                 $("#Cliente").val(item.Presupuesto.Vehiculo.Cliente.NombreCompleto);
-                                $("#Vehiculo").val(item.Presupuesto.Vehiculo.Matricula + "-" + item.Presupuesto.Vehiculo.Modelo.Marca.Nombre + " " + item.Presupuesto.Vehiculo.Modelo.Nombre);
+                                $("#Vehiculo").val((item.Presupuesto.Vehiculo.Matricula == null ? "N/A " : item.Presupuesto.Vehiculo.Matricula) + " - " + item.Presupuesto.Vehiculo.Modelo.Marca.Nombre + " " + item.Presupuesto.Vehiculo.Modelo.Nombre);
                             }
 
                             $(presupuesto).hide().appendTo("#facturaVentaDetalle tbody").fadeIn(1000);
                         });
+                        $("#divIrPresupuesto").append("<a href='/Presupuesto/EditarPresupuesto/" + id + "' class='btn btn-primary' title='Editar Presupuesto'><i class=' glyphicon glyphicon-edit'></i> Editar Presupuesto</a>");
                     }
                 });
             }
@@ -327,6 +351,7 @@
                     ddlPresupuesto.value(0);
                     $("#Cliente").val("");
                     $("#Vehiculo").val("");
+                    $("#divIrPresupuesto").empty();
                 }
                 else {
                     $("#facturaSinPresupuesto").hide();
@@ -335,7 +360,7 @@
                 }
                 $("#facturaVentaDetalle tbody tr").remove();
                 $("#facturaDetalle").hide();
-            });           
+            });
 
             //Obtener los productos o servicios y agregarlos al Drop-down List.
             var productsDataSource = new kendo.data.DataSource({
@@ -589,16 +614,7 @@
                         })
                         .done(function (facturaVenta) {
                             if (facturaVenta.Success) {
-                                toastr.success(facturaVenta.Message);
-
-                                botonSubmit.remove();
-                                $("#footerFactura").append("<a class='btn btn-primary' href='/MovimientoCaja/MovimientoCajaFormulario'>Ir a caja</a>");
-                                $("#footerFactura").append("<a class='btn btn-primary' href='/FacturaVenta' style='margin-left:4px'>Nueva Factura</a>");
-
-                                nuevaFacturaVentaDto = {
-                                    FacturaVentaDto: {},
-                                    FacturaVentaDetalles: []
-                                }
+                                window.location.href = "/FacturaVenta"
                             }
                             else {
                                 toastr.error(facturaVenta.Message);
@@ -607,8 +623,8 @@
                     }
                     else {
                         toastr.error("Debe haber al menos un artículo en el detalle para registrar la factura.");
-                    }                    
-                }                
+                    }
+                }
             });
 
             toastr.options = {

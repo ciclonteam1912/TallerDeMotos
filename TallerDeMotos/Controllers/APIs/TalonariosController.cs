@@ -25,7 +25,6 @@ namespace TallerDeMotos.Controllers.APIs
         {
             var talonarios = _context.Talonarios
                 .Include(t => t.Caja)
-                .Include(t => t.Sucursal.Ciudad)
                 .ToList();
             return Ok(talonarios);
         }

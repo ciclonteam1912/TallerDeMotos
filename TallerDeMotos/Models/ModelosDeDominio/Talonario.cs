@@ -46,10 +46,6 @@ namespace TallerDeMotos.Models.ModelosDeDominio
 
         [Display(Name = "Asignar Talonario a una Caja")]
         public int CajaId { get; set; }
-        public Sucursal Sucursal { get; set; }
-
-        [Display(Name = "Asignar Talonario a una Sucursal")]
-        public int SucursalId { get; set; }
 
         public ICollection<FacturaVenta> FacturaVentas { get; set; }
 

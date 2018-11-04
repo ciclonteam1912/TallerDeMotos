@@ -22,6 +22,14 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public int TalonarioId { get; set; }
         public Estado Estado { get; set; }
         public byte EstadoId { get; set; }
+
+        public string FormatoNumeroFactura
+        {
+            get
+            {
+                return NumeroFactura.ToString().PadLeft(7, '0');
+            }
+        }
         public ICollection<FacturaVentaDetalle> FacturaVentaDetalles { get; set; }
         public ICollection<FacturaVentaCliente> FacturaVentaClientes { get; set; }
         public ICollection<MovimientoCaja> MovimientoCajas { get; set; }

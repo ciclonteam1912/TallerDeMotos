@@ -58,12 +58,12 @@ namespace TallerDeMotos.Controllers.APIs
                 try
                 {
                     var usuarioId = User.Identity.GetUserId();
-                    //var caja = _context.Cajas.Where(c => c.UsuarioId == usuarioId).SingleOrDefault();
-                    Caja caja = new Caja();
+                    var caja = _context.CajaAperturaCierres.Where(c => c.UsuarioId == usuarioId).SingleOrDefault();
+                    
                     if (caja != null)
                     {
                         var talonario = _context.Talonarios
-                        .Where(t => t.EstaActivo && t.CajaId == caja.Id)
+                        .Where(t => t.EstaActivo && t.CajaId == caja.CajaId)
                         .Select(t => new { t.Id, t.NumeroFacturaActual })
                         .SingleOrDefault();
 

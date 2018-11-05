@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TallerDeMotos.Models;
 using TallerDeMotos.Models.ModelosDeDominio;
 
 namespace TallerDeMotos.ViewModels
@@ -8,6 +9,7 @@ namespace TallerDeMotos.ViewModels
     public class CajaAperturaCierreViewModel
     {
         public IEnumerable<Caja> Cajas { get; set; }
+        public IEnumerable<ApplicationUser> Usuarios { get; set; }
 
         public int Id { get; set; }
 
@@ -25,11 +27,18 @@ namespace TallerDeMotos.ViewModels
 
         public bool EstaAbierta { get; set; }
 
+        [Required]
+        [Display(Name = "Asignar usuario a una Caja")]
+        public string UsuarioId { get; set; }
+
+        public string MensajeError { get; set; }
+        public bool Resultado { get; set; }
+
         public string Titulo
         {
             get
             {
-                return Id != 0 ? "Editar Apertura/Cierre de Caja" : "Nueva Apertura/Cierre de Caja";
+                return Id != 0 ? "Editar Apertura de Caja" : "Nueva Apertura de Caja";
             }
         }
 
@@ -45,6 +54,7 @@ namespace TallerDeMotos.ViewModels
             Fecha = aperturaCierre.Fecha;
             SaldoInicial = aperturaCierre.SaldoInicial;
             EstaAbierta = aperturaCierre.EstaAbierta;
+            UsuarioId = aperturaCierre.UsuarioId;
         }
     }
 }

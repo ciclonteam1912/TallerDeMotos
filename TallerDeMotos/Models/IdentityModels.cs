@@ -19,7 +19,7 @@ namespace TallerDeMotos.Models
         public ICollection<Presupuesto> Presupuestos { get; set; }
         public ICollection<FacturaVenta> FacturaVentas { get; set; }
         public ICollection<OrdenCompra> OrdenCompras { get; set; }
-        public ICollection<Caja> Cajas { get; set; }
+        public ICollection<AperturaCierreCaja> AperturaCierresCajas { get; set; }
         public Empleado Empleado { get; set; }
 
         [RestriccionUnicaEnUsuario]
@@ -37,7 +37,7 @@ namespace TallerDeMotos.Models
             Presupuestos = new HashSet<Presupuesto>();
             FacturaVentas = new HashSet<FacturaVenta>();
             OrdenCompras = new HashSet<OrdenCompra>();
-            Cajas = new HashSet<Caja>();
+            AperturaCierresCajas = new HashSet<AperturaCierreCaja>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

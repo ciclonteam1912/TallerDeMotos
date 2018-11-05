@@ -19,7 +19,6 @@ namespace TallerDeMotos.Controllers.APIs
         public IHttpActionResult ObtenerCajas()
         {
             var cajas = _context.Cajas
-                .Include(m => m.Usuario)
                 .Include(m => m.Sucursal.Ciudad)
                 .ToList();
 

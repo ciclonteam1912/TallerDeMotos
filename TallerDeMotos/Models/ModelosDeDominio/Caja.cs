@@ -12,12 +12,6 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [StringLength(50)]
         public string Nombre { get; set; }
 
-        public ApplicationUser Usuario { get; set; }
-
-        [RestriccionUnicaEnCaja]
-        [Required]
-        public string UsuarioId { get; set; }
-
         public Sucursal Sucursal { get; set; }
 
         [Display(Name = "Sucursal")]

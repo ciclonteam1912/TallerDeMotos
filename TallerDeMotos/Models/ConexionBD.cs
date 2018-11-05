@@ -217,5 +217,69 @@ namespace TallerDeMotos.Models
 
             return existe;
         }
+
+        public string ValidarUsuarioCaja(string usuarioId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["TallerDeMotos"].ConnectionString;
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            string respuesta = "";
+
+            try
+            {
+                cmd = new SqlCommand("ValidarUsuarioCaja", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UsuarioId", usuarioId);
+                cmd.Parameters.Add("@resultado", SqlDbType.VarChar, 1).Direction = ParameterDirection.Output;
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+
+                respuesta = cmd.Parameters["@resultado"].Value.ToString();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+                con.Dispose();
+            }
+            return respuesta;
+        }
+
+        public string CajaDisponible(int cajaId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["TallerDeMotos"].ConnectionString;
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            string respuesta = "";
+
+            try
+            {
+                cmd = new SqlCommand("CajaDisponible", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CajaId", cajaId);
+                cmd.Parameters.Add("@resultado", SqlDbType.VarChar, 1).Direction = ParameterDirection.Output;
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+
+                respuesta = cmd.Parameters["@resultado"].Value.ToString();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+                con.Dispose();
+            }
+            return respuesta;
+        }
     }
 }

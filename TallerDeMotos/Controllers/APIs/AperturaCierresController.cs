@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Data.Entity;
-using System.Net.Http;
+using System.Linq;
 using System.Web.Http;
 using TallerDeMotos.Models;
 
@@ -23,6 +20,7 @@ namespace TallerDeMotos.Controllers.APIs
         {
             var aperturaCierres = _context.CajaAperturaCierres
                 .Include(m => m.Caja.Sucursal.Ciudad)
+                .Include(m => m.Usuario)
                 .ToList();
 
             return Ok(aperturaCierres);

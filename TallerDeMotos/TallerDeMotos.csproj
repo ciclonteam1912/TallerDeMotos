@@ -950,6 +950,14 @@
     <Compile Include="Migrations\201811032105374_SacarColumnaSucursalCodigoDeTalonarios.Designer.cs">
       <DependentUpon>201811032105374_SacarColumnaSucursalCodigoDeTalonarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811041523199_SacarColumnaUsuarioIdDeCajas.cs" />
+    <Compile Include="Migrations\201811041523199_SacarColumnaUsuarioIdDeCajas.Designer.cs">
+      <DependentUpon>201811041523199_SacarColumnaUsuarioIdDeCajas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811041538186_SeAgregoColumnaUsuarioCodigoEnCajaAperturaCierres.cs" />
+    <Compile Include="Migrations\201811041538186_SeAgregoColumnaUsuarioCodigoEnCajaAperturaCierres.Designer.cs">
+      <DependentUpon>201811041538186_SeAgregoColumnaUsuarioCodigoEnCajaAperturaCierres.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MayorACero.cs" />
@@ -965,7 +973,6 @@
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnModelo.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnMarca.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnTalonario.cs" />
-    <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnCaja.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnEmpleado.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnUsuario.cs" />
     <Compile Include="Models\AtributosDeValidacion\RestriccionUnicaEnAseguradora.cs" />
@@ -3363,6 +3370,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811032105374_SacarColumnaSucursalCodigoDeTalonarios.resx">
       <DependentUpon>201811032105374_SacarColumnaSucursalCodigoDeTalonarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811041523199_SacarColumnaUsuarioIdDeCajas.resx">
+      <DependentUpon>201811041523199_SacarColumnaUsuarioIdDeCajas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811041538186_SeAgregoColumnaUsuarioCodigoEnCajaAperturaCierres.resx">
+      <DependentUpon>201811041538186_SeAgregoColumnaUsuarioCodigoEnCajaAperturaCierres.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

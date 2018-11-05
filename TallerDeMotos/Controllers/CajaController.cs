@@ -37,12 +37,8 @@ namespace TallerDeMotos.Controllers
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult NuevaCaja()
         {
-            var viewModel = new CajaViewModel
-            {
-                Usuarios = _context.Users.ToList()
-            };
-
-            return View("CajaFormulario", viewModel);
+            var caja = new CajaViewModel();
+            return View("CajaFormulario", caja);
         }
 
         [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
@@ -52,11 +48,7 @@ namespace TallerDeMotos.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = new CajaViewModel(caja)
-                {
-                    Usuarios = _context.Users.ToList()
-                };
-
+                var viewModel = new CajaViewModel(caja);
                 return View("CajaFormulario", viewModel);
             }
 
@@ -83,10 +75,7 @@ namespace TallerDeMotos.Controllers
             if (cajaBD == null)
                 return HttpNotFound();
 
-            var caja = new CajaViewModel(cajaBD)
-            {
-                Usuarios = _context.Users.ToList()
-            };
+            var caja = new CajaViewModel(cajaBD);
 
             return View("CajaFormulario", caja);
         }

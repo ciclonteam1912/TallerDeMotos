@@ -43,17 +43,19 @@
                 noRecords: {
                     template: "<p>No existe registro de aperturas y cierres de cajas.</p>"
                 },
-                columns: [{
-                    template: "<a href='/CajaAperturaCierre/EditarAperturaCierre/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
-                    field: "Id",
-                    title: "&nbsp;",
-                    filterable: false,
-                    sortable: false,
-                    width: 70,
-                    attributes: {
-                        style: "text-align: center"
-                    }
-                }, {
+                columns: [
+                    //{
+                    //template: "<a href='/CajaAperturaCierre/EditarAperturaCierre/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
+                    //field: "Id",
+                    //title: "&nbsp;",
+                    //filterable: false,
+                    //sortable: false,
+                    //width: 70,
+                    //attributes: {
+                    //    style: "text-align: center"
+                    //}
+                    //},
+                {
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
                     title: "&nbsp;",
@@ -77,21 +79,25 @@
                     title: "Fecha",
                     width: 170
                 }, {
-                    field: "SaldoInicial",
-                    title: "Saldo Inicial",
-                    culture: "es-PY",
-                    format: "{0:c0}",
-                    width: 130,
-                    attributes: {
-                        style: "text-align: right"
-                    }
-
-                }, {
                     template: "#= EstaAbierta ? 'Abierta' : 'Cerrada' #",
                     field: "EstaAbierta",
                     title: "Estado Caja",
                     width: 120
-                }]
+                }, {
+                    field: "Usuario.UserName",
+                    title: "Usuario",
+                    width: 100
+                }, {
+                    template: "#if(EstaAbierta) {# <a href='' class='btn-link fa fa-lock js-cerrar' title='Cerrar Caja'></a> #}else{# <a href='' class='btn-link fa fa-unlock-alt js-abrir' title='Abrir Caja'></a>#}#",
+                    field: "Id",
+                    title: "&nbsp;",
+                    filterable: false,
+                    sortable: false,
+                    width: 70,
+                    attributes: {
+                        style: "text-align: center"
+                    }
+                }, ]
             });
 
             $("#grid").on("click", "a.js-eliminar", function () {
@@ -127,6 +133,56 @@
                                         "<a href='/Modelo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar Vehículo</a>");
                                 }
                             });
+                        }
+                    }
+                });
+
+                return false;
+            });
+
+            $("#grid").on("click", "a.js-cerrar", function () {
+                var $tr = $(this).closest("tr"),
+                    grid = $("#grid").data("kendoGrid"),
+                    dataItem = grid.dataItem($tr);
+
+                var id = dataItem.Id;
+
+                $.ajax({
+                    url: "/CajaAperturaCierre/CambiarEstadoCaja/" + id,
+                    method: "POST"
+                })
+                .done(function (caja) {
+                    if (caja.Success) {
+                        grid.dataSource.read();
+                        grid.dataSource.refresh();
+                    } else {
+                            toastr.error("No se pudo actualizar el estado de la caja");
+                    }
+                });
+
+                return false;
+            });
+
+            $("#grid").on("click", "a.js-abrir", function () {
+                var $tr = $(this).closest("tr"),
+                    grid = $("#grid").data("kendoGrid"),
+                    dataItem = grid.dataItem($tr);
+
+                var id = dataItem.Id;
+
+                $.ajax({
+                    url: "/CajaAperturaCierre/CambiarEstadoCaja/" + id,
+                    method: "POST"
+                })
+                .done(function (caja) {
+                    if (caja.Success) {
+                        grid.dataSource.read();
+                        grid.dataSource.refresh();
+                    } else {
+                        if (caja.Message != "") {
+                            toastr.error(caja.Message);
+                        } else {
+                            toastr.error("No se pudo actualizar el estado de la caja");
                         }
                     }
                 });

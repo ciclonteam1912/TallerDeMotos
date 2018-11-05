@@ -22,15 +22,6 @@
                             @Html.ValidationMessageFor(c => c.Nombre)
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(c => c.UsuarioId)
-                            @Html.DropDownListFor(c => c.UsuarioId, new SelectList(Model.Usuarios, "Id", "UserName"), "Asignar empleado a la caja...", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(c => c.UsuarioId)
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(t => t.SucursalId, new { id = "labelSucursal" })
@@ -48,7 +39,9 @@
                             <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>
                             <div>@Html.ValidationMessageFor(t => t.SucursalId)</div>
                         </div>
-                    </div>
+                    </div>                    
+                </div>
+                <div class="row">                    
                     <div class="col-md-6">
                         <div class="checkbox">
                             <label>

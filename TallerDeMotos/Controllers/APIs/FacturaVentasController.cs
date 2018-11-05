@@ -58,7 +58,7 @@ namespace TallerDeMotos.Controllers.APIs
                 try
                 {
                     var usuarioId = User.Identity.GetUserId();
-                    var caja = _context.CajaAperturaCierres.Where(c => c.UsuarioId == usuarioId).SingleOrDefault();
+                    var caja = _context.CajaAperturaCierres.Where(c => c.UsuarioId == usuarioId && c.EstaAbierta).SingleOrDefault();
                     
                     if (caja != null)
                     {

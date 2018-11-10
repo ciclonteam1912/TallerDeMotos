@@ -213,13 +213,12 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/clientes/" + id,
+                                url: "/api/clientes/EliminarCliente/" + id,
                                 method: "DELETE"
                             })
                             .done(function (cliente) {
                                 console.log(cliente.Message);
                                 if (cliente.Success) {
-                                    //button.parents("tr").remove();
                                     grid.dataSource.remove(dataItem);
                                     toastr.success(cliente.Message);
                                 } else {

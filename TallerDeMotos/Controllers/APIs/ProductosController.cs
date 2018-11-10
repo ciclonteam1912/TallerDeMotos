@@ -52,7 +52,8 @@ namespace TallerDeMotos.Controllers.APIs
             }
             catch(Exception ex)
             {
-                return BadRequest();
+                if (ex.InnerException.InnerException.Message.Contains("FK_dbo.FacturaCompraDetalles_dbo.Productos_ProductoCodigo"))
+                    return Json(new JsonResponse { Success = false, Message = "FK_dbo.FacturaCompraDetalles_dbo.Productos_ProductoCodigo" });
             }
 
             return Ok(new JsonResponse { Success = true, Message = "Producto eliminado con éxito" });

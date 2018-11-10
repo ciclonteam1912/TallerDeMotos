@@ -66,11 +66,6 @@
                     title: "Nombre",
                     width: 120
                 }, {
-                    template: "#= EstadoCaja ? 'Abierta' : 'Cerrada' #",
-                    field: "EstadoCaja",
-                    title: "Estado Caja",
-                    width: 70
-                }, {
                     field: "Sucursal.NombreCompleto",
                     title: "Sucursal",
                     width: 120
@@ -97,7 +92,7 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/cajas/" + id,
+                                url: "/api/cajas/EliminarCaja/" + id,
                                 method: "DELETE"
                             })
                             .done(function (caja) {
@@ -108,8 +103,15 @@
                                     if (caja.Message == "FK_dbo.CajaAperturaCierres_dbo.Cajas_CajaCodigo")
                                         toastr.error("<p class='eliminar'>No se pudo eliminar la caja. Elimine primero el registro de apertura o cierre asociado a esta caja.</p>" +
                                         "<a href='/CajaAperturaCierre' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar Apertura/Cierre de Caja</a>");
+
+                                    if (caja.Message == "FK_dbo.Talonarios_dbo.Cajas_CajaCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar la caja. Elimine primero el talonario asociado a esta caja.</p>" +
+                                        "<a href='/Talonario' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar Talonario</a>");
                                 }
-                            });
+                            })
+                            .fail(function () {
+                            toastr.error("<p class='eliminar'>No se pudo eliminar la caja.</p>");
+                            });;
                         }
                     }
                 });

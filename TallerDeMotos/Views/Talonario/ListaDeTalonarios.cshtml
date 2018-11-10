@@ -10,11 +10,13 @@
 
     <div id="example">
         <div id="grid" style="width:100%"></div>
+        <div id="details"></div>
     </div>
 </div>
 
 @section Scripts{
     <script>
+        var wnd, detailsTemplate;
         $(document).ready(function () {
             $("#menuVentas").addClass('active');
 
@@ -67,31 +69,9 @@
                         style: "text-align: right"
                     }
                 }, {
-                    field: "FechaInicioVigencia",
-                    title: "Fecha Inicio Vigencia",
-                    type: "date",
-                    format: "{0:dd/MM/yyyy}",
+                    field: "Caja.Nombre",
+                    title: "Caja",
                     width: 90
-                }, {
-                    field: "FechaFinVigencia",
-                    title: "Fecha Fin Vigencia",
-                    type: "date",
-                    format: "{0:dd/MM/yyyy}",
-                    width: 90
-                }, {
-                    field: "NumeroFacturaInicial",
-                    title: "N° Factura Inicial",
-                    width: 90,
-                    attributes: {
-                        style: "text-align: right"
-                    }
-                }, {
-                    field: "NumeroFacturaFinal",
-                    title: "N° Factura Final",
-                    width: 90,
-                    attributes: {
-                        style: "text-align: right"
-                    }
                 }, {
                     field: "NumeroFacturaActual",
                     title: "N° Factura Actual",
@@ -104,9 +84,26 @@
                     title: "Estado",
                     width: 100,
                     template: "#= EstaActivo ? 'Activo' : 'Inactivo' #"
+                }, {
+                    command: {
+                        text: "Ver Detalles",
+                        click: showDetails
+                    },
+                    title: " ",
+                    width: "130px"
                 }]
             });
          
+            wnd = $("#details")
+            .kendoWindow({
+                title: "Detalles del Talonario",
+                modal: true,
+                visible: false,
+                resizable: false,
+                width: 350
+            }).data("kendoWindow");
+            detailsTemplate = kendo.template($("#template").html());
+
             $("#grid").on("click", "a.js-eliminar", function () {
                 var $tr = $(this).closest("tr"),
                     grid = $("#grid").data("kendoGrid"),
@@ -130,9 +127,15 @@
                                 url: "/api/talonarios/EliminarTalonario/" + id,
                                 method: "DELETE"
                             })
-                            .done(function () {
-                                grid.dataSource.remove(dataItem);
-                                toastr.success("Talonario eliminado con éxito");
+                            .done(function (talonario) {
+                                if (talonario.Success) {
+                                    grid.dataSource.remove(dataItem);
+                                    toastr.success(talonario.Message);
+                                }
+                                else {
+                                    if(talonario.Message == "FK_dbo.FacturaVentas_dbo.Talonarios_TalonarioCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el talonario. Ya está asociado a una Factura de Venta.</p>");
+                                }
                             })
                             .fail(function () {
                                 toastr.error("<p class='eliminar'>No se pudo eliminar el talonario.</p>");
@@ -155,5 +158,24 @@
                 "extendedTimeOut": 1000
             }
         });
+
+        function showDetails(e) {
+            e.preventDefault();
+
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            wnd.content(detailsTemplate(dataItem));
+            wnd.center().open();
+        }
     </script>
+
+    <script type="text/x-kendo-template" id="template">
+
+        <div id="details-container">
+
+        <p><b>Número de Factura Inicial:</b> #= NumeroFacturaInicial #</p>
+        <p><b>Número de Factura Final:</b> #= NumeroFacturaFinal #</p>
+        <p><b>Fecha Inicio de Vigencia:</b> #= kendo.toString(kendo.parseDate(FechaInicioVigencia), "dd/MM/yyyy") #</p>
+        <p><b>Fecha Fin de Vigencia:</b> #= kendo.toString(kendo.parseDate(FechaFinVigencia), "dd/MM/yyyy") #</p>
+    </div>
+</script>       
 }

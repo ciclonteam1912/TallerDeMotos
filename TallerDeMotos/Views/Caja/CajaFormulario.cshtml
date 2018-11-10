@@ -41,15 +41,6 @@
                         </div>
                     </div>                    
                 </div>
-                <div class="row">                    
-                    <div class="col-md-6">
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(c => c.EstadoCaja) Está Abierta?
-                            </label>
-                        </div>
-                    </div>
-                </div>
                 @Html.HiddenFor(c => c.Id)
                 @Html.AntiForgeryToken()
             </div>

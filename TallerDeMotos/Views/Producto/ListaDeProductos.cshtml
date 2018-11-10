@@ -180,7 +180,7 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/productos/" + id,
+                                url: "/api/productos/EliminarProducto/" + id,
                                 method: "DELETE"
                             })
                             .done(function (producto) {
@@ -188,9 +188,8 @@
                                     grid.dataSource.remove(dataItem);
                                     toastr.success(producto.Message);
                                 } else {
-                                    if (producto.Message == "FK_dbo.Vehiculos_dbo.Clientes_ClienteCodigo")
-                                        toastr.error("<p class='eliminar'>No se pudo eliminar el cliente. Elimine primero el vehículo de este cliente.</p>" +
-                                        "<a href='/Vehiculo' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar vehículo</a>");
+                                    if (producto.Message == "FK_dbo.FacturaCompraDetalles_dbo.Productos_ProductoCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el producto, ya que está asociado a una factura de compra.</p>");
                                 }
                             });
                         }

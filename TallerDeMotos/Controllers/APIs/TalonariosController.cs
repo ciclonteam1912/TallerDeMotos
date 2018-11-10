@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using TallerDeMotos.Models;
@@ -32,12 +33,19 @@ namespace TallerDeMotos.Controllers.APIs
         [HttpDelete]
         public IHttpActionResult EliminarTalonario(int id)
         {
-            var talonario = _context.Talonarios.Single(t => t.Id == id);
+            try
+            {
+                var talonario = _context.Talonarios.Single(t => t.Id == id);
 
-            _context.Talonarios.Remove(talonario);
-            _context.SaveChanges();
-
-            return Ok();
+                _context.Talonarios.Remove(talonario);
+                _context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                if (ex.InnerException.InnerException.Message.Contains("FK_dbo.FacturaVentas_dbo.Talonarios_TalonarioCodigo"))
+                    return Json(new JsonResponse { Success = false, Message = "FK_dbo.FacturaVentas_dbo.Talonarios_TalonarioCodigo" });
+            }
+            return Ok(new JsonResponse { Success = true, Message = "Talonario eliminado con éxito" });
         }
     }
 }

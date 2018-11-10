@@ -958,6 +958,10 @@
     <Compile Include="Migrations\201811041538186_SeAgregoColumnaUsuarioCodigoEnCajaAperturaCierres.Designer.cs">
       <DependentUpon>201811041538186_SeAgregoColumnaUsuarioCodigoEnCajaAperturaCierres.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811102029317_SacarColumnaEstadoCajaDeCajas.cs" />
+    <Compile Include="Migrations\201811102029317_SacarColumnaEstadoCajaDeCajas.Designer.cs">
+      <DependentUpon>201811102029317_SacarColumnaEstadoCajaDeCajas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MayorACero.cs" />
@@ -3376,6 +3380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811041538186_SeAgregoColumnaUsuarioCodigoEnCajaAperturaCierres.resx">
       <DependentUpon>201811041538186_SeAgregoColumnaUsuarioCodigoEnCajaAperturaCierres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811102029317_SacarColumnaEstadoCajaDeCajas.resx">
+      <DependentUpon>201811102029317_SacarColumnaEstadoCajaDeCajas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

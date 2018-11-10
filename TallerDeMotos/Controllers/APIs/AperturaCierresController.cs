@@ -21,7 +21,8 @@ namespace TallerDeMotos.Controllers.APIs
             var aperturaCierres = _context.CajaAperturaCierres
                 .Include(m => m.Caja.Sucursal.Ciudad)
                 .Include(m => m.Usuario)
-                .ToList();
+                .ToList()
+                .OrderByDescending(m => m.Fecha);
 
             return Ok(aperturaCierres);
         }

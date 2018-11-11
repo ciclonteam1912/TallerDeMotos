@@ -54,13 +54,6 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.TipoMovimientoId)
-                                                @Html.DropDownListFor(m => m.TipoMovimientoId, new SelectList(Model.TipoMovimientos, "Id", "Descripcion"), "Seleccione un tipo de movimiento...", new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(m => m.TipoMovimientoId)
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
                                                 @Html.LabelFor(m => m.FacturaVentaId)
                                                 @Html.DropDownListFor(m => m.FacturaVentaId, new SelectList(Model.FacturaVentas, "Id", "NumeroFactura"), "Seleccione una factura", new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(m => m.FacturaVentaId)

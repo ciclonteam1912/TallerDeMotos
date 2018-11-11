@@ -58,6 +58,10 @@
                             style: "text-align: right"
                         }
                     }, {
+                        field: "Talonario.Caja.Nombre",
+                        title: "Caja",                        
+                        width: "90px"
+                    }, {
                         field: "FechaFacturaVenta",
                         title: "Fecha de Factura",
                         template: "#= kendo.toString(kendo.parseDate(FechaFacturaVenta), 'dd/MM/yyyy HH:mm tt')#",
@@ -67,15 +71,6 @@
                         title: "Cliente",
                         width: "100px",
                         template: "#= Presupuesto == null ? '' : Presupuesto.Vehiculo.Cliente.NombreCompleto#",
-                    },
-                    {
-                        field: "Presupuesto",
-                        title: "Presupuesto Nro.",
-                        width: "70px",
-                        template: "#= Presupuesto == null ? '' : Presupuesto.Id#",
-                        attributes: {
-                            style: "text-align: right"
-                        }
                     }, {
                         field: "SubTotal",
                         title: "Total",
@@ -87,7 +82,7 @@
                         }
                     },
                     {
-                        template: "<a href='/FacturaVenta/FacturaVentaReport?nroFactura=  #: NumeroFactura #' target='_blank' class='btn btn-primary' title='Imprimir Factura de Venta'><i class='fa fa-print'></i></a>",
+                        template: "<a href='/FacturaVenta/FacturaVentaReport?nroFactura=  #: NumeroFactura #&nroCaja= #: Talonario.Caja.Id #' target='_blank' class='btn btn-primary' title='Imprimir Factura de Venta'><i class='fa fa-print'></i></a>",
                         field: "NumeroFactura",
                         title: "&nbsp;",
                         filterable: false,

@@ -43,6 +43,7 @@ namespace TallerDeMotos.Controllers.APIs
                 .Include(fc => fc.Presupuesto.Vehiculo.Cliente)
                 .Include(fc => fc.Presupuesto.Vehiculo.Modelo.Marca)
                 .Include(fc => fc.Usuario)
+                .Include(fc => fc.Talonario.Caja)
                 .ToList()
                 .OrderByDescending(fc => fc.FechaFacturaVenta);
 

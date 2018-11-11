@@ -127,15 +127,9 @@ namespace TallerDeMotos.Controllers
                 return View("MovimientoCajaFormulario", model);
             }
 
-            //var query = (from aperturaCierre in _context.CajaAperturaCierres
-            //             join caja in _context.Cajas on aperturaCierre.CajaId equals caja.Id
-            //             where caja.EstadoActivo
-            //             select new { ID = aperturaCierre.Id }).First();
-
-            //int id = query.ID;
             if (viewModel.Id == 0)
-            {
-                //viewModel.AperturaCierreCajaId = id;
+            {                
+                viewModel.TipoMovimientoId = 1;
                 var movimiento = Mapper.Map<MovimientoCajaViewModel, MovimientoCaja>(viewModel);
                 _context.MovimientoCajas.Add(movimiento);
 

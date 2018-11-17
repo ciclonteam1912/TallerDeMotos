@@ -8,21 +8,25 @@
             <div class="modal-body">
                 <div class="row">
                     <div id="message" class="col-md-12" style="display:none"></div>
-                </div>           
+                </div>
                 @(Html.Kendo().Grid<TallerDeMotos.Dtos.CargoDto>()
                     .Name("gridCargo")
                     .Columns(columns =>
                     {
                         columns.Bound(p => p.Nombre).Width(130);
                         columns.Bound(p => p.Descripcion).Title("Descripción").Width(150);
-                        columns.Command(command => command.Destroy()).Width(80);
+                        columns.Command(command => command.Destroy().Text("Eliminar")).Width(80);
                     })
                     .ToolBar(toolbar =>
                     {
-                        toolbar.Create();
-                        toolbar.Save();
+                        toolbar.Create().Text("Agregar");
+                        toolbar.Save().CancelText("Cancelar").SaveText("Guardar Cambios");
                     })
-                    .Editable(editable => editable.Mode(GridEditMode.InCell))
+                    .Editable(editable =>
+                    {
+                        editable.Mode(GridEditMode.InCell);
+                        editable.DisplayDeleteConfirmation("¿Estás seguro de eliminar este Cargo?");
+                    })
                     .Pageable(p => p.Refresh(true))
                     .Navigatable()
                     .Sortable()
@@ -49,6 +53,7 @@
 </div>
 
 <script type="text/javascript">
+
     function error_handler(e) {
         if (e.errors) {
             $.each(e.errors, function (key, value) {

@@ -89,10 +89,10 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.FechaDeNacimiento, new { id = "labelFecha" })
-                            @Html.TextBoxFor(m => m.FechaDeNacimiento, new { @class = "form-control", id= "FechaDeNacimiento", placeholder = "Fecha de Nacimiento...", style = "width:74%; " })
+                            @Html.LabelFor(m => m.Fecha, new { id = "labelFecha" })
+                            @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control", id= "FechaDeNacimiento", placeholder = "Fecha de Nacimiento...", style = "width:74%; " })
                             <div class="row">
-                                @Html.ValidationMessageFor(m => m.FechaDeNacimiento)                                
+                                @Html.ValidationMessageFor(m => m.Fecha)                                
                             </div>                            
                         </div>
                     </div>

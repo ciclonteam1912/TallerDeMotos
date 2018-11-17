@@ -83,6 +83,7 @@ namespace TallerDeMotos.Controllers
 
             if (cliente.Id == 0)
             {
+                cliente.FechaDeNacimiento = Convert.ToDateTime(cliente.Fecha);
                 cliente.FechaDeIngreso = DateTime.Now;
                 _context.Clientes.Add(cliente);
             }
@@ -90,6 +91,7 @@ namespace TallerDeMotos.Controllers
             {
                 var clientesBD = _context.Clientes.Single(c => c.Id == cliente.Id);
                 Mapper.Map<Cliente, Cliente>(cliente, clientesBD);
+                clientesBD.FechaDeNacimiento = Convert.ToDateTime(cliente.Fecha);
             }
 
             _context.SaveChanges();
@@ -112,6 +114,8 @@ namespace TallerDeMotos.Controllers
                 Ciudades = _context.Ciudades.ToList()
             };
 
+
+            viewModel.Fecha = viewModel.FechaDeNacimiento.ToString();
             return View("ClienteFormulario", viewModel);
         }
 

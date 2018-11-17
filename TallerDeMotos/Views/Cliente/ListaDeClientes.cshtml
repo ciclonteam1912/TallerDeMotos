@@ -264,7 +264,7 @@
             
             <p><b>Ciudad:</b> #= Ciudad.Nombre #</p>
                 <p><b>Correo Electrónico:</b> #= (CorreoElectronico == null) ? ' ' : CorreoElectronico #</p>
-                <p><b> #= (Personeria.Descripcion == 'Física') ? 'Fecha de Nacimiento:' : 'Fecha de Fundación:' #</b> #= kendo.toString(kendo.parseDate(FechaDeNacimiento), "g") #</p>
+                <p><b> #= (Personeria.Descripcion == 'Física') ? 'Fecha de Nacimiento:' : 'Fecha de Fundación:' #</b> #= kendo.toString(kendo.parseDate(FechaDeNacimiento), "dd/MM/yyyy") #</p>
             
         </div>
     </script>       

@@ -44,6 +44,9 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Fecha de Nacimiento")]
         public DateTime? FechaDeNacimiento { get; set; }
 
+        [Display(Name = "Fecha de Nacimiento")]
+        public string Fecha{ get; set; }
+
         [Display(Name = "Personería")]
         public byte PersoneriaId { get; set; }
 
@@ -84,6 +87,7 @@ namespace TallerDeMotos.ViewModels
             CorreoElectronico = cliente.CorreoElectronico;
             NombrePropietario = cliente.NombrePropietario;
             FechaDeNacimiento = cliente.FechaDeNacimiento;
+            Fecha = cliente.Fecha;
             PersoneriaId = cliente.PersoneriaId;
             TipoDocumentoId = cliente.TipoDocumentoId;
             ValorDocumento = cliente.ValorDocumento;

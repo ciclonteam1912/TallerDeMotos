@@ -14,14 +14,18 @@
                     .Columns(columns =>
                     {
                         columns.Bound(p => p.Nombre).Width(150);                        
-                        columns.Command(command => command.Destroy()).Width(80);
+                        columns.Command(command => command.Destroy().Text("Eliminar")).Width(80);
                     })
                     .ToolBar(toolbar =>
                     {
-                        toolbar.Create();
-                        toolbar.Save();
+                        toolbar.Create().Text("Agregar");
+                        toolbar.Save().CancelText("Cancelar").SaveText("Guardar Cambios");
                     })
-                    .Editable(editable => editable.Mode(GridEditMode.InCell))
+                    .Editable(editable =>
+                    {
+                        editable.Mode(GridEditMode.InCell);
+                        editable.DisplayDeleteConfirmation("¿Estás seguro de eliminar esta Ciudad?");
+                    })
                     .Pageable(p => p.Refresh(true))
                     .Navigatable()
                     .Sortable()

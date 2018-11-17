@@ -27,6 +27,10 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         [Display(Name = "Fecha de Fabricación")]
         public DateTime FechaDeFabricacion { get; set; }
 
+        [NotMapped]
+        [Display(Name = "Fecha de Fabricación")]
+        public string Fecha { get; set; }
+
         [Required]
         [StringLength(20)]
         public string Color { get; set; }

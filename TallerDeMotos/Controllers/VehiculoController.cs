@@ -98,6 +98,7 @@ namespace TallerDeMotos.Controllers
             if (vehiculo.Id == 0)
             {                
                 vehiculo.FechaDeIngreso = DateTime.Now;
+                vehiculo.FechaDeFabricacion = Convert.ToDateTime(vehiculo.Fecha);
                 _context.Vehiculos.Add(vehiculo);
             }
             else
@@ -107,6 +108,7 @@ namespace TallerDeMotos.Controllers
                     .Single(c => c.Id == vehiculo.Id);
 
                 Mapper.Map<Vehiculo, Vehiculo>(vehiculo, vehiculosBD);
+                vehiculosBD.FechaDeFabricacion = Convert.ToDateTime(vehiculo.Fecha);
                 vehiculosBD.Aseguradora = vehiculo.Aseguradora;
             }
 
@@ -133,6 +135,7 @@ namespace TallerDeMotos.Controllers
                 Combustibles = _context.Combustibles.ToList()
             };
 
+            viewModel.Fecha = viewModel.FechaDeFabricacion.ToString();
             return View("VehiculoFormulario", viewModel);
         }
     }

@@ -110,9 +110,9 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(v => v.FechaDeFabricacion) <span class="asterisco">*</span> <br />
-                            @Html.TextBoxFor(v => v.FechaDeFabricacion, new { @class = "form-control", style = "width:74%; ", onkeydown = "return false;" })
-                            <div>@Html.ValidationMessageFor(v => v.FechaDeFabricacion)</div>
+                            @Html.LabelFor(v => v.Fecha) <span class="asterisco">*</span> <br />
+                            @Html.TextBoxFor(v => v.Fecha, new { @class = "form-control", style = "width:74%; ", onkeydown = "return false;" })
+                            <div>@Html.ValidationMessageFor(v => v.Fecha)</div>
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(v => v.Kilometro)
-                            @Html.TextBoxFor(v => v.Kilometro, new { @class = "form-control", placeholder = "Kilometraje del Vehículo", autocomplete = "off", type = "number", min = "0", max = "99999", oninput = "maxLengthCheck(this)" })
+                            @Html.TextBoxFor(v => v.Kilometro, new { @class = "form-control", placeholder = "Kilometraje del Vehículo", autocomplete = "off", type = "number", min = "0", max = "9999999999", oninput = "maxLengthCheck(this)" })
                             @Html.ValidationMessageFor(v => v.Kilometro)
                         </div>
                     </div>
@@ -176,7 +176,7 @@
 
             $("#menuTaller").addClass('active');
 
-            $("#FechaDeFabricacion").kendoDateTimePicker({
+            $("#Fecha").kendoDateTimePicker({
                 culture: "es-ES",
                 format: "dd/MM/yyyy HH:mm",
                 animation: {

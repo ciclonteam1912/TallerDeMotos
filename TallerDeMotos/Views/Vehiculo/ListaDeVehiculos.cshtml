@@ -257,7 +257,8 @@
             <h2>#= (Matricula == null) ? ' ' : Matricula #</h2>
             @*<em>#= Title #</em>*@
 
-            <p><b>Fecha de Ingreso:</b> #= kendo.toString(kendo.parseDate(FechaDeIngreso), "g") #</p>
+            <p><b>Fecha de Fabricación:</b> #= kendo.toString(kendo.parseDate(FechaDeFabricacion), "dd/MM/yyyy") #</p>
+            <p><b>Fecha de Ingreso:</b> #= kendo.toString(kendo.parseDate(FechaDeIngreso), "dd/MM/yyyy") #</p>
             <p><b>Kilometraje:</b> #= (Kilometro == null) ? '0' : Kilometro # km.</p>
             <p><b>Color:</b> #= (Color == null) ? ' ' : Color #</p>
             <p><b>Aseguradora:</b> #= (Aseguradora == null || Aseguradora.Nombre == null) ? ' ' : Aseguradora.Nombre #</p>

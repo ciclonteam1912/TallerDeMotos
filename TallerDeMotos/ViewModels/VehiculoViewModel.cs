@@ -32,7 +32,9 @@ namespace TallerDeMotos.ViewModels
         public float? Kilometro { get; set; }
 
         [Display(Name = "Fecha de Fabricación")]
-        public DateTime FechaDeFabricacion { get; set; }
+        public DateTime? FechaDeFabricacion { get; set; }
+        [Display(Name = "Fecha de Fabricación")]
+        public string Fecha { get; set; }
 
         [Required]
         [StringLength(20)]
@@ -71,6 +73,7 @@ namespace TallerDeMotos.ViewModels
             Matricula = vehiculo.Matricula;
             Chasis = vehiculo.Chasis;
             Kilometro = vehiculo.Kilometro;
+            Fecha = vehiculo.Fecha;
             Color = vehiculo.Color;
             ModeloId = vehiculo.ModeloId;
             ClienteId = vehiculo.ClienteId;

@@ -59,5 +59,11 @@ namespace TallerDeMotos.Controllers
             }
             return View("FacturaVentaReport");
         }
+
+        public ActionResult FacturaVentasGeneradasReport()
+        {
+
+            return View("FacturaVentasGeneradasReport");
+        }
     }
 }

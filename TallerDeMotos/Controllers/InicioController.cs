@@ -42,5 +42,10 @@ namespace TallerDeMotos.Controllers
         {
             return View();
         }
+
+        public ActionResult Reportes()
+        {
+            return View();
+        }
     }
 }

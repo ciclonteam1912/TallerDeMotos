@@ -1581,8 +1581,11 @@
     <Content Include="Content\FontAwesome-4.7.0\scss\_screen-reader.scss" />
     <Content Include="Content\FontAwesome-4.7.0\scss\_stacked.scss" />
     <Content Include="Content\FontAwesome-4.7.0\scss\_variables.scss" />
-    <Content Include="Reports\FacturaVentasRealizadas.trdp" />
+    <Content Include="Reports\FacturaVentasRealizadas.trdp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\MovimientoCajaRealizadas.trdp" />
+    <Content Include="Views\FacturaVenta\FacturaVentasGeneradasReport.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2925,6 +2928,7 @@
     <Content Include="Views\Account\EditarUsuario.cshtml" />
     <Content Include="Views\FacturaVenta\ListaDeFacturaDeVentas.cshtml" />
     <Content Include="Views\Presupuesto\EditarPresupuesto.cshtml" />
+    <Content Include="Views\Inicio\Reportes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

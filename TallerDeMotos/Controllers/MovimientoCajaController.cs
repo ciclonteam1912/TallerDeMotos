@@ -239,5 +239,10 @@ namespace TallerDeMotos.Controllers
             }
             return Json(viewModel);
         }
+
+        public ActionResult MovimientosDeCajaGeneradosReport()
+        {
+            return View("MovimientosDeCajaGeneradosReport");
+        }
     }
 }

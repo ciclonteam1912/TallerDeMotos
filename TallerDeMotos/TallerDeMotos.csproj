@@ -1586,6 +1586,9 @@
     </Content>
     <Content Include="Reports\MovimientoCajaRealizadas.trdp" />
     <Content Include="Views\FacturaVenta\FacturaVentasGeneradasReport.cshtml" />
+    <Content Include="Reports\ExistenciaActualVsCantidadSolicitada.trdp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2929,6 +2932,8 @@
     <Content Include="Views\FacturaVenta\ListaDeFacturaDeVentas.cshtml" />
     <Content Include="Views\Presupuesto\EditarPresupuesto.cshtml" />
     <Content Include="Views\Inicio\Reportes.cshtml" />
+    <Content Include="Views\MovimientoCaja\MovimientosDeCajaGeneradosReport.cshtml" />
+    <Content Include="Views\Producto\ProductoVsPresupuestoReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

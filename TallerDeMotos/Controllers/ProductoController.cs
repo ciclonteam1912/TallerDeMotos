@@ -129,5 +129,10 @@ namespace TallerDeMotos.Controllers
 
             return Json(productoDto, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ProductoVsPresupuestoReport()
+        {
+            return View("ProductoVsPresupuestoReport");
+        }
     }
 }

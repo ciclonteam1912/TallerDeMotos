@@ -962,6 +962,10 @@
     <Compile Include="Migrations\201811102029317_SacarColumnaEstadoCajaDeCajas.Designer.cs">
       <DependentUpon>201811102029317_SacarColumnaEstadoCajaDeCajas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811251910150_AgregarColumnaFechaDeVencimientoEnOrdenCompras.cs" />
+    <Compile Include="Migrations\201811251910150_AgregarColumnaFechaDeVencimientoEnOrdenCompras.Designer.cs">
+      <DependentUpon>201811251910150_AgregarColumnaFechaDeVencimientoEnOrdenCompras.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MayorACero.cs" />
@@ -2934,6 +2938,7 @@
     <Content Include="Views\Inicio\Reportes.cshtml" />
     <Content Include="Views\MovimientoCaja\MovimientosDeCajaGeneradosReport.cshtml" />
     <Content Include="Views\Producto\ProductoVsPresupuestoReport.cshtml" />
+    <Content Include="Scripts\kendo\resources\resources.es-PY.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3394,6 +3399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811102029317_SacarColumnaEstadoCajaDeCajas.resx">
       <DependentUpon>201811102029317_SacarColumnaEstadoCajaDeCajas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811251910150_AgregarColumnaFechaDeVencimientoEnOrdenCompras.resx">
+      <DependentUpon>201811251910150_AgregarColumnaFechaDeVencimientoEnOrdenCompras.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

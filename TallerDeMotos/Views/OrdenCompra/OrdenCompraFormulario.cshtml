@@ -31,6 +31,7 @@
                                 {
                                     source.Read(read => read.Url("/api/formasPago/ObtenerFormasDePago"));
                                 })
+                                .Events(e => e.Change("formaPagoChange"))
                             )
                             @Html.ValidationMessageFor(oc => oc.FormaPagoId)
                         </div>
@@ -49,6 +50,16 @@
                                 })
                             )
                             @Html.ValidationMessageFor(oc => oc.ProveedorId)
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" id="divFechaVenc">
+                        <div class="col-lg-6">
+                            @Html.LabelFor(oc => oc.Fecha)
+                            @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control", id = "FechaDeVencimiento", style = "width:100%; " })
+                            <div class="row">
+                                @Html.ValidationMessageFor(m => m.Fecha)
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -141,18 +152,34 @@
 
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
-    <script>       
+    <script>   
+        function formaPagoChange() {
+            var fpId = $("#FormaPagoId").val();
+            if (fpId == 1)
+                $("#divFechaVenc").show();
+            else
+                $("#divFechaVenc").hide();
+        }
+            
         $(document).ready(function () {
             UseMutationObserver();
+
+            $("#divFechaVenc").hide();
 
             $("#contenido").fadeIn(2000);
             $("#menuCompras").addClass('active');
             $('#imprimirOrden').hide();
 
+            $("#FechaDeVencimiento").kendoDateTimePicker({
+                value: new Date(),
+                culture: "es-ES",
+                dateInput: true
+            });
+
             var vm = {
                 OrdenCompra: {},
                 OrdenCompraDetalles: []
-            }
+            }          
 
             var total = 0;
             var subTotal = 0;
@@ -352,7 +379,8 @@
                 vm.OrdenCompra = {
                     FormaPagoId: $("#FormaPagoId").val(),
                     SubTotal: $("#totalAPagar").val(),
-                    ProveedorId: $("#ProveedorId").val()
+                    ProveedorId: $("#ProveedorId").val(),
+                    Fecha: $("#FechaDeVencimiento").val()
                 }
 
                 $('#ordenCompraDetalle tr.detalle').each(function (index, tr) {

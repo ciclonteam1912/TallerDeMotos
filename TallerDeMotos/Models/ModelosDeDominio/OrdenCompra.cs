@@ -17,6 +17,7 @@ namespace TallerDeMotos.Models.ModelosDeDominio
         public FacturaCompra FacturaCompra { get; set; }
         public ApplicationUser Usuario { get; set; }
         public string UsuarioId { get; set; }
+        public DateTime? FechaDeVencimiento { get; set; }
 
         public ICollection<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
         public ICollection<OrdenCompraAnulada> OrdenCompraAnuladas { get; set; }

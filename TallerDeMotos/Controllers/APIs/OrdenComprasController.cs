@@ -56,10 +56,16 @@ namespace TallerDeMotos.Controllers.APIs
                     SubTotal = nuevaOrdenCompraDto.OrdenCompra.SubTotal,
                     EstadoId = 1,
                     ProveedorId = nuevaOrdenCompraDto.OrdenCompra.ProveedorId,
-                    UsuarioId = User.Identity.GetUserId()
+                    UsuarioId = User.Identity.GetUserId(),
+                    Fecha = nuevaOrdenCompraDto.OrdenCompra.Fecha
                 };
 
                 var ordenCompra = Mapper.Map<OrdenCompraDto, OrdenCompra>(ordenCompraDto);
+                if (ordenCompraDto.FormaPagoId == 1)
+                    ordenCompra.FechaDeVencimiento = Convert.ToDateTime(ordenCompraDto.Fecha);
+                else
+                    ordenCompra.FechaDeVencimiento = null;
+
                 _context.OrdenCompras.Add(ordenCompra);
 
                 foreach (var detalle in nuevaOrdenCompraDto.OrdenCompraDetalles)

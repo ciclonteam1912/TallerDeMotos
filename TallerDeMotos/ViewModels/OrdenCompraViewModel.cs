@@ -27,5 +27,10 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Proveedor")]
         public int ProveedorId { get; set; }
 
+        [Display(Name = "Proveedor")]
+        public string Fecha { get; set; }
+
+        public DateTime FechaDeVencimiento { get; set; }
+
     }
 }

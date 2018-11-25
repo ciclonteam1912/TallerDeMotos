@@ -248,12 +248,18 @@
                    .toggleClass("k-invalid", element.hasClass("input-validation-error"));
         }
 
-        function format(input){            
-            if (input.target.value.trim().length > 7 && input.target.value.trim().indexOf('-') === -1) {
+        function format(input) {
+            if (input.target.value.trim().length > 7 && input.target.value.trim().indexOf('-') != -1) {
+                input.target.value = input.target.value.trim().replace('-', '');
                 let substring1 = input.target.value.trim().slice(0, 7),
                   substring2 = input.target.value.trim().slice(7, input.target.value.length);
                 input.target.value = substring1 + '-' + substring2;
             }
+            else if (input.target.value.trim().length > 6 && input.target.value.trim().indexOf('-') === -1) {
+                let substring1 = input.target.value.trim().slice(0, 6),
+                  substring2 = input.target.value.trim().slice(6, input.target.value.length);
+                input.target.value = substring1 + '-' + substring2;
+            }   
         }
 
         $(document).ready(function () {

@@ -22,7 +22,7 @@ namespace TallerDeMotos.ViewModels
 
         [Required]
         [StringLength(9)]
-        [RegularExpression(@"\d{7}[-]\d{1}", ErrorMessage = "El Ruc debe tener el siguiente formato. Ej.: 3202258-1")]
+        [RegularExpression(@"\d{6,7}[-]\d{1}", ErrorMessage = "El Ruc debe tener el siguiente formato. Ej.: 3202258-1")]
         [Remote("RucExisteEnProveedores", "RemoteValidation", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Ruc ya existe.")]
         [Display(Name = "RUC")]
         public string Ruc { get; set; }

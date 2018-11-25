@@ -152,5 +152,10 @@ namespace TallerDeMotos.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult DeudasProveedoresReport()
+        {
+            return View("DeudasProveedoresReport");
+        }
     }
 }

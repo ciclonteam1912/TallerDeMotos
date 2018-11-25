@@ -24,10 +24,10 @@ namespace TallerDeMotos.ViewModels
         [Display(Name = "Sub Totol")]
         public int SubTotal { get; set; }
 
-        [Display(Name = "Fecha de Vencimiento")]
+        [Display(Name = "Proveedor")]
         public int ProveedorId { get; set; }
 
-        [Display(Name = "Proveedor")]
+        [Display(Name = "Fecha de Vencimiento")]
         public string Fecha { get; set; }
 
         public DateTime FechaDeVencimiento { get; set; }

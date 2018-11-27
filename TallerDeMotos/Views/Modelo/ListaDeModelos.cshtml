@@ -98,7 +98,7 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/modelos/" + id,
+                                url: "/api/modelos/EliminarModelo/" + id,
                                 method: "DELETE"
                             })
                             .done(function (modelo) {

@@ -142,7 +142,7 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/aseguradoras/" + id,
+                                url: "/api/aseguradoras/EliminarAseguradora/" + id,
                                 method: "DELETE"
                             })
                             .done(function (aseguradora) {

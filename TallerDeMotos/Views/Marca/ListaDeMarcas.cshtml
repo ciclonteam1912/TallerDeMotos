@@ -91,7 +91,7 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/marcas/" + id,
+                                url: "/api/marcas/EliminarMarca/" + id,
                                 method: "DELETE"
                             })
                             .done(function (marca) {

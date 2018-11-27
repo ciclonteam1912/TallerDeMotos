@@ -55,11 +55,12 @@ namespace TallerDeMotos.Controllers.APIs
                 _context.SaveChanges();
             }
             catch(Exception ex)
-            {
-                return BadRequest();
+            {               
+                if (ex.InnerException.InnerException.Message.Contains("FK_dbo.Presupuestos_dbo.Vehiculos_VehiculoCodigo"))
+                    return Json(new JsonResponse { Success = false, Message = "FK_dbo.Presupuestos_dbo.Vehiculos_VehiculoCodigo" });
             }
             
-            return Ok();
+            return Ok(new JsonResponse { Success = true, Message = "Vehículo eliminado con éxito" });
         }
     }
 }

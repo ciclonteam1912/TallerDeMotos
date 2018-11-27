@@ -214,16 +214,18 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/vehiculos/" + id,
+                                url: "/api/vehiculos/EliminarVehiculo/" + id,
                                 method: "DELETE"
                             })
-                            .done(function () {
-                                grid.dataSource.remove(dataItem);
-                                toastr.success("Vehículo eliminado con éxito");
+                            .done(function (vehiculo) {
+                                if (vehiculo.Success) {
+                                    grid.dataSource.remove(dataItem);
+                                    toastr.success(vehiculo.Message);
+                                } else {
+                                    if (vehiculo.Message == "FK_dbo.Presupuestos_dbo.Vehiculos_VehiculoCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el vehículo, ya que está asociado a un presupuesto.</p>");
+                                }
                             })
-                            .fail(function () {
-                                toastr.error("<p class='eliminar'>No se pudo eliminar el vehículo.</p>");
-                            });
                         }
                     }
                 });

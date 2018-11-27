@@ -7,10 +7,6 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>@Model.Titulo</h2>
 
-    @{
-        var styleDisplay = Model.Id == 0 ? "display:block" : "display:none";
-    }
-
     @using (Html.BeginForm("GuardarProducto", "Producto"))
     {
         <div class="panel panel-default">
@@ -62,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="@styleDisplay">
+                <div class="row" style="display:none">
                     <div class="col-lg-6 producto" id="precioCostoCol">
                         <div class="form-group">
                             @Html.LabelFor(p => p.PrecioCosto)
@@ -78,11 +74,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="row producto">
+                <div class="row existencia">
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(p => p.ExistenciaActual)
-                            @Html.TextBoxFor(p => p.ExistenciaActual, new { @class = "form-control", placeholder = "Ingrese Existencia Actual del Producto...", autocomplete = "off", type = "number", min = "1", max = "9999999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
+                            @Html.TextBoxFor(p => p.ExistenciaActual, new { @class = "form-control", placeholder = "Ingrese Existencia Actual del Producto...", autocomplete = "off", type = "number", min = "1", max = "9999999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)", @readonly = "readonly" })
                             @Html.ValidationMessageFor(p => p.ExistenciaActual)
                         </div>
                     </div>
@@ -177,7 +173,7 @@
         $(document).ready(function () {
 
             UseMutationObserver();
-            //numberFormat2($("#PrecioVenta"));
+
             $("#menuStock").addClass('active');
             var marcaProductoCol = $("#marcaProdutoCol");
             var precioVentaCol = $("#precioVentaCol");
@@ -192,10 +188,12 @@
                 else
                     $("#PrecioVenta").prop("readonly", false);
 
+                $(".existencia").show();
                 $("#PrecioCosto").prop("readonly", true);
-                $("#ExistenciaActual").prop("readonly", true);
                 $("#ProductoTipoId option:not(:selected)").prop("disabled", true);
             }
+            else
+                $(".existencia").hide();
 
             var bandera = false;
             if (tipoProducto == 2) {
@@ -206,11 +204,11 @@
                 $("#Descripcion").attr("placeholder", "Ingrese Descripción del Servicio...");
                 $(".servicio").fadeIn(1000);
                 $(".producto").fadeOut(1000);
-            } else {
+            }
+            else {
                 $(".servicio").fadeIn(1000);
                 $(".producto").fadeIn(1000);
             }
-
             var cont = 0;
             $("#ProductoTipoId").change(function () {
                 let tipoProducto = $("#ProductoTipoId").val();

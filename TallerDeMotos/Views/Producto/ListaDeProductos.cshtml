@@ -190,6 +190,9 @@
                                 } else {
                                     if (producto.Message == "FK_dbo.FacturaCompraDetalles_dbo.Productos_ProductoCodigo")
                                         toastr.error("<p class='eliminar'>No se pudo eliminar el producto, ya que está asociado a una factura de compra.</p>");
+
+                                    if (producto.Message == "FK_dbo.OrdenCompraDetalles_dbo.Productos_ProductoCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el producto, ya que está asociado a una orden de compra.</p>");
                                 }
                             });
                         }

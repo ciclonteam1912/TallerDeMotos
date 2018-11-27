@@ -102,7 +102,7 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/usuarios/" + id,
+                                url: "/api/usuarios/EliminarUsuario/" + id,
                                 method: "DELETE"
                             })
                             .done(function (usuario) {
@@ -110,9 +110,9 @@
                                     grid.dataSource.remove(dataItem);
                                     toastr.success(usuario.Message);
                                 } else {
-                                    if (usuario.Message == "FK_dbo.Cajas_dbo.AspNetUsers_UsuarioId")
-                                        toastr.error("<p class='eliminar'>No se pudo eliminar el usuario. Elimine primero la caja al que fue asignado este usuario.</p>" +
-                                        "<a href='/Caja' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar caja</a>");
+                                    if (usuario.Message == "FK_dbo.CajaAperturaCierres_dbo.AspNetUsers_UsuarioCodigo")
+                                        toastr.error("<p class='eliminar'>No se pudo eliminar el usuario. Elimine primero la apertura de caja al que fue asignado este usuario.</p>" +
+                                        "<a href='/CajaAperturaCierre' class='btn eliminar'><i class='icono izquierda fa fa-times-circle-o'></i>Eliminar caja</a>");
                                 }
                             });
                         }

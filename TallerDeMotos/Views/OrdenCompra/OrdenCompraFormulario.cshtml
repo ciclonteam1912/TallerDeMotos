@@ -90,9 +90,6 @@
                                         <input id="tipoProductos" />
                                         <span class="errortipoProductos">Seleccionar Tipo de Producto</span>
                                     </td>
-                                    @*<td>
-                                        <button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal"></button>                                        
-                                    </td>*@
                                     <td>
                                         <input id="productosId" disabled="disabled" style="width: 150px; display:inline-block" />
                                         <span class="error-repetido">Producto o Servicio ya seleccionado</span>
@@ -103,6 +100,7 @@
                                     </td>
                                     <td>
                                         <input type="number" id="precio" class="form-control" />
+                                        <span class="error">Precio es obligatorio</span>
                                     </td>
                                     <td>
                                         <input type="number" id="cantidad" class="quantity form-control" min="1" max="999999" oninput="maxLengthCheck(this)" onkeydown="javascript: return event.keyCode == 69 ? false : true" />
@@ -251,7 +249,7 @@
                                 $("#iva").val(item.TipoImpuesto);
                             });
 
-                            $("#cantidad").focus();
+                            $("#precio").focus();
                         }
                     });
                 }
@@ -297,6 +295,14 @@
                 }
                 else {
                     $('#cantidad').siblings('span.error').css('display', 'none');
+                }
+
+                if ($("#precio").val() <= 0) {
+                    todoEsValido = false;
+                    $('#precio').siblings('span.error').css('display', 'block');
+                }
+                else {
+                    $('#precio').siblings('span.error').css('display', 'none');
                 }
 
                 if (todoEsValido) {

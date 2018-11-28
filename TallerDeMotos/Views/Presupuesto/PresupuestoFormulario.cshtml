@@ -101,7 +101,10 @@
                         <td>
                             <input type="text" id="productoDesc" readonly class="form-control" />
                         </td>
-                        <td><input type="text" id="productoPrecio" readonly class="form-control" /></td>
+                        <td>
+                            <input type="text" id="productoPrecio" readonly class="form-control" />
+                            <span class="error">Precio es obligatorio</span>
+                        </td>
                         <td>
                             @Html.TextBox("productoCantidad", "", new { @class = "form-control", autocomplete = "off", type = "number", min = "1", max = "99999", oninput = "maxLengthCheck(this)", onkeydown = "return isNumberKey(event)" })
                         </td>
@@ -352,6 +355,14 @@
                 }
                 else {
                     $('.k-dropdown').siblings('span.error').css('display', 'none');
+                }
+
+                if ($("#productoPrecio").val() == "") {
+                    todoEsValido = false;
+                    $('#productoPrecio').siblings('span.error').css('display', 'block');
+                }
+                else {
+                    $('#productoPrecio').siblings('span.error').css('display', 'block');
                 }
 
                 $('#presupuestoDetalle tr.detalle').each(function (index, tr) {

@@ -7,7 +7,10 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>Lista de Factura de Compras</h2>
 
-    <p><a href="FacturaCompra/FacturaCompraFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Factura de Compra</span></a></p>
+    @if (ViewBag.CrearFacturaCompra)
+    {
+        <p><a href="FacturaCompra/FacturaCompraFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Factura de Compra</span></a></p>
+    }
 
     <div id="example">
         <div id="grid"></div>

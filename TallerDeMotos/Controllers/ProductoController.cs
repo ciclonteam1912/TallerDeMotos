@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using TallerDeMotos.Dtos;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
-using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
@@ -16,23 +15,38 @@ namespace TallerDeMotos.Controllers
     {
         private ApplicationDbContext _context;
         private ProductoServicio productoServicio;
+        private ConexionBD _conexionBd;
 
         public ProductoController()
         {
             _context = new ApplicationDbContext();
             productoServicio = new ProductoServicio();
+            _conexionBd = new ConexionBD();
         }
 
         // GET: Producto
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller))
-                return View("ListaDeProductos");
+            string usuario = User.Identity.Name;
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Producto") || usuario.Equals("admin"))
+                ViewBag.CrearProducto = true;
+            else
+                ViewBag.CrearProducto = false;
 
-            return View("ListaDeProductosSoloLectura");
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Editar Producto") || usuario.Equals("admin"))
+                ViewBag.EditarProducto = true;
+            else
+                ViewBag.EditarProducto = false;
+
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Eliminar Producto") || usuario.Equals("admin"))
+                ViewBag.EliminarProducto = true;
+            else
+                ViewBag.EliminarProducto = false;
+
+            return View("ListaDeProductos");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HasPermission("Crear Producto")]
         public ActionResult NuevoProducto()
         {
             var viewModel = new ProductoViewModel
@@ -44,7 +58,6 @@ namespace TallerDeMotos.Controllers
             return View("ProductoFormulario", viewModel);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarProducto(Producto producto)
@@ -84,7 +97,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HasPermission("Editar Producto")]
         public ActionResult EditarProducto(int id)
         {
             var productoBD = _context.Productos

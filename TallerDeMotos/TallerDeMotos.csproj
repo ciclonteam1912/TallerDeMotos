@@ -966,6 +966,10 @@
     <Compile Include="Migrations\201811251910150_AgregarColumnaFechaDeVencimientoEnOrdenCompras.Designer.cs">
       <DependentUpon>201811251910150_AgregarColumnaFechaDeVencimientoEnOrdenCompras.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811272311067_AgregarPermisosPorDefecto2.cs" />
+    <Compile Include="Migrations\201811272311067_AgregarPermisosPorDefecto2.Designer.cs">
+      <DependentUpon>201811272311067_AgregarPermisosPorDefecto2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AtributosDeAutorizacion\AutorizacionPersonalizada.cs" />
     <Compile Include="Models\AtributosDeValidacion\MayorACero.cs" />
@@ -3406,6 +3410,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811251910150_AgregarColumnaFechaDeVencimientoEnOrdenCompras.resx">
       <DependentUpon>201811251910150_AgregarColumnaFechaDeVencimientoEnOrdenCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811272311067_AgregarPermisosPorDefecto2.resx">
+      <DependentUpon>201811272311067_AgregarPermisosPorDefecto2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

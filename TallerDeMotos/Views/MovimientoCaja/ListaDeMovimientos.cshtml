@@ -7,7 +7,10 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>Listado de Movimientos de Caja</h2>
 
-    <p><a href="MovimientoCaja/MovimientoCajaFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Movimiento</span></a></p>
+    @if (ViewBag.RealizarMovimientoCaja)
+    {
+        <p><a href="MovimientoCaja/MovimientoCajaFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Movimiento</span></a></p>
+    }
 
     <div id="example">
         <div id="grid"></div>
@@ -90,7 +93,7 @@
                         title: "Fecha",
                         template: "#= kendo.toString(kendo.parseDate(AperturaCierreCaja.Fecha), 'MM/dd/yyyy HH:mm tt')#",
                         width: "110px"
-                    }, 
+                    },
                     {
                         template: "<a href='/FacturaVenta/FacturaVentaReport?nroFactura=  #: FacturaVenta.NumeroFactura #&nroCaja= #: AperturaCierreCaja.Caja.Id #' target='_blank' class=' btn btn-primary'>Ver Factura</a>",
                         field: "FacturaVenta",

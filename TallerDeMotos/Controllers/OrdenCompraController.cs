@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Dtos;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
@@ -14,13 +15,14 @@ namespace TallerDeMotos.Controllers
     public class OrdenCompraController : Controller
     {
         private OrdenCompraServicio ordenCompraServicio;
-
+        private ConexionBD _conexionBD;
         private ApplicationDbContext _context;
 
         public OrdenCompraController()
         {
             _context = new ApplicationDbContext();
             ordenCompraServicio = new OrdenCompraServicio();
+            _conexionBD = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)
@@ -31,12 +33,22 @@ namespace TallerDeMotos.Controllers
         // GET: OrdenCompra
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller))
-                return View("ListaDeOrdenDeCompras");
+            string usuario = User.Identity.Name;
+            if (_conexionBD.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Orden de Compra") || usuario.Equals("admin"))
+                ViewBag.CrearOrdenCompra = true;
+            else
+                ViewBag.CrearOrdenCompra = false;
 
-            return View("ListaDeOrdenDeComprasSoloLectura");
+            if (_conexionBD.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Anular Orden de Compra") || usuario.Equals("admin"))
+                ViewBag.AnularOrdenCompra = true;
+            else
+                ViewBag.AnularOrdenCompra = false;
+
+            return View("ListaDeOrdenDeCompras");
+
         }
 
+        [HasPermission("Editar Orden de Compra")]
         public ActionResult EditarOrdenCompraDetalle(int id = 0)
         {
             if (id != 0)
@@ -44,7 +56,7 @@ namespace TallerDeMotos.Controllers
             return View();
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HasPermission("Crear Orden de Compra")]
         public ActionResult OrdenCompraFormulario()
         {
             var formaPagos = _context.FormasPago.ToList();
@@ -57,7 +69,6 @@ namespace TallerDeMotos.Controllers
             return View(viewModel);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult OrdenCompraReport(int ordenNro = 0)
         {
             if (ordenNro != 0)
@@ -65,7 +76,7 @@ namespace TallerDeMotos.Controllers
             return View("OrdenCompraReport");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HasPermission("Editar Orden de Compra")]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditarOrdenCompra(OrdenCompraDto ordenCompraDto)
         {
@@ -77,7 +88,6 @@ namespace TallerDeMotos.Controllers
             return Json(ordenCompraDto, JsonRequestBehavior.AllowGet);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public JsonResult ObtenerOrdenCompraPendiente()
         {
             var ordenCompra = _context.OrdenCompras.Include(oc => oc.Estado)
@@ -89,7 +99,7 @@ namespace TallerDeMotos.Controllers
             return Json(ordenCompra, JsonRequestBehavior.AllowGet);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HasPermission("Anular Orden de Compra")]
         public ActionResult AnularOrdenCompra(int id)
         {
             var ordenCompraAAnular = _context.OrdenCompras.SingleOrDefault(oc => oc.Id == id);
@@ -102,7 +112,6 @@ namespace TallerDeMotos.Controllers
             return View("OrdenCompraAnularFormulario");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult GuardarOrdenCompraAnulada()
         {
             int ordenCompraId = 0;

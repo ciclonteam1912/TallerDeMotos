@@ -6,12 +6,32 @@
 <div id="contenido" class="col-lg-9 col-md-9 col-xs-11">
     <h2>Lista de Aperturas y Cierres de Cajas</h2>
 
-    <p>
-        <a href="CajaAperturaCierre/NuevaAperturaCierre" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Nueva Apertura/Cierre</span></a>
-    </p>
+    @if (ViewBag.RealizarAperturaCierre)
+    {
+        <p>
+            <a href="CajaAperturaCierre/NuevaAperturaCierre" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Nueva Apertura/Cierre</span></a>
+        </p>
+    }    
 
     <div id="example">
         <div id="grid"></div>
+        @if (ViewBag.RealizarAperturaCierre)
+        {
+            <input type="hidden" value="1" id="realizarAperturaCierre" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="realizarAperturaCierre" />
+        }
+
+        @if (ViewBag.EliminarAperturaCierre)
+        {
+            <input type="hidden" value="1" id="eliminarAperturaCierre" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="eliminarAperturaCierre" />
+        }
     </div>
 </div>
 
@@ -21,6 +41,9 @@
 
         $(document).ready(function () {
             $("#menuCaja").addClass('active');
+
+            var puedeRealizar = $("#realizarAperturaCierre").val() == "1" ? true : false;
+            var puedeEliminar = $("#eliminarAperturaCierre").val() == "1" ? true : false;
 
             var table = $("#grid").kendoGrid({
                 dataSource: {
@@ -44,21 +67,11 @@
                     template: "<p>No existe registro de aperturas y cierres de cajas.</p>"
                 },
                 columns: [
-                    //{
-                    //template: "<a href='/CajaAperturaCierre/EditarAperturaCierre/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
-                    //field: "Id",
-                    //title: "&nbsp;",
-                    //filterable: false,
-                    //sortable: false,
-                    //width: 70,
-                    //attributes: {
-                    //    style: "text-align: center"
-                    //}
-                    //},
                 {
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
                     title: "&nbsp;",
+                    hidden: !puedeEliminar,
                     filterable: false,
                     sortable: false,
                     width: 70,
@@ -91,6 +104,7 @@
                     template: "#if(EstaAbierta) {# <a href='' class='btn-link fa fa-lock js-cerrar' title='Cerrar Caja'></a> #}else{# <a href='' class='btn-link fa fa-unlock-alt js-abrir' title='Abrir Caja'></a>#}#",
                     field: "Id",
                     title: "&nbsp;",
+                    hidden: !puedeRealizar,
                     filterable: false,
                     sortable: false,
                     width: 70,
@@ -156,7 +170,7 @@
                         grid.dataSource.read();
                         grid.dataSource.refresh();
                     } else {
-                            toastr.error("No se pudo actualizar el estado de la caja");
+                        toastr.error("No se pudo actualizar el estado de la caja");
                     }
                 });
 

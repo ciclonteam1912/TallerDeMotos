@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TallerDeMotos.Dtos;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
@@ -37,14 +38,16 @@ namespace TallerDeMotos.Controllers
 
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
-                return View("ListaDeMovimientos");
-
-            return View("ListaDeMovimientosSoloLectura");
+            string usuario = User.Identity.Name;
+            if (conexionBD.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Realizar Movimiento de Caja") || usuario.Equals("admin"))
+                ViewBag.RealizarMovimientoCaja = true;
+            else
+                ViewBag.RealizarMovimientoCaja = false;
+            return View("ListaDeMovimientos");
         }
 
         // GET: MovimientoCaja
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Realizar Movimiento de Caja")]
         public ActionResult MovimientoCajaFormulario()
         {            
             DataSet dsDatos = new DataSet();

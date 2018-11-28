@@ -7,7 +7,10 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>Lista de Factura de Ventas</h2>
 
-    <p><a href="FacturaVenta/FacturaVentaFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Factura de Venta</span></a></p>
+    @if (ViewBag.CrearFacturaVenta)
+    {
+        <p><a href="FacturaVenta/FacturaVentaFormulario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Registrar Factura de Venta</span></a></p>
+    }
 
     <div id="example">
         <div id="grid"></div>
@@ -59,7 +62,7 @@
                         }
                     }, {
                         field: "Talonario.Caja.Nombre",
-                        title: "Caja",                        
+                        title: "Caja",
                         width: "90px"
                     }, {
                         field: "FechaFacturaVenta",

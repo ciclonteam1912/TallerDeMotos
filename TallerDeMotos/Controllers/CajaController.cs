@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
@@ -14,10 +15,12 @@ namespace TallerDeMotos.Controllers
     public class CajaController : Controller
     {
         private ApplicationDbContext _context;
+        private ConexionBD _conexionBd;
 
         public CajaController()
         {
             _context = new ApplicationDbContext();
+            _conexionBd = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)
@@ -28,20 +31,32 @@ namespace TallerDeMotos.Controllers
         // GET: Caja
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller))
-                return View("ListaDeCajas");
+            string usuario = User.Identity.Name;
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Caja") || usuario.Equals("admin"))
+                ViewBag.CrearCaja = true;
+            else
+                ViewBag.CrearCaja = false;
 
-            return View("ListaDeCajasSoloLectura");
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Editar Caja") || usuario.Equals("admin"))
+                ViewBag.EditarCaja = true;
+            else
+                ViewBag.EditarCaja = false;
+
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Eliminar Caja") || usuario.Equals("admin"))
+                ViewBag.EliminarCaja = true;
+            else
+                ViewBag.EliminarCaja = false;
+
+            return View("ListaDeCajas");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HasPermission("Crear Caja")]
         public ActionResult NuevaCaja()
         {
             var caja = new CajaViewModel();
             return View("CajaFormulario", caja);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarCaja(Caja caja)
@@ -67,7 +82,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HasPermission("Editar Caja")]
         public ActionResult EditarCaja(int id)
         {
             var cajaBD = _context.Cajas.SingleOrDefault(c => c.Id == id);

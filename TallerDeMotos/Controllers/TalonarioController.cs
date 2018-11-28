@@ -2,8 +2,8 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
-using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
@@ -12,10 +12,12 @@ namespace TallerDeMotos.Controllers
     public class TalonarioController : Controller
     {
         private ApplicationDbContext _context;
+        private ConexionBD _conexionBd;
 
         public TalonarioController()
         {
             _context = new ApplicationDbContext();
+            _conexionBd = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)
@@ -26,13 +28,26 @@ namespace TallerDeMotos.Controllers
         // GET: Talonario
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
-                return View("ListaDeTalonarios");
+            string usuario = User.Identity.Name;
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Talonario") || usuario.Equals("admin"))
+                ViewBag.CrearTalonario = true;
+            else
+                ViewBag.CrearTalonario = false;
 
-            return View("ListaDeTalonariosSoloLectura");
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Editar Talonario") || usuario.Equals("admin"))
+                ViewBag.EditarTalonario = true;
+            else
+                ViewBag.EditarTalonario = false;
+
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Eliminar Talonario") || usuario.Equals("admin"))
+                ViewBag.EliminarTalonario = true;
+            else
+                ViewBag.EliminarTalonario = false;
+
+            return View("ListaDeTalonarios");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Crear Talonario")]
         public ActionResult NuevoTalonario()
         {
             var talonario = new TalonarioViewModel
@@ -43,7 +58,6 @@ namespace TallerDeMotos.Controllers
             return View("TalonarioFormulario", talonario);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarTalonario(Talonario talonario)
@@ -79,7 +93,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Editar Talonario")]
         public ActionResult EditarTalonario(int id)
         {
             var talonario = _context.Talonarios.SingleOrDefault(t => t.Id == id);

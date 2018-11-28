@@ -9,6 +9,31 @@
     <div id="example">
         <div id="grid" style="width:100%"></div>
         <div id="details"></div>
+        @if (ViewBag.CrearProducto)
+        {
+            <input type="hidden" value="1" id="crearProducto" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="crearProducto" />
+        }
+        @if (ViewBag.EditarProducto)
+        {
+            <input type="hidden" value="1" id="editarProducto" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="editarProducto" />
+        }
+
+        @if (ViewBag.EliminarProducto)
+        {
+            <input type="hidden" value="1" id="eliminarProducto" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="eliminarProducto" />
+        }
     </div>
 </div>
 
@@ -50,8 +75,11 @@
         kendo.culture().numberFormat.currency.symbol = "₲";
 
         $(document).ready(function () {
-
             $("#menuStock").addClass('active');
+
+            var puedeCrear = $("#crearProducto").val() == "1" ? true : false;
+            var puedeEditar = $("#editarProducto").val() == "1" ? true : false;
+            var puedeEliminar = $("#eliminarProducto").val() == "1" ? true : false;
 
             var table = $("#grid").kendoGrid({
                 toolbar: ["pdf"],
@@ -100,6 +128,7 @@
                     template: "<a href='/Producto/EditarProducto/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
                     field: "Id",
                     title: "&nbsp;",
+                    hidden: !puedeEditar,
                     filterable: false,
                     sortable: false,
                     width: 45,
@@ -110,6 +139,7 @@
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
                     title: "&nbsp;",
+                    hidden: !puedeEliminar,
                     filterable: false,
                     sortable: false,
                     width: 45,
@@ -148,7 +178,10 @@
                 }]
             });
 
-            $(".k-grid-toolbar").append('<a href="Producto/NuevoProducto" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Producto</span></a>');
+            if (puedeCrear)
+            {
+                $(".k-grid-toolbar").append('<a href="Producto/NuevoProducto" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Producto</span></a>');
+            }
 
             wnd = $("#details")
                         .kendoWindow({

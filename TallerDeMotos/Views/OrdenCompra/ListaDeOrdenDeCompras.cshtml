@@ -15,6 +15,14 @@
         <div id="grid"></div>        
     </div>
     <div id="details"></div>
+    @if (ViewBag.AnularOrdenCompra)
+    {
+        <input type="hidden" value="1" id="anularOrden" />
+    }
+    else
+    {
+        <input type="hidden" value="0" id="anularOrden" />
+    }
 </div>
 
 @section Scripts{
@@ -23,6 +31,8 @@
         kendo.culture().numberFormat.currency.symbol = "₲";
         $(document).ready(function () {
             $("#menuCompras").addClass('active');
+
+            var puedeAnular = $("#anularOrden").val() == "1" ? true : false;
 
             var dataSource = new kendo.data.DataSource({
                 autoSync: false,
@@ -85,6 +95,7 @@
                         template: "<a href='/OrdenCompra/AnularOrdenCompra/ #: Id #' class='btn-link glyphicon glyphicon-edit anular' title='Anular'></a>",
                         field: "Id",
                         title: "&nbsp;",
+                        hidden: !puedeAnular,
                         filterable: false,
                         sortable: false,
                         width: 50,

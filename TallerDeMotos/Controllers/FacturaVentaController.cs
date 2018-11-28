@@ -2,8 +2,8 @@
 using System.Data;
 using System.Web.Mvc;
 using TallerDeMotos.Dtos;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
-using TallerDeMotos.Models.AtributosDeAutorizacion;
 
 namespace TallerDeMotos.Controllers
 {
@@ -28,10 +28,16 @@ namespace TallerDeMotos.Controllers
         // GET: FacturaCompra
         public ActionResult Index()
         {
+            string usuario = User.Identity.Name;
+            if (_conexionBD.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Factura de Venta") || usuario.Equals("admin"))
+                ViewBag.CrearFacturaVenta = true;
+            else
+                ViewBag.CrearFacturaVenta = false;
+
             return View("ListaDeFacturaDeVentas");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Crear Factura de Venta")]
         public ActionResult FacturaVentaFormulario()
         {
             DataSet dsDatos = new DataSet();
@@ -49,7 +55,6 @@ namespace TallerDeMotos.Controllers
             return View(viewModel);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult FacturaVentaReport(int nroFactura = 0, int nroCaja = 0)
         {
             if (nroFactura != 0)

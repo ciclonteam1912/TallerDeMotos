@@ -9,6 +9,31 @@
     <div id="example">
         <div id="grid" style="width:100%"></div>
         <div id="details"></div>
+        @if (ViewBag.CrearProveedor)
+        {
+            <input type="hidden" value="1" id="crearProveedor" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="crearProveedor" />
+        }
+        @if (ViewBag.EditarProveedor)
+        {
+            <input type="hidden" value="1" id="editarProveedor" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="editarProveedor" />
+        }
+
+        @if (ViewBag.EliminarProveedor)
+        {
+            <input type="hidden" value="1" id="eliminarProveedor" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="eliminarProveedor" />
+        }
     </div>
 </div>
 
@@ -49,6 +74,10 @@
         var wnd, detailsTemplate;
         $(document).ready(function () {
             $("#menuCompras").addClass('active');
+
+            var puedeCrear = $("#crearProveedor").val() == "1" ? true : false;
+            var puedeEditar = $("#editarProveedor").val() == "1" ? true : false;
+            var puedeEliminar = $("#eliminarProveedor").val() == "1" ? true : false;
 
             var table = $("#grid").kendoGrid({
                 toolbar: ["pdf"],
@@ -98,6 +127,7 @@
                 columns: [{
                     template: "<a href='/Proveedor/EditarProveedor/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
                     field: "Id",
+                    hidden: !puedeEditar,
                     title: "&nbsp;",
                     filterable: false,
                     sortable: false,
@@ -108,6 +138,7 @@
                 }, {
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
+                    hidden: !puedeEliminar,
                     title: "&nbsp;",
                     filterable: false,
                     sortable: false,
@@ -144,7 +175,10 @@
                 }]
             });
 
-            $(".k-grid-toolbar").append('<a href="Proveedor/NuevoProveedor" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Proveedor</span></a>');        
+            if (puedeCrear)
+            {
+                $(".k-grid-toolbar").append('<a href="Proveedor/NuevoProveedor" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Proveedor</span></a>');
+            }
 
             wnd = $("#details")
                         .kendoWindow({

@@ -6,11 +6,31 @@
 <div class="col-lg-9 col-md-9 col-xs-11" id="contenido">
     <h2>Lista de Talonarios</h2>
 
-    <p><a href="Talonario/NuevoTalonario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Talonario</span></a></p>
+    @if (ViewBag.CrearTalonario)
+    {
+        <p><a href="Talonario/NuevoTalonario" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Agregar Talonario</span></a></p>
+    }
 
     <div id="example">
         <div id="grid" style="width:100%"></div>
         <div id="details"></div>
+        @if (ViewBag.EditarTalonario)
+        {
+            <input type="hidden" value="1" id="editarTalonario" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="editarTalonario" />
+        }
+
+        @if (ViewBag.EliminarTalonario)
+        {
+            <input type="hidden" value="1" id="eliminarTalonario" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="eliminarTalonario" />
+        }
     </div>
 </div>
 
@@ -19,6 +39,9 @@
         var wnd, detailsTemplate;
         $(document).ready(function () {
             $("#menuVentas").addClass('active');
+
+            var puedeEditar = $("#editarTalonario").val() == "1" ? true : false;
+            var puedeEliminar = $("#eliminarTalonario").val() == "1" ? true : false;
 
             var table = $("#grid").kendoGrid({
                 dataSource: {
@@ -44,6 +67,7 @@
                 columns: [{
                     template: "<a href='/Talonario/EditarTalonario/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
                     field: "Id",
+                    hidden: !puedeEditar,
                     title: "&nbsp;",
                     filterable: false,
                     sortable: false,
@@ -54,6 +78,7 @@
                 }, {
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
+                    hidden: !puedeEliminar,
                     title: "&nbsp;",
                     filterable: false,
                     sortable: false,
@@ -93,7 +118,7 @@
                     width: "130px"
                 }]
             });
-         
+
             wnd = $("#details")
             .kendoWindow({
                 title: "Detalles del Talonario",
@@ -133,7 +158,7 @@
                                     toastr.success(talonario.Message);
                                 }
                                 else {
-                                    if(talonario.Message == "FK_dbo.FacturaVentas_dbo.Talonarios_TalonarioCodigo")
+                                    if (talonario.Message == "FK_dbo.FacturaVentas_dbo.Talonarios_TalonarioCodigo")
                                         toastr.error("<p class='eliminar'>No se pudo eliminar el talonario. Ya está asociado a una Factura de Venta.</p>");
                                 }
                             })
@@ -172,10 +197,10 @@
 
         <div id="details-container">
 
-        <p><b>Número de Factura Inicial:</b> #= NumeroFacturaInicial #</p>
-        <p><b>Número de Factura Final:</b> #= NumeroFacturaFinal #</p>
-        <p><b>Fecha Inicio de Vigencia:</b> #= kendo.toString(kendo.parseDate(FechaInicioVigencia), "dd/MM/yyyy") #</p>
-        <p><b>Fecha Fin de Vigencia:</b> #= kendo.toString(kendo.parseDate(FechaFinVigencia), "dd/MM/yyyy") #</p>
-    </div>
-</script>       
+            <p><b>Número de Factura Inicial:</b> #= NumeroFacturaInicial #</p>
+            <p><b>Número de Factura Final:</b> #= NumeroFacturaFinal #</p>
+            <p><b>Fecha Inicio de Vigencia:</b> #= kendo.toString(kendo.parseDate(FechaInicioVigencia), "dd/MM/yyyy") #</p>
+            <p><b>Fecha Fin de Vigencia:</b> #= kendo.toString(kendo.parseDate(FechaFinVigencia), "dd/MM/yyyy") #</p>
+        </div>
+    </script>
 }

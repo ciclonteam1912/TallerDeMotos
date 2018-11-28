@@ -2,8 +2,8 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
-using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
 using TallerDeMotos.ViewModels;
 
@@ -12,10 +12,12 @@ namespace TallerDeMotos.Controllers
     public class ProveedorController : Controller
     {
         private ApplicationDbContext _context;
+        private ConexionBD _conexionBd;
 
         public ProveedorController()
         {
             _context = new ApplicationDbContext();
+            _conexionBd = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)
@@ -26,13 +28,26 @@ namespace TallerDeMotos.Controllers
         // GET: Proveedor
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller) || User.IsInRole(RoleName.Mecanico))
-                return View("ListaDeProveedores");
+            string usuario = User.Identity.Name;
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Proveedor") || usuario.Equals("admin"))
+                ViewBag.CrearProveedor = true;
+            else
+                ViewBag.CrearProveedor = false;
 
-            return View("ListaDeProveedoresSoloLectura");
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Editar Proveedor") || usuario.Equals("admin"))
+                ViewBag.EditarProveedor = true;
+            else
+                ViewBag.EditarProveedor = false;
+
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Eliminar Proveedor") || usuario.Equals("admin"))
+                ViewBag.EliminarProveedor = true;
+            else
+                ViewBag.EliminarProveedor = false;
+
+            return View("ListaDeProveedores");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Crear Proveedor")]
         public ActionResult NuevoProveedor()
         {
             var ciudades = _context.Ciudades.ToList();
@@ -45,7 +60,6 @@ namespace TallerDeMotos.Controllers
             return View("ProveedorFormulario", viewModel);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarProveedor(Proveedor proveedor)
@@ -72,7 +86,7 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Editar Proveedor")]
         public ActionResult EditarProveedor(int id)
         {
             var proveedorBD = _context.Proveedores.SingleOrDefault(p => p.Id == id);
@@ -93,6 +107,7 @@ namespace TallerDeMotos.Controllers
             return View("ProveedorFormulario", viewModel);
         }
 
+        [HasPermission("Editar Proveedor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditarProveedor(ProveedorViewModel proveedor)

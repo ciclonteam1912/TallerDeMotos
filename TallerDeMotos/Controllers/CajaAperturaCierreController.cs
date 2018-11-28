@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
@@ -28,13 +29,21 @@ namespace TallerDeMotos.Controllers
         // GET: CajaAperturaCierre
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller))
-                return View("ListaDeAperturaCierresDeCaja");
+            string usuario = User.Identity.Name;
+            if (_conexionBD.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Realizar Apertura y Cierre") || usuario.Equals("admin"))
+                ViewBag.RealizarAperturaCierre = true;
+            else
+                ViewBag.RealizarAperturaCierre = false;
 
-            return View("ListaDeAperturaCierresDeCajaSoloLectura");
+            if (_conexionBD.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Eliminar Apertura y Cierre") || usuario.Equals("admin"))
+                ViewBag.EliminarAperturaCierre = true;
+            else
+                ViewBag.EliminarAperturaCierre = false;
+
+            return View("ListaDeAperturaCierresDeCaja");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
+        [HasPermission("Realizar Apertura y Cierre")]
         public ActionResult NuevaAperturaCierre()
         {
             var viewModel = new CajaAperturaCierreViewModel()
@@ -46,7 +55,6 @@ namespace TallerDeMotos.Controllers
             return View("CajaAperturaCierreFormulario", viewModel);
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarAperturaCierre(AperturaCierreCaja aperturaCierrecaja)
@@ -101,7 +109,6 @@ namespace TallerDeMotos.Controllers
             return RedirectToAction("Index");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller)]
         public ActionResult EditarAperturaCierre(int id)
         {
             var aperturaCierrecajaBD = _context.CajaAperturaCierres.SingleOrDefault(c => c.Id == id);

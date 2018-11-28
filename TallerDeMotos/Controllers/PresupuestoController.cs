@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using TallerDeMotos.Dtos;
+using TallerDeMotos.Filters;
 using TallerDeMotos.Models;
 using TallerDeMotos.Models.AtributosDeAutorizacion;
 using TallerDeMotos.Models.ModelosDeDominio;
@@ -14,10 +15,12 @@ namespace TallerDeMotos.Controllers
     public class PresupuestoController : Controller
     {
         private ApplicationDbContext _context;
+        private ConexionBD _conexionBd;
 
         public PresupuestoController()
         {
             _context = new ApplicationDbContext();
+            _conexionBd = new ConexionBD();
         }
 
         protected override void Dispose(bool disposing)
@@ -26,22 +29,34 @@ namespace TallerDeMotos.Controllers
         }
 
         // GET: Presupuesto
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult Index()
         {
-            if (User.IsInRole(RoleName.Administrador) || User.IsInRole(RoleName.JefeDeTaller))
-                return View("ListaDePresupuestos");
+            string usuario = User.Identity.Name;
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Crear Presupuesto") || usuario.Equals("admin"))
+                ViewBag.CrearPresupuesto = true;
+            else
+                ViewBag.CrearPresupuesto = false;
 
-            return View("ListaDePresupuestosSoloLectura");
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Editar Presupuesto") || usuario.Equals("admin"))
+                ViewBag.EditarPresupuesto = true;
+            else
+                ViewBag.EditarPresupuesto = false;
+
+            if (_conexionBd.CHECK_IF_USER_OR_ROLE_HAS_PERMISSION("Anular Presupuesto") || usuario.Equals("admin"))
+                ViewBag.AnularPresupuesto = true;
+            else
+                ViewBag.AnularPresupuesto = false;
+
+            return View("ListaDePresupuestos");
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
+        [HasPermission("Crear Presupuesto")]
         public ActionResult PresupuestoFormulario()
         {
             return View();
         }
 
-
+        [HasPermission("Editar Presupuesto")]
         public ActionResult EditarPresupuesto(int id)
         {
             ViewBag.PresupuestoId = id;
@@ -139,7 +154,6 @@ namespace TallerDeMotos.Controllers
             return Json(new[] { presupuestoDetalleDto }.ToDataSourceResult(request, ModelState));
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public ActionResult PresupuestoReport(int id = 0)
         {
             if (id != 0)
@@ -147,7 +161,6 @@ namespace TallerDeMotos.Controllers
             return View();
         }
 
-        [AutorizacionPersonalizada(RoleName.Administrador, RoleName.JefeDeTaller, RoleName.Mecanico)]
         public JsonResult ObtenerPresupuestosPendientes()
         {
             var presupuesto = _context.Presupuestos.Include(p => p.Estado)

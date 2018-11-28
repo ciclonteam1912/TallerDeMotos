@@ -6,12 +6,32 @@
 <div id="contenido" class="col-lg-9 col-md-9 col-xs-11">
     <h2>Lista de Cajas</h2>
 
-    <p>
-        <a href="Caja/NuevaCaja" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Nueva Caja</span></a>
-    </p>
+    @if (ViewBag.CrearCaja)
+    {
+        <p>
+            <a href="Caja/NuevaCaja" class="btn btn-primary"><i class="fa fa-plus icono izquierda"></i><span class="button-text">Nueva Caja</span></a>
+        </p>
+    }    
 
     <div id="example">
         <div id="grid"></div>
+        @if (ViewBag.EditarCaja)
+        {
+            <input type="hidden" value="1" id="editarCaja" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="editarCaja" />
+        }
+
+        @if (ViewBag.EliminarCaja)
+        {
+            <input type="hidden" value="1" id="eliminarCaja" />
+        }
+        else
+        {
+            <input type="hidden" value="0" id="eliminarCaja" />
+        }
     </div>
 </div>
 
@@ -19,6 +39,9 @@
     <script>
         $(document).ready(function () {
             $("#menuCaja").addClass('active');
+
+            var puedeEditar = $("#editarCaja").val() == "1" ? true : false;
+            var puedeEliminar = $("#eliminarCaja").val() == "1" ? true : false;
 
             var table = $("#grid").kendoGrid({
                 dataSource: {
@@ -45,6 +68,7 @@
                     template: "<a href='/Caja/EditarCaja/ #: Id #' class='btn-link glyphicon glyphicon-edit' title='Editar'></a>",
                     field: "Id",
                     title: "&nbsp;",
+                    hidden: !puedeEditar,
                     filterable: false,
                     sortable: false,
                     width: 60,
@@ -55,6 +79,7 @@
                     template: "<a href='' class='btn-link glyphicon glyphicon-remove js-eliminar' title='Eliminar'></a>",
                     field: "Id",
                     title: "&nbsp;",
+                    hidden: !puedeEliminar,
                     filterable: false,
                     sortable: false,
                     width: 60,
@@ -110,7 +135,7 @@
                                 }
                             })
                             .fail(function () {
-                            toastr.error("<p class='eliminar'>No se pudo eliminar la caja.</p>");
+                                toastr.error("<p class='eliminar'>No se pudo eliminar la caja.</p>");
                             });;
                         }
                     }

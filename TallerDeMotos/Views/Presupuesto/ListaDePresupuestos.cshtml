@@ -15,6 +15,23 @@
         <div id="grid"></div>
     </div>
     <div id="details"></div>
+    @if (ViewBag.EditarPresupuesto)
+    {
+        <input type="hidden" value="1" id="editarPresupuesto" />
+    }
+    else
+    {
+        <input type="hidden" value="0" id="editarPresupuesto" />
+    }
+
+    @if (ViewBag.AnularPresupuesto)
+    {
+        <input type="hidden" value="1" id="anularPresupuesto" />
+    }
+    else
+    {
+        <input type="hidden" value="0" id="anularPresupuesto" />
+    }
 </div>
 
 @section Scripts{
@@ -23,6 +40,9 @@
         kendo.culture().numberFormat.currency.symbol = "₲";
         $(document).ready(function () {
             $("#menuVentas").addClass('active');
+
+            var puedeEditar = $("#editarPresupuesto").val() == "1" ? true : false;
+            var puedeAnular = $("#anularPresupuesto").val() == "1" ? true : false;
 
             var dataSource = new kendo.data.DataSource({
                 autoSync: false,
@@ -56,6 +76,7 @@
                         template: "<a href='/Presupuesto/EditarPresupuesto/ #: Id #' class='btn-link glyphicon glyphicon-edit anular' title='Editar Detalles'></a>",
                         field: "Id",
                         title: "&nbsp;",
+                        hidden: !puedeEditar,
                         filterable: false,
                         sortable: false,
                         width: 50,
